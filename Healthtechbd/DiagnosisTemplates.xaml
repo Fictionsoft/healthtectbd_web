@@ -1,0 +1,127 @@
+﻿<Page x:Class="Healthtechbd.DiagnosisTemplates"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Healthtechbd"
+     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="DiagnosisTemplates">
+
+    <StackPanel>
+        <!--Page Heading-->
+        <Grid>
+            <Grid Height="60" Background="#fff" VerticalAlignment="top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="DIAGNOSIS TEMPLATES" VerticalAlignment="Center" Margin="20" Foreground="#252834" FontSize="18"/>
+                <Button x:Name="ButtonAddDiagnosisTemplate" Grid.Column="1" Margin="0 0 20 0" Content="ADD DIAGNOSIS TEMPLATE" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddDiagnosisTemplate_Click" />
+            </Grid>
+        </Grid>
+
+
+        <!--Page Heading Bottom-->
+        <Border Margin="20" Height="430">
+            <StackPanel>
+                <!--Search Section-->
+                <Grid Height="60" Background="#F6F8F7">
+                    <Grid Height="30" Margin="20 0 0 0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"></ColumnDefinition>
+                            <ColumnDefinition Width="40"></ColumnDefinition>
+                            <ColumnDefinition Width="80"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Style="{StaticResource SearchBox}" Grid.Column="0" Text="Type here for search..."/>
+                        <Button Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0">
+                            <materialDesign:PackIcon Kind="DatabaseSearch"/>
+                        </Button>
+                        <Button Grid.Column="2" Style="{StaticResource SearchButton}">Reset</Button>
+                    </Grid>
+                </Grid>
+
+                <!--Info Area-->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="430">
+                    <Border Padding="20 0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="30"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="0" Text="NAME" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="1" Text="CREATED" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="2" Text="ACTION" HorizontalAlignment="Center" />
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="1" Grid.Column="0" Text="Spherocytosis" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="1" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="1" Grid.Column="2" Kind="Settings"/>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="3" Grid.Column="0" Text="Spie" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="2" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="2" Grid.Column="2" Kind="Settings"/>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="4" Grid.Column="0" Text="Spielmeyer-Vogt disease" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="3" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="3" Grid.Column="2" Kind="Settings"/>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="5" Grid.Column="0" Text="Spina-Spine" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="4" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="4" Grid.Column="2" Kind="Settings"/>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="6" Grid.Column="0" Text="Spina bifida" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="5" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="5" Grid.Column="2" Kind="Settings"/>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="7" Grid.Column="0" Text="Spina bifida hypospadias" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="6" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="6" Grid.Column="2" Kind="Settings"/>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="8" Grid.Column="0" Text="Spinal cord neoplasm" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="7" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="7" Grid.Column="2" Kind="Settings"/>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="0" Text="Spinal muscular atrophy" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="8" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="8" Grid.Column="2" Kind="Settings"/>
+
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="2" Grid.Column="0" Text="Warfarin necrosis" />
+                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="1" Text="29/05/2018" />
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="9" Grid.Column="2" Kind="Settings"/>
+
+                        </Grid>
+                    </Border>
+                </ScrollViewer>
+
+            </StackPanel>
+
+        </Border>
+
+    </StackPanel>
+</Page>

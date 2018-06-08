@@ -1,0 +1,172 @@
+﻿<!--Navigation Referance Link....https://www.youtube.com/watch?v=YQ1EJJZBHyE-->
+<Window x:Class="Healthtechbd.AdminPanelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Healthtechbd"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Admin Panel" Height="650" Width="1200"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+
+    <Window.Resources>
+       
+    </Window.Resources>
+
+    <Grid Background="#EDF1F5">
+        <!--Header-->
+        <Grid x:Name="header" Height="60" Background="#3CC2BB" VerticalAlignment="top" MouseDown="header_MouseDown">
+
+            <TextBlock Text="HEALTHTECHBD" HorizontalAlignment="Left" Margin="43 0 0 0" Foreground="#fff" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" MouseDown="ButtonDashboard_MouseDown" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Grid Margin="0 0 5 0" Height="40" Width="40">
+                    <Border Name="Mask"
+                    Background="White"
+                    BorderBrush="#FF3B5998"
+                    CornerRadius="100">
+                    </Border>
+
+                    <StackPanel >
+                        <Image Name="Receiver" 
+                            Source="/Images/dashboard-students.png" Height="40" Width="40" />
+                        <StackPanel.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=Mask}" />
+                        </StackPanel.OpacityMask>
+                    </StackPanel>
+
+                </Grid>
+
+                <TextBlock Text="Abdullah al mamun" VerticalAlignment="Center" FontSize="16" Foreground="#fff" />
+                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Margin="0 12 0 0" Padding="15"  Foreground="#fff">
+                    <StackPanel>
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Foreground="#576069"/>
+                            <Button x:Name="ButtonMyProfile" Content="My Profile" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonMyProfile_Click" />
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Image" VerticalAlignment="Center" Foreground="#576069" />
+                            <Button Content="Change Profile Picture" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0"  />
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Security" Foreground="#576069"  VerticalAlignment="Center"/>
+                            <Button x:Name="ButtonChangePassword" Content="Change Password"  Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangePassword_Click" />
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Settings" Foreground="#576069"  VerticalAlignment="Center"/>
+                            <Button x:Name="ButtonProfileSettins" Content="Settings" VerticalAlignment="Center" Margin="3 0 0 0"  Foreground="#576069"  Click="ButtonProfileSettins_Click"/>
+                        </Grid>
+
+                        <Separator/>
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Logout" Foreground="#576069"  VerticalAlignment="Center"/>
+                            <Button x:Name="ButtonLogout" Content="Logout" VerticalAlignment="Center" Margin="3 0 0 0"  Click="ButtonLogout_Click"  Foreground="#576069" />
+                        </Grid>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+            </StackPanel>
+        </Grid>
+
+        <!--NavItem-->
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="242" x:Name="SidebarColumnDefination"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--NavItem-->
+            <Grid x:Name="Sidebar" x:FieldModifier="public" Grid.Column="0" Width="242" HorizontalAlignment="Left" >
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF0ECFC5" Offset="0"/>
+                        <GradientStop Color="#FF042321" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="69*"/>
+                    <ColumnDefinition Width="52*"/>
+                </Grid.ColumnDefinitions>
+
+
+
+                <ListView Foreground="#fff" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0 0 0 0" Grid.ColumnSpan="2">
+                    <TextBlock x:Name="ButtonLogo" Text="HEALTHTECHBD" HorizontalAlignment="Center" Padding="0 8 0 0" Margin="0 0 0 10" Width="225" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" MouseDown="ButtonDashboard_MouseDown" />
+
+                    <ListViewItem Height="60" >
+                        <StackPanel Orientation="Horizontal"  >
+                            <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDashboard_MouseDown" />
+                            <TextBlock Style="{StaticResource NavItem}" Text="DASHBOARD" x:Name="ButtonDashboard" MouseDown="ButtonDashboard_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60" >
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountBox" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDoctors_MouseDown" />
+                            <TextBlock x:Name="ButtonDoctors" Style="{StaticResource NavItem}" Text="DOCTORS" MouseDown="ButtonDoctors_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Disqus" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDiagnosis_MouseDown"/>
+                            <TextBlock Style="{StaticResource NavItem}" x:Name="ButtonDiagnosis" Text="DIAGNOSIS" MouseDown="ButtonDiagnosis_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="MedicalBag" Style="{StaticResource NavItemIcon}" MouseDown="ButtonMedicines_MouseDown"/>
+                            <TextBlock x:Name="ButtonMedicines" Style="{StaticResource NavItem}" Text="MEDICINES" MouseDown="ButtonMedicines_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="TestTube" Style="{StaticResource NavItemIcon}" MouseDown="ButtonTests_MouseDown"/>
+                            <TextBlock x:Name="ButtonTests" Style="{StaticResource NavItem}" Text="TESTS" MouseDown="ButtonTests_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AccountCircle" Style="{StaticResource NavItemIcon}" MouseDown="ButtonPatients_MouseDown"/>
+                            <TextBlock x:Name="ButtonPatients" Style="{StaticResource NavItem}" Text="PATIENTS" MouseDown="ButtonPatients_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Notebook" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDiagnosisTemplates_MouseDown"/>
+                            <TextBlock x:Name="ButtonDiagnosisTemplates" Style="{StaticResource NavItem}" Text="DIAGNOSIS TEMPLATES" MouseDown="ButtonDiagnosisTemplates_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Prescription" Style="{StaticResource NavItemIcon}" MouseDown="ButtonPrescriptions_MouseDown"/>
+                            <TextBlock x:Name="ButtonPrescriptions" Style="{StaticResource NavItem}" Text="PRESCRIPTIONS" MouseDown="ButtonPrescriptions_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Settings" Style="{StaticResource NavItemIcon}" MouseDown="ButtonSettins_MouseDown"/>
+                            <TextBlock x:Name="ButtonSettins" Style="{StaticResource NavItem}" Text="SETTINGS" MouseDown="ButtonSettins_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                </ListView>
+            </Grid>
+
+            <!--MainContent Frame-->
+            <Frame Margin="0 60 0 0" x:Name="MainContent" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2">
+
+            </Frame>
+
+        </Grid>
+    </Grid>
+</Window>

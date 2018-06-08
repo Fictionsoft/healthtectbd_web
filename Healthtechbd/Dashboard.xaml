@@ -1,0 +1,42 @@
+﻿<Page x:Class="Healthtechbd.Dashboard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Healthtechbd"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      Title="Dashboard">
+
+    <StackPanel>
+
+        <Grid Height="60" Background="#fff" VerticalAlignment="top">
+            <TextBlock Text="DASHBOARD" Style="{StaticResource PageHeading}"/>
+        </Grid>
+
+        <Border Margin="20" Height="430">
+            <StackPanel>
+                <Grid Height="100" Background="#fff" Margin="0 0 0 20">
+                    <TextBlock Text="Welcome to Healthtechbd"  Margin="20 0 0 0" FontSize="16" Foreground="#252834" FontWeight="Bold" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Height="60" Background="#F6F8F7">
+                    <Grid Height="30" Margin="20 0 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"></ColumnDefinition>
+                            <ColumnDefinition Width="40"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Style="{StaticResource SearchBox}"  Grid.Column="0" Text="Type here for search..."/>
+                        <Button Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0">
+                            <materialDesign:PackIcon Kind="DatabaseSearch"/>
+                        </Button>
+                    </Grid>
+                </Grid>
+
+            </StackPanel>
+
+        </Border>
+
+    </StackPanel>
+</Page>
