@@ -13,6 +13,7 @@
        
     </Window.Resources>
 
+    
     <Grid Background="#EDF1F5">
         <!--Header-->
         <Grid x:Name="header" Height="60" Background="#3CC2BB" VerticalAlignment="top" MouseDown="header_MouseDown">
