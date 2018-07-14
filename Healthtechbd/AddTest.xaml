@@ -38,7 +38,7 @@
                         <Grid>
                             <StackPanel Grid.Row="4" Grid.Column="1"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Name"/>
-                                <TextBox Style="{StaticResource InputField}" Text=""/>
+                                <TextBox x:Name="txtTestName" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
                         </Grid>
                     </Border>

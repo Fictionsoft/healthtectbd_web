@@ -25,9 +25,19 @@ namespace Healthtechbd
             InitializeComponent();
         }
 
+        ContextDb db = new ContextDb();
+        test tbl = new test();
+
         private void SubmitAddTest_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
+
+            tbl.name = txtTestName.Text;
+            db.tests.Add(tbl);
+            txtTestName.Clear();
+            db.SaveChanges();
+
+            MessageBox.Show("Test Save Successfully");            
         }
     }
 }

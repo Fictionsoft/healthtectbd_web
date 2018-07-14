@@ -43,9 +43,37 @@
 
                 <!--Info Area-->
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="430">
-                    <Border Padding="20 0">
+                    <Border Padding="10 0">
                         <Grid>
-                            <Grid.RowDefinitions>
+
+                            <DataGrid AutoGenerateColumns="False" CanUserDeleteRows="True" x:Name="dataGridTests" ItemsSource="{Binding}" HorizontalAlignment="Left" Width="757" Margin="-9,0,-8,59" Background="White">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="*" Header="ID" Binding="{Binding id}" />
+                                    <DataGridTextColumn Width="2*" Header="Name" Binding="{Binding name}" />
+                                    <DataGridTextColumn Width="2*" Header="Created" Binding="{Binding created}" />
+                                    <DataGridTextColumn Width="2*" Header="Action" />
+                                    <DataGridTextColumn Width="2*" Visibility="Hidden" Binding="{Binding id}" />
+
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="btnDeleteTestRow" Content="Delete" Click="btnDeleteTestRow_Click" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="btnEditTestRow" Content="Edit" Click="btnEditTestRow_Click" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <!--<Grid.RowDefinitions>
                                 <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition Height="30"></RowDefinition>
                                 <RowDefinition Height="30"></RowDefinition>
@@ -110,7 +138,7 @@
 
                             <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="0" Text="USG Of Upper Abdomen" />
                             <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="9" Grid.Column="2" Kind="Settings"/>
+                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="9" Grid.Column="2" Kind="Settings"/>-->
                         </Grid>
                     </Border>
                 </ScrollViewer>

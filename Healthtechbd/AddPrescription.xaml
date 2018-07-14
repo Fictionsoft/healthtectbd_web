@@ -13,10 +13,7 @@
         <Style TargetType="TextBox" x:Key="PrescriptionInputField">
             <Setter Property="BorderBrush" Value="#eee"/>
             <Setter Property="Foreground" Value="#7d7d7d"/>
-            <Setter Property="Margin" Value="0 1 0 0"/>
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Height" Value="24"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <Style TargetType="CheckBox">
@@ -27,11 +24,30 @@
 
     </Page.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#E08D2C">
-        <Border Padding="10 0"  Margin="0 10 0 0">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF">
+        
+        <Border>
             <StackPanel>
 
-                <Grid Margin="0 0 0 20">
+                <!--Page Heading-->
+                <Grid Height="60" Background="#fff" VerticalAlignment="top">
+
+                    <Border Margin="20 0 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescription" />
+                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
+                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Add Prescription"/>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+
+                <!--Panel Head-->
+                <Grid Height="40" Background="#F6F8F7">
+                    <TextBlock Text="Add Prescription" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
+                </Grid>
+                
+                <Grid Margin="10 0 0 20">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="380"/>
@@ -47,36 +63,46 @@
                     <!--Patient Details-->
                     <StackPanel Grid.Column="0">
 
-                        <Label Foreground="#fff" FontWeight="SemiBold" Content="Patient Details"/>
-                        <Border  Background="#fff" CornerRadius="5">
-                            <Grid Height="105">
+                        <Label Foreground="#333" FontWeight="SemiBold" Content="Patient Details"/>
+                        <Border  Background="#EBEBEB" CornerRadius="5">
+                            <Grid Height="140">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="12*"/>
+                                    <ColumnDefinition Width="83*"/>
+                                </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="35"/>
                                     <RowDefinition Height="35"/>
                                     <RowDefinition Height="35"/>
+                                    <RowDefinition Height="35"/>
                                 </Grid.RowDefinitions>
 
-                                <Border Grid.Row="0" Padding="5">
+                                <Border Grid.Row="0" Padding="5" Grid.ColumnSpan="2">
                                     <StackPanel  Orientation="Horizontal">
-                                        <TextBlock FontWeight="SemiBold" Margin="0 0 5 0" Text="Name" VerticalAlignment="Center"/>
+                                        <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Name" VerticalAlignment="Center"/>
                                         <TextBox Style="{StaticResource PrescriptionInputField}" Width="333" Text=""/>
                                     </StackPanel>
                                 </Border>
 
-                                <Border Grid.Row="1" Padding="5">
+                                <Border Grid.Row="1" Padding="5" Grid.ColumnSpan="2">
                                     <StackPanel  Orientation="Horizontal">
-                                        <TextBlock FontWeight="SemiBold" Margin="0 0 5 0" Text="Address" VerticalAlignment="Center"/>
+                                        <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Phone" VerticalAlignment="Center"/>
                                         <TextBox Style="{StaticResource PrescriptionInputField}" Width="320" Text=""/>
                                     </StackPanel>
                                 </Border>
 
-                                <Border Grid.Row="2" Padding="5">
+                                <Border Grid.Row="2" Padding="5" Grid.ColumnSpan="2">
                                     <StackPanel  Orientation="Horizontal">
-                                        <TextBlock FontWeight="SemiBold" Margin="0 0 5 0" Text="Age" VerticalAlignment="Center"/>
-                                        <TextBox Width="40" Style="{StaticResource PrescriptionInputField}"  Text=""/>
-                                        <TextBlock FontWeight="SemiBold" Margin="3 0 5 0" Text="Address" VerticalAlignment="Center"/>
-                                        <TextBox Width="252" Style="{StaticResource PrescriptionInputField}" Text=""/>
+                                        <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Address" VerticalAlignment="Center"/>
+                                        <TextBox Width="320" Style="{StaticResource PrescriptionInputField}" Text=""/>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <Border Grid.Row="3" Padding="5" Grid.ColumnSpan="2">
+                                    <StackPanel  Orientation="Horizontal">
+                                        <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Age" VerticalAlignment="Center"/>
+                                        <TextBox Width="320" Style="{StaticResource PrescriptionInputField}"  Text=""/>
                                     </StackPanel>
                                 </Border>
 
@@ -86,9 +112,9 @@
 
                     <!--Health Data-->
                     <StackPanel Grid.Column="1" Margin="10 0">
-                        <Label Foreground="#fff" FontWeight="SemiBold" Content="Health Data"/>
-                        <Border Background="#fff" CornerRadius="5">
-                            <Grid Height="105">
+                        <Label Foreground="#333" FontWeight="SemiBold" Content="Health Data"/>
+                        <Border Background="#EBEBEB" CornerRadius="5">
+                            <Grid Height="140">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="35"/>
@@ -98,22 +124,22 @@
 
                                 <Border Grid.Row="0" Padding="5">
                                     <StackPanel  Orientation="Horizontal">
-                                        <TextBlock FontWeight="SemiBold" Margin="0 0 5 0" Text="BP" VerticalAlignment="Center"/>
+                                        <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="BP" VerticalAlignment="Center"/>
                                         <TextBox Style="{StaticResource PrescriptionInputField}" Width="150" Text=""/>
                                     </StackPanel>
                                 </Border>
 
                                 <Border Grid.Row="1" Padding="5">
                                     <StackPanel  Orientation="Horizontal">
-                                        <TextBlock FontWeight="SemiBold" Margin="0 0 5 0" Text="Temperature" VerticalAlignment="Center"/>
+                                        <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="Temperature" VerticalAlignment="Center"/>
                                         <TextBox Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
                                     </StackPanel>
                                 </Border>
 
                                 <Border Grid.Row="2" Padding="5">
                                     <StackPanel  Orientation="Horizontal">
-                                        <TextBlock FontWeight="SemiBold" Margin="0 0 5 0" Text="Last Visit Date:" VerticalAlignment="Center"/>
-                                        <TextBlock Foreground="#7d7d7d" Margin="0 0 5 0" Text="22 April 2018" VerticalAlignment="Center"/>
+                                        <TextBlock  FontWeight="SemiBold" Margin="0 0 5 0" Text="Last Visit Date:" VerticalAlignment="Center"/>
+                                        <TextBlock Foreground="#7d7d7d" Margin="2 0 0 0" Text="22 April 2018" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Border>
 
@@ -123,11 +149,11 @@
 
                     <!--Doctors Notes-->
                     <StackPanel Grid.Column="2" Margin="10 0">
-                        <Label Foreground="#fff" FontWeight="SemiBold" Content="Doctors Notes"/>
+                        <Label Foreground="#333" FontWeight="SemiBold" Content="Doctors Notes"/>
 
-                        <Border Background="#fff" CornerRadius="5">
-                            <Grid Height="105">
-                                <TextBox TextWrapping="Wrap" Width="400" Height="100" BorderThickness="0" Style="{StaticResource PrescriptionInputField}" Text=""/>
+                        <Border Background="#EBEBEB" CornerRadius="5">
+                            <Grid Height="140">
+                                <TextBox TextWrapping="Wrap" Width="415" Height="130" BorderThickness="0" Style="{StaticResource PrescriptionInputField}" Text=""/>
                             </Grid>
                         </Border>
 
@@ -135,11 +161,11 @@
 
                     <!--Prescriptions-->
                     <StackPanel Grid.Column="3">
-                        <Label Foreground="#fff" FontWeight="SemiBold" Content="Prescriptions"/>
+                        <Label Foreground="#333" FontWeight="SemiBold" Content="Prescriptions"/>
 
-                        <ScrollViewer Background="#eee"  FontSize="14" Foreground="#7d7d7d" Height="105" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer Background="#EBEBEB"  FontSize="14" Foreground="#7d7d7d" Height="140" VerticalScrollBarVisibility="Auto">
 
-                            <Border Padding="3" Background="#fff">
+                            <Border Padding="3" Background="#EBEBEB">
                                 <StackPanel>
                                     <TextBlock Padding="10 5" Text="06 April 2018" VerticalAlignment="Center"/>
                                     <TextBlock Padding="10 5" Text="06 April 2018" VerticalAlignment="Center"/>
@@ -161,11 +187,11 @@
                     </Grid.ColumnDefinitions>
 
                     <!--Diagnosis-->
-                    <Grid Height="280" Grid.Column="0"  Margin="0 0 10 0">
-                        <Border CornerRadius="5 5 0 0" Background="#1379AD" Padding="8 8">
+                    <Grid Height="280" Grid.Column="0"  Margin="10 0 0 0">
+                        <Border CornerRadius="5 5 0 0" Background="#EBEBEB" Padding="8 8">
 
                             <StackPanel>
-                                <TextBlock Text="Diagnosis" Foreground="#fff" FontWeight="SemiBold" Margin="0 10 0 5"/>
+                                <TextBlock Text="Diagnosis" Foreground="#333" FontWeight="SemiBold" Margin="0 10 0 5"/>
 
                                 <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8" Background="#fff" Height="245">-->
                                 <Grid Background="#fff" Height="245">
@@ -185,18 +211,18 @@
                                         <CheckBox Content="Absence of gluteal muscle" />
                                     </WrapPanel>
                                 </Grid>
-                                
+
                             </StackPanel>
                         </Border>
                     </Grid>
 
                     <!--Medicines-->
                     <Grid Height="280" Grid.Column="1" Margin="10 0 0 0">
-                        <Border Background="#119A55" CornerRadius="5 5 0 0" Padding="8 8">
+                        <Border Background="#EBEBEB" CornerRadius="5 5 0 0" Padding="8 8">
 
                             <StackPanel>
                                 <Grid>
-                                    <TextBlock Text="Medicines" Width="300" HorizontalAlignment="Left" Foreground="#fff" FontWeight="SemiBold" Margin="0 10 0 5"/>
+                                    <TextBlock Text="Medicines" Width="300" HorizontalAlignment="Left" Foreground="#333" FontWeight="SemiBold" Margin="0 10 0 5"/>
                                     <materialDesign:PackIcon Kind="Plus" Margin="0 -8 0 0" Foreground="#fff" VerticalAlignment="Top" Height="40" Width="40"  HorizontalAlignment="Right" />
                                 </Grid>
 
@@ -220,11 +246,11 @@
                     </Grid.ColumnDefinitions>
 
                     <!--Examination-->
-                    <Grid Height="170" Grid.Column="0" Margin="0 0 10 0">
-                        <Border Background="#1379AD" CornerRadius="0 0 5 5" Padding="8 8">
+                    <Grid Height="170" Grid.Column="0" Margin="10 0 0 0">
+                        <Border Background="#EBEBEB" CornerRadius="0 0 5 5" Padding="8 8">
 
                             <StackPanel>
-                                <TextBlock Text="Examinations" Foreground="#fff" FontWeight="SemiBold" Margin="0 0 0 5"/>
+                                <TextBlock Text="Examinations" Foreground="#333" FontWeight="SemiBold" Margin="0 0 0 5"/>
 
                                 <TextBox Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="130"/>
                             </StackPanel>
@@ -233,10 +259,10 @@
 
                     <!--Others Instruction-->
                     <Grid Height="170" Grid.Column="1" Margin="10 0 0 0">
-                        <Border CornerRadius="0 0 5 5" Padding="8 8" Background="#119A55">
+                        <Border CornerRadius="0 0 5 5" Padding="8 8" Background="#EBEBEB">
 
                             <StackPanel>
-                                <TextBlock Text="Other Instructions" Foreground="#fff" FontWeight="SemiBold" Margin="0 0 0 5"/>
+                                <TextBlock Text="Other Instructions" Foreground="#333" FontWeight="SemiBold" Margin="0 0 0 5"/>
 
                                 <TextBox Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="130"/>
                             </StackPanel>
@@ -247,8 +273,12 @@
 
                 <!--Buttons-->
                 <Grid Height="60" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="116*"/>
+                        <ColumnDefinition Width="179*"/>
+                    </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                         <Button x:Name="CancelAddPrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="SaveAddPrescription_Click"/>
                         <Button x:Name="SaveAddPrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="SaveAddPrescription_Click" />
                         <Button x:Name="SavePrintAddPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SaveAddPrescription_Click"/>

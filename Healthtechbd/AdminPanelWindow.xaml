@@ -13,7 +13,6 @@
        
     </Window.Resources>
 
-    
     <Grid Background="#EDF1F5">
         <!--Header-->
         <Grid x:Name="header" Height="60" Background="#3CC2BB" VerticalAlignment="top" MouseDown="header_MouseDown">
@@ -39,7 +38,7 @@
                 </Grid>
 
                 <TextBlock Text="Abdullah al mamun" VerticalAlignment="Center" FontSize="16" Foreground="#fff" />
-                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Margin="0 12 0 0" Padding="15"  Foreground="#fff">
+                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Padding="15"  Foreground="#fff">
                     <StackPanel>
                         <Grid>
                             <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Foreground="#576069"/>

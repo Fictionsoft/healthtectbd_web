@@ -23,11 +23,41 @@ namespace Healthtechbd
         public Tests()
         {
             InitializeComponent();
+
+            loadData();
         }
+
+        ContextDb db = new ContextDb();
+        test tbl = new test();
 
         private void ButtonAddTest_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("AddTest.xaml", UriKind.Relative));
+        }
+
+        void loadData()
+        {
+            var data = from x in db.tests select x;
+            dataGridTests.ItemsSource = data.ToList();
+        }
+
+        private void btnDeleteTestRow_Click(object sender, RoutedEventArgs e)
+        {
+            int test_id = (dataGridTests.SelectedItem as test).id;
+            tbl = (from x in db.tests where x.id == test_id select x).First();
+
+            db.tests.Remove(tbl);
+            db.SaveChanges();
+            loadData();
+            MessageBox.Show("Delete Successfully");
+        }
+
+        private void btnEditTestRow_Click(object sender, RoutedEventArgs e)
+        {
+            int test_id = (dataGridTests.SelectedItem as test).id;
+            NavigationService.Navigate(new Uri("AddTest.xaml", UriKind.Relative));
+
+            MessageBox.Show(test_id.ToString());
         }
     }
 }
