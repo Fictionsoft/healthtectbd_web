@@ -33,11 +33,11 @@
                             <ColumnDefinition Width="80"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox Style="{StaticResource SearchBox}" Grid.Column="0" Text="Type here for search..."/>
-                        <Button Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0">
+                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text="Type here for search..." />
+                        <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Margin="0 0 10 0" Click="btnSearch_Click" Grid.Column="1">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
-                        <Button Grid.Column="2" Style="{StaticResource SearchButton}">Reset</Button>
+                        <Button x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
                     </Grid>
                 </Grid>
 
@@ -46,18 +46,20 @@
                     <Border Padding="10 0">
                         <Grid>
 
-                            <DataGrid AutoGenerateColumns="False" CanUserDeleteRows="True" x:Name="dataGridTests" ItemsSource="{Binding}" HorizontalAlignment="Left" Width="757" Margin="-9,0,-8,59" Background="White">
+                            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridTests" ItemsSource="{Binding}" HorizontalAlignment="Left" Width="757" Margin="-9,0,-8,59" Background="White">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Width="*" Header="ID" Binding="{Binding id}" />
-                                    <DataGridTextColumn Width="2*" Header="Name" Binding="{Binding name}" />
-                                    <DataGridTextColumn Width="2*" Header="Created" Binding="{Binding created}" />
-                                    <DataGridTextColumn Width="2*" Header="Action" />
-                                    <DataGridTextColumn Width="2*" Visibility="Hidden" Binding="{Binding id}" />
+                                    <DataGridTextColumn Width="*" Header="Name" Binding="{Binding name}" />
+                                    <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />
+                                    <!--<DataGridTextColumn Width="*" Header="Action" />-->
+                                    <DataGridTextColumn Width="*" Visibility="Hidden" Binding="{Binding id}" />
 
                                     <DataGridTemplateColumn>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="btnDeleteTestRow" Content="Delete" Click="btnDeleteTestRow_Click" />
+                                                <!--<Button Padding="0 0 0 3" x:Name="btnEditTestRow" Background="#3CC2BB" Content="Edit" Click="btnEditTestRow_Click" />-->
+                                                <Button x:Name="btnEditTestRow" Background="#3CC2BB" Width="50" Padding="0" Click="btnEditTestRow_Click">
+                                                    <materialDesign:PackIcon Kind="TableEdit"/>
+                                                </Button>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -65,7 +67,10 @@
                                     <DataGridTemplateColumn>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="btnEditTestRow" Content="Edit" Click="btnEditTestRow_Click" />
+                                                <!--<Button Padding="0 0 0 3" x:Name="btnDeleteTestRow" Background="#3CC2BB" Content="Delete" Click="btnDeleteTestRow_Click" />-->
+                                                <Button x:Name="btnDeleteTestRow" Background="#3CC2BB" Width="50"  Padding="0" Click="btnDeleteTestRow_Click">
+                                                    <materialDesign:PackIcon Kind="Delete"/>
+                                                </Button>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -73,72 +78,6 @@
                                 </DataGrid.Columns>
                             </DataGrid>
 
-                            <!--<Grid.RowDefinitions>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="0" Text="NAME" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="1" Text="CREATED" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="ACTION" />
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="1" Grid.Column="0" Text="Outdoor Collection fee (RMCH)" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="1" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="1" Grid.Column="2" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="2" Grid.Column="0" Text="Outdoor Collection fee" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="2" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="2" Grid.Column="2" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="3" Grid.Column="0" Text="Tissu Bed" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="3" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="3" Grid.Column="2" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="4" Grid.Column="0" Text="Vacutainer Disposible Red" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="4" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="4" Grid.Column="2" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="5" Grid.Column="0" Text="Vacutainer Disposible Needle" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="5" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="5" Grid.Column="2" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="6" Grid.Column="0" Text="Vacutainer Disposible Grey" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="6" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="6" Grid.Column="2" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="7" Grid.Column="0" Text="One Time Urine Test Tube" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="7" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="7" Grid.Column="2" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="8" Grid.Column="0" Text="USG Of Whole Abdomen" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="8" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="8" Grid.Column="2" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="0" Text="USG Of Upper Abdomen" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="1" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="9" Grid.Column="2" Kind="Settings"/>-->
                         </Grid>
                     </Border>
                 </ScrollViewer>

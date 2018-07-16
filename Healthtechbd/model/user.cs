@@ -1,4 +1,4 @@
-namespace Healthtechbd
+namespace Healthtechbd.model
 {
     using System;
     using System.Collections.Generic;
@@ -6,16 +6,16 @@ namespace Healthtechbd
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("wpf_healthtechbd.tests")]
-    public partial class test
+    [Table("wpf_healthtechbd.users")]
+    public partial class user
     {
         public int id { get; set; }
-
-        [Required]
+        
         [StringLength(222)]
-        public string name { get; set; }
+        public string email { get; set; }
 
-        public bool status { get; set; }
+        [StringLength(222)]
+        public string password { get; set; }      
 
         [Column(TypeName = "timestamp")]
         public DateTime created { get; set; }

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Healthtechbd"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Admin Panel" Height="650" Width="1200"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="Admin Panel" Height="650" Width="1200" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
        
@@ -98,7 +98,7 @@
 
                     <ListViewItem Height="60" >
                         <StackPanel Orientation="Horizontal"  >
-                            <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDashboard_MouseDown" />
+                            <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDashboard_MouseDown"/>
                             <TextBlock Style="{StaticResource NavItem}" Text="DASHBOARD" x:Name="ButtonDashboard" MouseDown="ButtonDashboard_MouseDown"/>
                         </StackPanel>
                     </ListViewItem>
@@ -164,7 +164,7 @@
 
             <!--MainContent Frame-->
             <Frame Margin="0 60 0 0" x:Name="MainContent" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2">
-
+                
             </Frame>
 
         </Grid>

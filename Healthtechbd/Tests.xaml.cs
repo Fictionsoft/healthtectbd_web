@@ -24,40 +24,58 @@ namespace Healthtechbd
         {
             InitializeComponent();
 
-            loadData();
+            loadTests();
         }
 
-        ContextDb db = new ContextDb();
-        test tbl = new test();
+        model.ContextDb db = new model.ContextDb();
+        model.test test = new model.test();
 
         private void ButtonAddTest_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("AddTest.xaml", UriKind.Relative));
         }
 
-        void loadData()
+        void loadTests()
         {
-            var data = from x in db.tests select x;
-            dataGridTests.ItemsSource = data.ToList();
+            var tests = db.tests.ToList();
+            dataGridTests.ItemsSource = tests;
         }
 
         private void btnDeleteTestRow_Click(object sender, RoutedEventArgs e)
         {
-            int test_id = (dataGridTests.SelectedItem as test).id;
-            tbl = (from x in db.tests where x.id == test_id select x).First();
+            if (MessageBox.Show("Are You Sure ?", "Confirm",
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                int testId = (dataGridTests.SelectedItem as model.test).id;
+                test = db.tests.FirstOrDefault(x => x.id == testId);
+                //test = (from x in db.tests where x.id == test_id select x).First();
 
-            db.tests.Remove(tbl);
-            db.SaveChanges();
-            loadData();
-            MessageBox.Show("Delete Successfully");
+                db.tests.Remove(test);
+                db.SaveChanges();
+                loadTests();
+                MessageBox.Show("Delete Successfully");
+            }
         }
 
         private void btnEditTestRow_Click(object sender, RoutedEventArgs e)
         {
-            int test_id = (dataGridTests.SelectedItem as test).id;
-            NavigationService.Navigate(new Uri("AddTest.xaml", UriKind.Relative));
+            int testId = (dataGridTests.SelectedItem as model.test).id;
+            EditTest editTest = new EditTest(testId);
+            NavigationService.Navigate(editTest);
+        }
 
-            MessageBox.Show(test_id.ToString());
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string searchBy = searchField.Text.ToString();
+
+            var tests = db.tests.Where(x => x.name.Trim().StartsWith(searchBy)).ToList();
+            dataGridTests.ItemsSource = tests;                    
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            searchField.Clear();
+            loadTests();
         }
     }
 }

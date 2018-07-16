@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Healthtechbd"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="600" Width="1200"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
+        Title="LoginWindow" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Closed="Window_Closed" >
 
     <Grid>
         <Grid.Background>
@@ -20,10 +20,10 @@
                 <Separator/>
 
                 <!--Email-->
-                <TextBox Style="{StaticResource InputField}" Text="Email Address" />
+                <TextBox x:Name="EmailAddress" Style="{StaticResource InputField}" Text="Email Address" />
 
                 <!--Password-->
-                <TextBox Style="{StaticResource InputField}" Text="Password" />
+                <TextBox x:Name="Password" Style="{StaticResource InputField}" Text="Password" />
 
                 <!--Login Button-->
                 <Button x:Name="ButtonLogin" Content="LOGIN" Foreground="#fff" Background="#3CC2BB" Margin="0 0 0 10" Padding="9" Height="38" BorderBrush="#eee" BorderThickness="0" Click="ButtonLogin_Click" />

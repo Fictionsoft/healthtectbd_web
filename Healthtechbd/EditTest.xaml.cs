@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Healthtechbd
 {
     /// <summary>
-    /// Interaction logic for AddTest.xaml
+    /// Interaction logic for EditTest.xaml
     /// </summary>
-    public partial class AddTest : Page
+    public partial class EditTest : Page
     {
-        public AddTest()
+        public EditTest()
         {
             InitializeComponent();
         }
@@ -28,28 +28,36 @@ namespace Healthtechbd
         model.ContextDb db = new model.ContextDb();
         model.test test = new model.test();
 
-        private void SubmitAddTest_Click(object sender, RoutedEventArgs e)
+        public EditTest(int id) : this()
+        {
+            TestId.Text = id.ToString();
+
+            test = db.tests.FirstOrDefault(x => x.id == id);
+            TestName.Text = test.name;
+        }
+
+        private void SubmitUpdateTest_Click(object sender, RoutedEventArgs e)
         {
             if(TestName.Text != "")
             {
-                NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
+                int testId = int.Parse(TestId.Text);
 
+                test = db.tests.FirstOrDefault(x => x.id == testId);
                 test.name = TestName.Text.Trim();
-                db.tests.Add(test);
-                TestName.Clear();
                 db.SaveChanges();
 
-                MessageBox.Show("Test Save Successfully");
+                NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
+                MessageBox.Show("Update Successfully");
             }
             else
             {
                 MessageBox.Show("Test name is required", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }                        
+            }            
         }
 
-        private void CancelAddTest_Click(object sender, RoutedEventArgs e)
+        private void CancelEditTest_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
         }
-    }           
+    }
 }

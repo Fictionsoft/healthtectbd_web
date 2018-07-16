@@ -108,7 +108,13 @@
     <Compile Include="ChangePassword.xaml.cs">
       <DependentUpon>ChangePassword.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ContextDb.cs" />
+    <Compile Include="EditDiagnosis.xaml.cs">
+      <DependentUpon>EditDiagnosis.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditMedicine.xaml.cs">
+      <DependentUpon>EditMedicine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="model\ContextDb.cs" />
     <Compile Include="Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -121,12 +127,17 @@
     <Compile Include="Doctors.xaml.cs">
       <DependentUpon>Doctors.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditTest.xaml.cs">
+      <DependentUpon>EditTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ForgotPasswordWindow.xaml.cs">
       <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Medicines.xaml.cs">
       <DependentUpon>Medicines.xaml</DependentUpon>
     </Compile>
+    <Compile Include="model\diagnosis.cs" />
+    <Compile Include="model\user.cs" />
     <Compile Include="MyProfile.xaml.cs">
       <DependentUpon>MyProfile.xaml</DependentUpon>
     </Compile>
@@ -142,7 +153,8 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="test.cs" />
+    <Compile Include="model\medicine.cs" />
+    <Compile Include="model\test.cs" />
     <Compile Include="Tests.xaml.cs">
       <DependentUpon>Tests.xaml</DependentUpon>
     </Compile>
@@ -191,6 +203,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Doctors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditDiagnosis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditMedicine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -264,7 +288,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\login-bg.jpg" />

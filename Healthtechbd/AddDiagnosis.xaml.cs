@@ -25,7 +25,29 @@ namespace Healthtechbd
             InitializeComponent();
         }
 
+        model.ContextDb db = new model.ContextDb();
+        model.diagnosis diagnosis = new model.diagnosis();
+
         private void SubmitAddDiagnosis_Click(object sender, RoutedEventArgs e)
+        {
+            if(DiagnosisName.Text != "")
+            {
+                NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
+
+                diagnosis.name = DiagnosisName.Text.Trim();
+                db.diagnosis.Add(diagnosis);
+                DiagnosisName.Clear();
+                db.SaveChanges();
+
+                MessageBox.Show("Diagnosis Save Successfully");
+            }
+            else
+            {
+                MessageBox.Show("Diagnosis name is required", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }                                   
+        }
+
+        private void CancelAddDiagnosis_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
         }

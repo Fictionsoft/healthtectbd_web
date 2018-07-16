@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Healthtechbd
 {
     /// <summary>
-    /// Interaction logic for AddMedicines.xaml
+    /// Interaction logic for EditMedicine.xaml
     /// </summary>
-    public partial class AddMedicines : Page
+    public partial class EditMedicine : Page
     {
-        public AddMedicines()
+        public EditMedicine()
         {
             InitializeComponent();
         }
@@ -28,28 +28,36 @@ namespace Healthtechbd
         model.ContextDb db = new model.ContextDb();
         model.medicine medicine = new model.medicine();
 
-        private void SubmitAddMedicine_Click(object sender, RoutedEventArgs e)
+        private void SubmitUpdateMedicine_Click(object sender, RoutedEventArgs e)
         {
-            if(medicineName.Text != "")
+            if(MedicineName.Text != "")
             {
-                NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));
+                int medicineId = int.Parse(MedicineId.Text);
 
-                medicine.name = medicineName.Text.Trim();
-                db.medicines.Add(medicine);
-                medicineName.Clear();
+                medicine = db.medicines.FirstOrDefault(x => x.id == medicineId);
+                medicine.name = MedicineName.Text.Trim();
                 db.SaveChanges();
 
-                MessageBox.Show("Medicine Save Successfully");
+                NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));
+                MessageBox.Show("Update Successfully");
             }
             else
             {
                 MessageBox.Show("Medicine name is required", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            }            
         }
 
-        private void CancelAddMedicine_Click(object sender, RoutedEventArgs e)
+        private void CancelEditMedicine_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));
+        }
+
+        public EditMedicine(int id) : this()
+        {
+            MedicineId.Text = id.ToString();
+
+            medicine = db.medicines.FirstOrDefault(x => x.id == id);
+            MedicineName.Text = medicine.name;
         }
     }
 }
