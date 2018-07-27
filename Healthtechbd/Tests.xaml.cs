@@ -37,8 +37,15 @@ namespace Healthtechbd
 
         void loadTests()
         {
-            var tests = db.tests.ToList();
-            dataGridTests.ItemsSource = tests;
+            try
+            {
+                var tests = db.tests.OrderByDescending(x => x.created).ToList();
+                dataGridTests.ItemsSource = tests;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }                       
         }
 
         private void btnDeleteTestRow_Click(object sender, RoutedEventArgs e)
@@ -47,13 +54,20 @@ namespace Healthtechbd
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 int testId = (dataGridTests.SelectedItem as model.test).id;
-                test = db.tests.FirstOrDefault(x => x.id == testId);
-                //test = (from x in db.tests where x.id == test_id select x).First();
 
-                db.tests.Remove(test);
-                db.SaveChanges();
-                loadTests();
-                MessageBox.Show("Delete Successfully");
+                try
+                {
+                    test = db.tests.FirstOrDefault(x => x.id == testId);
+
+                    db.tests.Remove(test);
+                    db.SaveChanges();
+                    loadTests();
+                    MessageBox.Show("Delete Successfully");
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                
             }
         }
 
@@ -68,8 +82,23 @@ namespace Healthtechbd
         {
             string searchBy = searchField.Text.ToString();
 
-            var tests = db.tests.Where(x => x.name.Trim().StartsWith(searchBy)).ToList();
-            dataGridTests.ItemsSource = tests;                    
+            try
+            {
+                var tests = db.tests.Where(x => x.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).ToList();
+
+                if (tests.Count == 0)
+                {
+                    MessageBox.Show("Test not found");
+                }
+                else
+                {
+                    dataGridTests.ItemsSource = tests;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }                                        
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)

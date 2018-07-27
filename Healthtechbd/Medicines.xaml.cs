@@ -32,8 +32,15 @@ namespace Healthtechbd
 
         void loadMedicines()
         {
-            var medicines = db.medicines.ToList();
-            dataGridMedicines.ItemsSource = medicines;
+            try
+            {
+                var medicines = db.medicines.OrderByDescending(x => x.created).ToList();
+                dataGridMedicines.ItemsSource = medicines;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
         }
 
         private void ButtonAddMedicine_Click(object sender, RoutedEventArgs e)
@@ -47,13 +54,20 @@ namespace Healthtechbd
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 int medicineId = (dataGridMedicines.SelectedItem as model.medicine).id;
-                medicine = db.medicines.FirstOrDefault(x => x.id == medicineId);
-                //test = (from x in db.tests where x.id == test_id select x).First();
 
-                db.medicines.Remove(medicine);
-                db.SaveChanges();
-                loadMedicines();
-                MessageBox.Show("Delete Successfully");
+                try
+                {
+                    medicine = db.medicines.FirstOrDefault(x => x.id == medicineId);
+
+                    db.medicines.Remove(medicine);
+                    db.SaveChanges();
+                    loadMedicines();
+                    MessageBox.Show("Delete Successfully");
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }               
             }
         }
 
@@ -62,17 +76,29 @@ namespace Healthtechbd
            
             string searchBy = searchField.Text.ToString();
 
-            var medicines = db.medicines.Where(x => x.name.Trim().StartsWith(searchBy)).ToList();
-            dataGridMedicines.ItemsSource = medicines;
-            
+            try
+            {
+                var medicines = db.medicines.Where(x => x.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).ToList();
+
+                if (medicines.Count == 0)
+                {
+                    MessageBox.Show("Medicine not found");
+                }
+                else
+                {
+                    dataGridMedicines.ItemsSource = medicines;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }                                 
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
-        {
-            {
-                searchField.Clear();
-                loadMedicines();
-            }
+        {            
+            searchField.Clear();
+            loadMedicines();            
         }
 
         private void btnEditTestRow_Click(object sender, RoutedEventArgs e)

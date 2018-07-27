@@ -23,11 +23,69 @@ namespace Healthtechbd
         public Patients()
         {
             InitializeComponent();
+            loadPatients();
+        }
+
+        model.ContextDb db = new model.ContextDb();
+        model.user user = new model.user();
+
+        void loadPatients()   //User = Patient
+        {
+            var users = db.users.Where(x => x.role_id == 2 && x.doctor_id == MainWindow.Session.userId).OrderByDescending(x => x.created).ToList();
+            dataGridPatients.ItemsSource = users; // role_id 2 = Patient
         }
 
         private void ButtonAddPatient_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("AddPatient.xaml", UriKind.Relative));
+        }
+
+        private void btnDeletePatientRow_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are You Sure ?", "Confirm",
+               MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                int patientId = (dataGridPatients.SelectedItem as model.user).id;
+                user = db.users.FirstOrDefault(x => x.id == patientId);
+
+                db.users.Remove(user);
+                db.SaveChanges();
+                loadPatients();
+                MessageBox.Show("Delete Successfully");
+            }
+        }
+
+        private void btnEditPatientRow_Click(object sender, RoutedEventArgs e)
+        {
+            int patientId = (dataGridPatients.SelectedItem as model.user).id;
+            EditPatient editPatient = new EditPatient(patientId);
+            NavigationService.Navigate(editPatient);
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            searchField.Clear();
+            loadPatients();
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string searchBy = searchField.Text.ToString();
+
+            var users = db.users.Where(x => x.first_name.Trim().StartsWith(searchBy)  ||
+                                            x.phone.Trim().StartsWith(searchBy) ||
+                                            x.email.Trim().StartsWith(searchBy) ||
+                                            x.age.Trim().StartsWith(searchBy)   
+                                      ).OrderByDescending(x => x.created).ToList();
+
+            if (users.Count == 0)
+            {
+                MessageBox.Show("Patient not found");
+            }
+            else
+            {
+                dataGridPatients.ItemsSource = users;
+            }
         }
     }
 }

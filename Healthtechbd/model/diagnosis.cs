@@ -9,7 +9,12 @@ namespace Healthtechbd.model
     [Table("wpf_healthtechbd.diagnosis")]
     public partial class diagnosis
     {
-        public int id { get; set; }
+        //public diagnosis()
+        //{
+        //    this.diagnosis_templates = new HashSet<diagnosis_templates>();
+        //}
+
+        public int id { get; set; }        
 
         [Required]
         [StringLength(222)]
@@ -18,6 +23,8 @@ namespace Healthtechbd.model
         public bool status { get; set; }
 
         [Column(TypeName = "timestamp")]
-        public DateTime created { get; set; }
+        public DateTime created { get; set; }      
+        
+        public virtual ICollection<diagnosis_templates> diagnosis_templates { get; set; }
     }
 }

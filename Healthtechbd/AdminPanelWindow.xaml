@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Healthtechbd"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Admin Panel" Height="650" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="Admin Panel" Height="650" Width="1200" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
 
     <Window.Resources>
        
@@ -37,8 +37,8 @@
 
                 </Grid>
 
-                <TextBlock Text="Abdullah al mamun" VerticalAlignment="Center" FontSize="16" Foreground="#fff" />
-                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Padding="15"  Foreground="#fff">
+                <TextBlock x:Name="UserName" Text="" VerticalAlignment="Center" FontSize="16" Foreground="#fff" />
+                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Padding="15" Foreground="#fff">
                     <StackPanel>
                         <Grid>
                             <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Foreground="#576069"/>
@@ -55,10 +55,10 @@
                             <Button x:Name="ButtonChangePassword" Content="Change Password"  Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangePassword_Click" />
                         </Grid>
 
-                        <Grid>
+                        <!--<Grid>
                             <materialDesign:PackIcon Kind="Settings" Foreground="#576069"  VerticalAlignment="Center"/>
                             <Button x:Name="ButtonProfileSettins" Content="Settings" VerticalAlignment="Center" Margin="3 0 0 0"  Foreground="#576069"  Click="ButtonProfileSettins_Click"/>
-                        </Grid>
+                        </Grid>-->
 
                         <Separator/>
                         <Grid>
@@ -99,21 +99,28 @@
                     <ListViewItem Height="60" >
                         <StackPanel Orientation="Horizontal"  >
                             <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDashboard_MouseDown"/>
-                            <TextBlock Style="{StaticResource NavItem}" Text="DASHBOARD" x:Name="ButtonDashboard" MouseDown="ButtonDashboard_MouseDown"/>
+                            <TextBlock  x:FieldModifier="public" Style="{StaticResource NavItem}" Text="DASHBOARD" x:Name="ButtonDashboard" MouseDown="ButtonDashboard_MouseDown" Loaded="ButtonDashboard_Loaded"/>
                         </StackPanel>
                     </ListViewItem>
 
-                    <ListViewItem Height="60" >
+                    <!--<ListViewItem Height="60" >
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="AccountBox" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDoctors_MouseDown" />
                             <TextBlock x:Name="ButtonDoctors" Style="{StaticResource NavItem}" Text="DOCTORS" MouseDown="ButtonDoctors_MouseDown"/>
                         </StackPanel>
-                    </ListViewItem>
+                    </ListViewItem>-->
 
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Disqus" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDiagnosis_MouseDown"/>
                             <TextBlock Style="{StaticResource NavItem}" x:Name="ButtonDiagnosis" Text="DIAGNOSIS" MouseDown="ButtonDiagnosis_MouseDown"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Notebook" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDiagnosisTemplates_MouseDown"/>
+                            <TextBlock x:Name="ButtonDiagnosisTemplates" Style="{StaticResource NavItem}" Text="DIAGNOSIS TEMPLATES" MouseDown="ButtonDiagnosisTemplates_MouseDown"/>
                         </StackPanel>
                     </ListViewItem>
 
@@ -140,24 +147,17 @@
 
                     <ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Notebook" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDiagnosisTemplates_MouseDown"/>
-                            <TextBlock x:Name="ButtonDiagnosisTemplates" Style="{StaticResource NavItem}" Text="DIAGNOSIS TEMPLATES" MouseDown="ButtonDiagnosisTemplates_MouseDown"/>
-                        </StackPanel>
-                    </ListViewItem>
-
-                    <ListViewItem Height="60">
-                        <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Prescription" Style="{StaticResource NavItemIcon}" MouseDown="ButtonPrescriptions_MouseDown"/>
                             <TextBlock x:Name="ButtonPrescriptions" Style="{StaticResource NavItem}" Text="PRESCRIPTIONS" MouseDown="ButtonPrescriptions_MouseDown"/>
                         </StackPanel>
                     </ListViewItem>
 
-                    <ListViewItem Height="60">
+                    <!--<ListViewItem Height="60">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Settings" Style="{StaticResource NavItemIcon}" MouseDown="ButtonSettins_MouseDown"/>
                             <TextBlock x:Name="ButtonSettins" Style="{StaticResource NavItem}" Text="SETTINGS" MouseDown="ButtonSettins_MouseDown"/>
                         </StackPanel>
-                    </ListViewItem>
+                    </ListViewItem>-->
 
                 </ListView>
             </Grid>

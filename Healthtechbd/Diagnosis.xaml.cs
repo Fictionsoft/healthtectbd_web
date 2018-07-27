@@ -32,8 +32,15 @@ namespace Healthtechbd
 
         void loadDiagnosis()
         {
-            var diagnosis = db.diagnosis.ToList();
-            dataGridDiagnosis.ItemsSource = diagnosis;
+            try
+            {
+                var diagnosis = db.diagnosis.OrderByDescending(x => x.created).ToList();
+                dataGridDiagnosis.ItemsSource = diagnosis;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }           
         }
 
         private void ButtonAddDiagnosis_Click(object sender, RoutedEventArgs e)
@@ -41,18 +48,25 @@ namespace Healthtechbd
             NavigationService.Navigate(new Uri("AddDiagnosis.xaml", UriKind.Relative));
         }
 
-        private void btnDeleteDiagnosistRow_Click(object sender, RoutedEventArgs e)
+        private void btnDeleteDiagnosisRow_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Are You Sure ?", "Confirm",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 int diagnosisId = (dataGridDiagnosis.SelectedItem as model.diagnosis).id;
-                diagnosis = db.diagnosis.FirstOrDefault(x => x.id == diagnosisId);                
+                try
+                {
+                    diagnosis = db.diagnosis.FirstOrDefault(x => x.id == diagnosisId);
 
-                db.diagnosis.Remove(diagnosis);
-                db.SaveChanges();
-                loadDiagnosis();
-                MessageBox.Show("Delete Successfully");
+                    db.diagnosis.Remove(diagnosis);
+                    db.SaveChanges();
+                    loadDiagnosis();
+                    MessageBox.Show("Delete Successfully");
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                
             }
         }
 
@@ -73,8 +87,23 @@ namespace Healthtechbd
         {
             string searchBy = searchField.Text.ToString();
 
-            var diagnosis = db.diagnosis.Where(x => x.name.Trim().StartsWith(searchBy)).ToList();            
-            dataGridDiagnosis.ItemsSource = diagnosis;
+            try
+            {
+                var diagnosis = db.diagnosis.Where(x => x.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).ToList();
+
+                if (diagnosis.Count == 0)
+                {
+                    MessageBox.Show("Diagnosis not found");
+                }
+                else
+                {
+                    dataGridDiagnosis.ItemsSource = diagnosis;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }                      
         }       
     }
 }

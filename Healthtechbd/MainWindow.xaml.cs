@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Security.Cryptography;
 
 namespace Healthtechbd
 {
@@ -20,13 +21,28 @@ namespace Healthtechbd
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Session.............................
+        public class Session
+        {
+            public static int userId = 0;
+            public static string userFirstName = "";                      
+            public static string userLastName = "";                      
+            public static string userEmail = "";                      
+        }
+
         public MainWindow()
         {
-            InitializeComponent();           
+            InitializeComponent();            
+        }
+
+        public MainWindow(ResetPasswordWindow resetPasswordWindow) : this()
+        {
+            this.resetPasswordWindow = resetPasswordWindow;
         }
 
         model.ContextDb db = new model.ContextDb();
         model.user user = new model.user();
+        private ResetPasswordWindow resetPasswordWindow;
 
         private void registrationLink_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -49,31 +65,80 @@ namespace Healthtechbd
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-            AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
-            adminpanelwindow.Show();
-            MessageBox.Show("Login successfully", "Login");            
+            //this.Hide();
+            //AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
+            //adminpanelwindow.Show();
 
-            //if (EmailAddress.Text != "" && Password.Text != "")
-            //{
-            //    user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Text);
+            if (EmailAddress.Text != "" && Password.Password != "")
+            {
+                try
+                {
+                    user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password);
 
-            //    if (user != null)
-            //    {
-            //        this.Hide();
-            //        AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
-            //        adminpanelwindow.Show();
-            //        MessageBox.Show("Login successfully", "Login");
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Email or Password are invalid", "Invalid user", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Please fill the all field", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}                                 
+                    if (user != null) //User = Doctor
+                    {
+                        this.Hide();
+                        AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
+                        adminpanelwindow.Show();
+
+                        Session.userId = user.id;
+                        Session.userFirstName = user.first_name;
+                        Session.userLastName = user.last_name;
+                        Session.userEmail = user.email;
+                        
+                        if (MessageBox.Show("Login successfully", "Login") == MessageBoxResult.OK)
+                        {
+                            TextBlock UserName = AdminPanelWindow.userName;
+                            UserName.Text = Session.userFirstName +" "+ Session.userLastName;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Email or Password are invalid", "Invalid user", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please fill the all field", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }        
+
+        //Placeholder.................................................
+        private void EmailAddress_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(EmailAddress.Text == "Email Address")
+            {
+                EmailAddress.Text = "";
+            }                   
+        }
+
+        private void EmailAddress_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (EmailAddress.Text == "")
+            {
+                EmailAddress.Text = "Email Address";
+            }           
+        }     
+
+        private void Password_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(Password.Password == "Password")
+            {             
+                Password.Password = "";
+            }                       
+        }
+
+        private void Password_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Password.Password == "")
+            {
+                Password.Password = "Password";
+            }
         }       
     }
 }

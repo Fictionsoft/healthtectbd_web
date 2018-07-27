@@ -20,9 +20,9 @@
 
             <Border Margin="20 0 0 0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="1" Text="Medicine" MouseDown="CancelAddMedicine_Click" />
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="1" Text="Medicines" MouseDown="CancelAddMedicine_Click" />
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="2" Text="/" />
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="0" Text="Add Medicines"/>
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="0" Text="Add Medicine"/>
                 </StackPanel>
             </Border>
 
@@ -44,7 +44,7 @@
                         <Grid>
                             <StackPanel Grid.Row="4" Grid.Column="1"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Name"/>
-                                <TextBox x:Name="medicineName" Style="{StaticResource InputField}" Text=""/>
+                                <TextBox x:Name="MedicineName" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
 
                         </Grid>

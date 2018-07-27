@@ -33,7 +33,7 @@
                             <ColumnDefinition Width="80"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text="Type here for search..."/>
+                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" />
                         <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
@@ -42,21 +42,19 @@
                 </Grid>
 
                 <!--Info Area-->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="430">
-                    <Border Padding="20 0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="370">
+                    <Border Padding="10 0">
                         <Grid>
-                            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridDiagnosis" ItemsSource="{Binding}" HorizontalAlignment="Left" Width="757" Margin="-9,0,-8,59" Background="White">
+                            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridDiagnosis" ItemsSource="{Binding}" HorizontalAlignment="Left"  Margin="-10, 0, 10, 0" Background="White">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Name" Binding="{Binding name}" />
                                     <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />
-                                    <!--<DataGridTextColumn Width="*" Header="Action" />-->
                                     <DataGridTextColumn Width="*" Visibility="Hidden" Binding="{Binding id}" />
 
-                                    <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Action">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <!--<Button Padding="0 0 0 3" x:Name="btnEditTestRow" Background="#3CC2BB" Content="Edit" Click="btnEditTestRow_Click" />-->
-                                                <Button x:Name="btnEditDiagnosisRow" Background="#3CC2BB" Width="50" Padding="0" Click="btnEditDiagnosisRow_Click" >
+                                                <Button x:Name="btnEditDiagnosisRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnEditDiagnosisRow_Click" >
                                                     <materialDesign:PackIcon Kind="TableEdit"/>
                                                 </Button>
                                             </DataTemplate>
@@ -66,8 +64,7 @@
                                     <DataGridTemplateColumn>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <!--<Button Padding="0 0 0 3" x:Name="btnDeleteTestRow" Background="#3CC2BB" Content="Delete" Click="btnDeleteTestRow_Click" />-->
-                                                <Button x:Name="btnDeleteDiagnosistRow" Background="#3CC2BB" Width="50"  Padding="0" Click="btnDeleteDiagnosistRow_Click">
+                                                <Button x:Name="btnDeleteDiagnosisRow" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnDeleteDiagnosisRow_Click">
                                                     <materialDesign:PackIcon Kind="Delete"/>
                                                 </Button>
                                             </DataTemplate>

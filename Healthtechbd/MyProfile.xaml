@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Healthtechbd"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
      mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="550" d:DesignWidth="800"
       Title="MyProfile">
 
     <StackPanel>
@@ -20,7 +20,7 @@
 
             <Border Margin="20 0 0 0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="1" Text="Dashboard" />
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="1" Text="Dashboard" MouseDown="CancelMyProfile_Click" />
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="2" Text="/" />
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="0" Text="Update"/>
                 </StackPanel>
@@ -29,9 +29,9 @@
         </Grid>
 
         <!--Page Heading Bottom-->
-        <ScrollViewer Height="470" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Height="430" VerticalScrollBarVisibility="Auto">
 
-            <Border Margin="20" >
+            <Border Margin="20">
                 <StackPanel>
 
                     <!--Panel Head-->
@@ -60,47 +60,47 @@
 
                                 <StackPanel Grid.Row="0" Grid.Column="0" Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="First Name"/>
-                                    <TextBox Style="{StaticResource InputField}" Text=""/>
+                                    <TextBox x:Name="FirstName" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="0" Grid.Column="1"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Last Name"/>
-                                    <TextBox Style="{StaticResource InputField}" Text=""/>
+                                    <TextBox x:Name="LastName" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Email"/>
-                                    <TextBox Style="{StaticResource InputField}" Text="doctor@gmail.com" IsReadOnly="True" Background="#EEEEEE" Cursor="No"/>
+                                    <TextBox x:Name="Email" Style="{StaticResource InputField}" Text="" IsReadOnly="True" Background="#EEEEEE" Cursor="No"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="1" Grid.Column="1"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Phone"/>
-                                    <TextBox Style="{StaticResource InputField}" Text=""/>
+                                    <TextBox x:Name="Phone" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2" Grid.Column="0"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Address Line1"/>
-                                    <TextBox Style="{StaticResource InputField}" Text=""/>
+                                    <TextBox x:Name="AddressLine1" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2" Grid.Column="1"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Address Line2"/>
-                                    <TextBox Style="{StaticResource InputField}" Text=""/>
+                                    <TextBox x:Name="AddressLine2" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="3" Margin="5 0" Grid.ColumnSpan="2">
                                     <TextBlock Style="{StaticResource Level}" Text="Educational Qualification"/>
-                                    <TextBox Style="{StaticResource InputField}" Text=""/>
+                                    <TextBox x:Name="EducationalQualification" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="4" Grid.Column="0"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Clinic/Hospital Name"/>
-                                    <TextBox Style="{StaticResource InputField}" Text=""/>
+                                    <TextBox x:Name="ClinicName" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="4" Grid.Column="1"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Website"/>
-                                    <TextBox Style="{StaticResource InputField}" Text=""/>
+                                    <TextBox x:Name="Website" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                             </Grid>
@@ -116,7 +116,7 @@
         <Grid Height="60" Background="#E3E7EB" >
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                <Button x:Name="CancelMyProfile" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitMyProfile_Click" />
+                <Button x:Name="CancelMyProfile" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelMyProfile_Click" />
                 <Button x:Name="SubmitMyProfile" Content="SUBMIT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitMyProfile_Click" />
             </StackPanel>
 

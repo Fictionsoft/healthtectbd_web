@@ -32,24 +32,43 @@ namespace Healthtechbd
         {
             if(DiagnosisName.Text != "")
             {
-                NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
+                try
+                {
+                    var haveDiagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisName.Text);
 
-                diagnosis.name = DiagnosisName.Text.Trim();
-                db.diagnosis.Add(diagnosis);
-                DiagnosisName.Clear();
-                db.SaveChanges();
+                    if (haveDiagnosis == null)
+                    {
 
-                MessageBox.Show("Diagnosis Save Successfully");
+                        NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
+
+                        diagnosis.name = DiagnosisName.Text.Trim();
+                        diagnosis.status = true;
+                        diagnosis.created = DateTime.Now;
+                        db.diagnosis.Add(diagnosis);
+                        DiagnosisName.Clear();
+                        db.SaveChanges();
+
+                        MessageBox.Show("Diagnosis Save Successfully.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Diagnosis already exist.", "Already Exit");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                
             }
             else
             {
-                MessageBox.Show("Diagnosis name is required", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Diagnosis name is required.", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }                                   
         }
 
         private void CancelAddDiagnosis_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
-        }
+        }       
     }
 }

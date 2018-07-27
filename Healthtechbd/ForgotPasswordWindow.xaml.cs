@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Healthtechbd
@@ -44,6 +45,55 @@ namespace Healthtechbd
         {
             this.Hide();
             this.mainWindow.Show();
+        }
+
+        model.ContextDb db = new model.ContextDb();
+        model.user user = new model.user();
+
+        private void SubmitForgotPassword_Click(object sender, RoutedEventArgs e)
+        {       
+            if(EmailAddress.Text != "Email Address")
+            {
+                try
+                {
+                    user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.role_id == 1); //user = doctor,,,role_id 1 = doctor
+
+                    if (user != null)
+                    {
+                        this.Hide();
+                        ResetPasswordWindow resetPasswordWindow = new ResetPasswordWindow(user.email);
+                        resetPasswordWindow.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Email not found", "Invalid Doctor", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                
+            }
+            else
+            {
+                MessageBox.Show("Email is required");
+            }            
+        }
+
+        private void EmailAddress_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (EmailAddress.Text == "Email Address")
+            {
+                EmailAddress.Text = "";
+            }
+        }
+
+        private void EmailAddress_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (EmailAddress.Text == "")
+            {
+                EmailAddress.Text = "Email Address";
+            }
         }
     }
 }

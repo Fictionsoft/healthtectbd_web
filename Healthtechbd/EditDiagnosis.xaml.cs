@@ -32,8 +32,15 @@ namespace Healthtechbd
         {
             DiagnosisId.Text = id.ToString();
 
-            diagnosis = db.diagnosis.FirstOrDefault(x => x.id == id);
-            DiagnosisName.Text = diagnosis.name;
+            try
+            {
+                diagnosis = db.diagnosis.FirstOrDefault(x => x.id == id);
+                DiagnosisName.Text = diagnosis.name;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
         }
 
         private void CancelEditDiagnosis_Click(object sender, RoutedEventArgs e)
@@ -44,21 +51,36 @@ namespace Healthtechbd
         private void SubmitUpdateDiagnosis_Click(object sender, RoutedEventArgs e)
         {
             if(DiagnosisName.Text != "")
-            {
+            {                
                 int diagnosisId = int.Parse(DiagnosisId.Text);
 
-                diagnosis = db.diagnosis.FirstOrDefault(x => x.id == diagnosisId);
-                diagnosis.name = DiagnosisName.Text.Trim();
-                db.SaveChanges();
+                try
+                {
+                    var haveDiagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisName.Text && x.id != diagnosisId);
 
-                NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
-                MessageBox.Show("Update Successfully");
+                    if (haveDiagnosis == null)
+                    {
+                        diagnosis = db.diagnosis.FirstOrDefault(x => x.id == diagnosisId);
+                        diagnosis.name = DiagnosisName.Text.Trim();
+                        db.SaveChanges();
+
+                        NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
+                        MessageBox.Show("Update Successfully");
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Diagnosis already exist", "Already Exit");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                               
             }
             else
             {
                 MessageBox.Show("Diagnosis name is required", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            
+            }            
         }       
     }
 }

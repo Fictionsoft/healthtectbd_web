@@ -32,8 +32,15 @@ namespace Healthtechbd
         {
             TestId.Text = id.ToString();
 
-            test = db.tests.FirstOrDefault(x => x.id == id);
-            TestName.Text = test.name;
+            try
+            {
+                test = db.tests.FirstOrDefault(x => x.id == id);
+                TestName.Text = test.name;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
         }
 
         private void SubmitUpdateTest_Click(object sender, RoutedEventArgs e)
@@ -41,13 +48,28 @@ namespace Healthtechbd
             if(TestName.Text != "")
             {
                 int testId = int.Parse(TestId.Text);
+                try
+                {
+                    var haveTest = db.tests.FirstOrDefault(x => x.name == TestName.Text && x.id != testId);
 
-                test = db.tests.FirstOrDefault(x => x.id == testId);
-                test.name = TestName.Text.Trim();
-                db.SaveChanges();
+                    if (haveTest == null)
+                    {
+                        test = db.tests.FirstOrDefault(x => x.id == testId);
+                        test.name = TestName.Text.Trim();
+                        db.SaveChanges();
 
-                NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
-                MessageBox.Show("Update Successfully");
+                        NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
+                        MessageBox.Show("Update Successfully");
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Test already exist", "Already Exit");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                
             }
             else
             {
@@ -58,6 +80,6 @@ namespace Healthtechbd
         private void CancelEditTest_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
-        }
+        }        
     }
 }

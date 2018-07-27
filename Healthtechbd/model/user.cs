@@ -10,11 +10,41 @@ namespace Healthtechbd.model
     public partial class user
     {
         public int id { get; set; }
-        
-        [StringLength(222)]
+       
+        public int role_id { get; set; }
+
+        public int doctor_id { get; set; }
+
+        [StringLength(255)]
+        public string first_name { get; set; }
+
+        [StringLength(255)]
+        public string last_name { get; set; }
+
+        [StringLength(255)]
         public string email { get; set; }
 
-        [StringLength(222)]
+        [StringLength(255)]
+        public string phone { get; set; }
+
+        [StringLength(255)]
+        public string address_line1 { get; set; }
+
+        [StringLength(255)]
+        public string address_line2 { get; set; }
+
+        [StringLength(255)]
+        public string clinic_name { get; set; }
+
+        [StringLength(255)]
+        public string website { get; set; }
+
+        public string educational_qualification { get; set; }
+
+        [StringLength(10)]
+        public string age { get; set; }
+
+        [StringLength(255)]
         public string password { get; set; }      
 
         [Column(TypeName = "timestamp")]

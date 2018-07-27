@@ -32,14 +32,31 @@ namespace Healthtechbd
         {
             if(TestName.Text != "")
             {
-                NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
+                try
+                {
+                    var haveTest = db.tests.FirstOrDefault(x => x.name == TestName.Text);
 
-                test.name = TestName.Text.Trim();
-                db.tests.Add(test);
-                TestName.Clear();
-                db.SaveChanges();
+                    if (haveTest == null)
+                    {
+                        NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
 
-                MessageBox.Show("Test Save Successfully");
+                        test.name = TestName.Text.Trim();
+                        test.status = true;
+                        test.created = DateTime.Now;
+                        db.tests.Add(test);
+                        TestName.Clear();
+                        db.SaveChanges();
+                        MessageBox.Show("The test has been saved", "Success");
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Test already exist", "Already Exit");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                                               
             }
             else
             {
@@ -50,6 +67,6 @@ namespace Healthtechbd
         private void CancelAddTest_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
-        }
+        }        
     }           
 }

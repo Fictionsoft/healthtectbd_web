@@ -30,16 +30,33 @@ namespace Healthtechbd
 
         private void SubmitAddMedicine_Click(object sender, RoutedEventArgs e)
         {
-            if(medicineName.Text != "")
+            if(MedicineName.Text != "")
             {
-                NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));
+                try
+                {
+                    var haveMedicine = db.medicines.FirstOrDefault(x => x.name == MedicineName.Text);
 
-                medicine.name = medicineName.Text.Trim();
-                db.medicines.Add(medicine);
-                medicineName.Clear();
-                db.SaveChanges();
+                    if (haveMedicine == null)
+                    {
+                        NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));
 
-                MessageBox.Show("Medicine Save Successfully");
+                        medicine.name = MedicineName.Text.Trim();
+                        medicine.status = true;
+                        medicine.created = DateTime.Now;
+                        db.medicines.Add(medicine);
+                        MedicineName.Clear();
+                        db.SaveChanges();
+                        MessageBox.Show("Medicine Save Successfully");
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Medicine already exist", "Already Exit");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                
             }
             else
             {

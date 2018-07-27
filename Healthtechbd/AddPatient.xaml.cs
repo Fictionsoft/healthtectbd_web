@@ -25,9 +25,58 @@ namespace Healthtechbd
             InitializeComponent();
         }
 
+        model.ContextDb db = new model.ContextDb();
+        model.user user = new model.user();
+
         private void SubmitAddPatient_Click(object sender, RoutedEventArgs e)
         {
+            if(PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
+            {
+                var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text);
+
+                if(havePhone == null)
+                {
+                    NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
+                    user.first_name = PatientName.Text.Trim();
+                    user.phone = PatientPhone.Text.Trim();
+                    user.email = PatientEmail.Text.Trim();
+                    user.age = PatientAge.Text.Trim();
+                    user.address_line1 = PatientAddress.Text.Trim();
+                    user.created = DateTime.Now;
+                    user.doctor_id = MainWindow.Session.userId;
+                    user.role_id = 2;
+
+                    db.users.Add(user);
+                    try
+                    {
+                        db.SaveChanges();
+                        clear();
+                        MessageBox.Show("Patient has been saved", "Success");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The Phone Number already exist", "Already Exit");
+                }                             
+            }
+            else
+            {
+               MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }                      
+        }
+
+        private void CancelAddPatient_Click(object sender, RoutedEventArgs e)
+        {
             NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
+        }  
+
+       void clear()
+        {
+            PatientName.Text = PatientPhone.Text = PatientEmail.Text = PatientAge.Text = PatientAddress.Text = "";
         }
     }
 }

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Healthtechbd"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="550" d:DesignWidth="800"
       Title="Add Patient">
 
     <StackPanel>
@@ -14,7 +14,7 @@
         <Grid Height="60" Background="#fff" VerticalAlignment="top">
             <Border Margin="20 0 0 0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Patient" MouseDown="SubmitAddPatient_Click" />
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Patients" MouseDown="CancelAddPatient_Click" />
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Add Patient"/>
                 </StackPanel>
@@ -23,7 +23,7 @@
         </Grid>
 
         <!--Page Heading Bottom-->
-        <Border Margin="20" Height="430">
+        <Border Margin="20" Height="390">
             <StackPanel>
 
                 <!--Panel Head-->
@@ -49,28 +49,28 @@
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Row="0" Grid.Column="0" Margin="5 0">
-                                <TextBlock Style="{StaticResource Level}" Text="Name"/>
-                                <TextBox Style="{StaticResource InputField}" Text=""/>
+                                <TextBlock Style="{StaticResource Level}" Text="Name *"/>
+                                <TextBox x:Name="PatientName" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="0" Grid.Column="1"  Margin="5 0">
-                                <TextBlock Style="{StaticResource Level}" Text="Phone"/>
-                                <TextBox Style="{StaticResource InputField}" Text=""/>
+                                <TextBlock Style="{StaticResource Level}" Text="Phone *"/>
+                                <TextBox x:Name="PatientPhone" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Email"/>
-                                <TextBox Style="{StaticResource InputField}" Text=""/>
+                                <TextBox x:Name="PatientEmail" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" Grid.Column="1"  Margin="5 0">
-                                <TextBlock Style="{StaticResource Level}" Text="Address"/>
-                                <TextBox Style="{StaticResource InputField}" Text=""/>
+                                <TextBlock Style="{StaticResource Level}" Text="Age *"/>
+                                <TextBox x:Name="PatientAge" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="2" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Address"/>
-                                <TextBox Style="{StaticResource InputField}" Text=""/>
+                                <TextBox x:Name="PatientAddress" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
 
                         </Grid>
@@ -85,7 +85,7 @@
         <Grid Height="60" Background="#E3E7EB" >
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                <Button x:Name="CancelAddPatient" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitAddPatient_Click" />
+                <Button x:Name="CancelAddPatient" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelAddPatient_Click" />
                 <Button x:Name="SubmitAddPatient" Content="SUBMIT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitAddPatient_Click" />
             </StackPanel>
             

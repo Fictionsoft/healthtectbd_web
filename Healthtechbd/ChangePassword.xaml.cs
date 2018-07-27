@@ -25,9 +25,39 @@ namespace Healthtechbd
             InitializeComponent();
         }
 
+        model.ContextDb db = new model.ContextDb();
+        model.user user = new model.user();
+
         private void SubmitChangePassword_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("ChangePassword.xaml", UriKind.Relative));
+            if(Password.Password != "" && ConfirmPassword.Password != "")
+            {
+                if(Password.Password == ConfirmPassword.Password)
+                {
+                    try
+                    {
+                        user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.userId);
+
+                        user.password = Password.Password;
+                        db.SaveChanges();
+
+                        NavigationService.Navigate(new Uri("ChangePassword.xaml", UriKind.Relative));
+                        MessageBox.Show("Password has been changed", "Success");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Confirm Password didn't match with Password.", "Discrepancy", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                              
+            }
+            else
+            {
+                MessageBox.Show("Please fill up the all field.", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }                                  
         }
     }
 }

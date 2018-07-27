@@ -13,28 +13,28 @@
             <ImageBrush ImageSource="images/login-bg.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <Border Padding="40" Height="500" Width="475" BorderBrush="#eee" BorderThickness="1" Background="#fff">
+        <Border Padding="40" Width="475" BorderBrush="#eee" BorderThickness="1" Background="#fff" VerticalAlignment="Center">
             <StackPanel>
-                
+
                 <TextBlock Text="REGISTRATION"  Foreground="#545454" FontSize="25" TextAlignment="Center"></TextBlock>
                 <Separator/>
                 <!--First Name-->
-                <TextBox Style="{StaticResource InputField}" Text="First Name" />
+                <TextBox x:Name="FirstName" Style="{StaticResource InputField}" Text="First Name" GotFocus="FirstName_GotFocus" LostFocus="FirstName_LostFocus" />
 
                 <!--Last Name-->
-                <TextBox Style="{StaticResource InputField}" Text="Last Name" />
+                <TextBox x:Name="LastName" Style="{StaticResource InputField}" Text="Last Name" GotFocus="LastName_GotFocus" LostFocus="LastName_LostFocus" />
 
                 <!--Email-->
-                <TextBox Style="{StaticResource InputField}" Text="Email Address" />
+                <TextBox x:Name="EmailAddress" Style="{StaticResource InputField}" Text="Email Address" GotFocus="Email_GotFocus" LostFocus="EmailAddress_LostFocus" />
 
                 <!--Password-->
-                <TextBox Style="{StaticResource InputField}" Text="Password" />
+                <PasswordBox x:Name="Password" Password="Password" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus"  />
 
                 <!--Confirm Password-->
-                <TextBox Style="{StaticResource InputField}" Text="Confirm Password" />
+                <!--<PasswordBox x:Name="ConfirmPassword" Password="Password" GotFocus="ConfirmPassword_GotFocus" LostFocus="ConfirmPassword_LostFocus"  />-->
 
                 <!--Registration Button-->
-                <Button Content="REGISTRATION" Foreground="#fff" Background="#3CC2BB" Margin="0 0 0 10" Padding="9" Height="38" BorderBrush="#eee" BorderThickness="0"></Button>
+                <Button x:Name="btnRegistration" Content="REGISTRATION" Foreground="#fff" Background="#3CC2BB" Margin="0 0 0 10" Padding="9" Height="38" BorderBrush="#eee" BorderThickness="0" Click="btnRegistration_Click"></Button>
 
                 <!--Login-->
                 <Grid Margin="0 15 0 0">
@@ -42,10 +42,10 @@
                         <TextBlock Style="{StaticResource RegistrationLink}" x:Name="loginLink" Text="Login" MouseDown="loginLink_MouseDown"/>
                     </StackPanel>
                 </Grid>
-                
+
             </StackPanel>
         </Border>
-        <Border Height="5" Background="#37B5AE" Width="475" Margin="0 500 0 0">
+        <Border Height="5" Background="#37B5AE" Width="475" Margin="360,508,360,57">
 
         </Border>
     </Grid>

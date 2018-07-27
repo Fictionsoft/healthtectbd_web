@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,11 +24,73 @@ namespace Healthtechbd
         public AddDiagnosisTemplate()
         {
             InitializeComponent();
+
+            loadDiagnosisCombobox();
         }
+
+        model.ContextDb db = new model.ContextDb();
+        model.diagnosis diagnosis = new model.diagnosis();
+        model.diagnosis_templates diagnosis_template = new model.diagnosis_templates();
 
         private void SubmitAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
+            if(DiagnosisComboBox.SelectedIndex != 0 && Instruction.Text != "")
+            {
+                try
+                {
+                    diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.SelectedItem.ToString());
+
+                    var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_id == diagnosis.id);
+
+                    if (haveDiagnosisTemplate == null)
+                    {
+                        NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
+
+                        diagnosis_template.diagnosis_id = diagnosis.id;
+                        diagnosis_template.instructions = Instruction.Text;
+                        diagnosis_template.status = true;
+                        diagnosis_template.created = DateTime.Now;
+                        db.diagnosis_templates.Add(diagnosis_template);                        
+                        db.SaveChanges();
+
+                        MessageBox.Show("Diagnosis Tempalte has been saved", "Save");                       
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Diagnosis Template already exist", "Already Exit");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }               
+            }
+            else
+            {
+                MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
+
+        void loadDiagnosisCombobox()
+        {
+            try
+            {
+                var diagnosis = db.diagnosis.OrderByDescending(x => x.created).ToList();
+
+                foreach (var item in diagnosis)
+                {
+                    DiagnosisComboBox.Items.Add(item.name);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
+        }
+
+        private void CancelAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
+        }        
     }
 }

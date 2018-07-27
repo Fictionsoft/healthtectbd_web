@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace Healthtechbd
 {
     /// <summary>
@@ -20,13 +21,40 @@ namespace Healthtechbd
     public partial class AdminPanelWindow : Window
     {
         public static Grid sidebar; // To get sidebar
-        public static ColumnDefinition sidebarColumnDefination; // To get sidebarColumnDefenation
+        public static ColumnDefinition sidebarColumnDefination; // To get sidebarColumnDefenation        
+        private RegistrationWindow registrationWindow;
+        private ResetPasswordWindow resetPasswordWindow;
+        public static TextBlock userName;
 
         public AdminPanelWindow(MainWindow mainWindow)
         {
-            InitializeComponent();
+            InitializeComponent();                       
+
             sidebar = Sidebar; // To get sidebar
-            sidebarColumnDefination = SidebarColumnDefination;// To get sidebar
+            sidebarColumnDefination = SidebarColumnDefination;// To get sidebar 
+            userName = UserName; // To get user name textblock
+        }
+
+        public AdminPanelWindow(RegistrationWindow registrationWindow)
+        {
+            InitializeComponent();
+           
+            sidebar = Sidebar; // To get sidebar
+            sidebarColumnDefination = SidebarColumnDefination;// To get sidebar 
+            userName = UserName; // To get user name textblock
+
+            this.registrationWindow = registrationWindow;
+        }
+
+        public AdminPanelWindow(ResetPasswordWindow resetPasswordWindow)
+        {
+            InitializeComponent();
+            
+            sidebar = Sidebar; // To get sidebar
+            sidebarColumnDefination = SidebarColumnDefination;// To get sidebar   
+            userName = UserName; // To get user name textblock
+
+            this.resetPasswordWindow = resetPasswordWindow;
         }
 
         private void header_MouseDown(object sender, MouseButtonEventArgs e)
@@ -35,9 +63,8 @@ namespace Healthtechbd
         }
 
         private void ButtonDashboard_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+        {           
             MainContent.Content = new Dashboard();
-
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 
@@ -74,15 +101,15 @@ namespace Healthtechbd
             MainContent.Content = new Prescriptions();
         }
 
-        private void ButtonDoctors_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainContent.Content = new Doctors();
-        }
+        //private void ButtonDoctors_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    MainContent.Content = new Doctors();
+        //}
 
-        private void ButtonSettins_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainContent.Content = new Settings();
-        }
+        //private void ButtonSettins_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    MainContent.Content = new Settings();
+        //}
 
         private void ButtonMyProfile_Click(object sender, RoutedEventArgs e)
         {
@@ -90,7 +117,7 @@ namespace Healthtechbd
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 
-            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                        
         }
 
         private void ButtonChangePassword_Click(object sender, RoutedEventArgs e)
@@ -115,7 +142,18 @@ namespace Healthtechbd
         {
             this.Hide();
             MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            mainWindow.Show();            
+        }
+
+        private void ButtonDashboard_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Dashboard();
+            
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

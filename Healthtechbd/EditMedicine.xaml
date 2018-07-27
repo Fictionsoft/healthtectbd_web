@@ -19,9 +19,9 @@
 
             <Border Margin="20 0 0 0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="1" Text="Medicine" MouseDown="CancelEditMedicine_Click" />
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="1" Text="Medicines" MouseDown="CancelEditMedicine_Click" />
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="2" Text="/" />
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="0" Text="Edit Medicines"/>
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="0" Text="Edit Medicine"/>
                 </StackPanel>
             </Border>
 

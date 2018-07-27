@@ -30,16 +30,32 @@ namespace Healthtechbd
 
         private void SubmitUpdateMedicine_Click(object sender, RoutedEventArgs e)
         {
-            if(MedicineName.Text != "")
+            if (MedicineName.Text != "")
             {
                 int medicineId = int.Parse(MedicineId.Text);
 
-                medicine = db.medicines.FirstOrDefault(x => x.id == medicineId);
-                medicine.name = MedicineName.Text.Trim();
-                db.SaveChanges();
+                try
+                {
+                    var haveMedicine = db.medicines.FirstOrDefault(x => x.name == MedicineName.Text && x.id != medicineId);
 
-                NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));
-                MessageBox.Show("Update Successfully");
+                    if (haveMedicine == null)
+                    {
+                        medicine = db.medicines.FirstOrDefault(x => x.id == medicineId);
+                        medicine.name = MedicineName.Text.Trim();
+                        db.SaveChanges();
+
+                        NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));
+                        MessageBox.Show("Update Successfully");
+                    }
+                    else
+                    {
+                        MessageBox.Show("The medicine already exit", "Alreasy Exit");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                
             }
             else
             {
@@ -56,8 +72,15 @@ namespace Healthtechbd
         {
             MedicineId.Text = id.ToString();
 
-            medicine = db.medicines.FirstOrDefault(x => x.id == id);
-            MedicineName.Text = medicine.name;
+            try
+            {
+                medicine = db.medicines.FirstOrDefault(x => x.id == id);
+                MedicineName.Text = medicine.name;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
         }
     }
 }
