@@ -21,7 +21,7 @@
         </Grid>
 
         <!--Page Heading Bottom-->
-        <Border Margin="20" Height="430">
+        <Border Margin="20" MinHeight="430">
             <StackPanel>
                 <!--Search Section-->
                 <Grid Height="60" Background="#F6F8F7">

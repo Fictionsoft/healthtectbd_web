@@ -32,12 +32,19 @@ namespace Healthtechbd
         {
             PatientId.Text = id.ToString(); //Patient = User
 
-            user = db.users.FirstOrDefault(x => x.id == id);
-            PatientName.Text = user.first_name;
-            PatientPhone.Text = user.phone;
-            PatientAge.Text = user.age;
-            PatientEmail.Text = user.email;
-            PatientAddress.Text = user.address_line1;
+            try
+            {
+                user = db.users.FirstOrDefault(x => x.id == id);
+                PatientName.Text = user.first_name;
+                PatientPhone.Text = user.phone;
+                PatientAge.Text = user.age;
+                PatientEmail.Text = user.email;
+                PatientAddress.Text = user.address_line1;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
         }
 
         private void CancelUpdatePatient_Click(object sender, RoutedEventArgs e)
@@ -51,18 +58,34 @@ namespace Healthtechbd
             {
                 int patientId = int.Parse(PatientId.Text);
 
-                user = db.users.FirstOrDefault(x => x.id == patientId);
+                var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patientId);
 
-                user.first_name = PatientName.Text.Trim();
-                user.phone = PatientPhone.Text.Trim();
-                user.email = PatientEmail.Text.Trim();
-                user.age = PatientAge.Text.Trim();
-                user.address_line1 = PatientAddress.Text.Trim();
+                if(havePhone == null)
+                {                    
+                    try
+                    {
+                        user = db.users.FirstOrDefault(x => x.id == patientId);
 
-                db.SaveChanges();
+                        user.first_name = PatientName.Text.Trim();
+                        user.phone = PatientPhone.Text.Trim();
+                        user.email = PatientEmail.Text.Trim();
+                        user.age = PatientAge.Text.Trim();
+                        user.address_line1 = PatientAddress.Text.Trim();
 
-                NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
-                MessageBox.Show("Update Successfully");
+                        db.SaveChanges();
+
+                        NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
+                        MessageBox.Show("Update Successfully", "Success");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The Phone already exist.", "Already Exit");
+                }                              
             }
             else
             {

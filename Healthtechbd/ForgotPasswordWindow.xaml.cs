@@ -76,7 +76,7 @@ namespace Healthtechbd
             }
             else
             {
-                MessageBox.Show("Email is required");
+                MessageBox.Show("Email is required", "Required Field");
             }            
         }
 

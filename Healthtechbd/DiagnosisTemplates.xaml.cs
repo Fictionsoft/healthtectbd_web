@@ -63,7 +63,7 @@ namespace Healthtechbd
                     db.diagnosis_templates.Remove(diagnosis_template);
                     db.SaveChanges();
                     loadDiagnosisTemplates();
-                    MessageBox.Show("Delete Successfully");
+                    MessageBox.Show("Delete Successfully", "Success");
                 }
                 catch
                 {
@@ -95,7 +95,7 @@ namespace Healthtechbd
 
                 if (diagnosisTemplates.Count == 0)
                 {
-                    MessageBox.Show("DiagnosisTemplate not found");
+                    MessageBox.Show("DiagnosisTemplate not found", "Wraning");
                 }
                 else
                 {

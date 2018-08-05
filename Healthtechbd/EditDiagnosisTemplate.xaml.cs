@@ -71,7 +71,7 @@ namespace Healthtechbd
 
         private void SubmitAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if(DiagnosisComboBox.SelectedIndex != 0)
+            if(DiagnosisComboBox.SelectedItem != "Type here...")
             {
                 int diagnosisTemplateId = int.Parse(DiagnosisTemplateId.Text);
 
@@ -85,7 +85,7 @@ namespace Healthtechbd
                     db.SaveChanges();
 
                     NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
-                    MessageBox.Show("Update Successfully");
+                    MessageBox.Show("Update Successfully", "Success");
                 }
                 catch
                 {
@@ -97,6 +97,21 @@ namespace Healthtechbd
                 MessageBox.Show("Diagnosis name is required", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
            
+        }
+        private void DiagnosisComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (DiagnosisComboBox.Text == "Type here...")
+            {
+                DiagnosisComboBox.Text = "";
+            }
+        }
+
+        private void DiagnosisComboBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (DiagnosisComboBox.Text == "")
+            {
+                DiagnosisComboBox.Text = "Type here...";
+            }
         }
     }
 }

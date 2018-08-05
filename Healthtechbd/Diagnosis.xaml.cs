@@ -61,7 +61,7 @@ namespace Healthtechbd
                     db.diagnosis.Remove(diagnosis);
                     db.SaveChanges();
                     loadDiagnosis();
-                    MessageBox.Show("Delete Successfully");
+                    MessageBox.Show("Delete Successfully", "Success");
                 }
                 catch
                 {

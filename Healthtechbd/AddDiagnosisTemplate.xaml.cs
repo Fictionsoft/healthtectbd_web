@@ -34,7 +34,7 @@ namespace Healthtechbd
 
         private void SubmitAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if(DiagnosisComboBox.SelectedIndex != 0 && Instruction.Text != "")
+            if(DiagnosisComboBox.SelectedItem != "Type here..." && Instruction.Text != "")
             {
                 try
                 {
@@ -91,6 +91,22 @@ namespace Healthtechbd
         private void CancelAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
-        }        
+        }
+
+        private void DiagnosisComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (DiagnosisComboBox.Text == "Type here...")
+            {
+                DiagnosisComboBox.Text = "";
+            }
+        }       
+
+        private void DiagnosisComboBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (DiagnosisComboBox.Text == "")
+            {
+                DiagnosisComboBox.Text = "Type here...";
+            }
+        }
     }
 }

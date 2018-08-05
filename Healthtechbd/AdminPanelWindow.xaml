@@ -99,7 +99,7 @@
                     <ListViewItem Height="60" >
                         <StackPanel Orientation="Horizontal"  >
                             <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDashboard_MouseDown"/>
-                            <TextBlock  x:FieldModifier="public" Style="{StaticResource NavItem}" Text="DASHBOARD" x:Name="ButtonDashboard" MouseDown="ButtonDashboard_MouseDown" Loaded="ButtonDashboard_Loaded"/>
+                            <TextBlock x:FieldModifier="public" Style="{StaticResource NavItem}" Text="DASHBOARD" x:Name="ButtonDashboard" MouseDown="ButtonDashboard_MouseDown" Loaded="ButtonDashboard_Loaded"/>
                         </StackPanel>
                     </ListViewItem>
 

@@ -51,8 +51,8 @@
 
                             <StackPanel Grid.Row="0" Grid.Column="0" Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Diagnosis Name *"/>
-                                <ComboBox x:Name="DiagnosisComboBox" Style="{StaticResource ComboBox}" SelectedIndex="0">
-                                    <ComboBoxItem>Select</ComboBoxItem>                                                                                          
+                                <ComboBox Text="Type here..." StaysOpenOnEdit="True" IsEditable="True" x:Name="DiagnosisComboBox" Style="{StaticResource ComboBox}" GotFocus="DiagnosisComboBox_GotFocus" LostFocus="DiagnosisComboBox_LostFocus">
+                                                                                                                              
                                 </ComboBox>
                             </StackPanel>
 

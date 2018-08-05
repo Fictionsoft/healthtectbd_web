@@ -31,8 +31,15 @@ namespace Healthtechbd
 
         void loadPatients()   //User = Patient
         {
-            var users = db.users.Where(x => x.role_id == 2 && x.doctor_id == MainWindow.Session.userId).OrderByDescending(x => x.created).ToList();
-            dataGridPatients.ItemsSource = users; // role_id 2 = Patient
+            try
+            {
+                var users = db.users.Where(x => x.role_id == 2 && x.doctor_id == MainWindow.Session.userId).OrderByDescending(x => x.created).ToList();
+                dataGridPatients.ItemsSource = users; // role_id 2 = Patient 
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }                       
         }
 
         private void ButtonAddPatient_Click(object sender, RoutedEventArgs e)
@@ -45,13 +52,20 @@ namespace Healthtechbd
             if (MessageBox.Show("Are You Sure ?", "Confirm",
                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                int patientId = (dataGridPatients.SelectedItem as model.user).id;
-                user = db.users.FirstOrDefault(x => x.id == patientId);
+                try
+                {
+                    int patientId = (dataGridPatients.SelectedItem as model.user).id;
+                    user = db.users.FirstOrDefault(x => x.id == patientId);
 
-                db.users.Remove(user);
-                db.SaveChanges();
-                loadPatients();
-                MessageBox.Show("Delete Successfully");
+                    db.users.Remove(user);
+                    db.SaveChanges();
+                    loadPatients();
+                    MessageBox.Show("Delete Successfully", "Success");
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                
             }
         }
 
@@ -70,22 +84,32 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            string searchBy = searchField.Text.ToString();
-
-            var users = db.users.Where(x => x.first_name.Trim().StartsWith(searchBy)  ||
-                                            x.phone.Trim().StartsWith(searchBy) ||
-                                            x.email.Trim().StartsWith(searchBy) ||
-                                            x.age.Trim().StartsWith(searchBy)   
-                                      ).OrderByDescending(x => x.created).ToList();
-
-            if (users.Count == 0)
+            if(searchField.Text != "")
             {
-                MessageBox.Show("Patient not found");
-            }
-            else
-            {
-                dataGridPatients.ItemsSource = users;
-            }
+                string searchBy = searchField.Text.ToString();
+
+                try
+                {
+                    var users = db.users.Where(x => x.first_name.Trim().StartsWith(searchBy) ||
+                                                x.phone.Trim().StartsWith(searchBy) ||
+                                                x.email.Trim().StartsWith(searchBy) ||
+                                                x.age.Trim().StartsWith(searchBy)
+                                          ).OrderByDescending(x => x.created).ToList();
+
+                    if (users.Count == 0)
+                    {
+                        MessageBox.Show("Patient not found");
+                    }
+                    else
+                    {
+                        dataGridPatients.ItemsSource = users;
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }                       
         }
     }
 }

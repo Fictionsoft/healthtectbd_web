@@ -77,13 +77,12 @@ namespace Healthtechbd
 
                     db.SaveChanges();
 
-                    MessageBox.Show("Profile update successfully");
+                    MessageBox.Show("Profile has been updated", "Success");
                 }
                 else
                 {
                     MessageBox.Show("The Phone Number already exist", "Already Exit");
-                }
-                
+                }               
             }
             catch
             {

@@ -62,7 +62,7 @@ namespace Healthtechbd
                     db.medicines.Remove(medicine);
                     db.SaveChanges();
                     loadMedicines();
-                    MessageBox.Show("Delete Successfully");
+                    MessageBox.Show("Delete Successfully", "Success");
                 }
                 catch
                 {
@@ -82,7 +82,7 @@ namespace Healthtechbd
 
                 if (medicines.Count == 0)
                 {
-                    MessageBox.Show("Medicine not found");
+                    MessageBox.Show("Medicine not found", "Warning");
                 }
                 else
                 {

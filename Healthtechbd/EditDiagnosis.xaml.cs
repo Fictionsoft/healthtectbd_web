@@ -65,7 +65,7 @@ namespace Healthtechbd
                         db.SaveChanges();
 
                         NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
-                        MessageBox.Show("Update Successfully");
+                        MessageBox.Show("Update Successfully", "Success");
                     }
                     else
                     {

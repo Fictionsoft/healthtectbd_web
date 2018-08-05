@@ -59,7 +59,7 @@ namespace Healthtechbd
                         db.SaveChanges();
 
                         NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
-                        MessageBox.Show("Update Successfully");
+                        MessageBox.Show("Update Successfully", "Success");
                     }
                     else
                     {

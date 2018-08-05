@@ -62,7 +62,7 @@ namespace Healthtechbd
                     db.tests.Remove(test);
                     db.SaveChanges();
                     loadTests();
-                    MessageBox.Show("Delete Successfully");
+                    MessageBox.Show("Delete Successfully", "Success");
                 }
                 catch
                 {
@@ -88,7 +88,7 @@ namespace Healthtechbd
 
                 if (tests.Count == 0)
                 {
-                    MessageBox.Show("Test not found");
+                    MessageBox.Show("Test not found", "Warning");
                 }
                 else
                 {

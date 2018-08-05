@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-
 namespace Healthtechbd
 {
     /// <summary>
@@ -28,11 +27,11 @@ namespace Healthtechbd
 
         public AdminPanelWindow(MainWindow mainWindow)
         {
-            InitializeComponent();                       
-
+            InitializeComponent();
+            
             sidebar = Sidebar; // To get sidebar
-            sidebarColumnDefination = SidebarColumnDefination;// To get sidebar 
-            userName = UserName; // To get user name textblock
+            sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
+            userName = UserName; // To get user name textblock           
         }
 
         public AdminPanelWindow(RegistrationWindow registrationWindow)
@@ -40,7 +39,7 @@ namespace Healthtechbd
             InitializeComponent();
            
             sidebar = Sidebar; // To get sidebar
-            sidebarColumnDefination = SidebarColumnDefination;// To get sidebar 
+            sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
             userName = UserName; // To get user name textblock
 
             this.registrationWindow = registrationWindow;
@@ -51,7 +50,7 @@ namespace Healthtechbd
             InitializeComponent();
             
             sidebar = Sidebar; // To get sidebar
-            sidebarColumnDefination = SidebarColumnDefination;// To get sidebar   
+            sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation0   
             userName = UserName; // To get user name textblock
 
             this.resetPasswordWindow = resetPasswordWindow;
@@ -148,7 +147,7 @@ namespace Healthtechbd
         private void ButtonDashboard_Loaded(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new Dashboard();
-            
+            UserName.Text = MainWindow.Session.userFirstName;
         }
 
         private void Window_Closed(object sender, EventArgs e)

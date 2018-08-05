@@ -21,7 +21,7 @@ namespace Healthtechbd
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Session.............................
+        //Custom Session.............................
         public class Session
         {
             public static int userId = 0;
@@ -61,8 +61,8 @@ namespace Healthtechbd
         private void Window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
-        }        
-
+        }
+       
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
             //this.Hide();
@@ -86,7 +86,7 @@ namespace Healthtechbd
                         Session.userLastName = user.last_name;
                         Session.userEmail = user.email;
                         
-                        if (MessageBox.Show("Login successfully", "Login") == MessageBoxResult.OK)
+                        if (MessageBox.Show("Login successfully", "Success") == MessageBoxResult.OK)
                         {
                             TextBlock UserName = AdminPanelWindow.userName;
                             UserName.Text = Session.userFirstName +" "+ Session.userLastName;
@@ -94,7 +94,7 @@ namespace Healthtechbd
                     }
                     else
                     {
-                        MessageBox.Show("Email or Password are invalid", "Invalid user", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Email or Password are invalid", "Invalid User", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch
