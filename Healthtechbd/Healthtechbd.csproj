@@ -126,6 +126,7 @@
     <Compile Include="EditPatient.xaml.cs">
       <DependentUpon>EditPatient.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainModel.cs" />
     <Compile Include="model\ContextDb.cs" />
     <Compile Include="Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
@@ -174,6 +175,7 @@
     <Compile Include="Tests.xaml.cs">
       <DependentUpon>Tests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelBase.cs" />
     <Page Include="AddDiagnosis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -328,6 +330,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\download %281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\wpf-chosen-control\WpfChosenControl\WpfChosenControl.csproj">
+      <Project>{07db70c6-e069-4c37-90c1-a4358c4b1fb3}</Project>
+      <Name>WpfChosenControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

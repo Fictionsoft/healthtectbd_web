@@ -3,13 +3,19 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:control="clr-namespace:WpfChosenControl;assembly=WpfChosenControl"
       xmlns:local="clr-namespace:Healthtechbd"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="800"
       Title="Add Diagnosis Template">
 
+    <Page.Resources>
+        <local:MainModel x:Key="viewmodel"/>
+    </Page.Resources>
+
     <StackPanel>
+
         <!--Page Heading-->
         <Grid Height="60" Background="#fff" VerticalAlignment="top">
 
@@ -20,7 +26,7 @@
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Add Diagnosis Template"/>
                 </StackPanel>
             </Border>
-            
+
         </Grid>
 
         <!--Page Heading Bottom-->
@@ -50,10 +56,8 @@
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Row="0" Grid.Column="0" Margin="5 0">
-                                <TextBlock Style="{StaticResource Level}" Text="Diagnosis Name *"/>
-                                <ComboBox Text="Type here..." StaysOpenOnEdit="True" IsEditable="True" x:Name="DiagnosisComboBox" Style="{StaticResource ComboBox}" GotFocus="DiagnosisComboBox_GotFocus" LostFocus="DiagnosisComboBox_LostFocus">
-                                                                                                                              
-                                </ComboBox>
+                                <TextBlock Style="{StaticResource Level}" Text="Diagnosis Name *" />
+                                <ComboBox IsTextSearchEnabled="False" IsEditable="True" x:Name="DiagnosisComboBox" Style="{StaticResource ComboBox}" GotFocus="DiagnosisComboBox_GotFocus"/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="0" Grid.Column="1"  Margin="5 0">
@@ -63,7 +67,10 @@
 
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
-                                <TextBox Style="{StaticResource InputField}" Height="100" Text=""/>
+                                <!--<TextBox Style="{StaticResource InputField}" Height="100" Text=""/>-->
+                                <Grid DataContext="{StaticResource viewmodel}">
+                                    <control:ChosenControl ItemsSource="{Binding Items}" SelectedItems="{Binding Students}"  DefaultMessage="Please Select Items." ValueMemberPath="Id"   DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
+                                </Grid>
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" Grid.Column="1"  Margin="5 0">

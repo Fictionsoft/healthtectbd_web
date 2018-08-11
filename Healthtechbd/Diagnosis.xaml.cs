@@ -89,7 +89,7 @@ namespace Healthtechbd
 
             try
             {
-                var diagnosis = db.diagnosis.Where(x => x.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).ToList();
+                var diagnosis = db.diagnosis.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).ToList();
 
                 if (diagnosis.Count == 0)
                 {
@@ -104,6 +104,13 @@ namespace Healthtechbd
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }                      
-        }       
+        }
+
+        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchBy = searchField.Text.ToString();
+            var diagnosis = db.diagnosis.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).ToList();
+            dataGridDiagnosis.ItemsSource = diagnosis;
+        }
     }
 }

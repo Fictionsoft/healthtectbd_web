@@ -23,9 +23,11 @@ namespace Healthtechbd
     {
         public AddDiagnosisTemplate()
         {
-            InitializeComponent();
-
+            InitializeComponent();           
             loadDiagnosisCombobox();
+
+            DiagnosisComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
+                     new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
         }
 
         model.ContextDb db = new model.ContextDb();
@@ -93,20 +95,66 @@ namespace Healthtechbd
             NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
         }
 
+        //private void DiagnosisComboBox_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (DiagnosisComboBox.Text == "Type here...")
+        //    {
+        //        DiagnosisComboBox.Text = "";
+        //    }
+        //}       
+
+        //private void DiagnosisComboBox_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (DiagnosisComboBox.Text == "")
+        //    {
+        //        DiagnosisComboBox.Text = "Type here...";
+        //    }
+        //}             
+
+        //private void DiagnosisComboBox_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    // ... A List.
+        //    List<string> data = new List<string>();
+        //    data.Add("Book");
+        //    data.Add("Computer");
+        //    data.Add("Chair");
+        //    data.Add("Mug");
+
+        //    // ... Get the ComboBox reference.
+        //    var comboBox = sender as ComboBox;
+
+        //    // ... Assign the ItemsSource to the List.
+        //    comboBox.ItemsSource = data;
+
+        //    // ... Make the first item selected.
+        //    comboBox.SelectedIndex = 0;
+        //}
+
+        void DiagnosisComboBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            DiagnosisComboBox.IsDropDownOpen = true;
+
+            ComboBox obj = sender as ComboBox;
+
+            var item = obj.Text;
+
+            var diagnosis = db.diagnosis.Where(x => x.name.Contains(item)).OrderByDescending(x => x.created).ToList();
+            DiagnosisComboBox.Items.Clear();
+
+            foreach (var data in diagnosis)
+            {
+                DiagnosisComboBox.Items.Add(data.name);
+            }
+
+            if (diagnosis.Count == 0)
+            {
+                DiagnosisComboBox.Items.Add("No results mached with " + item);
+            }
+        }
+
         private void DiagnosisComboBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (DiagnosisComboBox.Text == "Type here...")
-            {
-                DiagnosisComboBox.Text = "";
-            }
-        }       
-
-        private void DiagnosisComboBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (DiagnosisComboBox.Text == "")
-            {
-                DiagnosisComboBox.Text = "Type here...";
-            }
+            DiagnosisComboBox.IsDropDownOpen = true;
         }
     }
 }

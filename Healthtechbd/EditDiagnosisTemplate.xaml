@@ -55,17 +55,17 @@
                                 </ComboBox>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="0" Grid.Column="1"  Margin="5 0">
+                            <StackPanel Grid.Row="0" Grid.Column="1" Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Instructions"/>
                                 <TextBox x:Name="Instruction" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
                                 <TextBox Style="{StaticResource InputField}" Height="100" Text=""/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="1" Grid.Column="1"  Margin="5 0">
+                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Tests"/>
                                 <TextBox Style="{StaticResource InputField}" Height="100" Text=""/>
                             </StackPanel>
