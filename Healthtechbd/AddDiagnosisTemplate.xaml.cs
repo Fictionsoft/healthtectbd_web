@@ -24,7 +24,7 @@ namespace Healthtechbd
         public AddDiagnosisTemplate()
         {
             InitializeComponent();           
-            loadDiagnosisCombobox();
+            LoadDiagnosisCombobox();
 
             DiagnosisComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
                      new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
@@ -73,7 +73,7 @@ namespace Healthtechbd
             }
         }
 
-        void loadDiagnosisCombobox()
+        void LoadDiagnosisCombobox()
         {
             try
             {
