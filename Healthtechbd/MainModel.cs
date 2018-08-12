@@ -44,26 +44,26 @@ namespace Healthtechbd
 
         public MainModel()
         {
-            //var items = new ObservableCollection<Student>();
+            var items = new ObservableCollection<Student>();
 
-            //var medicines = db.medicines.OrderByDescending(x => x.created).ToList();
+            var medicines = db.medicines.OrderByDescending(x => x.created).ToList();
 
-            //foreach (var data in medicines)
-            //{
-            //    items.Add(new Student() { Id = data.id, Name = data.name });
-            //}
+            foreach (var data in medicines)
+            {
+                items.Add(new Student() { Id = data.id, Name = data.name });
+            }
 
-            //Items = items;
-            //var students = new List<Student>();
-            //students.Add(Items.First());
-            //students.Add(Items.LastOrDefault());
+            Items = items;
+            var students = new List<Student>();
+            students.Add(Items.First());
+            students.Add(Items.LastOrDefault());
 
-            //this.Students = students;
+            this.Students = students;
         }
 
-        public void test()
+        public int test()
         {
-            
+            return 1;
         }
 
         private void Submit()

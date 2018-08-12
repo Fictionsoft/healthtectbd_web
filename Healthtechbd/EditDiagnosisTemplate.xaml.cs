@@ -23,14 +23,14 @@ namespace Healthtechbd
         public EditDiagnosisTemplate()
         {
             InitializeComponent();
-            loadDiagnosisCombobox();
+            LoadDiagnosisCombobox();
         }
         
         model.diagnosis_templates diagnosis_template = new model.diagnosis_templates();
         model.ContextDb db = new model.ContextDb();
         model.diagnosis diagnosis = new model.diagnosis();
 
-        void loadDiagnosisCombobox()
+        void LoadDiagnosisCombobox()
         {
             try
             {

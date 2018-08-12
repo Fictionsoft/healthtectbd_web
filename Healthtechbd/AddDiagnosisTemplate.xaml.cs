@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfChosenControl;
 
 namespace Healthtechbd
 {
@@ -24,7 +27,7 @@ namespace Healthtechbd
         public AddDiagnosisTemplate()
         {
             InitializeComponent();           
-            loadDiagnosisCombobox();
+            LoadDiagnosisCombobox();
 
             DiagnosisComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
                      new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
@@ -33,6 +36,7 @@ namespace Healthtechbd
         model.ContextDb db = new model.ContextDb();
         model.diagnosis diagnosis = new model.diagnosis();
         model.diagnosis_templates diagnosis_template = new model.diagnosis_templates();
+        model.medicine medicine = new model.medicine();
 
         private void SubmitAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
@@ -73,7 +77,7 @@ namespace Healthtechbd
             }
         }
 
-        void loadDiagnosisCombobox()
+        void LoadDiagnosisCombobox()
         {
             try
             {
@@ -156,5 +160,31 @@ namespace Healthtechbd
         {
             DiagnosisComboBox.IsDropDownOpen = true;
         }
+
+        
+        //private void SearchField_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    ChosenControl chosenControl = new ChosenControl();
+        //    chosenControl.MyPopup_Loaded(sender, e);
+
+        //    var items = new ObservableCollection<Student>();
+
+        //    var medicines = db.medicines.Where(x => x.name.Trim().Contains(SearchField.Text)).OrderByDescending(x => x.created).ToList();
+
+        //    foreach (var data in medicines)
+        //    {
+        //        items.Add(new Student() { Id = data.id, Name = data.name });
+        //    }
+
+        //    //Items = items;
+        //    //var students = new List<Student>();
+        //    //students.Add(Items.First());
+        //    //students.Add(Items.LastOrDefault());
+
+        //    //this.Students = students;
+
+        //    MainModel mainModel = new MainModel();
+        //    mainModel.test();
+        //}
     }
 }

@@ -67,7 +67,7 @@
 
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
-                                <!--<TextBox Style="{StaticResource InputField}" Height="100" Text=""/>-->
+                                <!--<TextBox BorderBrush="#eee" Padding="5 0 0 4" BorderThickness="1" FontSize="14" Foreground="#7d7d7d" x:Name="SearchField" Text="" TextChanged="SearchField_TextChanged" Height="40" Margin="0 0 0 5"/>-->
                                 <Grid DataContext="{StaticResource viewmodel}">
                                     <control:ChosenControl ItemsSource="{Binding Items}" SelectedItems="{Binding Students}"  DefaultMessage="Please Select Items." ValueMemberPath="Id"   DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
                                 </Grid>
