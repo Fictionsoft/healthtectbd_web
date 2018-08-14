@@ -27,10 +27,7 @@ namespace Healthtechbd
         public AddDiagnosisTemplate()
         {
             InitializeComponent();           
-            LoadDiagnosisCombobox();
-
-            DiagnosisComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
-                     new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
+            LoadDiagnosisCombobox();            
         }
 
         model.ContextDb db = new model.ContextDb();
@@ -42,6 +39,13 @@ namespace Healthtechbd
         {
             if(DiagnosisComboBox.SelectedItem != "Type here..." && Instruction.Text != "")
             {
+                ChosenControl chosenControl = new ChosenControl();
+                //var test = chosenControl._nodeList;
+                //var test = ChosenControl.SessionChosen.SelectedTokens;
+
+
+
+
                 try
                 {
                     diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.SelectedItem.ToString());
@@ -99,41 +103,6 @@ namespace Healthtechbd
             NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
         }
 
-        //private void DiagnosisComboBox_GotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (DiagnosisComboBox.Text == "Type here...")
-        //    {
-        //        DiagnosisComboBox.Text = "";
-        //    }
-        //}       
-
-        //private void DiagnosisComboBox_LostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (DiagnosisComboBox.Text == "")
-        //    {
-        //        DiagnosisComboBox.Text = "Type here...";
-        //    }
-        //}             
-
-        //private void DiagnosisComboBox_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    // ... A List.
-        //    List<string> data = new List<string>();
-        //    data.Add("Book");
-        //    data.Add("Computer");
-        //    data.Add("Chair");
-        //    data.Add("Mug");
-
-        //    // ... Get the ComboBox reference.
-        //    var comboBox = sender as ComboBox;
-
-        //    // ... Assign the ItemsSource to the List.
-        //    comboBox.ItemsSource = data;
-
-        //    // ... Make the first item selected.
-        //    comboBox.SelectedIndex = 0;
-        //}
-
         void DiagnosisComboBox_TextChanged(object sender, RoutedEventArgs e)
         {
             DiagnosisComboBox.IsDropDownOpen = true;
@@ -160,31 +129,6 @@ namespace Healthtechbd
         {
             DiagnosisComboBox.IsDropDownOpen = true;
         }
-
         
-        //private void SearchField_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    ChosenControl chosenControl = new ChosenControl();
-        //    chosenControl.MyPopup_Loaded(sender, e);
-
-        //    var items = new ObservableCollection<Student>();
-
-        //    var medicines = db.medicines.Where(x => x.name.Trim().Contains(SearchField.Text)).OrderByDescending(x => x.created).ToList();
-
-        //    foreach (var data in medicines)
-        //    {
-        //        items.Add(new Student() { Id = data.id, Name = data.name });
-        //    }
-
-        //    //Items = items;
-        //    //var students = new List<Student>();
-        //    //students.Add(Items.First());
-        //    //students.Add(Items.LastOrDefault());
-
-        //    //this.Students = students;
-
-        //    MainModel mainModel = new MainModel();
-        //    mainModel.test();
-        //}
     }
 }

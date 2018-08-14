@@ -175,7 +175,6 @@
     <Compile Include="Tests.xaml.cs">
       <DependentUpon>Tests.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModelBase.cs" />
     <Page Include="AddDiagnosis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

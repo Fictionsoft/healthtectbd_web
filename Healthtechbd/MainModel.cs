@@ -4,101 +4,69 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using WpfChosenControl;
+using WpfChosenControl.model;
 
 namespace Healthtechbd
 {
     public class MainModel : ViewModelBase
     {        
-        private ObservableCollection<Student> _items;
-        private List<Student> _selectedItems;
+        private ObservableCollection<IdNameModel> _medicinesLists;
+        private List<IdNameModel> _selectedMedicines;
 
 
-        public ObservableCollection<Student> Items
+        public ObservableCollection<IdNameModel> MedicinesLists
         {
             get
             {
-                return _items;
+                return _medicinesLists;
             }
             set
             {
-                _items = value;
-                //NotifyPropertyChanged("Items");
+                _medicinesLists = value;
+                NotifyPropertyChanged("MedicinesLists");
             }
         }
 
-        public List<Student> Students
+        public List<IdNameModel> SelectedMedicines
         {
             get
             {
-                return _selectedItems;
+                return _selectedMedicines;
             }
             set
             {
-                _selectedItems = value;
-                //NotifyPropertyChanged("SelectedItems");
+                _selectedMedicines = value;
+                NotifyPropertyChanged("SelectedItems");
             }
         }
 
-        model.ContextDb db = new model.ContextDb();
-        model.medicine medicine = new model.medicine();        
+        model.ContextDb db = new model.ContextDb();        
 
         public MainModel()
         {
-            var items = new ObservableCollection<Student>();
+            var items = new ObservableCollection<IdNameModel>();
 
-            var medicines = db.medicines.OrderByDescending(x => x.created).ToList();
+            var medicinesLists = db.medicines.OrderByDescending(x => x.created).ToList();
 
-            foreach (var data in medicines)
+            foreach (var medicine in medicinesLists)
             {
-                items.Add(new Student() { Id = data.id, Name = data.name });
+                items.Add(new IdNameModel() { Id = medicine.id, Name = medicine.name });
             }
 
-            Items = items;
-            var students = new List<Student>();
-            students.Add(Items.First());
-            students.Add(Items.LastOrDefault());
+            MedicinesLists = items;
+            var medicines = new List<IdNameModel>();
+            medicines.Add(MedicinesLists.First());
+            medicines.Add(MedicinesLists.LastOrDefault());
 
-            this.Students = students;
-        }
+            this.SelectedMedicines = medicines;
+        }        
 
-        public int test()
-        {
-            return 1;
-        }
+        //private void Submit()
+        //{
 
-        private void Submit()
-        {
-
-        }
-    }
-
-
-    public class Student : ViewModelBase
-    {
-
-        private int _Id;
-        public int Id
-        {
-            get { return _Id; }
-
-            set
-            {
-                _Id = value;
-                NotifyPropertyChanged("Id");
-            }
-        }
-        private string _Name;
-        public string Name
-        {
-            get { return _Name; }
-
-            set
-            {
-                _Name = value;
-                NotifyPropertyChanged("Name");
-            }
-        }
-
+        //}
+        
     }
 }
 
