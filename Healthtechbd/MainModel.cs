@@ -56,8 +56,8 @@ namespace Healthtechbd
 
             MedicinesLists = items;
             var medicines = new List<IdNameModel>();
-            medicines.Add(MedicinesLists.First());
-            medicines.Add(MedicinesLists.LastOrDefault());
+            //medicines.Add(MedicinesLists.First());
+            //medicines.Add(MedicinesLists.LastOrDefault());
 
             this.SelectedMedicines = medicines;
         }        
