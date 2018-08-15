@@ -33,8 +33,8 @@ namespace Healthtechbd
         {
             try
             {
-                var users = db.users.Where(x => x.role_id == 2 && x.doctor_id == MainWindow.Session.userId).OrderByDescending(x => x.created).ToList();
-                dataGridPatients.ItemsSource = users; // role_id 2 = Patient 
+                var users = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.userId).OrderByDescending(x => x.created).Take(10).ToList();
+                dataGridPatients.ItemsSource = users; // role_id 3 = Patient 
             }
             catch
             {
@@ -94,7 +94,7 @@ namespace Healthtechbd
                                                 x.phone.Trim().StartsWith(searchBy) ||
                                                 x.email.Trim().StartsWith(searchBy) ||
                                                 x.age.Trim().StartsWith(searchBy)
-                                          ).OrderByDescending(x => x.created).ToList();
+                                          ).OrderByDescending(x => x.created).Take(10).ToList();
 
                     if (users.Count == 0)
                     {

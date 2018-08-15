@@ -34,7 +34,7 @@ namespace Healthtechbd
         {
             try
             {
-                var medicines = db.medicines.OrderByDescending(x => x.created).ToList();
+                var medicines = db.medicines.OrderByDescending(x => x.created).Take(10).ToList();
                 dataGridMedicines.ItemsSource = medicines;
             }
             catch
@@ -78,7 +78,7 @@ namespace Healthtechbd
 
             try
             {
-                var medicines = db.medicines.Where(x => x.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).ToList();
+                var medicines = db.medicines.Where(x => x.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
 
                 if (medicines.Count == 0)
                 {

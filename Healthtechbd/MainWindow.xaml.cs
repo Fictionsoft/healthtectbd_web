@@ -24,10 +24,11 @@ namespace Healthtechbd
         //Custom Session.............................
         public class Session
         {
-            public static int userId = 0;
-            public static string userFirstName = "";                      
-            public static string userLastName = "";                      
-            public static string userEmail = "";                      
+            public static int userId;
+            public static string userFirstName;                      
+            public static string userLastName;                      
+            public static string userEmail;
+            public static int editRecordId;                    
         }
 
         public MainWindow()
@@ -71,8 +72,8 @@ namespace Healthtechbd
 
             if (EmailAddress.Text != "" && Password.Password != "")
             {
-                try
-                {
+                //try
+                //{
                     user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password);
 
                     if (user != null) //User = Doctor
@@ -96,11 +97,11 @@ namespace Healthtechbd
                     {
                         MessageBox.Show("Email or Password are invalid", "Invalid User", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                //}
             }
             else
             {

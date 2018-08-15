@@ -6,7 +6,7 @@ namespace Healthtechbd.model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("wpf_healthtechbd.diagnosis")]
+    [Table("wpf_healthtechbd.diagnosis_lists")]
     public partial class diagnosis
     {
         //public diagnosis()

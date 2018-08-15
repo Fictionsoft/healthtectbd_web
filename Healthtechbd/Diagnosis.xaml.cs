@@ -34,14 +34,14 @@ namespace Healthtechbd
         {
             try
             {
-                var diagnosis = db.diagnosis.OrderByDescending(x => x.created).ToList();
+                var diagnosis = db.diagnosis.OrderByDescending(x => x.created).Take(10).ToList();
                 dataGridDiagnosis.ItemsSource = diagnosis;
-            }
+        }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }           
-        }
+            }
+}
 
         private void ButtonAddDiagnosis_Click(object sender, RoutedEventArgs e)
         {
@@ -109,7 +109,7 @@ namespace Healthtechbd
         private void searchField_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchBy = searchField.Text.ToString();
-            var diagnosis = db.diagnosis.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).ToList();
+            var diagnosis = db.diagnosis.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
             dataGridDiagnosis.ItemsSource = diagnosis;
         }
     }

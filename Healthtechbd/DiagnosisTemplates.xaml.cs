@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfChosenControl.model;
 
 namespace Healthtechbd
 {
@@ -27,22 +28,27 @@ namespace Healthtechbd
             loadDiagnosisTemplates();
         }
 
-        model.ContextDb db = new model.ContextDb();
-        model.diagnosis diagnosis = new model.diagnosis();
-        model.diagnosis_templates diagnosis_template = new model.diagnosis_templates();
+        ContextDb db = new ContextDb();
+        //diagnosis diagnosis = new diagnosis();
+        diagnosis_templates diagnosis_template = new diagnosis_templates();
 
         void loadDiagnosisTemplates()
         {
             try
             {
-                var diagnosisTemplates = db.diagnosis_templates.Include(x => x.diagnosis).OrderByDescending(x => x.created).ToList();
+                var diagnosisTemplates = db.diagnosis_templates
+                    .Include(x => x.diagnosis)
+                    .OrderByDescending(x => x.created)
+                    .Take(10)
+                    .ToList();
+
                 dataGridDiagnosisTemplates.ItemsSource = diagnosisTemplates;
-            }
+        }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }                      
-        }
+            }
+}
 
         private void ButtonAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
@@ -74,7 +80,7 @@ namespace Healthtechbd
 
         private void btnEditDiagnosisTemplateRow_Click(object sender, RoutedEventArgs e)
         {
-            int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as model.diagnosis_templates).id;
+            int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosis_templates).id;
             EditDiagnosisTemplate editDiagnosisTemplate = new EditDiagnosisTemplate(diagnosisTemplateId);
             NavigationService.Navigate(editDiagnosisTemplate);
         }
@@ -91,7 +97,7 @@ namespace Healthtechbd
 
             try
             {
-                var diagnosisTemplates = db.diagnosis_templates.Where(x => x.diagnosis.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).ToList();
+                var diagnosisTemplates = db.diagnosis_templates.Where(x => x.diagnosis.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
 
                 if (diagnosisTemplates.Count == 0)
                 {

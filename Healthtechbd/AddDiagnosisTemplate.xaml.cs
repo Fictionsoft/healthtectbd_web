@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfChosenControl;
+using WpfChosenControl.model;
 
 namespace Healthtechbd
 {
@@ -26,54 +27,77 @@ namespace Healthtechbd
     {
         public AddDiagnosisTemplate()
         {
-            InitializeComponent();           
-            LoadDiagnosisCombobox();            
+            InitializeComponent();
+            LoadDiagnosisCombobox();
+
+            DiagnosisComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
+                    new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
         }
 
-        model.ContextDb db = new model.ContextDb();
-        model.diagnosis diagnosis = new model.diagnosis();
-        model.diagnosis_templates diagnosis_template = new model.diagnosis_templates();
-        model.medicine medicine = new model.medicine();
+        ContextDb db = new ContextDb();
+        diagnosis diagnosis = new diagnosis();
+        diagnosis_templates diagnosis_template = new diagnosis_templates();
+        diagnosis_medicines diagnosis_medecine = new diagnosis_medicines();
+        medicine medicine = new medicine();
 
         private void SubmitAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if(DiagnosisComboBox.SelectedItem != "Type here..." && Instruction.Text != "")
+            if (DiagnosisComboBox.SelectedItem != "Type here..." && Instruction.Text != "")
             {
-                ChosenControl chosenControl = new ChosenControl();
-                //var test = chosenControl._nodeList;
-                //var test = ChosenControl.SessionChosen.SelectedTokens;
+                //try
+                //{
+                diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
 
+                var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id);
 
-
-
-                try
+                if (haveDiagnosisTemplate == null)
                 {
-                    diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.SelectedItem.ToString());
+                    NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
 
-                    var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_id == diagnosis.id);
+                    diagnosis_template.diagnosis_list_id = diagnosis.id;
+                    diagnosis_template.instructions = Instruction.Text;
+                    diagnosis_template.status = true;
+                    diagnosis_template.created = DateTime.Now;
+                    db.diagnosis_templates.Add(diagnosis_template);
 
-                    if (haveDiagnosisTemplate == null)
+                    int result_diagnosis_template = db.SaveChanges();
+                    if (result_diagnosis_template > 0)
                     {
-                        NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
+                        int diagnosis_template_id = diagnosis_template.id;
 
-                        diagnosis_template.diagnosis_id = diagnosis.id;
-                        diagnosis_template.instructions = Instruction.Text;
-                        diagnosis_template.status = true;
-                        diagnosis_template.created = DateTime.Now;
-                        db.diagnosis_templates.Add(diagnosis_template);                        
-                        db.SaveChanges();
+                        // delete
+                        var diagnosis_medicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosis_template_id);
+                        if (diagnosis_medicines.Count() > 0)
+                        {
+                            db.diagnosis_medicines.RemoveRange(diagnosis_medicines);
+                            int delete_result = db.SaveChanges();
+                        }
+                        
+                        // add
+                        var ids = ChosenControl.selectedIds;
+                        foreach (int medicine_id in ids)
+                        {
+                            diagnosis_medecine.diagnosis_id = diagnosis_template_id;
+                            diagnosis_medecine.medicine_id = medicine_id;
+                            diagnosis_medecine.status = true;
+                            diagnosis_medecine.created = DateTime.Now;
+                            db.diagnosis_medicines.Add(diagnosis_medecine);
+                            int retult_diagnosis_medecines = db.SaveChanges();
+                        }
+                        
+                    }
 
-                        MessageBox.Show("Diagnosis Tempalte has been saved", "Save");                       
-                    }
-                    else
-                    {
-                        MessageBox.Show("The Diagnosis Template already exist", "Already Exit");
-                    }
+                    MessageBox.Show("Diagnosis Tempalte has been saved", "Save");
                 }
-                catch
+                else
                 {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }               
+                    MessageBox.Show("The Diagnosis Template already exist", "Already Exit");
+                }
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                //}
             }
             else
             {
@@ -85,7 +109,7 @@ namespace Healthtechbd
         {
             try
             {
-                var diagnosis = db.diagnosis.OrderByDescending(x => x.created).ToList();
+                var diagnosis = db.diagnosis.OrderByDescending(x => x.created).Take(10).ToList();
 
                 foreach (var item in diagnosis)
                 {
@@ -95,7 +119,7 @@ namespace Healthtechbd
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }            
+            }
         }
 
         private void CancelAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
@@ -111,7 +135,7 @@ namespace Healthtechbd
 
             var item = obj.Text;
 
-            var diagnosis = db.diagnosis.Where(x => x.name.Contains(item)).OrderByDescending(x => x.created).ToList();
+            var diagnosis = db.diagnosis.Where(x => x.name.Contains(item)).OrderByDescending(x => x.created).Take(10).ToList();
             DiagnosisComboBox.Items.Clear();
 
             foreach (var data in diagnosis)
@@ -129,6 +153,6 @@ namespace Healthtechbd
         {
             DiagnosisComboBox.IsDropDownOpen = true;
         }
-        
+
     }
 }

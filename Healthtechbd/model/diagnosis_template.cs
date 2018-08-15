@@ -6,15 +6,15 @@ namespace Healthtechbd.model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("wpf_healthtechbd.diagnosis_templates")]
+    [Table("wpf_healthtechbd.diagnosis")]
     public partial class diagnosis_templates
     {
         public int id { get; set; }
 
         public int doctor_id { get; set; }
 
-        public int diagnosis_id { get; set; }
-        [ForeignKey("diagnosis_id")]
+        public int diagnosis_list_id { get; set; }
+        [ForeignKey("diagnosis_list_id")]
         public virtual diagnosis diagnosis { get; set; }
 
         [StringLength(222)]

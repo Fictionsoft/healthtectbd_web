@@ -10,7 +10,7 @@ using WpfChosenControl.model;
 namespace Healthtechbd
 {
     public class MainModel : ViewModelBase
-    {        
+    {
         private ObservableCollection<IdNameModel> _medicinesLists;
         private List<IdNameModel> _selectedMedicines;
 
@@ -41,32 +41,53 @@ namespace Healthtechbd
             }
         }
 
-        model.ContextDb db = new model.ContextDb();        
-
+        ContextDb db = new ContextDb();
         public MainModel()
         {
-            var items = new ObservableCollection<IdNameModel>();
+            var medicines = new ObservableCollection<IdNameModel>();
 
-            var medicinesLists = db.medicines.OrderByDescending(x => x.created).ToList();
+            var medicinesLists = db.medicines.OrderByDescending(x => x.created).Take(10).ToList();
 
             foreach (var medicine in medicinesLists)
             {
-                items.Add(new IdNameModel() { Id = medicine.id, Name = medicine.name });
+                medicines.Add(new IdNameModel() { Id = medicine.id, Name = medicine.name });
             }
 
-            MedicinesLists = items;
-            var medicines = new List<IdNameModel>();
-            //medicines.Add(MedicinesLists.First());
-            //medicines.Add(MedicinesLists.LastOrDefault());
+            MedicinesLists = medicines;
 
-            this.SelectedMedicines = medicines;
-        }        
+            var students = new List<IdNameModel>();
+            SelectedMedicines = students;
 
-        //private void Submit()
-        //{
 
-        //}
-        
+        }
+
+        public MainModel(int diagonosis_template_id) : this()
+        {
+            
+            //this.SelectedMedicines = students;
+
+            //var existing_items = new ObservableCollection<IdNameModel>();
+            //var existing_medicines = db.diagnosis_medicines
+            //.Where(x => x.diagnosis_id == diagonosis_template_id)
+            //.Select(x => new
+            //{
+            //    Id = x.medicine.id,
+            //    Name = x.medicine.name
+            //})
+            //.ToList();
+
+            //if (existing_medicines.Count() > 0)
+            //{
+            //    foreach (var existing_medicine in existing_medicines)
+            //    {
+            //        existing_items.Add(new IdNameModel() { Id = existing_medicine.Id, Name = existing_medicine.Name });
+            //    }
+            //}
+            //MedicinesLists = existing_items;
+            //var medecines = new List<IdNameModel>();
+            //medecines.AddRange(existing_items);
+            //this.SelectedMedicines = medecines;
+        }
     }
 }
 
