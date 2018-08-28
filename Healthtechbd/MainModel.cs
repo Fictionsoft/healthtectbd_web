@@ -24,7 +24,7 @@ namespace Healthtechbd
             set
             {
                 _medicinesLists = value;
-                NotifyPropertyChanged("MedicinesLists");
+                //NotifyPropertyChanged("MedicinesLists");
             }
         }
 
@@ -37,7 +37,7 @@ namespace Healthtechbd
             set
             {
                 _selectedMedicines = value;
-                NotifyPropertyChanged("SelectedItems");
+                //NotifyPropertyChanged("SelectedItems");
             }
         }
 
@@ -55,8 +55,8 @@ namespace Healthtechbd
 
             MedicinesLists = medicines;
 
-            var students = new List<IdNameModel>();
-            SelectedMedicines = students;
+            var selected_medicines = new List<IdNameModel>();
+            SelectedMedicines = selected_medicines;
 
 
         }

@@ -135,7 +135,7 @@ namespace Healthtechbd
 
             var item = obj.Text;
 
-            var diagnosis = db.diagnosis.Where(x => x.name.Contains(item)).OrderByDescending(x => x.created).Take(10).ToList();
+            var diagnosis = db.diagnosis.Where(x => x.name.StartsWith(item)).OrderByDescending(x => x.created).Take(10).ToList();
             DiagnosisComboBox.Items.Clear();
 
             foreach (var data in diagnosis)

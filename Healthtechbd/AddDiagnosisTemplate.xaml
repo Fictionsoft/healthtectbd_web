@@ -68,7 +68,7 @@
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
                                 <Grid DataContext="{StaticResource viewmodel}">
-                                    <control:ChosenControl ItemsSource="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items." ValueMemberPath="Id"   DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
+                                    <control:ChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items." ValueMemberPath="Id"   DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
                                 </Grid>
                             </StackPanel>
 
