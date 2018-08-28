@@ -60,7 +60,6 @@ namespace Healthtechbd
         public EditDiagnosisTemplate(int id) : this()
         {
             DiagnosisTemplateId.Text = id.ToString();
-            ChosenControl chosenControl = new ChosenControl(id);
 
             try
             {
