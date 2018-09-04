@@ -38,8 +38,8 @@ namespace Healthtechbd
         {
             InitializeComponent();
            
-            sidebar = Sidebar; // To get sidebar
-            sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
+            //sidebar = Sidebar; // To get sidebar
+            //sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
             userName = UserName; // To get user name textblock
 
             this.registrationWindow = registrationWindow;
@@ -49,8 +49,8 @@ namespace Healthtechbd
         {
             InitializeComponent();
             
-            sidebar = Sidebar; // To get sidebar
-            sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation0   
+            //sidebar = Sidebar; // To get sidebar
+            //sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation0   
             userName = UserName; // To get user name textblock
 
             this.resetPasswordWindow = resetPasswordWindow;

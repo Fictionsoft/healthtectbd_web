@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Healthtechbd.model;
 
 namespace Healthtechbd
 {
@@ -26,8 +27,8 @@ namespace Healthtechbd
             loadPatients();
         }
 
-        model.ContextDb db = new model.ContextDb();
-        model.user user = new model.user();
+        contextd_db db = new contextd_db();
+        user user = new user();
 
         void loadPatients()   //User = Patient
         {
@@ -54,7 +55,7 @@ namespace Healthtechbd
             {
                 try
                 {
-                    int patientId = (dataGridPatients.SelectedItem as model.user).id;
+                    int patientId = (dataGridPatients.SelectedItem as user).id;
                     user = db.users.FirstOrDefault(x => x.id == patientId);
 
                     db.users.Remove(user);
@@ -71,7 +72,7 @@ namespace Healthtechbd
 
         private void btnEditPatientRow_Click(object sender, RoutedEventArgs e)
         {
-            int patientId = (dataGridPatients.SelectedItem as model.user).id;
+            int patientId = (dataGridPatients.SelectedItem as user).id;
             EditPatient editPatient = new EditPatient(patientId);
             NavigationService.Navigate(editPatient);
         }

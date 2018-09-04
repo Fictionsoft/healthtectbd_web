@@ -28,7 +28,7 @@ namespace Healthtechbd
             loadDiagnosisTemplates();
         }
 
-        ContextDb db = new ContextDb();
+        contextd_db db = new contextd_db();
         //diagnosis diagnosis = new diagnosis();
         diagnosis_templates diagnosis_template = new diagnosis_templates();
 

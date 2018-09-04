@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Healthtechbd.model;
 
 namespace Healthtechbd
 {
@@ -27,8 +28,8 @@ namespace Healthtechbd
             loadDiagnosis();
         }
 
-        model.ContextDb db = new model.ContextDb();
-        model.diagnosis diagnosis = new model.diagnosis();
+        contextd_db db = new contextd_db();
+        diagnosis diagnosis = new diagnosis();
 
         void loadDiagnosis()
         {
@@ -53,7 +54,7 @@ namespace Healthtechbd
             if (MessageBox.Show("Are You Sure ?", "Confirm",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                int diagnosisId = (dataGridDiagnosis.SelectedItem as model.diagnosis).id;
+                int diagnosisId = (dataGridDiagnosis.SelectedItem as diagnosis).id;
                 try
                 {
                     diagnosis = db.diagnosis.FirstOrDefault(x => x.id == diagnosisId);
@@ -72,7 +73,7 @@ namespace Healthtechbd
 
         private void btnEditDiagnosisRow_Click(object sender, RoutedEventArgs e)
         {
-            int diagnosisId = (dataGridDiagnosis.SelectedItem as model.diagnosis).id;
+            int diagnosisId = (dataGridDiagnosis.SelectedItem as diagnosis).id;
             EditDiagnosis editDiagnosis = new EditDiagnosis(diagnosisId);
             NavigationService.Navigate(editDiagnosis);
         }

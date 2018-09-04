@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Healthtechbd.model;
 
 namespace Healthtechbd
 {
@@ -48,8 +49,8 @@ namespace Healthtechbd
             mainWindow.Show();
         }
 
-        model.ContextDb db = new model.ContextDb();
-        model.user user = new model.user();
+        contextd_db db = new contextd_db();
+        user user = new user();
 
         private void ButtonResetPassword_Click(object sender, RoutedEventArgs e)
         {

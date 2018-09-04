@@ -1,6 +1,7 @@
 ﻿using Healthtechbd.model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,10 +30,10 @@ namespace Healthtechbd
 
             DiagnosisComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
                     new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
-        }
-        
+        }        
+
         diagnosis_templates diagnosis_template = new diagnosis_templates();
-        ContextDb db = new ContextDb();
+        contextd_db db = new contextd_db();
         diagnosis diagnosis = new diagnosis();
 
         void LoadDiagnosisCombobox()
@@ -61,6 +62,8 @@ namespace Healthtechbd
         {
             DiagnosisTemplateId.Text = id.ToString();
 
+            MainWindow.Session.editRecordId = id;
+            MainModel mainModel = new MainModel();
             try
             {
                 var diagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.id == id);
@@ -128,5 +131,8 @@ namespace Healthtechbd
         {
             DiagnosisComboBox.IsDropDownOpen = true;
         }
+        
     }
+
+   
 }

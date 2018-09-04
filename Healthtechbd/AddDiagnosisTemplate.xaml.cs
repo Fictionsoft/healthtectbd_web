@@ -34,7 +34,7 @@ namespace Healthtechbd
                     new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
         }
 
-        ContextDb db = new ContextDb();
+        contextd_db db = new contextd_db();
         diagnosis diagnosis = new diagnosis();
         diagnosis_templates diagnosis_template = new diagnosis_templates();
         diagnosis_medicines diagnosis_medecine = new diagnosis_medicines();

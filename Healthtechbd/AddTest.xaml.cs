@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Healthtechbd.model;
 
 namespace Healthtechbd
 {
@@ -25,8 +26,8 @@ namespace Healthtechbd
             InitializeComponent();
         }
 
-        model.ContextDb db = new model.ContextDb();
-        model.test test = new model.test();
+        contextd_db db = new contextd_db();
+        test test = new test();
 
         private void SubmitAddTest_Click(object sender, RoutedEventArgs e)
         {

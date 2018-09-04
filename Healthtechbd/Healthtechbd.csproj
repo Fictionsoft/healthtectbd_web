@@ -127,7 +127,7 @@
       <DependentUpon>EditPatient.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainModel.cs" />
-    <Compile Include="model\ContextDb.cs" />
+    <Compile Include="model\context_db.cs" />
     <Compile Include="Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>

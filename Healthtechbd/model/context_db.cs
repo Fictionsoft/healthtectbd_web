@@ -5,10 +5,10 @@ namespace Healthtechbd.model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class ContextDb : DbContext
+    public partial class contextd_db : DbContext
     {
-        public ContextDb()
-            : base("name=ContextDb")
+        public contextd_db()
+            : base("name=contextd_db")
         {
         }
 

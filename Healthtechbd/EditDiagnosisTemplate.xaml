@@ -10,13 +10,12 @@
       Title="Add Diagnosis Template">
 
     <Page.Resources>
-        <local:MainModel x:Key="viewmodel"/>
+        <local:MainModel x:Key="mainmodel"/>
     </Page.Resources>
 
     <StackPanel>
         <!--Page Heading-->
         <Grid Height="60" Background="#fff" VerticalAlignment="top">
-
             <Border Margin="20 0 0 0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Diagnosis Templates" MouseDown="CancelAddDiagnosisTemplate_Click" />
@@ -24,7 +23,6 @@
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Add Diagnosis Template"/>
                 </StackPanel>
             </Border>
-
         </Grid>
 
         <!--Page Heading Bottom-->
@@ -65,8 +63,8 @@
 
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
-                                <Grid DataContext="{StaticResource viewmodel}">
-                                    <control:ChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items." ValueMemberPath="Id"   DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
+                                <Grid DataContext="{StaticResource mainmodel}">
+                                    <control:ChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"   DefaultMessage="Please Select Items."  ValueMemberPath="Id" DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
                                 </Grid>
                             </StackPanel>
 

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Healthtechbd.model;
 
 namespace Healthtechbd
 {
@@ -27,8 +28,8 @@ namespace Healthtechbd
             loadTests();
         }
 
-        model.ContextDb db = new model.ContextDb();
-        model.test test = new model.test();
+        contextd_db db = new contextd_db();
+        test test = new test();
 
         private void ButtonAddTest_Click(object sender, RoutedEventArgs e)
         {
@@ -53,7 +54,7 @@ namespace Healthtechbd
             if (MessageBox.Show("Are You Sure ?", "Confirm",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                int testId = (dataGridTests.SelectedItem as model.test).id;
+                int testId = (dataGridTests.SelectedItem as test).id;
 
                 try
                 {
@@ -73,7 +74,7 @@ namespace Healthtechbd
 
         private void btnEditTestRow_Click(object sender, RoutedEventArgs e)
         {
-            int testId = (dataGridTests.SelectedItem as model.test).id;
+            int testId = (dataGridTests.SelectedItem as test).id;
             EditTest editTest = new EditTest(testId);
             NavigationService.Navigate(editTest);
         }
