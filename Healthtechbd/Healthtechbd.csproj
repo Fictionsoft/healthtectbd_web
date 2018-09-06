@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="model\medicine.cs" />
     <Compile Include="model\test.cs" />
+    <Compile Include="TestModel.cs" />
     <Compile Include="Tests.xaml.cs">
       <DependentUpon>Tests.xaml</DependentUpon>
     </Compile>

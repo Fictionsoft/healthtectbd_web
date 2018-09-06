@@ -36,8 +36,9 @@ namespace Healthtechbd
 
         contextd_db db = new contextd_db();
         diagnosis diagnosis = new diagnosis();
-        diagnosis_templates diagnosis_template = new diagnosis_templates();
-        diagnosis_medicines diagnosis_medecine = new diagnosis_medicines();
+        diagnosis_template diagnosis_template = new diagnosis_template();
+        diagnosis_medicine diagnosis_medecine = new diagnosis_medicine();
+        diagnosis_test diagnosis_test = new diagnosis_test();
         medicine medicine = new medicine();
 
         private void SubmitAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
@@ -65,7 +66,7 @@ namespace Healthtechbd
                     {
                         int diagnosis_template_id = diagnosis_template.id;
 
-                        // delete
+                        //medicines delete
                         var diagnosis_medicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosis_template_id);
                         if (diagnosis_medicines.Count() > 0)
                         {
@@ -73,9 +74,9 @@ namespace Healthtechbd
                             int delete_result = db.SaveChanges();
                         }
                         
-                        // add
-                        var ids = ChosenControl.selectedIds;
-                        foreach (int medicine_id in ids)
+                        //medicines add
+                        var medicinesIds = ChosenControl.selectedIds;
+                        foreach (int medicine_id in medicinesIds)
                         {
                             diagnosis_medecine.diagnosis_id = diagnosis_template_id;
                             diagnosis_medecine.medicine_id = medicine_id;
@@ -84,7 +85,31 @@ namespace Healthtechbd
                             db.diagnosis_medicines.Add(diagnosis_medecine);
                             int retult_diagnosis_medecines = db.SaveChanges();
                         }
-                        
+
+                        ChosenControl.selectedIds.Clear();
+
+                        //test delete
+                        var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosis_template_id);
+                        if (diagnosis_tests.Count() > 0)
+                        {
+                            db.diagnosis_tests.RemoveRange(diagnosis_tests);
+                            int delete_result = db.SaveChanges();
+                        }
+
+                        //tets add
+                        var testsIds = TestChosenControl.selectedIds;
+                        foreach (int test_id in testsIds)
+                        {
+                            diagnosis_test.diagnosis_id = diagnosis_template_id;
+                            diagnosis_test.test_id = test_id;
+                            diagnosis_test.status = true;
+                            diagnosis_test.created = DateTime.Now;
+                            db.diagnosis_tests.Add(diagnosis_test);
+                            int retult_diagnosis_tests = db.SaveChanges();
+                        }
+
+                        TestChosenControl.selectedIds.Clear();
+
                     }
 
                     MessageBox.Show("Diagnosis Tempalte has been saved", "Save");

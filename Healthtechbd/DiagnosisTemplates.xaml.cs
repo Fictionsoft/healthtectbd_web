@@ -28,9 +28,8 @@ namespace Healthtechbd
             loadDiagnosisTemplates();
         }
 
-        contextd_db db = new contextd_db();
-        //diagnosis diagnosis = new diagnosis();
-        diagnosis_templates diagnosis_template = new diagnosis_templates();
+        contextd_db db = new contextd_db();        
+        diagnosis_template diagnosis_template = new diagnosis_template();        
 
         void loadDiagnosisTemplates()
         {
@@ -60,13 +59,22 @@ namespace Healthtechbd
             if (MessageBox.Show("Are You Sure ?", "Confirm",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as model.diagnosis_templates).id;
+                int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosis_template).id;
 
                 try
                 {
+                    //Remove Diagnosis Template
                     diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == diagnosisTemplateId);
-
                     db.diagnosis_templates.Remove(diagnosis_template);
+
+                    //Remove Diagnosis_Tests
+                    var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
+                    db.diagnosis_tests.RemoveRange(diagnosis_tests);
+
+                    //Remove Diagnosis_Medicines
+                    var diagnosis_medicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
+                    db.diagnosis_medicines.RemoveRange(diagnosis_medicines);
+
                     db.SaveChanges();
                     loadDiagnosisTemplates();
                     MessageBox.Show("Delete Successfully", "Success");
@@ -80,7 +88,7 @@ namespace Healthtechbd
 
         private void btnEditDiagnosisTemplateRow_Click(object sender, RoutedEventArgs e)
         {
-            int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosis_templates).id;
+            int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosis_template).id;
             EditDiagnosisTemplate editDiagnosisTemplate = new EditDiagnosisTemplate(diagnosisTemplateId);
             NavigationService.Navigate(editDiagnosisTemplate);
         }

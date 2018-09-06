@@ -68,14 +68,15 @@ namespace Healthtechbd
 
             MedicinesLists = medicines;
 
-            //var selected_medicines = new List<IdNameModel>();
-            //SelectedMedicines = selected_medicines;
-
-            //ItemId = MainWindow.Session.editRecordId.ToString();
             int ItemId = MainWindow.Session.editRecordId;
             if (ItemId > 0)
             {
                 LoadExistingItems(ItemId);
+            }
+            else
+            {
+                var selected_medicines = new List<IdNameModel>();
+                SelectedMedicines = selected_medicines;
             }
         }
 
