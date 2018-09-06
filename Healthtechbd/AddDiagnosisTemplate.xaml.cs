@@ -75,7 +75,7 @@ namespace Healthtechbd
                         }
                         
                         //medicines add
-                        var medicinesIds = ChosenControl.selectedIds;
+                        var medicinesIds = MedicineChosenControl.selectedIds;
                         foreach (int medicine_id in medicinesIds)
                         {
                             diagnosis_medecine.diagnosis_id = diagnosis_template_id;
@@ -86,7 +86,7 @@ namespace Healthtechbd
                             int retult_diagnosis_medecines = db.SaveChanges();
                         }
 
-                        ChosenControl.selectedIds.Clear();
+                        MedicineChosenControl.selectedIds.Clear();
 
                         //test delete
                         var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosis_template_id);
