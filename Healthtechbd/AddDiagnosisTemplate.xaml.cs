@@ -158,9 +158,9 @@ namespace Healthtechbd
 
             ComboBox obj = sender as ComboBox;
 
-            var item = obj.Text;
+            var searchBy = obj.Text;
 
-            var diagnosis = db.diagnosis.Where(x => x.name.StartsWith(item)).OrderByDescending(x => x.created).Take(10).ToList();
+            var diagnosis = db.diagnosis.Where(x => x.name.StartsWith(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
             DiagnosisComboBox.Items.Clear();
 
             foreach (var data in diagnosis)
@@ -170,7 +170,7 @@ namespace Healthtechbd
 
             if (diagnosis.Count == 0)
             {
-                DiagnosisComboBox.Items.Add("No results mached with " + item);
+                DiagnosisComboBox.Items.Add("No results mached with " + searchBy);
             }
         }
 

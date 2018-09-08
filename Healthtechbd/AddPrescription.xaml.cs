@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfChosenControl.model;
 
 namespace Healthtechbd
 {
@@ -23,6 +24,70 @@ namespace Healthtechbd
         public AddPrescription()
         {
             InitializeComponent();
+
+            LoadPatientCombobox();
+            LoadDiagnosisCheckbox();
+
+            PatientComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
+                   new System.Windows.Controls.TextChangedEventHandler(PatientComboBox_TextChanged));
+        }        
+
+        contextd_db db = new contextd_db();
+        user patient = new user();
+
+        void LoadPatientCombobox()
+        {
+            try
+            {
+                var patients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.userId).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+
+                foreach (var patient in patients)
+                {
+                    PatientComboBox.Items.Add(patient.first_name);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void PatientComboBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PatientComboBox.IsDropDownOpen = true;
+        }
+
+        private void PatientComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PatientComboBox.IsDropDownOpen = true;
+
+            ComboBox obj = sender as ComboBox;
+
+            var searchBy = obj.Text;
+
+            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.userId) && (x.first_name.StartsWith(searchBy) || x.last_name.StartsWith(searchBy))).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+            PatientComboBox.Items.Clear();
+
+            foreach (var patient in patients)
+            {
+                PatientComboBox.Items.Add(patient.first_name);
+            }
+
+            if (patients.Count == 0)
+            {
+                PatientComboBox.Items.Add("No results mached with " + searchBy);
+            }
+        }
+
+        void LoadDiagnosisCheckbox()
+        {
+            var diagnosisTemplates = db.diagnosis_templates.ToList();
+            foreach (var diagnosisTemplate in diagnosisTemplates)
+            {
+                CheckBox checkbox = new CheckBox();
+                checkbox.Content = diagnosisTemplate.diagnosis.name.ToString();
+                DiagnosisCheckbox.Children.Add(checkbox);
+            }
         }
 
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
@@ -34,5 +99,26 @@ namespace Healthtechbd
 
             AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).
         }
+
+        private void PatientComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
+
+            PatientPhone.Text = patient.phone;
+            PatientAddress.Text = patient.address_line1;
+            PatientAge.Text = patient.age;
+        }
+
+        private void HandleCheck(object sender, RoutedEventArgs e)
+        {
+            NewPatientName.Visibility = Visibility.Visible;
+            PatientComboBox.Visibility = Visibility.Hidden;
+        }
+
+        private void HandleUnchecked(object sender, RoutedEventArgs e)
+        {
+            NewPatientName.Visibility = Visibility.Hidden;
+            PatientComboBox.Visibility = Visibility.Visible;
+        }        
     }
 }

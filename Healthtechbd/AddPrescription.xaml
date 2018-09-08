@@ -10,6 +10,12 @@
       Title="AddPrescription">
 
     <Page.Resources>
+        <Style TargetType="ComboBox" x:Key="DiagnosisComboBox">
+            <Setter Property="BorderBrush" Value="#eee"/>
+            <Setter Property="Foreground" Value="#7d7d7d"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
         <Style TargetType="TextBox" x:Key="PrescriptionInputField">
             <Setter Property="BorderBrush" Value="#eee"/>
             <Setter Property="Foreground" Value="#7d7d7d"/>
@@ -81,29 +87,36 @@
 
                                     <Border Grid.Row="0" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
-                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Name" VerticalAlignment="Center"/>
-                                            <TextBox Style="{StaticResource PrescriptionInputField}" Width="333" Text=""/>
+                                            <TextBlock Width="43" FontWeight="SemiBold" Margin="0,4,5,5" Text="Name:" VerticalAlignment="Center"/>
+
+                                            <ToggleButton Margin="-10 0 0 0" Content="New" Checked = "HandleCheck" Unchecked = "HandleUnchecked" Width="42" />
+                                            <!--<materialDesign:PackIcon x:Name="ButtonTogglePatient" Kind="Pencil" Margin="-6,6,0,0" Height="15" Width="27" MouseDown="ButtonTogglePatient_MouseDown"/>-->
+
+
+                                            <ComboBox IsTextSearchEnabled="False" IsEditable="True" Width="290" Padding="0 -0.5 0 0" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
+
+                                            <TextBox x:Name="NewPatientName" Visibility="Hidden" Margin="-310 0 0 0" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="290" HorizontalAlignment="Right" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="1" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
-                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Phone" VerticalAlignment="Center"/>
-                                            <TextBox Style="{StaticResource PrescriptionInputField}" Width="320" Text=""/>
+                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Phone:" VerticalAlignment="Center"/>
+                                            <TextBox x:Name="PatientPhone" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="310" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="2" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
-                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Address" VerticalAlignment="Center"/>
-                                            <TextBox Width="320" Style="{StaticResource PrescriptionInputField}" Text=""/>
+                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Address:" VerticalAlignment="Center"/>
+                                            <TextBox x:Name="PatientAddress" Width="310" Style="{StaticResource PrescriptionInputField}" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="3" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
-                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Age" VerticalAlignment="Center"/>
-                                            <TextBox Width="320" Style="{StaticResource PrescriptionInputField}"  Text=""/>
+                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Age:" VerticalAlignment="Center"/>
+                                            <TextBox x:Name="PatientAge" Padding="0 -0.5 0 0" Width="310" Style="{StaticResource PrescriptionInputField}"  Text=""/>
                                         </StackPanel>
                                     </Border>
 
@@ -125,14 +138,14 @@
 
                                     <Border Grid.Row="0" Padding="5">
                                         <StackPanel  Orientation="Horizontal">
-                                            <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="BP" VerticalAlignment="Center"/>
-                                            <TextBox Style="{StaticResource PrescriptionInputField}" Width="150" Text=""/>
+                                            <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="BP:" VerticalAlignment="Center"/>
+                                            <TextBox Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="1" Padding="5">
                                         <StackPanel  Orientation="Horizontal">
-                                            <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="Temperature" VerticalAlignment="Center"/>
+                                            <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="Temperature:" VerticalAlignment="Center"/>
                                             <TextBox Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
                                         </StackPanel>
                                     </Border>
@@ -196,20 +209,7 @@
 
                                     <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8" Background="#fff" Height="245">-->
                                     <Grid Background="#fff" Height="245">
-                                        <WrapPanel Margin="5 10" VerticalAlignment="Top" Orientation="Horizontal">
-                                            <CheckBox Content="Spellacy gibbs watts syndrome" />
-                                            <CheckBox Content="Taeniasis" />
-                                            <CheckBox Content="Spie" />
-                                            <CheckBox Content="Spellacy gibbs watts syndrome" />
-                                            <CheckBox Content="West Nile virus" />
-                                            <CheckBox Content="Wes" />
-                                            <CheckBox Content="Xeroderma"/>
-                                            <CheckBox Content="X fragile site folic acid type"/>
-                                            <CheckBox Content="Trichinellosis" />
-                                            <CheckBox Content="Transitional cell carcinoma" />
-                                            <CheckBox Content="Tre" />
-                                            <CheckBox Content="Aagenaes syndrome" />
-                                            <CheckBox Content="Absence of gluteal muscle" />
+                                        <WrapPanel x:Name="DiagnosisCheckbox" Margin="5 10" VerticalAlignment="Top" Orientation="Horizontal">
                                         </WrapPanel>
                                     </Grid>
 

@@ -62,7 +62,7 @@ namespace Healthtechbd
         {
             DiagnosisTemplateId.Text = id.ToString();
 
-            MainWindow.Session.editRecordId = id;
+            //MainWindow.Session.editRecordId = id;
             MainModel mainModel = new MainModel();
             try
             {

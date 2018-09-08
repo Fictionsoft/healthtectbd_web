@@ -58,7 +58,7 @@
 
                             <StackPanel Grid.Row="0" Grid.Column="0" Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Diagnosis Name *" />
-                                <ComboBox IsTextSearchEnabled="False" IsEditable="True" x:Name="DiagnosisComboBox" Style="{StaticResource ComboBox}" GotFocus="DiagnosisComboBox_GotFocus"/>
+                                <ComboBox IsTextSearchEnabled="False" IsEditable="True" x:Name="DiagnosisComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="DiagnosisComboBox_GotFocus"/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="0" Grid.Column="1"  Margin="5 0">
@@ -78,7 +78,7 @@
                                 <Grid DataContext="{StaticResource testmodel}" Height="102">
                                     <control:TestChosenControl TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,1,1,0"  />
                                 </Grid> 
-                            </StackPanel>
+                            </StackPanel> 
 
                         </Grid>
                     </Border>
