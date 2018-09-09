@@ -10,7 +10,7 @@
       Title="Add Diagnosis Template">
 
     <Page.Resources>
-        <local:MainModel x:Key="mainmodel"/>
+        <local:MedicineModel x:Key="medicinemodel"/>
     </Page.Resources>
 
     <StackPanel>
@@ -53,7 +53,7 @@
 
                             <StackPanel Grid.Row="0" Grid.Column="0" Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Diagnosis Name"/>
-                                <ComboBox IsTextSearchEnabled="False" IsEditable="True" x:Name="DiagnosisComboBox" Style="{StaticResource ComboBox}" GotFocus="DiagnosisComboBox_GotFocus"/>
+                                <ComboBox IsTextSearchEnabled="False" IsEditable="True" x:Name="DiagnosisComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="DiagnosisComboBox_GotFocus"/>
                             </StackPanel>
 
                             <StackPanel Grid.Row="0" Grid.Column="1" Margin="5 0">
@@ -63,7 +63,7 @@
 
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
-                                <Grid DataContext="{StaticResource mainmodel}">
+                                <Grid DataContext="{StaticResource medicinemodel}">
                                     <control:MedicineChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"   DefaultMessage="Please Select Items."  ValueMemberPath="Id" DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
                                 </Grid>
                             </StackPanel>

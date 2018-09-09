@@ -126,8 +126,6 @@
     <Compile Include="EditPatient.xaml.cs">
       <DependentUpon>EditPatient.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainModel.cs" />
-    <Compile Include="model\context_db.cs" />
     <Compile Include="Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -149,9 +147,8 @@
     <Compile Include="Medicines.xaml.cs">
       <DependentUpon>Medicines.xaml</DependentUpon>
     </Compile>
-    <Compile Include="model\diagnosis.cs" />
-    <Compile Include="model\diagnosis_template.cs" />
-    <Compile Include="model\user.cs" />
+    <Compile Include="MedicineModel.cs" />
+    <Compile Include="TestModel.cs" />
     <Compile Include="MyProfile.xaml.cs">
       <DependentUpon>MyProfile.xaml</DependentUpon>
     </Compile>
@@ -170,9 +167,6 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="model\medicine.cs" />
-    <Compile Include="model\test.cs" />
-    <Compile Include="TestModel.cs" />
     <Compile Include="Tests.xaml.cs">
       <DependentUpon>Tests.xaml</DependentUpon>
     </Compile>
@@ -336,6 +330,9 @@
       <Project>{07db70c6-e069-4c37-90c1-a4358c4b1fb3}</Project>
       <Name>WpfChosenControl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

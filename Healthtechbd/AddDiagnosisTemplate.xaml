@@ -11,7 +11,7 @@
       Title="Add Diagnosis Template">
 
     <Page.Resources>
-        <local:MainModel x:Key="mainmodel"/>
+        <local:MedicineModel x:Key="medicinemodel"/>
         <local:TestModel x:Key="testmodel"/>
     </Page.Resources>
 
@@ -68,7 +68,7 @@
 
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
-                                <Grid DataContext="{StaticResource mainmodel}" Height="102">
+                                <Grid DataContext="{StaticResource medicinemodel }" Height="102">
                                     <control:MedicineChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,1,1,0"  />
                                 </Grid>
                             </StackPanel>

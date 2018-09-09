@@ -9,9 +9,8 @@ using WpfChosenControl.model;
 
 namespace Healthtechbd
 {
-    public class MainModel : ViewModelBase
+    class MedicineModel : ViewModelBase
     {
-        
         private ObservableCollection<IdNameModel> _medicinesLists;
         public ObservableCollection<IdNameModel> MedicinesLists
         {
@@ -55,7 +54,7 @@ namespace Healthtechbd
         //}
 
         contextd_db db = new contextd_db();
-        public MainModel()
+        public MedicineModel()
         {
             var medicines = new ObservableCollection<IdNameModel>();
 

@@ -29,12 +29,13 @@ namespace Healthtechbd
             LoadDiagnosisCheckbox();
 
             PatientComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
-                   new System.Windows.Controls.TextChangedEventHandler(PatientComboBox_TextChanged));
+                   new System.Windows.Controls.TextChangedEventHandler(PatientComboBox_TextChanged));           
         }        
 
         contextd_db db = new contextd_db();
         user patient = new user();
 
+        //Load Patient Combobox.....
         void LoadPatientCombobox()
         {
             try
@@ -50,6 +51,28 @@ namespace Healthtechbd
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        //Patient Combobox DropDown Closed..........
+        private void PatientComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
+
+            PatientPhone.Text = patient.phone;
+            PatientAddress.Text = patient.address_line1;
+            PatientAge.Text = patient.age;
+        }
+
+        private void NewPatientCheck(object sender, RoutedEventArgs e)
+        {
+            NewPatientName.Visibility = Visibility.Visible;
+            PatientComboBox.Visibility = Visibility.Hidden;
+        }
+
+        private void NewPatientUncheck(object sender, RoutedEventArgs e)
+        {
+            NewPatientName.Visibility = Visibility.Hidden;
+            PatientComboBox.Visibility = Visibility.Visible;
         }
 
         private void PatientComboBox_GotFocus(object sender, RoutedEventArgs e)
@@ -79,15 +102,33 @@ namespace Healthtechbd
             }
         }
 
+        //Load Diagnosis CheckBox.....
         void LoadDiagnosisCheckbox()
         {
             var diagnosisTemplates = db.diagnosis_templates.ToList();
             foreach (var diagnosisTemplate in diagnosisTemplates)
             {
-                CheckBox checkbox = new CheckBox();
+                CheckBox checkbox = new CheckBox();                                                    
                 checkbox.Content = diagnosisTemplate.diagnosis.name.ToString();
+                checkbox.DataContext = diagnosisTemplate.id;
                 DiagnosisCheckbox.Children.Add(checkbox);
+
+                checkbox.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(DiagnosisChecked));
             }
+        }
+
+        private void DiagnosisChecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox; 
+            var diagnosisTemplateId = (int)checkBox.DataContext;
+
+            var diagnosisTemplate = db.diagnosis_templates.Where(x => x.id == diagnosisTemplateId).FirstOrDefault();
+            DoctorsNotes.Text = diagnosisTemplate.instructions;
+
+            var diagnosisMedicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
+            var diagnosisTests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
+
+
         }
 
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
@@ -98,27 +139,6 @@ namespace Healthtechbd
             sidebar.Visibility = Visibility.Visible;
 
             AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).
-        }
-
-        private void PatientComboBox_DropDownClosed(object sender, EventArgs e)
-        {
-            patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
-
-            PatientPhone.Text = patient.phone;
-            PatientAddress.Text = patient.address_line1;
-            PatientAge.Text = patient.age;
-        }
-
-        private void HandleCheck(object sender, RoutedEventArgs e)
-        {
-            NewPatientName.Visibility = Visibility.Visible;
-            PatientComboBox.Visibility = Visibility.Hidden;
-        }
-
-        private void HandleUnchecked(object sender, RoutedEventArgs e)
-        {
-            NewPatientName.Visibility = Visibility.Hidden;
-            PatientComboBox.Visibility = Visibility.Visible;
-        }        
+        }       
     }
 }

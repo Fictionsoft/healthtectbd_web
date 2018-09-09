@@ -1,4 +1,4 @@
-﻿using Healthtechbd.model;
+﻿using WpfChosenControl.model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +32,7 @@ namespace Healthtechbd
                     new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
         }        
 
-        diagnosis_templates diagnosis_template = new diagnosis_templates();
+        diagnosis_template diagnosis_template = new diagnosis_template();
         contextd_db db = new contextd_db();
         diagnosis diagnosis = new diagnosis();
 
@@ -62,8 +62,8 @@ namespace Healthtechbd
         {
             DiagnosisTemplateId.Text = id.ToString();
 
-            //MainWindow.Session.editRecordId = id;
-            MainModel mainModel = new MainModel();
+            MainWindow.Session.editRecordId = id;
+            MedicineModel mainModel = new MedicineModel();
             try
             {
                 var diagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.id == id);

@@ -88,11 +88,7 @@
                                     <Border Grid.Row="0" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="43" FontWeight="SemiBold" Margin="0,4,5,5" Text="Name:" VerticalAlignment="Center"/>
-
-                                            <ToggleButton Margin="-10 0 0 0" Content="New" Checked = "HandleCheck" Unchecked = "HandleUnchecked" Width="42" />
-                                            <!--<materialDesign:PackIcon x:Name="ButtonTogglePatient" Kind="Pencil" Margin="-6,6,0,0" Height="15" Width="27" MouseDown="ButtonTogglePatient_MouseDown"/>-->
-
-
+                                            <ToggleButton Margin="-10 0 0 0" Content="New" Checked = "NewPatientCheck" Unchecked = "NewPatientUncheck" Width="42" />
                                             <ComboBox IsTextSearchEnabled="False" IsEditable="True" Width="290" Padding="0 -0.5 0 0" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
 
                                             <TextBox x:Name="NewPatientName" Visibility="Hidden" Margin="-310 0 0 0" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="290" HorizontalAlignment="Right" Text=""/>
@@ -167,7 +163,7 @@
 
                             <Border Background="#EBEBEB" CornerRadius="5" Padding="5">
                                 <Grid Height="130">
-                                    <TextBox TextWrapping="Wrap" Height="130" BorderThickness="0" Style="{StaticResource PrescriptionInputField}" Text=""/>
+                                    <TextBox x:Name="DoctorsNotes" TextWrapping="Wrap" Height="130" BorderThickness="0" Style="{StaticResource PrescriptionInputField}" Text=""/>
                                 </Grid>
                             </Border>
 
@@ -210,6 +206,7 @@
                                     <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8" Background="#fff" Height="245">-->
                                     <Grid Background="#fff" Height="245">
                                         <WrapPanel x:Name="DiagnosisCheckbox" Margin="5 10" VerticalAlignment="Top" Orientation="Horizontal">
+                                            
                                         </WrapPanel>
                                     </Grid>
 
