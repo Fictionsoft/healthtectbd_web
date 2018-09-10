@@ -7,7 +7,7 @@ using System.Windows.Input;
 using WpfChosenControl;
 using WpfChosenControl.model;
 
-namespace Healthtechbd
+namespace Healthtechbd.Model
 {
     class TestModel: ViewModelBase
     {

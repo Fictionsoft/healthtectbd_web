@@ -3,13 +3,18 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Healthtechbd"
+      xmlns:control="clr-namespace:WpfChosenControl;assembly=WpfChosenControl"
+      xmlns:local="clr-namespace:Healthtechbd.Model"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="850" d:DesignWidth="1200"
       Title="AddPrescription">
 
     <Page.Resources>
+
+        <local:DiagnosisMedicineModel x:Key="diagnosisMedicineModel"/>
+
+
         <Style TargetType="ComboBox" x:Key="DiagnosisComboBox">
             <Setter Property="BorderBrush" Value="#eee"/>
             <Setter Property="Foreground" Value="#7d7d7d"/>
@@ -225,10 +230,11 @@
                                     </Grid>
 
                                     <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8" Background="#fff" Height="245">-->
-                                    <Grid Background="#fff" Height="245">
-                                        <WrapPanel Margin="5 10" Orientation="Horizontal">
-                                            <TextBlock Text="Medicines List Here........" Foreground="#7d7d7d"/>
-                                        </WrapPanel>
+                                    <Grid Background="#fff" Height="245">                                         
+                                        <Grid DataContext="{StaticResource diagnosisMedicineModel}" Height="102">
+                                            <control:DiagnosisMedicineChosenControl TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,1,1,0"  />
+                                        </Grid>
+                                        <!--<WrapPanel Margin="5 10" Orientation="Horizontal"/>-->
                                     </Grid>
 
                                 </StackPanel>

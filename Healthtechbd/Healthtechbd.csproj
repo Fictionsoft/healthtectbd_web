@@ -147,8 +147,9 @@
     <Compile Include="Medicines.xaml.cs">
       <DependentUpon>Medicines.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MedicineModel.cs" />
-    <Compile Include="TestModel.cs" />
+    <Compile Include="Model\DiagnosisMedicineModel.cs" />
+    <Compile Include="Model\MedicineModel.cs" />
+    <Compile Include="Model\TestModel.cs" />
     <Compile Include="MyProfile.xaml.cs">
       <DependentUpon>MyProfile.xaml</DependentUpon>
     </Compile>
@@ -331,8 +332,6 @@
       <Name>WpfChosenControl</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

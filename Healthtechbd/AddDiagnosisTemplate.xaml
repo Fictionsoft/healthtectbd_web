@@ -4,15 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:control="clr-namespace:WpfChosenControl;assembly=WpfChosenControl"
-      xmlns:local="clr-namespace:Healthtechbd"
+      xmlns:local="clr-namespace:Healthtechbd.Model"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="800"
       Title="Add Diagnosis Template">
 
     <Page.Resources>
-        <local:MedicineModel x:Key="medicinemodel"/>
-        <local:TestModel x:Key="testmodel"/>
+        <local:MedicineModel x:Key="medicineModel"/>
+        <local:TestModel x:Key="testModel"/>
     </Page.Resources>
 
     <StackPanel>
@@ -68,14 +68,14 @@
 
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
-                                <Grid DataContext="{StaticResource medicinemodel }" Height="102">
+                                <Grid DataContext="{StaticResource medicineModel }" Height="102">
                                     <control:MedicineChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,1,1,0"  />
                                 </Grid>
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" Grid.Column="1"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Tests"/>
-                                <Grid DataContext="{StaticResource testmodel}" Height="102">
+                                <Grid DataContext="{StaticResource testModel}" Height="102">
                                     <control:TestChosenControl TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,1,1,0"  />
                                 </Grid> 
                             </StackPanel> 

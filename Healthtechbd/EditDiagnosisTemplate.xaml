@@ -4,13 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:control="clr-namespace:WpfChosenControl;assembly=WpfChosenControl"
-      xmlns:local="clr-namespace:Healthtechbd"
+      xmlns:local="clr-namespace:Healthtechbd.Model"
       mc:Ignorable="d"       
       d:DesignHeight="550" d:DesignWidth="800"
       Title="Add Diagnosis Template">
 
     <Page.Resources>
-        <local:MedicineModel x:Key="medicinemodel"/>
+        <local:MedicineModel x:Key="medicineModel"/>
     </Page.Resources>
 
     <StackPanel>
@@ -63,7 +63,7 @@
 
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
-                                <Grid DataContext="{StaticResource medicinemodel}">
+                                <Grid DataContext="{StaticResource medicineModel}">
                                     <control:MedicineChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"   DefaultMessage="Please Select Items."  ValueMemberPath="Id" DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
                                 </Grid>
                             </StackPanel>

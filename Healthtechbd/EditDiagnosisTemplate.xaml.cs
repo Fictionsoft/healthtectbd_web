@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfChosenControl;
+using Healthtechbd.Model;
 
 namespace Healthtechbd
 {
@@ -63,7 +64,7 @@ namespace Healthtechbd
             DiagnosisTemplateId.Text = id.ToString();
 
             MainWindow.Session.editRecordId = id;
-            MedicineModel mainModel = new MedicineModel();
+            MedicineModel medicineModel = new MedicineModel();
             try
             {
                 var diagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.id == id);
