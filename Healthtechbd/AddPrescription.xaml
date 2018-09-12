@@ -5,15 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:control="clr-namespace:WpfChosenControl;assembly=WpfChosenControl"
       xmlns:local="clr-namespace:Healthtechbd.Model"
+      xmlns:localChosenControl="clr-namespace:WpfChosenControl"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="850" d:DesignWidth="1200"
-      Title="AddPrescription">
+      Title="AddPrescription" >
 
     <Page.Resources>
-
         <local:DiagnosisMedicineModel x:Key="diagnosisMedicineModel"/>
-
 
         <Style TargetType="ComboBox" x:Key="DiagnosisComboBox">
             <Setter Property="BorderBrush" Value="#eee"/>
@@ -45,7 +44,7 @@
 
                     <Border Margin="20 0 0 0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescriptions" />
+                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescriptions" MouseDown="SaveAddPrescription_Click" />
                             <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
                             <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Add Prescription"/>
                         </StackPanel>
@@ -211,7 +210,7 @@
                                     <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8" Background="#fff" Height="245">-->
                                     <Grid Background="#fff" Height="245">
                                         <WrapPanel x:Name="DiagnosisCheckbox" Margin="5 10" VerticalAlignment="Top" Orientation="Horizontal">
-                                            
+
                                         </WrapPanel>
                                     </Grid>
 
@@ -230,13 +229,13 @@
                                     </Grid>
 
                                     <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8" Background="#fff" Height="245">-->
-                                    <Grid Background="#fff" Height="245">                                         
+                                    <Grid Background="#fff" Height="245">
                                         <Grid DataContext="{StaticResource diagnosisMedicineModel}" Height="102">
-                                            <control:DiagnosisMedicineChosenControl TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,1,1,0"  />
+                                            <control:DiagnosisMedicineChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,1,1,0"  />
                                         </Grid>
                                         <!--<WrapPanel Margin="5 10" Orientation="Horizontal"/>-->
+                                        
                                     </Grid>
-
                                 </StackPanel>
                             </Border>
                         </Grid>

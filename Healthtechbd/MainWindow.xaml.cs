@@ -73,8 +73,8 @@ namespace Healthtechbd
 
             if (EmailAddress.Text != "" && Password.Password != "")
             {
-                //try
-                //{
+                try
+                {
                     user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password);
 
                     if (user != null) //User = Doctor
@@ -98,11 +98,11 @@ namespace Healthtechbd
                     {
                         MessageBox.Show("Email or Password are invalid", "Invalid User", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //}
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             else
             {

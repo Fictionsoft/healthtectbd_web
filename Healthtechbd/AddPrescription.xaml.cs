@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfChosenControl;
 using WpfChosenControl.model;
 
 namespace Healthtechbd
@@ -113,11 +114,11 @@ namespace Healthtechbd
                 checkbox.DataContext = diagnosisTemplate.id;
                 DiagnosisCheckbox.Children.Add(checkbox);
 
-                checkbox.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(DiagnosisChecked));
+                checkbox.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(DiagnosIsChecked));
             }
         }
 
-        private void DiagnosisChecked(object sender, RoutedEventArgs e)
+        private void DiagnosIsChecked(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox; 
             var diagnosisTemplateId = (int)checkBox.DataContext;
@@ -128,7 +129,10 @@ namespace Healthtechbd
             var diagnosisMedicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
             var diagnosisTests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
 
+            DiagnosisMedicineChosenControl diagnosisMedicineChosenControl = new DiagnosisMedicineChosenControl();
 
+            //diagnosisMedicineChosenControl.CheckBox_Click(sender, e);
+            //diagnosisMedicineChosenControl._SelectedMedicines.Add(new IdNameModel() { Id = 1000, Name = "Default 1000" });
         }
 
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)

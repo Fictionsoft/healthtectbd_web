@@ -11,47 +11,61 @@ namespace Healthtechbd.Model
 {
     class DiagnosisMedicineModel : ViewModelBase
     {
-        private ObservableCollection<IdNameModel> _testsLists;
-        public ObservableCollection<IdNameModel> TestsLists
+        private ObservableCollection<IdNameModel> _medicinesLists;
+        public ObservableCollection<IdNameModel> MedicinesLists
         {
             get
             {
-                return _testsLists;
+                return _medicinesLists;
             }
             set
             {
-                _testsLists = value;
-                NotifyPropertyChanged("TestsLists");
+                _medicinesLists = value;
+                NotifyPropertyChanged("MedicinesLists");
             }
         }
 
-        private List<IdNameModel> _selectedTests;
-        public List<IdNameModel> SelectedTests
+        private List<IdNameModel> _selectedMedicines;
+        public List<IdNameModel> SelectedMedicines
         {
             get
             {
-                return _selectedTests;
+                return _selectedMedicines;
             }
             set
             {
-                _selectedTests = value;
-                NotifyPropertyChanged("SelectedTests");
+                _selectedMedicines = value;
+                NotifyPropertyChanged("SelectedMedicines");
             }
         }
+
+        //private string _itemId;
+        //public string ItemId
+        //{
+        //    get
+        //    {
+        //        return _itemId;
+        //    }
+        //    set
+        //    {
+        //        _itemId = value;
+        //        NotifyPropertyChanged("ItemId");
+        //    }
+        //}
 
         contextd_db db = new contextd_db();
         public DiagnosisMedicineModel()
         {
-            var tests = new ObservableCollection<IdNameModel>();
+            var medicines = new ObservableCollection<IdNameModel>();
 
-            var testsLists = db.tests.OrderByDescending(x => x.created).Take(10).ToList();
+            var medicinesLists = db.medicines.OrderByDescending(x => x.created).Take(10).ToList();
 
-            foreach (var test in testsLists)
+            foreach (var medicine in medicinesLists)
             {
-                tests.Add(new IdNameModel() { Id = test.id, Name = test.name });
+                medicines.Add(new IdNameModel() { Id = medicine.id, Name = medicine.name });
             }
 
-            TestsLists = tests;
+            MedicinesLists = medicines;
 
             int ItemId = MainWindow.Session.editRecordId;
             if (ItemId > 0)
@@ -60,34 +74,34 @@ namespace Healthtechbd.Model
             }
             else
             {
-                var selected_tests = new List<IdNameModel>();
-                SelectedTests = selected_tests;
+                var selected_medicines = new List<IdNameModel>();
+                SelectedMedicines = selected_medicines;
             }
         }
 
         public void LoadExistingItems(int ItemId)
         {
             var existing_items = new ObservableCollection<IdNameModel>();
-            var existing_tests = db.diagnosis_tests
+            var existing_medicines = db.diagnosis_medicines
             .Where(x => x.diagnosis_id == ItemId)
             .Select(x => new
             {
-                Id = x.test.id,
-                Name = x.test.name
+                Id = x.medicine.id,
+                Name = x.medicine.name
             })
             .ToList();
 
-            if (existing_tests.Count() > 0)
+            if (existing_medicines.Count() > 0)
             {
-                foreach (var existing_test in existing_tests)
+                foreach (var existing_medicine in existing_medicines)
                 {
-                    existing_items.Add(new IdNameModel() { Id = existing_test.Id, Name = existing_test.Name });
+                    existing_items.Add(new IdNameModel() { Id = existing_medicine.Id, Name = existing_medicine.Name });
                 }
             }
-            TestsLists = existing_items;
-            var tests = new List<IdNameModel>();
-            tests.AddRange(existing_items);
-            this.SelectedTests = tests;
+            MedicinesLists = existing_items;
+            var medecines = new List<IdNameModel>();
+            medecines.AddRange(existing_items);
+            this.SelectedMedicines = medecines;
         }
     }
 }

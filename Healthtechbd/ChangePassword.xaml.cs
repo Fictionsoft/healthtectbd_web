@@ -60,5 +60,10 @@ namespace Healthtechbd
                 MessageBox.Show("Please fill up the all field.", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }                                  
         }
+
+        private void CancelChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
+        }
     }
 }

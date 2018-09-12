@@ -62,8 +62,8 @@ namespace Healthtechbd
         {
             if(FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
-                try
-                {
+                //try
+                //{
                     var haveEmail = db.users.FirstOrDefault(x => x.email == EmailAddress.Text);
 
                     if (haveEmail == null)
@@ -97,11 +97,11 @@ namespace Healthtechbd
                     {
                         MessageBox.Show("The Email already exist.", "Already Exit");
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);                
-                }                
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);                
+                //}                
             }
             else
             {
