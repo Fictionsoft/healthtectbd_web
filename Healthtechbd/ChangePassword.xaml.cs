@@ -37,7 +37,7 @@ namespace Healthtechbd
                 {
                     try
                     {
-                        user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.userId);
+                        user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
 
                         user.password = Password.Password;
                         db.SaveChanges();

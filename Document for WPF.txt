@@ -1,0 +1,17 @@
+Document for WPF/Desktop Application
+
+* Visual Studio For Editor.
+
+* MySql Connector 6.10.7 For Visual Studio.(You Can Use Any Version)
+
+* MySql 2.0.5 For Visual Studio.(You Can Use Any Version)
+
+* MySql Server (Microsoft SQL Server/XAMPP).
+
+* Add Reference Entity Framework For Manage Database to Manage Database With
+  EntityFramework.SqlServer,
+  MySql.Data,
+  MySql.Data.Entity.EF6
+  
+  Note: If You Add MySql.Data.Entity.EF6 Reference The Three Other File Will Be Added Automatically.
+  

@@ -24,6 +24,9 @@
                 <!--Last Name-->
                 <TextBox x:Name="LastName" Style="{StaticResource InputField}" Text="Last Name" GotFocus="LastName_GotFocus" LostFocus="LastName_LostFocus" />
 
+                <!--Phone-->
+                <TextBox x:Name="Phone" Style="{StaticResource InputField}" Text="Phone Number" GotFocus="Phone_GotFocus" LostFocus="Phone_LostFocus" />
+
                 <!--Email-->
                 <TextBox x:Name="EmailAddress" Style="{StaticResource InputField}" Text="Email Address" GotFocus="Email_GotFocus" LostFocus="EmailAddress_LostFocus" />
 

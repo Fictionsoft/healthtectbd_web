@@ -36,7 +36,7 @@ namespace Healthtechbd
         {
             try
             {
-                user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.userId);
+                user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
 
                 FirstName.Text = user.first_name;
                 LastName.Text = user.last_name;
@@ -60,11 +60,11 @@ namespace Healthtechbd
             {
                 NavigationService.Navigate(new Uri("MyProfile.xaml", UriKind.Relative));
 
-                var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text && x.id != MainWindow.Session.userId);
+                var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text && x.id != MainWindow.Session.doctorId);
 
                 if(havePhone == null)
                 {
-                    user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.userId);
+                    user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
 
                     user.first_name = FirstName.Text;
                     user.last_name = LastName.Text;

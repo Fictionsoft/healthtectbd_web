@@ -67,7 +67,7 @@ namespace Healthtechbd
                     AdminPanelWindow adminPanelWindow = new AdminPanelWindow(this);
                     adminPanelWindow.Show();
 
-                    MainWindow.Session.userId = user.id;
+                    MainWindow.Session.doctorId = user.id;
                     MainWindow.Session.userFirstName = user.first_name;
                     MainWindow.Session.userLastName = user.last_name;
                     MainWindow.Session.userEmail = user.email;

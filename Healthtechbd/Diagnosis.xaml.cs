@@ -37,12 +37,12 @@ namespace Healthtechbd
             {
                 var diagnosis = db.diagnosis.OrderByDescending(x => x.created).Take(10).ToList();
                 dataGridDiagnosis.ItemsSource = diagnosis;
-        }
+            }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-}
+        }
 
         private void ButtonAddDiagnosis_Click(object sender, RoutedEventArgs e)
         {

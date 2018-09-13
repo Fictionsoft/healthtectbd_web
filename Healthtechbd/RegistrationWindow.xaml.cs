@@ -60,7 +60,7 @@ namespace Healthtechbd
 
         private void btnRegistration_Click(object sender, RoutedEventArgs e)
         {
-            if(FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
+            if(FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
                 //try
                 //{
@@ -78,9 +78,10 @@ namespace Healthtechbd
                         db.users.Add(user);
                         db.SaveChanges();                       
                        
-                        MainWindow.Session.userId = user.id;
+                        MainWindow.Session.doctorId = user.id;
                         MainWindow.Session.userFirstName = FirstName.Text;
                         MainWindow.Session.userLastName = LastName.Text;
+                        MainWindow.Session.userPhone = int.Parse(Phone.Text);
                         MainWindow.Session.userEmail = EmailAddress.Text;
 
                         this.Hide();
@@ -171,6 +172,22 @@ namespace Healthtechbd
             {
                Password.Password = "Password";
             }
-        }                 
+        }
+
+        private void Phone_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Phone.Text == "Phone Number")
+            {
+                Phone.Text = "";
+            }
+        }
+
+        private void Phone_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Phone.Text == "")
+            {
+                Phone.Text = "Phone Number";
+            }
+        }
     }
 }

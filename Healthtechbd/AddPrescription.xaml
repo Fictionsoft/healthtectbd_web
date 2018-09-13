@@ -139,14 +139,14 @@
                                     <Border Grid.Row="0" Padding="5">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="BP:" VerticalAlignment="Center"/>
-                                            <TextBox Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
+                                            <TextBox x:Name="BloodPresure" Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="1" Padding="5">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="Temperature:" VerticalAlignment="Center"/>
-                                            <TextBox Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
+                                            <TextBox x:Name="Temperature" Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
                                         </StackPanel>
                                     </Border>
 
@@ -267,7 +267,7 @@
                                 <StackPanel>
                                     <TextBlock Text="Other Instructions" Foreground="#333" FontWeight="SemiBold" Margin="0 0 0 5"/>
 
-                                    <TextBox Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="130"/>
+                                    <TextBox x:Name="OtherInstructions" Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="130"/>
                                 </StackPanel>
                             </Border>
                         </Grid>

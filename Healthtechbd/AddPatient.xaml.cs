@@ -44,7 +44,7 @@ namespace Healthtechbd
                     user.age = PatientAge.Text.Trim();
                     user.address_line1 = PatientAddress.Text.Trim();
                     user.created = DateTime.Now;
-                    user.doctor_id = MainWindow.Session.userId;
+                    user.doctor_id = MainWindow.Session.doctorId;
                     user.role_id = 3; // role_id 3 = Patient
 
                     db.users.Add(user);

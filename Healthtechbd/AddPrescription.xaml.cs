@@ -34,6 +34,7 @@ namespace Healthtechbd
         }        
 
         contextd_db db = new contextd_db();
+        prescription prescription = new prescription();
         user patient = new user();
 
         //Load Patient Combobox.....
@@ -41,7 +42,7 @@ namespace Healthtechbd
         {
             try
             {
-                var patients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.userId).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+                var patients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
 
                 foreach (var patient in patients)
                 {
@@ -89,7 +90,7 @@ namespace Healthtechbd
 
             var searchBy = obj.Text;
 
-            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.userId) && (x.first_name.StartsWith(searchBy) || x.last_name.StartsWith(searchBy))).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) && (x.first_name.StartsWith(searchBy) || x.last_name.StartsWith(searchBy))).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
             PatientComboBox.Items.Clear();
 
             foreach (var patient in patients)
@@ -134,15 +135,32 @@ namespace Healthtechbd
             //diagnosisMedicineChosenControl.CheckBox_Click(sender, e);
             //diagnosisMedicineChosenControl._SelectedMedicines.Add(new IdNameModel() { Id = 1000, Name = "Default 1000" });
         }
+        
 
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-
+        {            
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 
-            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+
+            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+
+            patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
+
+            prescription.user_id = patient.id;
+            prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
+            prescription.blood_pressure = BloodPresure.Text;
+            prescription.temperature = Temperature.Text;
+            prescription.doctores_notes = DoctorsNotes.Text;
+            prescription.other_instructions = OtherInstructions.Text;
+            prescription.status = true;
+            prescription.created = DateTime.Now;
+
+            db.presceiptions.Add(prescription);
+            db.SaveChanges();
+
+            MessageBox.Show("Prescription has been saved", "Success");
         }       
     }
 }

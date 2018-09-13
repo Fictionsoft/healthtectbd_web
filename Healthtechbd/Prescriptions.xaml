@@ -34,8 +34,8 @@
                             <ColumnDefinition Width="80"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox Style="{StaticResource SearchBox}" Grid.Column="0" Text="Type here for search..."/>
-                        <Button Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0">
+                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text=""/>
+                        <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
                         <Button Grid.Column="2" Style="{StaticResource SearchButton}">Reset</Button>
@@ -43,102 +43,42 @@
                 </Grid>
 
                 <!--Info Area-->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="430">
-                    <Border Padding="20 0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="370">
+                    <Border Padding="10 0">
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                                <RowDefinition Height="30"></RowDefinition>
-                            </Grid.RowDefinitions>
+                            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridPrescriptions" ItemsSource="{Binding}" HorizontalAlignment="Left"  Margin="-10, 0, 10, 0" Background="White">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="*" Header="Patient" Binding="{Binding user.first_name}" />
+                                    <DataGridTextColumn Width="*" Header="Phone" Binding="{Binding user.phone}" />
+                                    <DataGridTextColumn Width="*" Header="Diagnosis" />
+                                    <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />
+                                    <DataGridTextColumn Width="*" Visibility="Hidden" Binding="{Binding id}" />
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="5*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
+                                    <DataGridTemplateColumn Header="Action">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="btnEditPrescriptionRow" Background="#3CC2BB" Height="20" Width="30" Padding="0"  >
+                                                    <materialDesign:PackIcon Kind="TableEdit"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
-                            <!--Info-->
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="0" Text="PATIENT" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="1" Text="PHONE" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="2" Text="DIAGNOSIS" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="3" Text="CREATED" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="0" Grid.Column="4" Text="ACTION" HorizontalAlignment="Center"/>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="btnDeletePrescriptionRow" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnDeletePrescriptionRow_Click" >
+                                                    <materialDesign:PackIcon Kind="Delete"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="1" Grid.Column="0" Text="Abdullah Al Mamun" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="1" Grid.Column="1" Text="01750000002" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="1" Grid.Column="2" Text="Spellacy gibbs watts syndrome" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="1" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="1" Grid.Column="4" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="2" Grid.Column="0" Text="Saiful Islam Rubel" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="2" Grid.Column="1" Text="0175000000" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="2" Grid.Column="2" Text="Spellacy gibbs watts syndrome, Spherophakia brachymorphia syndrome" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="2" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="2" Grid.Column="4" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="3" Grid.Column="0" Text="Azizul" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="3" Grid.Column="1" Text="0175000000" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="3" Grid.Column="2" Text="Warfarin antenatal infection" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="3" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="3" Grid.Column="4" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="4" Grid.Column="0" Text="Mizanur Rhaman" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="4" Grid.Column="1" Text="0175000000" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="4" Grid.Column="2" Text="Craniofacial and skeletal defects" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="4" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="4" Grid.Column="4" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="5" Grid.Column="0" Text="Habullah" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="5" Grid.Column="1" Text="0175000000" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="5" Grid.Column="2" Text="Cranioacrofacial syndrome" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="5" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="5" Grid.Column="4" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="6" Grid.Column="0" Text="Sagor Ahammed" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="6" Grid.Column="1" Text="017500000" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="6" Grid.Column="2" Text="Eosinophilic fasciitis" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="6" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="6" Grid.Column="4" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="7" Grid.Column="0" Text="Abdur Rahim" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="7" Grid.Column="1" Text="0175080000" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="7" Grid.Column="2" Text="Dysfibrinogenemia, familial" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="7" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="7" Grid.Column="4" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="8" Grid.Column="0" Text="Monirul Islam" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="8" Grid.Column="1" Text="0175080000" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="8" Grid.Column="2" Text="Diaphragmatic hernia abnormal face limb" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="8" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="8" Grid.Column="4" Kind="Settings"/>
-
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="0" Text="Haider Ali" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="1" Text="017500000" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="2" Text="Cushing syndrome, familial" />
-                            <TextBlock Style="{StaticResource TableDataRow}" Grid.Row="9" Grid.Column="3" Text="29/05/2018" />
-                            <materialDesign:PackIcon Style="{StaticResource ActionIcon}" Grid.Row="9" Grid.Column="4" Kind="Settings"/>
-
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Grid>
                     </Border>
-                </ScrollViewer>
+                </ScrollViewer> 
 
             </StackPanel>
 

@@ -25,10 +25,14 @@ namespace Healthtechbd
         //Custom Session.............................
         public class Session
         {
-            public static int userId;
+            #region Doctor Info
+            public static int doctorId;
             public static string userFirstName;                      
             public static string userLastName;                      
+            public static int userPhone;                      
             public static string userEmail;
+            #endregion
+
             public static int editRecordId;                    
         }
 
@@ -82,8 +86,9 @@ namespace Healthtechbd
                         this.Hide();
                         AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
                         adminpanelwindow.Show();
-
-                        Session.userId = user.id;
+                        
+                        //Doctor Info Save to Session....
+                        Session.doctorId = user.id;
                         Session.userFirstName = user.first_name;
                         Session.userLastName = user.last_name;
                         Session.userEmail = user.email;
