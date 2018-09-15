@@ -36,10 +36,7 @@ namespace Healthtechbd
 
         public AdminPanelWindow(RegistrationWindow registrationWindow)
         {
-            InitializeComponent();
-           
-            //sidebar = Sidebar; // To get sidebar
-            //sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
+            InitializeComponent();          
             userName = UserName; // To get user name textblock
 
             this.registrationWindow = registrationWindow;
@@ -47,10 +44,7 @@ namespace Healthtechbd
 
         public AdminPanelWindow(ResetPasswordWindow resetPasswordWindow)
         {
-            InitializeComponent();
-            
-            //sidebar = Sidebar; // To get sidebar
-            //sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation0   
+            InitializeComponent();            
             userName = UserName; // To get user name textblock
 
             this.resetPasswordWindow = resetPasswordWindow;
@@ -60,55 +54,6 @@ namespace Healthtechbd
         {
             DragMove();
         }
-
-        private void ButtonDashboard_MouseDown(object sender, MouseButtonEventArgs e)
-        {           
-            MainContent.Content = new Dashboard();
-            Grid sidebar = AdminPanelWindow.sidebar;
-            sidebar.Visibility = Visibility.Visible;
-
-            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).        
-        }
-
-        private void ButtonDiagnosis_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainContent.Content = new Diagnosis();
-        }
-
-        private void ButtonMedicines_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainContent.Content = new Medicines();
-        }
-
-        private void ButtonTests_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainContent.Content = new Tests();
-        }
-
-        private void ButtonPatients_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainContent.Content = new Patients();
-        }
-
-        private void ButtonDiagnosisTemplates_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainContent.Content = new DiagnosisTemplates();
-        }
-
-        private void ButtonPrescriptions_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainContent.Content = new Prescriptions();
-        }
-
-        //private void ButtonDoctors_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    MainContent.Content = new Doctors();
-        //}
-
-        //private void ButtonSettins_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    MainContent.Content = new Settings();
-        //}
 
         private void ButtonMyProfile_Click(object sender, RoutedEventArgs e)
         {
@@ -153,6 +98,50 @@ namespace Healthtechbd
         private void Window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ButtonDashboard_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Dashboard();
+        }
+
+        private void ButtonDiagnosis_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Diagnosis();
+        }
+
+        private void ButtonDiagnosisTemplates_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new DiagnosisTemplates();
+        }
+
+        private void ButtonMedicines_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Medicines();
+        }
+
+        private void ButtonTests_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Tests();
+        }
+
+        private void ButtonPatients_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Patients();
+        }
+
+        private void ButtonPrescriptions_GotFocus(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Prescriptions();
+        }
+
+        private void Logo_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainContent.Content = new Dashboard();
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Visible;
+
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).
         }
     }
 }

@@ -26,11 +26,13 @@ namespace Healthtechbd
     {
         public EditDiagnosisTemplate()
         {
+            //MainWindow.Session.editRecordId = int.Parse(DiagnosisTemplateId.Text);
             InitializeComponent();
             LoadDiagnosisCombobox();
 
             DiagnosisComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
                     new System.Windows.Controls.TextChangedEventHandler(DiagnosisComboBox_TextChanged));
+           
         }        
 
         diagnosis_template diagnosis_template = new diagnosis_template();
@@ -63,8 +65,6 @@ namespace Healthtechbd
         {
             DiagnosisTemplateId.Text = id.ToString();
 
-            MainWindow.Session.editRecordId = id;
-            MedicineModel medicineModel = new MedicineModel();
             try
             {
                 var diagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.id == id);
@@ -78,9 +78,11 @@ namespace Healthtechbd
             }                  
         }
 
-        private void SubmitAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
+        private void SubmitUpdateDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if(DiagnosisComboBox.SelectedItem != "Type here...")
+            var test = MedicineChosenControl.selectedIds;
+
+            if (DiagnosisComboBox.SelectedItem != "Type here...")
             {
                 int diagnosisTemplateId = int.Parse(DiagnosisTemplateId.Text);
 

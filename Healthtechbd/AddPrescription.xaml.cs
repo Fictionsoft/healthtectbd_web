@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Healthtechbd.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,13 @@ namespace Healthtechbd
     /// </summary>
     public partial class AddPrescription : Page
     {
+        private DiagnosisMedicineChosenControl medicineChosenControl = null;
+
         public AddPrescription()
         {
             InitializeComponent();
+
+            medicineChosenControl = (DiagnosisMedicineChosenControl)FindName("medicineChosen");
 
             LoadPatientCombobox();
             LoadDiagnosisCheckbox();
@@ -58,11 +63,18 @@ namespace Healthtechbd
         //Patient Combobox DropDown Closed..........
         private void PatientComboBox_DropDownClosed(object sender, EventArgs e)
         {
-            patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
+            try
+            {
+                patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
 
-            PatientPhone.Text = patient.phone;
-            PatientAddress.Text = patient.address_line1;
-            PatientAge.Text = patient.age;
+                PatientPhone.Text = patient.phone;
+                PatientAddress.Text = patient.address_line1;
+                PatientAge.Text = patient.age;
+            }
+            catch
+            {
+
+            }            
         }
 
         private void NewPatientCheck(object sender, RoutedEventArgs e)
@@ -127,40 +139,60 @@ namespace Healthtechbd
             var diagnosisTemplate = db.diagnosis_templates.Where(x => x.id == diagnosisTemplateId).FirstOrDefault();
             DoctorsNotes.Text = diagnosisTemplate.instructions;
 
-            var diagnosisMedicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
             var diagnosisTests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
 
-            DiagnosisMedicineChosenControl diagnosisMedicineChosenControl = new DiagnosisMedicineChosenControl();
+            var diagnosisMedicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosisTemplateId)
+                .Select(x => new IdNameModel {
+                    Id = x.medicine_id,
+                    Name = x.medicine.name
+                })
+                .ToList();
 
-            //diagnosisMedicineChosenControl.CheckBox_Click(sender, e);
-            //diagnosisMedicineChosenControl._SelectedMedicines.Add(new IdNameModel() { Id = 1000, Name = "Default 1000" });
+            ((DiagnosisMedicineModel)medicineChosenControl.DataContext).SelectedMedicines = diagnosisMedicines;
         }
         
 
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
         {            
+            if(PatientComboBox.Text != "")
+            {
+                Grid sidebar = AdminPanelWindow.sidebar;
+                sidebar.Visibility = Visibility.Visible;
+
+                AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+
+                NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+
+                patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
+
+                prescription.user_id = patient.id;
+                prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
+                prescription.blood_pressure = BloodPresure.Text;
+                prescription.temperature = Temperature.Text;
+                prescription.doctores_notes = DoctorsNotes.Text;
+                prescription.other_instructions = OtherInstructions.Text;
+                prescription.status = true;
+                prescription.created = DateTime.Now;
+
+                db.presceiptions.Add(prescription);
+                db.SaveChanges();
+
+                MessageBox.Show("Prescription has been saved", "Success");
+            }
+            else
+            {
+                MessageBox.Show("Patient name is required", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
+        }
+
+        private void CancelAddPrescription_Click(object sender, RoutedEventArgs e)
+        {
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 
             AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
 
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-
-            patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
-
-            prescription.user_id = patient.id;
-            prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
-            prescription.blood_pressure = BloodPresure.Text;
-            prescription.temperature = Temperature.Text;
-            prescription.doctores_notes = DoctorsNotes.Text;
-            prescription.other_instructions = OtherInstructions.Text;
-            prescription.status = true;
-            prescription.created = DateTime.Now;
-
-            db.presceiptions.Add(prescription);
-            db.SaveChanges();
-
-            MessageBox.Show("Prescription has been saved", "Success");
-        }       
+        }
     }
 }

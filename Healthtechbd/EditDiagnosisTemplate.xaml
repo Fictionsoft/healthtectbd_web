@@ -11,6 +11,7 @@
 
     <Page.Resources>
         <local:MedicineModel x:Key="medicineModel"/>
+        <local:TestModel x:Key="testModel"/>
     </Page.Resources>
 
     <StackPanel>
@@ -20,7 +21,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Diagnosis Templates" MouseDown="CancelAddDiagnosisTemplate_Click" />
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Add Diagnosis Template"/>
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Edit Diagnosis Template"/>
                 </StackPanel>
             </Border>
         </Grid>
@@ -31,7 +32,7 @@
 
                 <!--Panel Head-->
                 <Grid Height="40" Background="#F6F8F7">
-                    <TextBlock Text="Add Diagnosis Template" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
+                    <TextBlock Text="Edit Diagnosis Template" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
                 </Grid>
 
                 <!--Info Area-->
@@ -70,7 +71,9 @@
 
                             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Tests"/>
-                                <TextBox Style="{StaticResource InputField}" Height="100" Text=""/>
+                                <Grid DataContext="{StaticResource testModel}">
+                                    <control:TestChosenControl TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."  ValueMemberPath="Id" DisplayMemberPath="Name" />
+                                </Grid>
                             </StackPanel>
 
                             <TextBox x:Name="DiagnosisTemplateId" Visibility="Hidden" Style="{StaticResource InputField}" Text=""/>
@@ -88,7 +91,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
                 <Button x:Name="CancelAddDiagnosisTemplate" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelAddDiagnosisTemplate_Click"/>
-                <Button x:Name="SubmitAddDiagnosisTemplate" Content="UPDATE" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitAddDiagnosisTemplate_Click" />
+                <Button x:Name="SubmitUpdateDiagnosisTemplate" Content="UPDATE" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitUpdateDiagnosisTemplate_Click" />
             </StackPanel>
 
         </Grid>

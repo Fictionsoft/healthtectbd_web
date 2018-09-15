@@ -35,8 +35,9 @@ namespace Healthtechbd
         {
             try
             {
-                var prescriptions = db.presceiptions.Where(x => x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(10).ToList();
-                dataGridPrescriptions.ItemsSource = prescriptions;
+                var prescriptions = db.presceiptions.Where(x => x.doctor_id  == MainWindow.Session.doctorId)
+                                   .OrderByDescending(x => x.created).Take(10).ToList();
+                                   dataGridPrescriptions.ItemsSource = prescriptions;
             }
             catch
             {

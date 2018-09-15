@@ -49,13 +49,14 @@ namespace Healthtechbd
                 //{
                 diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
 
-                var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id);
+                var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
 
                 if (haveDiagnosisTemplate == null)
                 {
                     NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
 
                     diagnosis_template.diagnosis_list_id = diagnosis.id;
+                    diagnosis_template.doctor_id = MainWindow.Session.doctorId;
                     diagnosis_template.instructions = Instruction.Text;
                     diagnosis_template.status = true;
                     diagnosis_template.created = DateTime.Now;

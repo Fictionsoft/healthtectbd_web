@@ -71,10 +71,6 @@ namespace Healthtechbd
        
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-            //this.Hide();
-            //AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
-            //adminpanelwindow.Show();
-
             if (EmailAddress.Text != "" && Password.Password != "")
             {
                 try

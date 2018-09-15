@@ -52,6 +52,8 @@ namespace Healthtechbd
         private void ButtonAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("AddDiagnosisTemplate.xaml", UriKind.Relative));
+
+            MainWindow.Session.editRecordId = 0;
         }
 
         private void btnDeleteDiagnosisTemplateRow_Click(object sender, RoutedEventArgs e)
@@ -89,6 +91,7 @@ namespace Healthtechbd
         private void btnEditDiagnosisTemplateRow_Click(object sender, RoutedEventArgs e)
         {
             int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosis_template).id;
+            MainWindow.Session.editRecordId = diagnosisTemplateId;
             EditDiagnosisTemplate editDiagnosisTemplate = new EditDiagnosisTemplate(diagnosisTemplateId);
             NavigationService.Navigate(editDiagnosisTemplate);
         }

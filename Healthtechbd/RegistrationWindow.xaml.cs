@@ -62,48 +62,56 @@ namespace Healthtechbd
         {
             if(FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
-                //try
-                //{
+                try
+                {
                     var haveEmail = db.users.FirstOrDefault(x => x.email == EmailAddress.Text);
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text);
 
                     if (haveEmail == null)
                     {
-                        user.role_id = 1; //Doctor role_id = 1
-                        user.first_name = FirstName.Text;
-                        user.last_name = LastName.Text;
-                        user.email = EmailAddress.Text;                       
-                        user.password = Password.Password;
-                        user.created = DateTime.Now;
-
-                        db.users.Add(user);
-                        db.SaveChanges();                       
-                       
-                        MainWindow.Session.doctorId = user.id;
-                        MainWindow.Session.userFirstName = FirstName.Text;
-                        MainWindow.Session.userLastName = LastName.Text;
-                        MainWindow.Session.userPhone = int.Parse(Phone.Text);
-                        MainWindow.Session.userEmail = EmailAddress.Text;
-
-                        this.Hide();
-                        AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
-                        adminpanelwindow.Show();
-
-                        if (MessageBox.Show("Registration is successfull.", "Success") == MessageBoxResult.OK)
+                        if(havePhone == null)
                         {
-                            TextBlock UserName = AdminPanelWindow.userName;
-                            UserName.Text = MainWindow.Session.userFirstName + " " + MainWindow.Session.userLastName;
-                        }                        
+                            user.role_id = 1; //Doctor role_id = 1
+                            user.first_name = FirstName.Text;
+                            user.last_name = LastName.Text;
+                            user.email = EmailAddress.Text;
+                            user.password = Password.Password;
+                            user.created = DateTime.Now;
+
+                            db.users.Add(user);
+                            db.SaveChanges();
+
+                            MainWindow.Session.doctorId = user.id;
+                            MainWindow.Session.userFirstName = FirstName.Text;
+                            MainWindow.Session.userLastName = LastName.Text;
+                            MainWindow.Session.userPhone = int.Parse(Phone.Text);
+                            MainWindow.Session.userEmail = EmailAddress.Text;
+
+                            this.Hide();
+                            AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
+                            adminpanelwindow.Show();
+
+                            if (MessageBox.Show("Registration is successfull.", "Success") == MessageBoxResult.OK)
+                            {
+                                TextBlock UserName = AdminPanelWindow.userName;
+                                UserName.Text = MainWindow.Session.userFirstName + " " + MainWindow.Session.userLastName;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("The Phone Number already exist.", "Already Exit");
+                        }
                     }
                     else
                     {
                         MessageBox.Show("The Email already exist.", "Already Exit");
                     }
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);                
-                //}                
             }
+                catch
+            {
+                MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
             else
             {
                 MessageBox.Show("Please fill up the all field.", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);

@@ -17,7 +17,7 @@
         <!--Header-->
         <Grid x:Name="header" Height="60" Background="#3CC2BB" VerticalAlignment="top" MouseDown="header_MouseDown">
 
-            <TextBlock Text="HEALTHTECHBD" HorizontalAlignment="Left" Margin="43 0 0 0" Foreground="#fff" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" MouseDown="ButtonDashboard_MouseDown" />
+            <TextBlock x:Name="Logo" Text="HEALTHTECHBD" HorizontalAlignment="Left" Margin="43 0 0 0" Foreground="#fff" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" MouseDown="Logo_MouseDown"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Grid Margin="0 0 5 0" Height="40" Width="40">
@@ -94,12 +94,12 @@
 
 
                 <ListView Foreground="#fff" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0 0 0 0" Grid.ColumnSpan="2">
-                    <TextBlock x:Name="ButtonLogo" Text="HEALTHTECHBD" HorizontalAlignment="Center" Padding="0 8 0 0" Margin="0 0 0 10" Width="225" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" MouseDown="ButtonDashboard_MouseDown" />
+                    <TextBlock x:Name="ButtonLogo" Text="HEALTHTECHBD" HorizontalAlignment="Center" Padding="0 8 0 0" Margin="0 0 0 10" Width="225" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" GotFocus="ButtonDashboard_GotFocus" />
 
-                    <ListViewItem Height="60" >
+                    <ListViewItem x:Name="ButtonDashboard" Loaded="ButtonDashboard_Loaded" GotFocus="ButtonDashboard_GotFocus">
                         <StackPanel Orientation="Horizontal"  >
-                            <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDashboard_MouseDown"/>
-                            <TextBlock x:FieldModifier="public" Style="{StaticResource NavItem}" Text="DASHBOARD" x:Name="ButtonDashboard" MouseDown="ButtonDashboard_MouseDown" Loaded="ButtonDashboard_Loaded"/>
+                            <materialDesign:PackIcon Kind="ViewDashboard" Style="{StaticResource NavItemIcon}"/>
+                            <TextBlock Style="{StaticResource NavItem}" Text="DASHBOARD"/>
                         </StackPanel>
                     </ListViewItem>
 
@@ -110,45 +110,45 @@
                         </StackPanel>
                     </ListViewItem>-->
 
-                    <ListViewItem Height="60">
+                    <ListViewItem x:Name="ButtonDiagnosis" Height="60" GotFocus="ButtonDiagnosis_GotFocus">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Disqus" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDiagnosis_MouseDown"/>
-                            <TextBlock Style="{StaticResource NavItem}" x:Name="ButtonDiagnosis" Text="DIAGNOSIS" MouseDown="ButtonDiagnosis_MouseDown"/>
+                            <materialDesign:PackIcon Kind="Disqus" Style="{StaticResource NavItemIcon}"/>
+                            <TextBlock Style="{StaticResource NavItem}"  Text="DIAGNOSIS"/>
                         </StackPanel>
                     </ListViewItem>
 
-                    <ListViewItem Height="60">
+                    <ListViewItem x:Name="ButtonDiagnosisTemplates" Height="60" GotFocus="ButtonDiagnosisTemplates_GotFocus">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Notebook" Style="{StaticResource NavItemIcon}" MouseDown="ButtonDiagnosisTemplates_MouseDown"/>
-                            <TextBlock x:Name="ButtonDiagnosisTemplates" Style="{StaticResource NavItem}" Text="DIAGNOSIS TEMPLATES" MouseDown="ButtonDiagnosisTemplates_MouseDown"/>
+                            <materialDesign:PackIcon Kind="Notebook" Style="{StaticResource NavItemIcon}"/>
+                            <TextBlock Style="{StaticResource NavItem}" Text="DIAGNOSIS TEMPLATES"/>
                         </StackPanel>
                     </ListViewItem>
 
-                    <ListViewItem Height="60">
+                    <ListViewItem x:Name="ButtonMedicines" Height="60" GotFocus="ButtonMedicines_GotFocus">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="MedicalBag" Style="{StaticResource NavItemIcon}" MouseDown="ButtonMedicines_MouseDown"/>
-                            <TextBlock x:Name="ButtonMedicines" Style="{StaticResource NavItem}" Text="MEDICINES" MouseDown="ButtonMedicines_MouseDown"/>
+                            <materialDesign:PackIcon Kind="MedicalBag" Style="{StaticResource NavItemIcon}"/>
+                            <TextBlock Style="{StaticResource NavItem}" Text="MEDICINES"/>
                         </StackPanel>
                     </ListViewItem>
 
-                    <ListViewItem Height="60">
+                    <ListViewItem x:Name="ButtonTests" Height="60" GotFocus="ButtonTests_GotFocus">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="TestTube" Style="{StaticResource NavItemIcon}" MouseDown="ButtonTests_MouseDown"/>
-                            <TextBlock x:Name="ButtonTests" Style="{StaticResource NavItem}" Text="TESTS" MouseDown="ButtonTests_MouseDown"/>
+                            <materialDesign:PackIcon Kind="TestTube" Style="{StaticResource NavItemIcon}"/>
+                            <TextBlock Style="{StaticResource NavItem}" Text="TESTS"/>
                         </StackPanel>
                     </ListViewItem>
 
-                    <ListViewItem Height="60">
+                    <ListViewItem x:Name="ButtonPatients" Height="60" GotFocus="ButtonPatients_GotFocus">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="AccountCircle" Style="{StaticResource NavItemIcon}" MouseDown="ButtonPatients_MouseDown"/>
-                            <TextBlock x:Name="ButtonPatients" Style="{StaticResource NavItem}" Text="PATIENTS" MouseDown="ButtonPatients_MouseDown"/>
+                            <materialDesign:PackIcon Kind="AccountCircle" Style="{StaticResource NavItemIcon}"/>
+                            <TextBlock Style="{StaticResource NavItem}" Text="PATIENTS"/>
                         </StackPanel>
                     </ListViewItem>
 
-                    <ListViewItem Height="60">
+                    <ListViewItem x:Name="ButtonPrescriptions" Height="60" GotFocus="ButtonPrescriptions_GotFocus">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Prescription" Style="{StaticResource NavItemIcon}" MouseDown="ButtonPrescriptions_MouseDown"/>
-                            <TextBlock x:Name="ButtonPrescriptions" Style="{StaticResource NavItem}" Text="PRESCRIPTIONS" MouseDown="ButtonPrescriptions_MouseDown"/>
+                            <materialDesign:PackIcon Kind="Prescription" Style="{StaticResource NavItemIcon}"/>
+                            <TextBlock Style="{StaticResource NavItem}" Text="PRESCRIPTIONS"/>
                         </StackPanel>
                     </ListViewItem>
 

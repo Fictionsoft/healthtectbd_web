@@ -9,7 +9,7 @@ using WpfChosenControl.model;
 
 namespace Healthtechbd.Model
 {
-    class MedicineModel : ViewModelBase
+    public class MedicineModel : ViewModelBase
     {
         private ObservableCollection<IdNameModel> _medicinesLists;
         public ObservableCollection<IdNameModel> MedicinesLists
@@ -68,6 +68,7 @@ namespace Healthtechbd.Model
             MedicinesLists = medicines;
 
             int ItemId = MainWindow.Session.editRecordId;
+            //int ItemId = 9;
             if (ItemId > 0)
             {
                 LoadExistingItems(ItemId);
