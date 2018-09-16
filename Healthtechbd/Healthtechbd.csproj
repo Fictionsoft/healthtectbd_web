@@ -114,6 +114,9 @@
     <Compile Include="ChangePassword.xaml.cs">
       <DependentUpon>ChangePassword.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChangeProfilePic.xaml.cs">
+      <DependentUpon>ChangeProfilePic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditDiagnosis.xaml.cs">
       <DependentUpon>EditDiagnosis.xaml</DependentUpon>
     </Compile>
@@ -200,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ChangePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChangeProfilePic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

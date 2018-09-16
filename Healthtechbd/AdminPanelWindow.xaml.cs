@@ -143,5 +143,14 @@ namespace Healthtechbd
 
             AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).
         }
+
+        private void ButtonChangeProfilePic_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new ChangeProfilePic();
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Visible;
+
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).
+        }
     }
 }

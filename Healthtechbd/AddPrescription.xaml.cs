@@ -102,7 +102,9 @@ namespace Healthtechbd
 
             var searchBy = obj.Text;
 
-            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) && (x.first_name.StartsWith(searchBy) || x.last_name.StartsWith(searchBy))).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) && 
+                           (x.first_name.StartsWith(searchBy))).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+
             PatientComboBox.Items.Clear();
 
             foreach (var patient in patients)

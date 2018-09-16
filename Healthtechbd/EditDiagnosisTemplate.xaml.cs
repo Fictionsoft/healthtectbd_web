@@ -79,9 +79,7 @@ namespace Healthtechbd
         }
 
         private void SubmitUpdateDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
-        {
-            var test = MedicineChosenControl.selectedIds;
-
+        {           
             if (DiagnosisComboBox.SelectedItem != "Type here...")
             {
                 int diagnosisTemplateId = int.Parse(DiagnosisTemplateId.Text);

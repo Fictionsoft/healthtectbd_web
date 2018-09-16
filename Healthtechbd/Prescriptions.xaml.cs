@@ -37,7 +37,8 @@ namespace Healthtechbd
             {
                 var prescriptions = db.presceiptions.Where(x => x.doctor_id  == MainWindow.Session.doctorId)
                                    .OrderByDescending(x => x.created).Take(10).ToList();
-                                   dataGridPrescriptions.ItemsSource = prescriptions;
+
+               dataGridPrescriptions.ItemsSource = prescriptions;
             }
             catch
             {
@@ -98,6 +99,12 @@ namespace Healthtechbd
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            searchField.Clear();
+            loadPrescriptions();
         }
     }
 }

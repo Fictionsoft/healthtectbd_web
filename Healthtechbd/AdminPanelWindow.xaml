@@ -47,7 +47,7 @@
 
                         <Grid>
                             <materialDesign:PackIcon Kind="Image" VerticalAlignment="Center" Foreground="#576069" />
-                            <Button Content="Change Profile Picture" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0"  />
+                            <Button x:Name="ButtonChangeProfilePic" Content="Change Profile Picture" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangeProfilePic_Click"  />
                         </Grid>
 
                         <Grid>
