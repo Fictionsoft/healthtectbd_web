@@ -57,11 +57,33 @@ namespace Healthtechbd.Model
             if (ItemId > 0)
             {
                 LoadExistingItems(ItemId);
+                StoreExitingIdsIntoSelectedIds(ItemId);
             }
             else
             {
                 var selected_tests = new List<IdNameModel>();
                 SelectedTests = selected_tests;
+            }
+        }
+
+        public void StoreExitingIdsIntoSelectedIds(int ItemId)
+        {
+            var existing_items = new ObservableCollection<IdNameModel>();
+            var existing_tests = db.diagnosis_tests
+            .Where(x => x.diagnosis_id == ItemId)
+            .Select(x => new
+            {
+                Id = x.test.id,
+                Name = x.test.name
+            })
+            .ToList();
+
+            if (existing_tests.Count() > 0)
+            {
+                foreach (var existing_test in existing_tests)
+                {
+                    TestChosenControl.selectedIds.Add(existing_test.Id);
+                }
             }
         }
 

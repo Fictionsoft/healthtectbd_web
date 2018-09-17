@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfChosenControl;
 using WpfChosenControl.model;
 
 namespace Healthtechbd
@@ -54,6 +55,8 @@ namespace Healthtechbd
             NavigationService.Navigate(new Uri("AddDiagnosisTemplate.xaml", UriKind.Relative));
 
             MainWindow.Session.editRecordId = 0;
+            MedicineChosenControl.selectedIds.Clear();
+            TestChosenControl.selectedIds.Clear();
         }
 
         private void btnDeleteDiagnosisTemplateRow_Click(object sender, RoutedEventArgs e)
@@ -90,10 +93,13 @@ namespace Healthtechbd
 
         private void btnEditDiagnosisTemplateRow_Click(object sender, RoutedEventArgs e)
         {
+            MedicineChosenControl.selectedIds.Clear();
+            TestChosenControl.selectedIds.Clear();
+
             int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosis_template).id;
             MainWindow.Session.editRecordId = diagnosisTemplateId;
             EditDiagnosisTemplate editDiagnosisTemplate = new EditDiagnosisTemplate(diagnosisTemplateId);
-            NavigationService.Navigate(editDiagnosisTemplate);
+            NavigationService.Navigate(editDiagnosisTemplate);           
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)

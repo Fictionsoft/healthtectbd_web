@@ -29,7 +29,7 @@ namespace Healthtechbd
             public static int doctorId;
             public static string userFirstName;                      
             public static string userLastName;                      
-            public static int userPhone;                      
+            public static string userPhone;                      
             public static string userEmail;
             #endregion
 
@@ -73,8 +73,8 @@ namespace Healthtechbd
         {
             if (EmailAddress.Text != "" && Password.Password != "")
             {
-                try
-                {
+                //try
+                //{
                     user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password);
 
                     if (user != null) //User = Doctor
@@ -93,17 +93,23 @@ namespace Healthtechbd
                         {
                             TextBlock UserName = AdminPanelWindow.userName;
                             UserName.Text = Session.userFirstName +" "+ Session.userLastName;
+
+                            if(user.profile_picture != "")
+                            {
+                                Image ProfilePic = AdminPanelWindow.profilePic;
+                                ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images//" + user.profile_picture));
+                            }
                         }
                     }
                     else
                     {
                         MessageBox.Show("Email or Password are invalid", "Invalid User", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                //}
             }
             else
             {

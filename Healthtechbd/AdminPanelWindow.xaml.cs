@@ -24,6 +24,7 @@ namespace Healthtechbd
         private RegistrationWindow registrationWindow;
         private ResetPasswordWindow resetPasswordWindow;
         public static TextBlock userName;
+        public static Image profilePic;       
 
         public AdminPanelWindow(MainWindow mainWindow)
         {
@@ -31,7 +32,8 @@ namespace Healthtechbd
             
             sidebar = Sidebar; // To get sidebar
             sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
-            userName = UserName; // To get user name textblock           
+            userName = UserName; // To get user name textblock     
+            profilePic = ProfilePic;
         }
 
         public AdminPanelWindow(RegistrationWindow registrationWindow)

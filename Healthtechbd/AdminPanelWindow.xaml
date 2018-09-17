@@ -28,8 +28,7 @@
                     </Border>
 
                     <StackPanel >
-                        <Image Name="Receiver" 
-                            Source="/Images/dashboard-students.png" Height="40" Width="40" />
+                        <Image Name="ProfilePic" Height="40" Width="40" />
                         <StackPanel.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=Mask}" />
                         </StackPanel.OpacityMask>

@@ -45,85 +45,84 @@ namespace Healthtechbd
         {
             if (DiagnosisComboBox.SelectedItem != "Type here..." && Instruction.Text != "")
             {
-                //try
-                //{
-                diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
-
-                var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
-
-                if (haveDiagnosisTemplate == null)
+                try
                 {
-                    NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
+                    diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
 
-                    diagnosis_template.diagnosis_list_id = diagnosis.id;
-                    diagnosis_template.doctor_id = MainWindow.Session.doctorId;
-                    diagnosis_template.instructions = Instruction.Text;
-                    diagnosis_template.status = true;
-                    diagnosis_template.created = DateTime.Now;
-                    db.diagnosis_templates.Add(diagnosis_template);
+                    var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
 
-                    int result_diagnosis_template = db.SaveChanges();
-                    if (result_diagnosis_template > 0)
+                    if (haveDiagnosisTemplate == null)
                     {
-                        int diagnosis_template_id = diagnosis_template.id;
+                        NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
 
-                        //medicines delete
-                        var diagnosis_medicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosis_template_id);
-                        if (diagnosis_medicines.Count() > 0)
+                        diagnosis_template.diagnosis_list_id = diagnosis.id;
+                        diagnosis_template.doctor_id = MainWindow.Session.doctorId;
+                        diagnosis_template.instructions = Instruction.Text;
+                        diagnosis_template.status = true;
+                        diagnosis_template.created = DateTime.Now;
+                        db.diagnosis_templates.Add(diagnosis_template);
+
+                        int result_diagnosis_template = db.SaveChanges();
+                        if (result_diagnosis_template > 0)
                         {
-                            db.diagnosis_medicines.RemoveRange(diagnosis_medicines);
-                            int delete_result = db.SaveChanges();
-                        }
+                            int diagnosis_template_id = diagnosis_template.id;
+
+                            //medicines delete
+                            var diagnosis_medicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosis_template_id);
+                            if (diagnosis_medicines.Count() > 0)
+                            {
+                                db.diagnosis_medicines.RemoveRange(diagnosis_medicines);
+                                int delete_result = db.SaveChanges();
+                            }
                         
-                        //medicines add
-                        var medicinesIds = MedicineChosenControl.selectedIds;
-                        foreach (int medicine_id in medicinesIds)
-                        {
-                            diagnosis_medecine.diagnosis_id = diagnosis_template_id;
-                            diagnosis_medecine.medicine_id = medicine_id;
-                            diagnosis_medecine.status = true;
-                            diagnosis_medecine.created = DateTime.Now;
-                            db.diagnosis_medicines.Add(diagnosis_medecine);
-                            int retult_diagnosis_medecines = db.SaveChanges();
+                            //medicines add
+                            var medicinesIds = MedicineChosenControl.selectedIds;
+                            foreach (int medicine_id in medicinesIds)
+                            {
+                                diagnosis_medecine.diagnosis_id = diagnosis_template_id;
+                                diagnosis_medecine.medicine_id = medicine_id;
+                                diagnosis_medecine.status = true;
+                                diagnosis_medecine.created = DateTime.Now;
+                                db.diagnosis_medicines.Add(diagnosis_medecine);
+                                int retult_diagnosis_medecines = db.SaveChanges();
+                            }
+
+                            MedicineChosenControl.selectedIds.Clear();
+
+                            //test delete
+                            var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosis_template_id);
+                            if (diagnosis_tests.Count() > 0)
+                            {
+                                db.diagnosis_tests.RemoveRange(diagnosis_tests);
+                                int delete_result = db.SaveChanges();
+                            }
+
+                            //tets add
+                            var testsIds = TestChosenControl.selectedIds;
+                            foreach (int test_id in testsIds)
+                            {
+                                diagnosis_test.diagnosis_id = diagnosis_template_id;
+                                diagnosis_test.test_id = test_id;
+                                diagnosis_test.status = true;
+                                diagnosis_test.created = DateTime.Now;
+                                db.diagnosis_tests.Add(diagnosis_test);
+                                int retult_diagnosis_tests = db.SaveChanges();
+                            }
+
+                            TestChosenControl.selectedIds.Clear();                    
                         }
 
-                        MedicineChosenControl.selectedIds.Clear();
-
-                        //test delete
-                        var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosis_template_id);
-                        if (diagnosis_tests.Count() > 0)
-                        {
-                            db.diagnosis_tests.RemoveRange(diagnosis_tests);
-                            int delete_result = db.SaveChanges();
-                        }
-
-                        //tets add
-                        var testsIds = TestChosenControl.selectedIds;
-                        foreach (int test_id in testsIds)
-                        {
-                            diagnosis_test.diagnosis_id = diagnosis_template_id;
-                            diagnosis_test.test_id = test_id;
-                            diagnosis_test.status = true;
-                            diagnosis_test.created = DateTime.Now;
-                            db.diagnosis_tests.Add(diagnosis_test);
-                            int retult_diagnosis_tests = db.SaveChanges();
-                        }
-
-                        TestChosenControl.selectedIds.Clear();
-
+                        MessageBox.Show("Diagnosis Tempalte has been saved", "Save");
                     }
-
-                    MessageBox.Show("Diagnosis Tempalte has been saved", "Save");
+                    else
+                    {
+                        MessageBox.Show("The Diagnosis Template already exist", "Already Exit");
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("The Diagnosis Template already exist", "Already Exit");
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //}
             }
             else
             {

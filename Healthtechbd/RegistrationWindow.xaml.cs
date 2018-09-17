@@ -60,7 +60,7 @@ namespace Healthtechbd
 
         private void btnRegistration_Click(object sender, RoutedEventArgs e)
         {
-            if(FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
+            if (FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
                 try
                 {
@@ -69,7 +69,7 @@ namespace Healthtechbd
 
                     if (haveEmail == null)
                     {
-                        if(havePhone == null)
+                        if (havePhone == null)
                         {
                             user.role_id = 1; //Doctor role_id = 1
                             user.first_name = FirstName.Text;
@@ -84,12 +84,12 @@ namespace Healthtechbd
                             MainWindow.Session.doctorId = user.id;
                             MainWindow.Session.userFirstName = FirstName.Text;
                             MainWindow.Session.userLastName = LastName.Text;
-                            MainWindow.Session.userPhone = int.Parse(Phone.Text);
+                            MainWindow.Session.userPhone = Phone.Text;
                             MainWindow.Session.userEmail = EmailAddress.Text;
 
                             this.Hide();
-                            AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
-                            adminpanelwindow.Show();
+                            AdminPanelWindow adminpanelWindow = new AdminPanelWindow(this);
+                            adminpanelWindow.Show();
 
                             if (MessageBox.Show("Registration is successfull.", "Success") == MessageBoxResult.OK)
                             {
@@ -106,12 +106,12 @@ namespace Healthtechbd
                     {
                         MessageBox.Show("The Email already exist.", "Already Exit");
                     }
-            }
+                }
                 catch
-            {
-                MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                {
+                    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
-        }
             else
             {
                 MessageBox.Show("Please fill up the all field.", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);

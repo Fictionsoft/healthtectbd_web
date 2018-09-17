@@ -30,12 +30,11 @@ namespace Healthtechbd
             InitializeComponent();
         }
 
-        private BitmapImage image;
         contextd_db db = new contextd_db();
-        user user = new user();
+        user user = new user();             
 
-        private void ButtonOpen_MouseDown(object sender, MouseButtonEventArgs e)
-        {                       
+        private void ButtonBrowse_Click(object sender, RoutedEventArgs e)
+        {
             OpenFileDialog op = new OpenFileDialog();
 
             op.Title = "Select a picture";
@@ -43,36 +42,48 @@ namespace Healthtechbd
 
             if (op.ShowDialog() == true)
             {
-                ProfilePic.Source = new BitmapImage(new Uri(op.FileName)); //FilePath
-                Random rnd = new Random();
-                string correctImageName = System.IO.Path.GetFileName(op.FileName) +"_"+ rnd.Next();
+                ReviewProfilePic.Source = new BitmapImage(new Uri(op.FileName)); //FilePath               
+                string imageName = System.IO.Path.GetFileName(op.FileName);
 
                 FilePath.Text = op.FileName; //FileName = FilePath
-                CorrectImageName.Text = correctImageName;
+                CorrectImageName.Text = imageName;
             }
         }
 
         private void SubmitUpdateProPic_Click(object sender, RoutedEventArgs e)
-        {
+        {           
             OpenFileDialog op = new OpenFileDialog();
+            Random rnd = new Random();
+            string fullImageName = rnd.Next() + "_" + CorrectImageName.Text;
 
-            string destination = System.AppDomain.CurrentDomain.BaseDirectory;           
-
-            System.IO.File.Copy(FilePath.Text, destination + "images//" + CorrectImageName.Text);
+            string destination = System.AppDomain.CurrentDomain.BaseDirectory + "images//";            
+            System.IO.File.Copy(FilePath.Text, destination + fullImageName);
 
             user = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
 
-            user.profile_picture = CorrectImageName.Text;
+            //Store Exits ProfilePic Name to delete
+            ExitsProfilePic.Text = user.profile_picture;
+
+            user.profile_picture = fullImageName;
             var uploadProfilePic = db.SaveChanges();
 
-            if (uploadProfilePic == 1)
+            if (uploadProfilePic > 0)
             {
                 MessageBox.Show("Profile picture update successfully", "Success");
+                Image ProfilePic = AdminPanelWindow.profilePic;
+
+                ProfilePic.Source = new BitmapImage(new Uri(destination + user.profile_picture));                
             }
             else
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }            
-        }
+            }
+
+            //Delete Doctor Profile Image
+            if (ExitsProfilePic.Text != "" && File.Exists(destination + ExitsProfilePic.Text))
+            { 
+                //System.IO.File.Delete(destination + ExitsProfilePic.Text);
+            }
+        }        
     }
 }
