@@ -106,5 +106,11 @@ namespace Healthtechbd
             searchField.Clear();
             loadPrescriptions();
         }
+
+        private void btnViewPrescriptionRow_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Session.editRecordId = (dataGridPrescriptions.SelectedItem as prescription).id;
+            NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
+        }
     }
 }

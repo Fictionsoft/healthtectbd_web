@@ -61,9 +61,6 @@ namespace Healthtechbd
 
             user = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
 
-            //Store Exits ProfilePic Name to delete
-            ExitsProfilePic.Text = user.profile_picture;
-
             user.profile_picture = fullImageName;
             var uploadProfilePic = db.SaveChanges();
 
@@ -77,12 +74,6 @@ namespace Healthtechbd
             else
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
-            //Delete Doctor Profile Image
-            if (ExitsProfilePic.Text != "" && File.Exists(destination + ExitsProfilePic.Text))
-            { 
-                //System.IO.File.Delete(destination + ExitsProfilePic.Text);
             }
         }        
     }

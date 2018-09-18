@@ -39,7 +39,6 @@
 
                                 <TextBlock x:Name="CorrectImageName" Visibility="Hidden" Text=""/>
                                 <TextBlock x:Name="FilePath" Visibility="Hidden" Text=""/>
-                                <TextBlock x:Name="ExitsProfilePic" Visibility="Hidden" Text=""/>
                             </StackPanel>
                         </Grid>
                     </Border>

@@ -1,0 +1,196 @@
+﻿<Page x:Class="Healthtechbd.ViewPrescription"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Healthtechbd"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="800"
+      Title="ViewPrescription">
+
+    <Page.Resources>
+        <Style TargetType="Separator">
+        </Style>
+    </Page.Resources>
+    
+    <StackPanel>
+        <!--Page Heading-->
+        <Grid Height="60" Background="#fff" VerticalAlignment="top">
+            <Border Margin="20 0 0 0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescription"/>
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="View Prescription"/>
+                </StackPanel>
+            </Border>
+
+            <Button x:Name="ButtonPrintPrescription" Grid.Column="1" Margin="0 0 20 0" Content="PRINT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonPrintPrescription_Click" />
+        </Grid>
+
+        <!--Page Heading Bottom-->
+        <ScrollViewer Height="490" VerticalScrollBarVisibility="Auto">
+            <Border x:Name="PrintArea" Margin="20">
+                <StackPanel>
+
+                    <Grid Background="#fff">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--Doctors Info-->
+                        <Border Padding="0 20 0 0" Grid.Row="0" HorizontalAlignment="Center">
+                            <Grid>
+                                <StackPanel Margin="5 0">
+                                    <TextBlock x:Name="DoctorName" Style="{StaticResource Level}" Text=""/>
+                                    <TextBlock x:Name="DoctorQualification" Style="{StaticResource Level}" Text="MBBS; FCPS( Medicine )"/>
+                                    <TextBlock x:Name="DoctorAddress" Style="{StaticResource Level}" Text="384/1 , West Nakhalpara,Tejgaon, Mohakhali"/>
+                                    <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Text=""/>
+                                    <TextBlock x:Name="DoctorWebsite" Style="{StaticResource Level}" Text=""/>
+                                    <TextBlock x:Name="DoctorPhone" Style="{StaticResource Level}" Text="Call: 34565"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Separator Margin="12" Grid.Row="1" Background="#eee"/>
+
+                        <!--Patient & Last Visit Date-->
+                        <Border Padding="12" Grid.Row="2">
+                            <Grid>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                
+                                <!--Patient-->
+                                <StackPanel Grid.Column="0" Margin="5 0">
+                                    <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Patient"/>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource Level}" Margin="0 0 3 0" Text="Name :"/>
+                                        <TextBlock FontWeight="Normal" x:Name="PatientName" Style="{StaticResource Level}" Text="Arafath Khan"/>
+
+                                        <TextBlock Style="{StaticResource Level}" Margin="10 0 3 0" Text="Age :"/>
+                                        <TextBlock FontWeight="Normal" x:Name="PatientAge" Style="{StaticResource Level}" Text="18 Years"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Phone :"/>
+                                        <TextBlock FontWeight="Normal" x:Name="PatientPhone" Style="{StaticResource Level}" Text="01750800764"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Address :"/>
+                                        <TextBlock FontWeight="Normal" x:Name="PatientAddress" Style="{StaticResource Level}" Text="Pabna"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Diagnosis :"/>
+                                        <TextBlock FontWeight="Normal" x:Name="PatientDiagnosis" Style="{StaticResource Level}" Text="Spellacy gibbs watts syndrome, Spherophakia brachymorphia syndrome."/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                                
+                                <!--Last Visit Date-->
+                                <StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Last Visit Date :"/>
+                                    <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="23 April 2018"/>
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+
+                        <!--Medicines-->
+                        <Border Padding="12" Grid.Row="3">
+                            <Grid>
+                                <StackPanel Margin="5 0">
+                                    <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Medicines"/>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource Level}" Margin="0 0 3 0" Text="Premil 2 Tablet :"/>
+                                        <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="( 1-1-1 )"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Igen Eye Drops :"/>
+                                        <TextBlock FontWeight="Normal"  Style="{StaticResource Level}" Text=" ( 1+1+1 )"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Skinabin Cream :"/>
+                                        <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="( 1-1-1 )"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Aciflox 200 Tablet :"/>
+                                        <TextBlock FontWeight="Normal"  Style="{StaticResource Level}" Text=" ( 1+1+1 )"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!--Examinations-->
+                        <Border Padding="12" Grid.Row="4">
+                            <Grid>
+                                <StackPanel Margin="5 0">
+                                    <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Examinations"/>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="CT Scan of HBS/Pelvic Organ, CT Scan of Whole Abdomen/KUB Region, CT Scan of Knee Joint/ Ankle Joint."/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!--Doctors Note-->
+                        <Border Padding="12" Grid.Row="5">
+                            <Grid>
+                                <StackPanel Margin="5 0">
+                                    <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Doctor's Note"/>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="Instructions goes here1, instructions goes here1"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Separator Grid.Row="6" Margin="12 150 12 0" Background="#eee"/>
+                        
+                        <!--Singnature & Date-->
+                        <Border Padding="12" Grid.Row="7">
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Signature :"/>
+                                    <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="Arafath Khan"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Date :"/>
+                                    <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="23 April 2018"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </StackPanel>
+</Page> 

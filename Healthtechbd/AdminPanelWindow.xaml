@@ -10,7 +10,7 @@
         Title="Admin Panel" Height="650" Width="1200" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
 
     <Window.Resources>
-       
+
     </Window.Resources>
 
     <Grid Background="#EDF1F5">
@@ -20,7 +20,10 @@
             <TextBlock x:Name="Logo" Text="HEALTHTECHBD" HorizontalAlignment="Left" Margin="43 0 0 0" Foreground="#fff" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" MouseDown="Logo_MouseDown"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Grid Margin="0 0 5 0" Height="40" Width="40">
+
+                <Image Name="ProfilePic" Height="50" Margin="0 0 10 0"/>
+
+                <!--<Grid Margin="0 0 5 0" Height="50" Width="50">
                     <Border Name="Mask"
                     Background="White"
                     BorderBrush="#FF3B5998"
@@ -28,13 +31,14 @@
                     </Border>
 
                     <StackPanel >
-                        <Image Name="ProfilePic" Height="40" Width="40" />
+                        <Image Name="ProfilePic" Height="60" Width="60"  />
                         <StackPanel.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=Mask}" />
                         </StackPanel.OpacityMask>
                     </StackPanel>
 
-                </Grid>
+                </Grid>-->
+
 
                 <TextBlock x:Name="UserName" Text="" VerticalAlignment="Center" FontSize="16" Foreground="#fff" />
                 <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Padding="15" Foreground="#fff">
@@ -163,7 +167,7 @@
 
             <!--MainContent Frame-->
             <Frame Margin="0 60 0 0" x:Name="MainContent" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2">
-                
+
             </Frame>
 
         </Grid>
