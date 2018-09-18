@@ -24,8 +24,6 @@ namespace Healthtechbd
         public ViewPrescription()
         {
             InitializeComponent();
-
-            var test = MainWindow.Session.editRecordId;
             LoadViewPrescriptionInfo();
         }
 
@@ -41,20 +39,31 @@ namespace Healthtechbd
 
         contextd_db db = new contextd_db();
         user doctor = new user();
+        prescription prescription = new prescription();
 
         public void LoadViewPrescriptionInfo()
         {                    
             doctor = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
+            prescription = db.presceiptions.Where(x => x.id == MainWindow.Session.editRecordId).FirstOrDefault();
 
-            if(doctor.clinic_name == "")
-            {
-                DoctorClinicName.Visibility = Visibility.Collapsed;                
-            }
+            DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorWebsite.Visibility = (doctor.website == "") ? Visibility.Collapsed : Visibility.Visible;
 
+            //Doctor Info
             DoctorName.Text          = doctor.first_name +" "+ doctor.last_name;
             DoctorQualification.Text = doctor.educational_qualification;
             DoctorAddress.Text       = doctor.address_line1 +" "+ doctor.address_line2;
+            DoctorClinicName.Text    = doctor.clinic_name; 
+            DoctorWebsite.Text       = doctor.website; 
             DoctorPhone.Text         = doctor.phone;
+
+            //Patient Info
+            PatientName.Text = prescription.user.first_name;
+            PatientAge.Text = prescription.user.age;
+            PatientPhone.Text = prescription.user.phone;
+            PatientAddress.Text = prescription.user.address_line1;
         }
     }
 }

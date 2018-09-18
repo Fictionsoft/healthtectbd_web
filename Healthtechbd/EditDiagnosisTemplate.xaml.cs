@@ -70,7 +70,7 @@ namespace Healthtechbd
             {
                 var diagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
 
-                var diagnosis = db.diagnosis.Where(x => x.id == diagnosisTemplate.diagnosis_list_id).OrderByDescending(x => x.created).Take(10).ToList();
+                var diagnosis = db.diagnosis.Where(x => x.id == diagnosisTemplate.diagnosis_list_id).OrderByDescending(x => x.created).ToList();
 
                 foreach (var item in diagnosis)
                 {

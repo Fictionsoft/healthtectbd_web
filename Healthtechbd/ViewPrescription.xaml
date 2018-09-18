@@ -14,24 +14,24 @@
         </Style>
     </Page.Resources>
     
-    <StackPanel>
-        <!--Page Heading-->
-        <Grid Height="60" Background="#fff" VerticalAlignment="top">
-            <Border Margin="20 0 0 0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescription"/>
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="View Prescription"/>
-                </StackPanel>
-            </Border>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <!--Page Heading-->
+            <Grid Height="60" Background="#fff" VerticalAlignment="top">
+                <Border Margin="20 0 0 0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescription"/>
+                        <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
+                        <TextBlock Style="{StaticResource BreadcrumbItem}" Text="View Prescription"/>
+                    </StackPanel>
+                </Border>
 
-            <Button x:Name="ButtonPrintPrescription" Grid.Column="1" Margin="0 0 20 0" Content="PRINT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonPrintPrescription_Click" />
-        </Grid>
+                <Button x:Name="ButtonPrintPrescription" Grid.Column="1" Margin="0 0 20 0" Content="PRINT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonPrintPrescription_Click" />
+            </Grid>
 
-        <!--Page Heading Bottom-->
-        <ScrollViewer Height="490" VerticalScrollBarVisibility="Auto">
-            <Border x:Name="PrintArea" Margin="20">
-                <StackPanel>
+            <!--Page Heading Bottom-->
+            <Border Margin="20">
+                <StackPanel x:Name="PrintArea">
 
                     <Grid Background="#fff">
 
@@ -50,11 +50,11 @@
                         <Border Padding="0 20 0 0" Grid.Row="0" HorizontalAlignment="Center">
                             <Grid>
                                 <StackPanel Margin="5 0">
-                                    <TextBlock x:Name="DoctorName" Style="{StaticResource Level}" Text=""/>
-                                    <TextBlock x:Name="DoctorQualification" Style="{StaticResource Level}" Text="MBBS; FCPS( Medicine )"/>
+                                    <TextBlock x:Name="DoctorName" Style="{StaticResource Level}" Text="Arafat Khan"/>
+                                    <TextBlock x:Name="DoctorQualification" Style="{StaticResource Level}" Text="MBBS; FCPS( Medicine)"/>
                                     <TextBlock x:Name="DoctorAddress" Style="{StaticResource Level}" Text="384/1 , West Nakhalpara,Tejgaon, Mohakhali"/>
-                                    <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Text=""/>
-                                    <TextBlock x:Name="DoctorWebsite" Style="{StaticResource Level}" Text=""/>
+                                    <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Text="Clinic Name"/>
+                                    <TextBlock x:Name="DoctorWebsite" Style="{StaticResource Level}" Text="www.sitename.com"/>
                                     <TextBlock x:Name="DoctorPhone" Style="{StaticResource Level}" Text="Call: 34565"/>
                                 </StackPanel>
                             </Grid>
@@ -65,12 +65,12 @@
                         <!--Patient & Last Visit Date-->
                         <Border Padding="12" Grid.Row="2">
                             <Grid>
-                                
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <!--Patient-->
                                 <StackPanel Grid.Column="0" Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Patient"/>
@@ -99,7 +99,7 @@
                                     </StackPanel>
 
                                 </StackPanel>
-                                
+
                                 <!--Last Visit Date-->
                                 <StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal">
                                     <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Last Visit Date :"/>
@@ -166,7 +166,7 @@
                         </Border>
 
                         <Separator Grid.Row="6" Margin="12 150 12 0" Background="#eee"/>
-                        
+
                         <!--Singnature & Date-->
                         <Border Padding="12" Grid.Row="7">
                             <Grid>
@@ -191,6 +191,7 @@
 
                 </StackPanel>
             </Border>
-        </ScrollViewer>
-    </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
 </Page> 

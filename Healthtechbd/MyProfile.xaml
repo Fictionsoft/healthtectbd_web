@@ -59,12 +59,12 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Row="0" Grid.Column="0" Margin="5 0">
-                                    <TextBlock Style="{StaticResource Level}" Text="First Name"/>
+                                    <TextBlock Style="{StaticResource Level}" Text="First Name *"/>
                                     <TextBox x:Name="FirstName" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="0" Grid.Column="1"  Margin="5 0">
-                                    <TextBlock Style="{StaticResource Level}" Text="Last Name"/>
+                                    <TextBlock Style="{StaticResource Level}" Text="Last Name *"/>
                                     <TextBox x:Name="LastName" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
@@ -74,7 +74,7 @@
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="1" Grid.Column="1"  Margin="5 0">
-                                    <TextBlock Style="{StaticResource Level}" Text="Phone"/>
+                                    <TextBlock Style="{StaticResource Level}" Text="Phone *"/>
                                     <TextBox x:Name="Phone" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 

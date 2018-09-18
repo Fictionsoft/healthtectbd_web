@@ -55,40 +55,47 @@ namespace Healthtechbd
         }
 
         private void SubmitMyProfile_Click(object sender, RoutedEventArgs e)
-        {           
-            try
+        {   
+            if(FirstName.Text != "" && LastName.Text != "" && Phone.Text != "")
             {
-                NavigationService.Navigate(new Uri("MyProfile.xaml", UriKind.Relative));
-
-                var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text && x.id != MainWindow.Session.doctorId);
-
-                if(havePhone == null)
+                try
                 {
-                    user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
+                    NavigationService.Navigate(new Uri("MyProfile.xaml", UriKind.Relative));
 
-                    user.first_name = FirstName.Text;
-                    user.last_name = LastName.Text;
-                    //user.email = Email.Text;
-                    user.phone = Phone.Text;
-                    user.address_line1 = AddressLine1.Text;
-                    user.address_line2 = AddressLine2.Text;
-                    user.educational_qualification = EducationalQualification.Text;
-                    user.clinic_name = ClinicName.Text;
-                    user.website = Website.Text;
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text && x.id != MainWindow.Session.doctorId);
 
-                    db.SaveChanges();
+                    if (havePhone == null)
+                    {
+                        user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
 
-                    MessageBox.Show("Profile has been updated", "Success");
+                        user.first_name = FirstName.Text;
+                        user.last_name = LastName.Text;
+                        //user.email = Email.Text;
+                        user.phone = Phone.Text;
+                        user.address_line1 = AddressLine1.Text;
+                        user.address_line2 = AddressLine2.Text;
+                        user.educational_qualification = EducationalQualification.Text;
+                        user.clinic_name = ClinicName.Text;
+                        user.website = Website.Text;
+
+                        db.SaveChanges();
+
+                        MessageBox.Show("Profile has been updated", "Success");
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Phone Number already exist", "Already Exit");
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("The Phone Number already exist", "Already Exit");
-                }               
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
-            catch
+            else
             {
-                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }            
+                MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }        
         }
 
         private void CancelMyProfile_Click(object sender, RoutedEventArgs e)
