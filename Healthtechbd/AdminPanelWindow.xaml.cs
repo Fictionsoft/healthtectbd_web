@@ -94,7 +94,7 @@ namespace Healthtechbd
         private void ButtonDashboard_Loaded(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new Dashboard();
-            UserName.Text = MainWindow.Session.userFirstName;
+            UserName.Text = MainWindow.Session.doctorFirstName;
         }
 
         private void Window_Closed(object sender, EventArgs e)

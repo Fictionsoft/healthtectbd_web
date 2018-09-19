@@ -64,6 +64,10 @@ namespace Healthtechbd
             PatientAge.Text = prescription.user.age;
             PatientPhone.Text = prescription.user.phone;
             PatientAddress.Text = prescription.user.address_line1;
+
+            //Singnature & Date
+            DoctorSingnature.Text = doctor.first_name + " " + doctor.last_name;
+            CreatedDate.Text = prescription.created.ToString();
         }
     }
 }

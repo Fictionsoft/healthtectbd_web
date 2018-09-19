@@ -178,12 +178,12 @@
 
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                                     <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Signature :"/>
-                                    <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="Arafath Khan"/>
+                                    <TextBlock x:Name="DoctorSingnature" FontWeight="Normal" Style="{StaticResource Level}" Text="Arafath Khan"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                     <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Date :"/>
-                                    <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="23 April 2018"/>
+                                    <TextBlock x:Name="CreatedDate" FontWeight="Normal" Style="{StaticResource Level}" Text="23 April 2018"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

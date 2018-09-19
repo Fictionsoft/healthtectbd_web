@@ -23,7 +23,7 @@ namespace Healthtechbd
     {
 
         contextd_db db = new contextd_db();
-        user user = new user();
+        user doctor = new user();
 
         public MyProfile()
         {
@@ -36,17 +36,17 @@ namespace Healthtechbd
         {
             try
             {
-                user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
+                doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
 
-                FirstName.Text = user.first_name;
-                LastName.Text = user.last_name;
-                Email.Text = user.email;
-                Phone.Text = user.phone;
-                AddressLine1.Text = user.address_line1;
-                AddressLine2.Text = user.address_line2;
-                EducationalQualification.Text = user.educational_qualification;
-                ClinicName.Text = user.clinic_name;
-                Website.Text = user.website;
+                FirstName.Text = doctor.first_name;
+                LastName.Text = doctor.last_name;
+                Email.Text = doctor.email;
+                Phone.Text = doctor.phone;
+                AddressLine1.Text = doctor.address_line1;
+                AddressLine2.Text = doctor.address_line2;
+                EducationalQualification.Text = doctor.educational_qualification;
+                ClinicName.Text = doctor.clinic_name;
+                Website.Text = doctor.website;
             }
             catch
             {
@@ -66,21 +66,31 @@ namespace Healthtechbd
 
                     if (havePhone == null)
                     {
-                        user = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
+                        doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
 
-                        user.first_name = FirstName.Text;
-                        user.last_name = LastName.Text;
-                        //user.email = Email.Text;
-                        user.phone = Phone.Text;
-                        user.address_line1 = AddressLine1.Text;
-                        user.address_line2 = AddressLine2.Text;
-                        user.educational_qualification = EducationalQualification.Text;
-                        user.clinic_name = ClinicName.Text;
-                        user.website = Website.Text;
+                        doctor.first_name = FirstName.Text;
+                        doctor.last_name = LastName.Text;
+                        //doctor.email = Email.Text;
+                        doctor.phone = Phone.Text;
+                        doctor.address_line1 = AddressLine1.Text;
+                        doctor.address_line2 = AddressLine2.Text;
+                        doctor.educational_qualification = EducationalQualification.Text;
+                        doctor.clinic_name = ClinicName.Text;
+                        doctor.website = Website.Text;
 
                         db.SaveChanges();
 
-                        MessageBox.Show("Profile has been updated", "Success");
+                        //Change Session Info.................
+                        MainWindow.Session.doctorFirstName = FirstName.Text;
+                        MainWindow.Session.doctorLastName = LastName.Text;
+                        MainWindow.Session.doctorPhone = Phone.Text;
+                        MainWindow.Session.doctorEmail = Email.Text;
+
+                        if (MessageBox.Show("Profile has been updated", "Success") == MessageBoxResult.OK)
+                        {
+                            TextBlock UserName = AdminPanelWindow.userName;
+                            UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
+                        }                        
                     }
                     else
                     {

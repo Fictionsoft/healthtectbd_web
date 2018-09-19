@@ -82,19 +82,19 @@ namespace Healthtechbd
                             db.SaveChanges();
 
                             MainWindow.Session.doctorId = user.id;
-                            MainWindow.Session.userFirstName = FirstName.Text;
-                            MainWindow.Session.userLastName = LastName.Text;
-                            MainWindow.Session.userPhone = Phone.Text;
-                            MainWindow.Session.userEmail = EmailAddress.Text;
+                            MainWindow.Session.doctorFirstName = FirstName.Text;
+                            MainWindow.Session.doctorLastName = LastName.Text;
+                            MainWindow.Session.doctorPhone = Phone.Text;
+                            MainWindow.Session.doctorEmail = EmailAddress.Text;
 
                             this.Hide();
                             AdminPanelWindow adminpanelWindow = new AdminPanelWindow(this);
                             adminpanelWindow.Show();
 
-                            if (MessageBox.Show("Registration is successfull.", "Success") == MessageBoxResult.OK)
+                            if (MessageBox.Show("Registration is successfull", "Success") == MessageBoxResult.OK)
                             {
                                 TextBlock UserName = AdminPanelWindow.userName;
-                                UserName.Text = MainWindow.Session.userFirstName + " " + MainWindow.Session.userLastName;
+                                UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
                             }
                         }
                         else

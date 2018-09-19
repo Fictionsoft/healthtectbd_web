@@ -27,10 +27,10 @@ namespace Healthtechbd
         {
             #region Doctor Info
             public static int doctorId;
-            public static string userFirstName;                      
-            public static string userLastName;                      
-            public static string userPhone;                      
-            public static string userEmail;
+            public static string doctorFirstName;                      
+            public static string doctorLastName;                      
+            public static string doctorPhone;                      
+            public static string doctorEmail;
             #endregion
 
             public static int editRecordId;                    
@@ -73,8 +73,8 @@ namespace Healthtechbd
         {
             if (EmailAddress.Text != "" && Password.Password != "")
             {
-                //try
-                //{
+                try
+                {
                     user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password);
 
                     if (user != null) //User = Doctor
@@ -85,14 +85,14 @@ namespace Healthtechbd
                         
                         //Doctor Info Save to Session....
                         Session.doctorId = user.id;
-                        Session.userFirstName = user.first_name;
-                        Session.userLastName = user.last_name;
-                        Session.userEmail = user.email;
+                        Session.doctorFirstName = user.first_name;
+                        Session.doctorLastName = user.last_name;
+                        Session.doctorEmail = user.email;
                         
                         if (MessageBox.Show("Login successfully", "Success") == MessageBoxResult.OK)
                         {
                             TextBlock UserName = AdminPanelWindow.userName;
-                            UserName.Text = Session.userFirstName +" "+ Session.userLastName;
+                            UserName.Text = Session.doctorFirstName +" "+ Session.doctorLastName;
 
                             if(user.profile_picture != "")
                             {
@@ -105,11 +105,11 @@ namespace Healthtechbd
                     {
                         MessageBox.Show("Email or Password are invalid", "Invalid User", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //}
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             else
             {

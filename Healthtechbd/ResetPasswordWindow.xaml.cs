@@ -68,14 +68,14 @@ namespace Healthtechbd
                     adminPanelWindow.Show();
 
                     MainWindow.Session.doctorId = user.id;
-                    MainWindow.Session.userFirstName = user.first_name;
-                    MainWindow.Session.userLastName = user.last_name;
-                    MainWindow.Session.userEmail = user.email;
+                    MainWindow.Session.doctorFirstName = user.first_name;
+                    MainWindow.Session.doctorLastName = user.last_name;
+                    MainWindow.Session.doctorEmail = user.email;
 
                     if (MessageBox.Show("Password has been reset and Login Successfully", "Success") == MessageBoxResult.OK)
                     {
                         TextBlock UserName = AdminPanelWindow.userName;
-                        UserName.Text = MainWindow.Session.userFirstName + " " + MainWindow.Session.userLastName;
+                        UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
                     }                    
                 }
                 else
