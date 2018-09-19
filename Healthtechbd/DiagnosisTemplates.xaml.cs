@@ -43,12 +43,12 @@ namespace Healthtechbd
                     .ToList();
 
                 dataGridDiagnosisTemplates.ItemsSource = diagnosisTemplates;
-        }
+            }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-}
+        }
 
         private void ButtonAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {

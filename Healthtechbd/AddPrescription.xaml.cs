@@ -40,6 +40,7 @@ namespace Healthtechbd
 
         contextd_db db = new contextd_db();
         prescription prescription = new prescription();
+        prescriptions_medicine prescriptions_medicine = new prescriptions_medicine();
         user patient = new user();
 
         //Load Patient Combobox.....
@@ -129,34 +130,64 @@ namespace Healthtechbd
                 checkbox.DataContext = diagnosisTemplate.id;
                 DiagnosisCheckbox.Children.Add(checkbox);
 
-                checkbox.AddHandler(CheckBox.CheckedEvent, new RoutedEventHandler(DiagnosIsChecked));
+                checkbox.AddHandler(CheckBox.ClickEvent, new RoutedEventHandler(DiagnosIsClick));
             }
         }
 
-        private void DiagnosIsChecked(object sender, RoutedEventArgs e)
+        public static List<long> diagnosisTemplateIds = new List<long>();
+        private void DiagnosIsClick(object sender, RoutedEventArgs e)
         {
-            CheckBox checkBox = sender as CheckBox; 
+            CheckBox checkBox = sender as CheckBox;
+          
             var diagnosisTemplateId = (int)checkBox.DataContext;
 
-            var diagnosisTemplate = db.diagnosis_templates.Where(x => x.id == diagnosisTemplateId).FirstOrDefault();
-            DoctorsNotes.Text = diagnosisTemplate.instructions;
+            if(checkBox.IsChecked == true)
+            {
+                diagnosisTemplateIds.Add(diagnosisTemplateId);
+            }
+
+            if(checkBox.IsChecked == false)
+            {
+                diagnosisTemplateIds.Remove(diagnosisTemplateId);
+            }
+
+            var diagnosisTemplates = db.diagnosis_templates
+                .Where(x => diagnosisTemplateIds.Contains(x.id))
+                .Select(x => x.instructions).ToList();
+
+            var instructions = "";
+            foreach (var instruction in diagnosisTemplates)
+            {
+                instructions += instruction + (instruction.Equals(diagnosisTemplates.Last()) ?".":", ");
+            }
+
+            DoctorsNotes.Text = instructions;
 
             var diagnosisTests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
 
-            var diagnosisMedicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosisTemplateId)
-                .Select(x => new IdNameModel {
+            var diagnosisMedicines = db.diagnosis_medicines.Where(x => diagnosisTemplateIds.Contains(x.diagnosis_id))
+                .Select(x => new IdNameModel
+                {
                     Id = x.medicine_id,
                     Name = x.medicine.name
                 })
                 .ToList();
 
             ((DiagnosisMedicineModel)medicineChosenControl.DataContext).SelectedMedicines = diagnosisMedicines;
-        }
-        
+
+            // store ids to save into database
+            MedicineChosenControl.selectedIds.Clear();
+            foreach (var diagnosisMedicine in diagnosisMedicines)
+            {
+                MedicineChosenControl.selectedIds.Add(diagnosisMedicine.Id);
+            }
+        }        
 
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
-        {            
-            if(PatientComboBox.Text != "")
+        {
+            var test = MedicineChosenControl.selectedIds;
+            
+            if(PatientComboBox.Text != "" && PatientPhone.Text != "")
             {
                 Grid sidebar = AdminPanelWindow.sidebar;
                 sidebar.Visibility = Visibility.Visible;
@@ -177,13 +208,38 @@ namespace Healthtechbd
                 prescription.created = DateTime.Now;
 
                 db.presceiptions.Add(prescription);
-                db.SaveChanges();
+                int result_add_prescription = db.SaveChanges();  
+                
+                if(result_add_prescription > 0)
+                {
+                    //prescription medicines delete
+                    var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == prescription.id);
+                    if (prescriptions_medicines.Count() > 0)
+                    {
+                        db.prescriptions_medicines.RemoveRange(prescriptions_medicines);
+                        int delete_result = db.SaveChanges();
+                    }
+
+                    //prescription medicines add
+                    var medicinesIds = MedicineChosenControl.selectedIds;
+                    foreach (int medicine_id in medicinesIds)
+                    {
+                        prescriptions_medicine.prescription_id = prescription.id;
+                        prescriptions_medicine.medicine_id = medicine_id;
+                        prescriptions_medicine.status = true;
+                        prescriptions_medicine.created = DateTime.Now;
+                        db.prescriptions_medicines.Add(prescriptions_medicine);
+                        int retult_prescription_medecines = db.SaveChanges();
+                    }
+
+                    MedicineChosenControl.selectedIds.Clear();
+                }
 
                 MessageBox.Show("Prescription has been saved", "Success");
             }
             else
             {
-                MessageBox.Show("Patient name is required", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }            
         }
 

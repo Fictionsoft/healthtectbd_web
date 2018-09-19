@@ -90,7 +90,7 @@
 
                                     <Border Grid.Row="0" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
-                                            <TextBlock Width="43" FontWeight="SemiBold" Margin="0,4,5,5" Text="Name:" VerticalAlignment="Center"/>
+                                            <TextBlock Width="43" FontWeight="SemiBold" Margin="0,4,5,5" Text="Name*:" VerticalAlignment="Center"/>
                                             <ToggleButton Margin="-10 0 0 0" Content="New" Checked = "NewPatientCheck" Unchecked = "NewPatientUncheck" Width="42" />
                                             <ComboBox IsTextSearchEnabled="False" IsEditable="True" Width="290" Padding="0 -0.5 0 0" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
 
@@ -100,7 +100,7 @@
 
                                     <Border Grid.Row="1" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
-                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Phone:" VerticalAlignment="Center"/>
+                                            <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Phone*:" VerticalAlignment="Center"/>
                                             <TextBox x:Name="PatientPhone" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="310" Text=""/>
                                         </StackPanel>
                                     </Border>
@@ -216,7 +216,7 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
-
+ 
                         <!--Medicines-->
                         <Grid Height="280" Grid.Column="1" Margin="30 0 10 0">
                             <Border Background="#EBEBEB" CornerRadius="5 5 0 0" Padding="8 8">

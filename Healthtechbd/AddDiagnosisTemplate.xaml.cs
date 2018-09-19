@@ -67,15 +67,15 @@ namespace Healthtechbd
                         {
                             int diagnosis_template_id = diagnosis_template.id;
 
-                            //medicines delete
+                            //diagnosis medicines delete
                             var diagnosis_medicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosis_template_id);
                             if (diagnosis_medicines.Count() > 0)
                             {
                                 db.diagnosis_medicines.RemoveRange(diagnosis_medicines);
                                 int delete_result = db.SaveChanges();
                             }
-                        
-                            //medicines add
+
+                            //diagnosis medicines add
                             var medicinesIds = MedicineChosenControl.selectedIds;
                             foreach (int medicine_id in medicinesIds)
                             {
@@ -89,7 +89,7 @@ namespace Healthtechbd
 
                             MedicineChosenControl.selectedIds.Clear();
 
-                            //test delete
+                            //diagnosis test delete
                             var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosis_template_id);
                             if (diagnosis_tests.Count() > 0)
                             {
@@ -97,7 +97,7 @@ namespace Healthtechbd
                                 int delete_result = db.SaveChanges();
                             }
 
-                            //tets add
+                            //diagnosis tets add
                             var testsIds = TestChosenControl.selectedIds;
                             foreach (int test_id in testsIds)
                             {
