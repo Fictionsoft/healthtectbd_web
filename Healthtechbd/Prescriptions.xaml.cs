@@ -67,6 +67,31 @@ namespace Healthtechbd
                     prescription = db.presceiptions.FirstOrDefault(x => x.id == prescriptionId);
 
                     db.presceiptions.Remove(prescription);
+
+                    //prescription diagnosis delete
+                    var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescriptionId);
+                    if (prescriptions_diagnosis.Count() > 0)
+                    {
+                        db.prescriptions_diagnosis.RemoveRange(prescriptions_diagnosis);
+                        int delete_result = db.SaveChanges();
+                    }
+
+                    //prescription medicines delete
+                    var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == prescriptionId);
+                    if (prescriptions_medicines.Count() > 0)
+                    {
+                        db.prescriptions_medicines.RemoveRange(prescriptions_medicines);
+                        int delete_result = db.SaveChanges();
+                    }
+
+                    //prescription tests delete
+                    var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == prescriptionId);
+                    if (prescriptions_tests.Count() > 0)
+                    {
+                        db.prescriptions_tests.RemoveRange(prescriptions_tests);
+                        int delete_result = db.SaveChanges();
+                    }
+
                     db.SaveChanges();
                     loadPrescriptions();
                     MessageBox.Show("Delete Successfully", "Success");
