@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <local:DiagnosisMedicineModel x:Key="diagnosisMedicineModel"/>
+        <local:DiagnosisTestModel x:Key="diagnosisTestModel"/>
 
         <Style TargetType="ComboBox" x:Key="DiagnosisComboBox">
             <Setter Property="BorderBrush" Value="#eee"/>
@@ -227,14 +228,12 @@
                                         <materialDesign:PackIcon Kind="Plus" Margin="0 -8 0 0" Foreground="#fff" VerticalAlignment="Top" Height="40" Width="40"  HorizontalAlignment="Right" />
                                     </Grid>
 
-                                    <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8" Background="#fff" Height="245">-->
                                     <Grid Background="#fff" Height="245">
                                         <Grid DataContext="{StaticResource diagnosisMedicineModel}" Height="102">
                                             <control:DiagnosisMedicineChosenControl x:Name="medicineChosen" MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,1,1,0"  />
                                         </Grid>
-                                        <!--<WrapPanel Margin="5 10" Orientation="Horizontal"/>-->
-                                        
                                     </Grid>
+                                    
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -250,11 +249,15 @@
                         <!--Examination-->
                         <Grid Height="170" Grid.Column="0" Margin="10 0 0 0">
                             <Border Background="#EBEBEB" CornerRadius="0 0 5 5" Padding="8 8">
-
                                 <StackPanel>
-                                    <TextBlock Text="Examinations" Foreground="#333" FontWeight="SemiBold" Margin="0 0 0 5"/>
+                                    <TextBlock Text="Tests" Width="300" HorizontalAlignment="Left" Foreground="#333" FontWeight="SemiBold" Margin="0 10 0 5"/>
 
-                                    <TextBox Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="130"/>
+                                    <Grid Background="#fff" Height="245">
+                                        <Grid DataContext="{StaticResource diagnosisTestModel}" Height="102">
+                                            <control:DiagnosisTestChosenControl x:Name="testChosen" TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="0,-65,0,66"  />
+                                        </Grid>
+                                    </Grid>
+                                    
                                 </StackPanel>
                             </Border>
                         </Grid>

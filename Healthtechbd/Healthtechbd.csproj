@@ -151,6 +151,7 @@
       <DependentUpon>Medicines.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DiagnosisMedicineModel.cs" />
+    <Compile Include="Model\DiagnosisTestModel.cs" />
     <Compile Include="Model\MedicineModel.cs" />
     <Compile Include="Model\TestModel.cs" />
     <Compile Include="MyProfile.xaml.cs">
