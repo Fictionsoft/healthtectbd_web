@@ -85,9 +85,7 @@ namespace Healthtechbd
                                 diagnosis_medecine.created = DateTime.Now;
                                 db.diagnosis_medicines.Add(diagnosis_medecine);
                                 int retult_diagnosis_medecines = db.SaveChanges();
-                            }
-
-                            MedicineChosenControl.selectedIds.Clear();
+                            }                            
 
                             //diagnosis test delete
                             var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosis_template_id);
@@ -109,6 +107,7 @@ namespace Healthtechbd
                                 int retult_diagnosis_tests = db.SaveChanges();
                             }
 
+                            MedicineChosenControl.selectedIds.Clear();
                             TestChosenControl.selectedIds.Clear();                    
                         }
 
@@ -160,7 +159,7 @@ namespace Healthtechbd
 
             var searchBy = obj.Text;
 
-            var diagnosis = db.diagnosis.Where(x => x.name.StartsWith(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+            var diagnosis = db.diagnosis.Where(x => x.name.Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
             DiagnosisComboBox.Items.Clear();
 
             foreach (var data in diagnosis)

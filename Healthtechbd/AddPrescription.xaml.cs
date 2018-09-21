@@ -108,7 +108,7 @@ namespace Healthtechbd
             var searchBy = obj.Text;
 
             var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) && 
-                           (x.first_name.StartsWith(searchBy))).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+                           (x.first_name.Contains(searchBy))).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
 
             PatientComboBox.Items.Clear();
 
@@ -187,17 +187,17 @@ namespace Healthtechbd
             ((DiagnosisTestModel)diagnosisTestChosenControl.DataContext).SelectedTests = diagnosisTests;
 
             // store mediciene ids to save into database
-            MedicineChosenControl.selectedIds.Clear();
+            DiagnosisMedicineChosenControl.selectedIds.Clear();
             foreach (var diagnosisMedicine in diagnosisMedicines)
             {
-                MedicineChosenControl.selectedIds.Add(diagnosisMedicine.Id);
+                DiagnosisMedicineChosenControl.selectedIds.Add(diagnosisMedicine.Id);
             }
 
             // store test ids to save into database
-            TestChosenControl.selectedIds.Clear();
+            DiagnosisTestChosenControl.selectedIds.Clear();
             foreach (var diagnosisTest in diagnosisTests)
             {
-                TestChosenControl.selectedIds.Add(diagnosisTest.Id);
+                DiagnosisTestChosenControl.selectedIds.Add(diagnosisTest.Id);
             }
         }        
 
@@ -236,6 +236,10 @@ namespace Healthtechbd
 
                     //Add Prescription Tests
                     AddPrescriptionTests(prescription.id);
+
+                    diagnosisTemplateIds.Clear();
+                    DiagnosisMedicineChosenControl.selectedIds.Clear();
+                    DiagnosisTestChosenControl.selectedIds.Clear();
                 }
 
                 MessageBox.Show("Prescription has been saved", "Success");
@@ -265,10 +269,7 @@ namespace Healthtechbd
                 prescriptions_diagnosi.created = DateTime.Now;
                 db.prescriptions_diagnosis.Add(prescriptions_diagnosi);
                 int retult_prescription_diagnosis = db.SaveChanges();
-            }
-
-            diagnosisTemplateIds.Clear();
-            MedicineChosenControl.selectedIds.Clear();
+            }            
         }
 
         void AddPrescriptionMedicines(int PrescriptionId)
@@ -291,10 +292,7 @@ namespace Healthtechbd
                 prescriptions_medicine.created = DateTime.Now;
                 db.prescriptions_medicines.Add(prescriptions_medicine);
                 int retult_prescription_medecines = db.SaveChanges();
-            }
-
-            diagnosisTemplateIds.Clear();
-            MedicineChosenControl.selectedIds.Clear();
+            }            
         }
 
         void AddPrescriptionTests(int PrescriptionId)
@@ -317,10 +315,7 @@ namespace Healthtechbd
                 prescriptions_test.created = DateTime.Now;
                 db.prescriptions_tests.Add(prescriptions_test);
                 int retult_prescription_tests = db.SaveChanges();
-            }
-
-            diagnosisTemplateIds.Clear();
-            TestChosenControl.selectedIds.Clear();
+            }                     
         }
 
         private void CancelAddPrescription_Click(object sender, RoutedEventArgs e)

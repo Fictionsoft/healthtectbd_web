@@ -92,11 +92,11 @@ namespace Healthtechbd
                 try
                 {
                     var users = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) &&
-                                                (x.first_name.Trim().StartsWith(searchBy) ||
-                                                x.last_name.Trim().StartsWith(searchBy) ||
-                                                x.phone.Trim().StartsWith(searchBy) ||
-                                                x.email.Trim().StartsWith(searchBy) ||
-                                                x.age.Trim().StartsWith(searchBy))
+                                                (x.first_name.Trim().Contains(searchBy) ||
+                                                x.last_name.Trim().Contains(searchBy) ||
+                                                x.phone.Trim().Contains(searchBy) ||
+                                                x.email.Trim().Contains(searchBy) ||
+                                                x.age.Trim().Contains(searchBy))
                                           ).OrderByDescending(x => x.created).Take(10).ToList();
 
                     if (users.Count == 0)

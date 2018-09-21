@@ -79,7 +79,7 @@ namespace Healthtechbd
 
             try
             {
-                var medicines = db.medicines.Where(x => x.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+                var medicines = db.medicines.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
 
                 if (medicines.Count == 0)
                 {

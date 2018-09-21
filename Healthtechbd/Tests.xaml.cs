@@ -85,7 +85,7 @@ namespace Healthtechbd
 
             try
             {
-                var tests = db.tests.Where(x => x.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+                var tests = db.tests.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
 
                 if (tests.Count == 0)
                 {

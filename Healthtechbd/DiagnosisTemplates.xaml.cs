@@ -114,7 +114,7 @@ namespace Healthtechbd
 
             try
             {
-                var diagnosisTemplates = db.diagnosisTemplates.Where(x => x.diagnosis.name.Trim().StartsWith(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+                var diagnosisTemplates = db.diagnosisTemplates.Where(x => x.diagnosis.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
 
                 if (diagnosisTemplates.Count == 0)
                 {

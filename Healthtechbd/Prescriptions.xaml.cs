@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfChosenControl.model;
+using WpfChosenControl;
 
 namespace Healthtechbd
 {
@@ -48,6 +49,10 @@ namespace Healthtechbd
 
         private void ButtonAddPrescription_Click(object sender, RoutedEventArgs e)
         {
+            AddPrescription.diagnosisTemplateIds.Clear();
+            DiagnosisMedicineChosenControl.selectedIds.Clear();
+            DiagnosisTestChosenControl.selectedIds.Clear();
+
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Hidden;
 
@@ -109,7 +114,9 @@ namespace Healthtechbd
 
             try
             {
-                var prescriptions = db.presceiptions.Where(x => x.user.first_name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).ToList();
+                var prescriptions = db.presceiptions.Where(x => x.user.first_name.Trim().Contains(searchBy) ||
+                                    x.user.phone.Trim().Contains(searchBy))
+                                    .OrderByDescending(x => x.created).ToList();
 
                 if (prescriptions.Count == 0)
                 {
