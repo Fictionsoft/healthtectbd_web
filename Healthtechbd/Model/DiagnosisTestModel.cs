@@ -68,8 +68,8 @@ namespace Healthtechbd.Model
         public void LoadExistingItems(int ItemId)
         {
             var existing_items = new ObservableCollection<IdNameModel>();
-            var existing_tests = db.diagnosis_tests
-            .Where(x => x.diagnosis_id == ItemId)
+            var existing_tests = db.prescriptions_tests
+            .Where(x => x.prescription_id == ItemId)
             .Select(x => new
             {
                 Id = x.test.id,

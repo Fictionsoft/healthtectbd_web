@@ -49,6 +49,7 @@ namespace Healthtechbd
 
         private void ButtonAddPrescription_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.Session.editRecordId = 0;
             AddPrescription.diagnosisTemplateIds.Clear();
             DiagnosisMedicineChosenControl.selectedIds.Clear();
             DiagnosisTestChosenControl.selectedIds.Clear();
@@ -143,6 +144,19 @@ namespace Healthtechbd
         {
             MainWindow.Session.editRecordId = (dataGridPrescriptions.SelectedItem as prescription).id;
             NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
+        }
+
+        private void btnEditPrescriptionRow_Click(object sender, RoutedEventArgs e)
+        {
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Hidden;
+
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(0);
+
+            int prescriptionId = (dataGridPrescriptions.SelectedItem as prescription).id;
+            MainWindow.Session.editRecordId = prescriptionId;
+            EditPrescription editPrescription = new EditPrescription(prescriptionId);
+            NavigationService.Navigate(editPrescription);                      
         }
     }
 }

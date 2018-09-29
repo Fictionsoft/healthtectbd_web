@@ -72,14 +72,17 @@ namespace Healthtechbd
             {
                 patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
 
-                PatientPhone.Text = patient.phone;
-                PatientAddress.Text = patient.address_line1;
-                PatientAge.Text = patient.age;
+                if (patient != null)
+                {
+                    PatientPhone.Text = patient.phone;
+                    PatientAddress.Text = patient.address_line1;
+                    PatientAge.Text = patient.age;
+                }
             }
             catch
             {
-
-            }            
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void NewPatientCheck(object sender, RoutedEventArgs e)
@@ -191,6 +194,7 @@ namespace Healthtechbd
             foreach (var diagnosisMedicine in diagnosisMedicines)
             {
                 DiagnosisMedicineChosenControl.selectedIds.Add(diagnosisMedicine.Id);
+                diagnosisMedicineChosenControl._nodeList.Add(new Node(new IdNameModel() { Id = diagnosisMedicine.Id, Name = diagnosisMedicine.Name }));
             }
 
             // store test ids to save into database
@@ -198,6 +202,7 @@ namespace Healthtechbd
             foreach (var diagnosisTest in diagnosisTests)
             {
                 DiagnosisTestChosenControl.selectedIds.Add(diagnosisTest.Id);
+                diagnosisTestChosenControl._nodeList.Add(new Node(new IdNameModel() { Id = diagnosisTest.Id, Name = diagnosisTest.Name }));
             }
         }        
 
@@ -283,7 +288,7 @@ namespace Healthtechbd
             }
 
             //prescription medicines add
-            var medicinesIds = MedicineChosenControl.selectedIds;
+            var medicinesIds = DiagnosisMedicineChosenControl.selectedIds;
             foreach (int medicine_id in medicinesIds)
             {
                 prescriptions_medicine.prescription_id = PrescriptionId;
@@ -306,7 +311,7 @@ namespace Healthtechbd
             }
 
             //prescription tests add
-            var testsIds = TestChosenControl.selectedIds;
+            var testsIds = DiagnosisTestChosenControl.selectedIds;
             foreach (int test_id in testsIds)
             {
                 prescriptions_test.prescription_id = PrescriptionId;

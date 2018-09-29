@@ -69,5 +69,10 @@ namespace Healthtechbd
             DoctorSingnature.Text = doctor.first_name + " " + doctor.last_name;
             CreatedDate.Text = prescription.created.ToString();
         }
+
+        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+        }
     }
 }
