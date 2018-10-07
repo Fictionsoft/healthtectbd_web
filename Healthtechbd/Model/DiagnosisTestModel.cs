@@ -57,6 +57,7 @@ namespace Healthtechbd.Model
             if (ItemId > 0)
             {
                 LoadExistingItems(ItemId);
+                StoreExitingIdsIntoSelectedIds(ItemId);
             }
             else
             {
@@ -88,6 +89,27 @@ namespace Healthtechbd.Model
             var tests = new List<IdNameModel>();
             tests.AddRange(existing_items);
             this.SelectedTests = tests;
+        }
+
+        public void StoreExitingIdsIntoSelectedIds(int ItemId)
+        {
+            var existing_items = new ObservableCollection<IdNameModel>();
+            var existing_tests = db.prescriptions_tests
+            .Where(x => x.prescription_id == ItemId)
+            .Select(x => new
+            {
+                Id = x.test.id,
+                Name = x.test.name
+            })
+            .ToList();
+
+            if (existing_tests.Count() > 0)
+            {
+                foreach (var existing_test in existing_tests)
+                {
+                    DiagnosisTestChosenControl.selectedIds.Add(existing_test.Id);
+                }
+            }
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Healthtechbd
             PrescriptionId.Text = id.ToString();
 
             try
-            {
+            {               
                 var prescription = db.presceiptions.FirstOrDefault(x => x.id == id);
                 PatientComboBox.SelectedItem = prescription.user.first_name;
                 PatientPhone.Text = prescription.user.phone;
@@ -139,16 +139,16 @@ namespace Healthtechbd
         //Load Diagnosis CheckBox.....
         void LoadDiagnosisCheckbox()
         {
-            var diagnosisTemplates = db.diagnosisTemplates.ToList();
-            foreach (var diagnosisTemplate in diagnosisTemplates)
+            var diagnosis_templates = db.diagnosis_templates.ToList();
+            foreach (var diagnosis_template in diagnosis_templates)
             {
                 CheckBox checkbox = new CheckBox();
-                checkbox.Content = diagnosisTemplate.diagnosis.name.ToString();
-                checkbox.DataContext = diagnosisTemplate.id;
+                checkbox.Content = diagnosis_template.diagnosis.name.ToString();
+                checkbox.DataContext = diagnosis_template.id;
                 DiagnosisCheckbox.Children.Add(checkbox);
 
                 var exitingDiagnosisTemplate = db.prescriptions_diagnosis
-                           .Where(x => x.diagnosis_id == diagnosisTemplate.id && x.prescription_id == MainWindow.Session.editRecordId)
+                           .Where(x => x.diagnosis_id == diagnosis_template.id && x.prescription_id == MainWindow.Session.editRecordId)
                            .FirstOrDefault();
 
                 if (exitingDiagnosisTemplate != null)
@@ -177,14 +177,14 @@ namespace Healthtechbd
                 diagnosisTemplateIds.Remove(diagnosisTemplateId);
             }
 
-            var diagnosisTemplates = db.diagnosisTemplates
+            var diagnosis_templates = db.diagnosis_templates
                 .Where(x => diagnosisTemplateIds.Contains(x.id))
                 .Select(x => x.instructions).ToList();
 
             var instructions = "";
-            foreach (var instruction in diagnosisTemplates)
+            foreach (var instruction in diagnosis_templates)
             {
-                instructions += instruction + (instruction.Equals(diagnosisTemplates.Last()) ? "." : ", ");
+                instructions += instruction + (instruction.Equals(diagnosis_templates.Last()) ? "." : ", ");
             }
 
             DoctorsNotes.Text = instructions;
@@ -224,5 +224,135 @@ namespace Healthtechbd
                 diagnosisTestChosenControl._nodeList.Add(new Node(new IdNameModel() { Id = diagnosisTest.Id, Name = diagnosisTest.Name }));
             }
         }
+
+
+        private void UpdatePrescription_Click(object sender, RoutedEventArgs e)
+        {
+            if (PatientComboBox.Text != "" && PatientPhone.Text != "")
+            {
+                Grid sidebar = AdminPanelWindow.sidebar;
+                sidebar.Visibility = Visibility.Visible;
+
+                AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+
+                NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+
+                prescription = db.presceiptions.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
+                patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
+
+                prescription.user_id = patient.id;
+                prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
+                prescription.blood_pressure = BloodPresure.Text;
+                prescription.temperature = Temperature.Text;
+                prescription.doctores_notes = DoctorsNotes.Text;
+                prescription.other_instructions = OtherInstructions.Text;
+                prescription.status = true;
+                prescription.created = DateTime.Now;            
+
+                int result_add_prescription = db.SaveChanges();
+
+                if (result_add_prescription > 0)
+                {
+                    //Add Prescription Diagnosis
+                    AddPrescriptionDiagnosis(MainWindow.Session.editRecordId);
+
+                    //Add Prescription Medicines
+                    AddPrescriptionMedicines(MainWindow.Session.editRecordId);
+
+                    //Add Prescription Tests
+                    AddPrescriptionTests(MainWindow.Session.editRecordId);
+
+                    diagnosisTemplateIds.Clear();
+                    DiagnosisMedicineChosenControl.selectedIds.Clear();
+                    DiagnosisTestChosenControl.selectedIds.Clear();
+                }
+
+                MessageBox.Show("Prescription has been saved", "Success");
+            }
+            else
+            {
+                MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        void AddPrescriptionDiagnosis(int PrescriptionId)
+        {
+            //prescription diagnosis delete
+            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == PrescriptionId);
+            if (prescriptions_diagnosis.Count() > 0)
+            {
+                db.prescriptions_diagnosis.RemoveRange(prescriptions_diagnosis);
+                int delete_result = db.SaveChanges();
+            }
+
+            //prescription diagnosis add            
+            foreach (int diagnosisTemplateId in diagnosisTemplateIds)
+            {
+                prescriptions_diagnosi.prescription_id = PrescriptionId;
+                prescriptions_diagnosi.diagnosis_id = diagnosisTemplateId;
+                prescriptions_diagnosi.status = true;
+                prescriptions_diagnosi.created = DateTime.Now;
+                db.prescriptions_diagnosis.Add(prescriptions_diagnosi);
+                int retult_prescription_diagnosis = db.SaveChanges();
+            }
+        }
+
+        void AddPrescriptionMedicines(int PrescriptionId)
+        {
+            //prescription medicines delete
+            var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == PrescriptionId);
+            if (prescriptions_medicines.Count() > 0)
+            {
+                db.prescriptions_medicines.RemoveRange(prescriptions_medicines);
+                int delete_result = db.SaveChanges();
+            }
+
+            //prescription medicines add
+            var medicinesIds = DiagnosisMedicineChosenControl.selectedIds;
+            foreach (int medicine_id in medicinesIds)
+            {
+                prescriptions_medicine.prescription_id = PrescriptionId;
+                prescriptions_medicine.medicine_id = medicine_id;
+                prescriptions_medicine.status = true;
+                prescriptions_medicine.created = DateTime.Now;
+                db.prescriptions_medicines.Add(prescriptions_medicine);
+                int retult_prescription_medecines = db.SaveChanges();
+            }
+        }
+
+        void AddPrescriptionTests(int PrescriptionId)
+        {
+            //prescription tests delete
+            var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == PrescriptionId);
+            if (prescriptions_tests.Count() > 0)
+            {
+                db.prescriptions_tests.RemoveRange(prescriptions_tests);
+                int delete_result = db.SaveChanges();
+            }
+
+            //prescription tests add
+            var testsIds = DiagnosisTestChosenControl.selectedIds;
+            foreach (int test_id in testsIds)
+            {
+                prescriptions_test.prescription_id = PrescriptionId;
+                prescriptions_test.test_id = test_id;
+                prescriptions_test.status = true;
+                prescriptions_test.created = DateTime.Now;
+                db.prescriptions_tests.Add(prescriptions_test);
+                int retult_prescription_tests = db.SaveChanges();
+            }
+        }
+
+
+        private void CancelUpdatePrescription_Click(object sender, RoutedEventArgs e)
+        {
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Visible;
+
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+
+            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+        }
+
     }
 }

@@ -44,16 +44,16 @@
 
                     <Border Margin="20 0 0 0">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescriptions" />
+                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescriptions" MouseDown="CancelUpdatePrescription_Click" />
                             <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
-                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Add Prescription"/>
+                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Edit Prescription"/>
                         </StackPanel>
                     </Border>
 
                 </Grid>
                 <StackPanel Background="#fff">
                     <Grid Height="40" Background="#F6F8F7">
-                        <TextBlock Text="Add Prescription" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
+                        <TextBlock Text="Edit Prescription" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
                     </Grid>
 
                     <!--Panel Head-->
@@ -283,8 +283,8 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                            <Button x:Name="CancelUpdatePrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5"/>
-                            <Button x:Name="UpdatePrescription" Content="UPDATE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" />
+                            <Button x:Name="CancelUpdatePrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelUpdatePrescription_Click"/>
+                            <Button x:Name="UpdatePrescription" Content="UPDATE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="UpdatePrescription_Click" />
                             <Button x:Name="UpdatePrintPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" />
                         </StackPanel>
 

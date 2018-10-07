@@ -71,6 +71,7 @@ namespace Healthtechbd.Model
             if (ItemId > 0)
             {
                 LoadExistingItems(ItemId);
+                StoreExitingIdsIntoSelectedIds(ItemId);
             }
             else
             {
@@ -102,6 +103,26 @@ namespace Healthtechbd.Model
             var medecines = new List<IdNameModel>();
             medecines.AddRange(existing_items);
             this.SelectedMedicines = medecines;
+        }
+
+        public void StoreExitingIdsIntoSelectedIds(int ItemId)
+        {
+            var existing_medicines = db.prescriptions_medicines
+            .Where(x => x.prescription_id == ItemId)
+            .Select(x => new
+            {
+                Id = x.medicine.id,
+                Name = x.medicine.name
+            })
+            .ToList();
+
+            if (existing_medicines.Count() > 0)
+            {
+                foreach (var existing_medicine in existing_medicines)
+                {
+                    DiagnosisMedicineChosenControl.selectedIds.Add(existing_medicine.Id);
+                }
+            }
         }
     }
 }

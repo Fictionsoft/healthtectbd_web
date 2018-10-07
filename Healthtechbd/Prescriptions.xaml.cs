@@ -147,7 +147,7 @@ namespace Healthtechbd
         }
 
         private void btnEditPrescriptionRow_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Hidden;
 
@@ -156,6 +156,15 @@ namespace Healthtechbd
             int prescriptionId = (dataGridPrescriptions.SelectedItem as prescription).id;
             MainWindow.Session.editRecordId = prescriptionId;
             EditPrescription editPrescription = new EditPrescription(prescriptionId);
+
+            EditPrescription.diagnosisTemplateIds.Clear();
+            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescriptionId).ToList();
+            foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
+            {
+                EditPrescription.diagnosisTemplateIds.Add(prescriptions_diagnosi.diagnosis_id);
+            }
+
+
             NavigationService.Navigate(editPrescription);                      
         }
     }

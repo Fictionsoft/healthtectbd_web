@@ -64,28 +64,7 @@ namespace Healthtechbd.Model
                 var selected_tests = new List<IdNameModel>();
                 SelectedTests = selected_tests;
             }
-        }
-
-        public void StoreExitingIdsIntoSelectedIds(int ItemId)
-        {
-            var existing_items = new ObservableCollection<IdNameModel>();
-            var existing_tests = db.diagnosis_tests
-            .Where(x => x.diagnosis_id == ItemId)
-            .Select(x => new
-            {
-                Id = x.test.id,
-                Name = x.test.name
-            })
-            .ToList();
-
-            if (existing_tests.Count() > 0)
-            {
-                foreach (var existing_test in existing_tests)
-                {
-                    TestChosenControl.selectedIds.Add(existing_test.Id);
-                }
-            }
-        }
+        }       
 
         public void LoadExistingItems(int ItemId)
         {
@@ -110,6 +89,27 @@ namespace Healthtechbd.Model
             var tests = new List<IdNameModel>();
             tests.AddRange(existing_items);
             this.SelectedTests = tests;
+        }
+
+        public void StoreExitingIdsIntoSelectedIds(int ItemId)
+        {
+            var existing_items = new ObservableCollection<IdNameModel>();
+            var existing_tests = db.diagnosis_tests
+            .Where(x => x.diagnosis_id == ItemId)
+            .Select(x => new
+            {
+                Id = x.test.id,
+                Name = x.test.name
+            })
+            .ToList();
+
+            if (existing_tests.Count() > 0)
+            {
+                foreach (var existing_test in existing_tests)
+                {
+                    TestChosenControl.selectedIds.Add(existing_test.Id);
+                }
+            }
         }
     }
 }

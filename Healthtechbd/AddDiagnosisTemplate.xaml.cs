@@ -36,7 +36,7 @@ namespace Healthtechbd
 
         contextd_db db = new contextd_db();
         diagnosis diagnosis = new diagnosis();
-        diagnosisTemplate diagnosis_template = new diagnosisTemplate();
+        diagnosis_template diagnosis_template = new diagnosis_template();
         diagnosis_medicine diagnosis_medecine = new diagnosis_medicine();
         diagnosis_test diagnosis_test = new diagnosis_test();
         medicine medicine = new medicine();
@@ -49,7 +49,7 @@ namespace Healthtechbd
                 {
                     diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
 
-                    var haveDiagnosisTemplate = db.diagnosisTemplates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
+                    var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
 
                     if (haveDiagnosisTemplate == null)
                     {
@@ -60,7 +60,7 @@ namespace Healthtechbd
                         diagnosis_template.instructions = Instruction.Text;
                         diagnosis_template.status = true;
                         diagnosis_template.created = DateTime.Now;
-                        db.diagnosisTemplates.Add(diagnosis_template);
+                        db.diagnosis_templates.Add(diagnosis_template);
 
                         int result_diagnosis_template = db.SaveChanges();
                         if (result_diagnosis_template > 0)

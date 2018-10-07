@@ -6,14 +6,14 @@
       xmlns:local="clr-namespace:Healthtechbd"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="800"
+      d:DesignHeight="5500" d:DesignWidth="800"
       Title="ViewPrescription">
 
     <Page.Resources>
         <Style TargetType="Separator">
         </Style>
     </Page.Resources>
-    
+
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel>
             <!--Page Heading-->
@@ -68,7 +68,7 @@
                             <Grid>
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
@@ -89,20 +89,22 @@
                                         <TextBlock FontWeight="Normal" x:Name="PatientPhone" Style="{StaticResource Level}" Text="01750800764"/>
                                     </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel x:Name="PatientAddressArea" Orientation="Horizontal">
                                         <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Address :"/>
                                         <TextBlock FontWeight="Normal" x:Name="PatientAddress" Style="{StaticResource Level}" Text="Pabna"/>
                                     </StackPanel>
 
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel x:Name="PatientDiagnosisArea" Orientation="Horizontal">
                                         <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Diagnosis :"/>
-                                        <TextBlock FontWeight="Normal" x:Name="PatientDiagnosis" Style="{StaticResource Level}" Text="Spellacy gibbs watts syndrome, Spherophakia brachymorphia syndrome."/>
+                                        <WrapPanel x:Name="PatientDiagnosis"  Width="646" VerticalAlignment="Top" Orientation="Horizontal">
+
+                                        </WrapPanel>
                                     </StackPanel>
 
                                 </StackPanel>
 
                                 <!--Last Visit Date-->
-                                <StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal">
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,0,0,105">
                                     <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Last Visit Date :"/>
                                     <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="23 April 2018"/>
                                 </StackPanel>
@@ -111,12 +113,12 @@
                         </Border>
 
                         <!--Medicines-->
-                        <Border Padding="12" Grid.Row="3">
+                        <Border x:Name="PrescriptioMedicinesArea" Padding="12" Grid.Row="3">
                             <Grid>
-                                <StackPanel Margin="5 0">
+                                <StackPanel x:Name="PrescriptioMedicines" Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Medicines"/>
-
-                                    <StackPanel Orientation="Horizontal">
+                                    
+                                    <!--<StackPanel Orientation="Horizontal">
                                         <TextBlock Style="{StaticResource Level}" Margin="0 0 3 0" Text="Premil 2 Tablet :"/>
                                         <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="( 1-1-1 )"/>
                                     </StackPanel>
@@ -134,46 +136,44 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Aciflox 200 Tablet :"/>
                                         <TextBlock FontWeight="Normal"  Style="{StaticResource Level}" Text=" ( 1+1+1 )"/>
-                                    </StackPanel>
+                                    </StackPanel>-->
 
                                 </StackPanel>
                             </Grid>
                         </Border>
 
                         <!--Examinations-->
-                        <Border Padding="12" Grid.Row="4">
+                        <Border x:Name="PatientExaminationArea" Padding="12" Grid.Row="4">
                             <Grid>
-                                <StackPanel Margin="5 0">
+                                <StackPanel>
                                     <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Examinations"/>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="CT Scan of HBS/Pelvic Organ, CT Scan of Whole Abdomen/KUB Region, CT Scan of Knee Joint/ Ankle Joint."/>
-                                    </StackPanel>
+                                    <WrapPanel x:Name="PatientExamination" HorizontalAlignment="Left"  Width="646" VerticalAlignment="Top" Orientation="Horizontal">
+                                    </WrapPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>
 
                         <!--Doctors Note-->
-                        <Border Padding="12" Grid.Row="5">
+                        <Border x:Name="DoctorsNoteArea" Padding="12" Grid.Row="5">
                             <Grid>
                                 <StackPanel Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Doctor's Note"/>
 
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="Instructions goes here1, instructions goes here1"/>
+                                        <TextBlock x:Name="DoctorsNote" FontWeight="Normal" Style="{StaticResource Level}" Text="Instructions goes here1, instructions goes here1"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>
 
                         <!--Others Note-->
-                        <Border Padding="12" Grid.Row="6">
+                        <Border x:Name="OthersInsArea" Padding="12" Grid.Row="6">
                             <Grid>
                                 <StackPanel Margin="5 0">
-                                    <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Others Note"/>
+                                    <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Others Instruction"/>
 
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="Instructions goes here1, instructions goes here1"/>
+                                        <TextBlock x:Name="OthersIns" FontWeight="Normal" Style="{StaticResource Level}" Text="Instructions goes here1, instructions goes here1"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>

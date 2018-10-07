@@ -129,12 +129,12 @@ namespace Healthtechbd
         //Load Diagnosis CheckBox.....
         void LoadDiagnosisCheckbox()
         {
-            var diagnosisTemplates = db.diagnosisTemplates.ToList();
-            foreach (var diagnosisTemplate in diagnosisTemplates)
+            var diagnosis_templates = db.diagnosis_templates.ToList();
+            foreach (var diagnosis_template in diagnosis_templates)
             {
                 CheckBox checkbox = new CheckBox();                                                    
-                checkbox.Content = diagnosisTemplate.diagnosis.name.ToString();
-                checkbox.DataContext = diagnosisTemplate.id;
+                checkbox.Content = diagnosis_template.diagnosis.name.ToString();
+                checkbox.DataContext = diagnosis_template.id;
                 DiagnosisCheckbox.Children.Add(checkbox);
 
                 checkbox.AddHandler(CheckBox.ClickEvent, new RoutedEventHandler(DiagnosIsClick));
@@ -158,14 +158,14 @@ namespace Healthtechbd
                 diagnosisTemplateIds.Remove(diagnosisTemplateId);
             }
 
-            var diagnosisTemplates = db.diagnosisTemplates
+            var diagnosis_templates = db.diagnosis_templates
                 .Where(x => diagnosisTemplateIds.Contains(x.id))
                 .Select(x => x.instructions).ToList();
 
             var instructions = "";
-            foreach (var instruction in diagnosisTemplates)
+            foreach (var instruction in diagnosis_templates)
             {
-                instructions += instruction + (instruction.Equals(diagnosisTemplates.Last()) ?".":", ");
+                instructions += instruction + (instruction.Equals(diagnosis_templates.Last()) ?".":", ");
             }
 
             DoctorsNotes.Text = instructions;

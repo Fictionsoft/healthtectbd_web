@@ -30,19 +30,19 @@ namespace Healthtechbd
         }
 
         contextd_db db = new contextd_db();        
-        diagnosisTemplate diagnosis_template = new diagnosisTemplate();        
+        diagnosis_template diagnosis_template = new diagnosis_template();        
 
         void loadDiagnosisTemplates()
         {
             try
             {
-                var diagnosisTemplates = db.diagnosisTemplates.Where(x => x.doctor_id == MainWindow.Session.doctorId)
+                var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctorId)
                     .Include(x => x.diagnosis)
                     .OrderByDescending(x => x.created)
                     .Take(10)
                     .ToList();
 
-                dataGridDiagnosisTemplates.ItemsSource = diagnosisTemplates;
+                dataGridDiagnosisTemplates.ItemsSource = diagnosis_templates;
             }
             catch
             {
@@ -64,13 +64,13 @@ namespace Healthtechbd
             if (MessageBox.Show("Are You Sure ?", "Confirm",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosisTemplate).id;
+                int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosis_template).id;
 
                 try
                 {
                     //Remove Diagnosis Template
-                    diagnosis_template = db.diagnosisTemplates.FirstOrDefault(x => x.id == diagnosisTemplateId);
-                    db.diagnosisTemplates.Remove(diagnosis_template);
+                    diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == diagnosisTemplateId);
+                    db.diagnosis_templates.Remove(diagnosis_template);
 
                     //Remove Diagnosis_Tests
                     var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosisTemplateId).ToList();
@@ -96,7 +96,7 @@ namespace Healthtechbd
             MedicineChosenControl.selectedIds.Clear();
             TestChosenControl.selectedIds.Clear();
 
-            int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosisTemplate).id;
+            int diagnosisTemplateId = (dataGridDiagnosisTemplates.SelectedItem as diagnosis_template).id;
             MainWindow.Session.editRecordId = diagnosisTemplateId;
             EditDiagnosisTemplate editDiagnosisTemplate = new EditDiagnosisTemplate(diagnosisTemplateId);
             NavigationService.Navigate(editDiagnosisTemplate);           
@@ -114,15 +114,15 @@ namespace Healthtechbd
 
             try
             {
-                var diagnosisTemplates = db.diagnosisTemplates.Where(x => x.diagnosis.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
 
-                if (diagnosisTemplates.Count == 0)
+                if (diagnosis_templates.Count == 0)
                 {
                     MessageBox.Show("DiagnosisTemplate not found", "Wraning");
                 }
                 else
                 {
-                    dataGridDiagnosisTemplates.ItemsSource = diagnosisTemplates;
+                    dataGridDiagnosisTemplates.ItemsSource = diagnosis_templates;
                 }
             }
             catch

@@ -209,11 +209,12 @@
 
                                     <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Padding="8" Background="#fff" Height="245">-->
                                     <Grid Background="#fff" Height="245">
-                                        <WrapPanel x:Name="DiagnosisCheckbox" Margin="5 10" VerticalAlignment="Top" Orientation="Horizontal">
-
-                                        </WrapPanel>
+                                        <ScrollViewer Margin="0 -12 0 0" Height="233" VerticalScrollBarVisibility="Auto">
+                                            <WrapPanel x:Name="DiagnosisCheckbox" Margin="5 10" VerticalAlignment="Top" Orientation="Horizontal">
+                                                
+                                            </WrapPanel>
+                                        </ScrollViewer>
                                     </Grid>
-
                                 </StackPanel>
                             </Border>
                         </Grid>

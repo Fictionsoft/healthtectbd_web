@@ -35,7 +35,7 @@ namespace Healthtechbd
            
         }        
 
-        diagnosisTemplate diagnosis_template = new diagnosisTemplate();
+        diagnosis_template diagnosis_template = new diagnosis_template();
         contextd_db db = new contextd_db();
         diagnosis diagnosis = new diagnosis();
         diagnosis_medicine diagnosis_medecine = new diagnosis_medicine();
@@ -52,10 +52,10 @@ namespace Healthtechbd
 
             try
             {
-                var diagnosisTemplate = db.diagnosisTemplates.FirstOrDefault(x => x.id == id);
-                DiagnosisComboBox.SelectedItem = diagnosisTemplate.diagnosis.name;
+                var diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == id);
+                DiagnosisComboBox.SelectedItem = diagnosis_template.diagnosis.name;
 
-                Instruction.Text = diagnosisTemplate.instructions;
+                Instruction.Text = diagnosis_template.instructions;
             }
             catch
             {
@@ -68,9 +68,9 @@ namespace Healthtechbd
         {
             try
             {
-                var diagnosisTemplate = db.diagnosisTemplates.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
+                var diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
 
-                var diagnosis = db.diagnosis.Where(x => x.id == diagnosisTemplate.diagnosis_list_id).OrderByDescending(x => x.created).ToList();
+                var diagnosis = db.diagnosis.Where(x => x.id == diagnosis_template.diagnosis_list_id).OrderByDescending(x => x.created).ToList();
 
                 foreach (var item in diagnosis)
                 {
@@ -94,10 +94,10 @@ namespace Healthtechbd
 
                 try
                 {
-                    diagnosis_template = db.diagnosisTemplates.FirstOrDefault(x => x.id == diagnosisTemplateId);
+                    diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == diagnosisTemplateId);
                     diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
 
-                    //var haveDiagnosisTemplate = db.diagnosisTemplates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
+                    //var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
 
                     //if(haveDiagnosisTemplate == null)
                     //{
