@@ -87,13 +87,15 @@ namespace Healthtechbd
 
         private void NewPatientCheck(object sender, RoutedEventArgs e)
         {
-            NewPatientName.Visibility = Visibility.Visible;
+            NewPatientName.Visibility = Visibility.Visible;              
             PatientComboBox.Visibility = Visibility.Hidden;
         }
 
         private void NewPatientUncheck(object sender, RoutedEventArgs e)
         {
             NewPatientName.Visibility = Visibility.Hidden;
+            NewPatientName.Text = "";
+
             PatientComboBox.Visibility = Visibility.Visible;
         }
 
@@ -208,51 +210,92 @@ namespace Healthtechbd
 
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
         {
-            if(PatientComboBox.Text != "" && PatientPhone.Text != "")
-            {
-                Grid sidebar = AdminPanelWindow.sidebar;
-                sidebar.Visibility = Visibility.Visible;
-
-                AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
-
-                NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-
-                patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
-
-                prescription.user_id = patient.id;
-                prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
-                prescription.blood_pressure = BloodPresure.Text;
-                prescription.temperature = Temperature.Text;
-                prescription.doctores_notes = DoctorsNotes.Text;
-                prescription.other_instructions = OtherInstructions.Text;
-                prescription.status = true;
-                prescription.created = DateTime.Now;
-
-                db.presceiptions.Add(prescription);
-                int result_add_prescription = db.SaveChanges();  
-                
-                if(result_add_prescription > 0)
+            if((PatientComboBox.Text != "" || NewPatientName.Text != "") && PatientPhone.Text != "" && PatientAge.Text != "")
+            {                
+                if(NewPatientName.Text != "")
                 {
-                    //Add Prescription Diagnosis
-                    AddPrescriptionDiagnosis(prescription.id);
+                
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text);
 
-                    //Add Prescription Medicines
-                    AddPrescriptionMedicines(prescription.id);
+                    if (havePhone == null)
+                    {
+                        Grid sidebar = AdminPanelWindow.sidebar;
+                        sidebar.Visibility = Visibility.Visible;
 
-                    //Add Prescription Tests
-                    AddPrescriptionTests(prescription.id);
+                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
 
-                    diagnosisTemplateIds.Clear();
-                    DiagnosisMedicineChosenControl.selectedIds.Clear();
-                    DiagnosisTestChosenControl.selectedIds.Clear();
+                        NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+
+                        patient.first_name = NewPatientName.Text.Trim();
+                        patient.phone = PatientPhone.Text.Trim();
+                        patient.age = PatientAge.Text.Trim();
+                        patient.address_line1 = PatientAddress.Text.Trim();
+                        patient.created = DateTime.Now;
+                        patient.doctor_id = MainWindow.Session.doctorId;
+                        patient.role_id = 3; // role_id 3 = Patient
+
+                        db.users.Add(patient);                        
+                        db.SaveChanges();                                                
+                        prescription.user_id = patient.id;
+
+                        SavePrescription();                                       
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Phone Number already exist", "Already Exit");
+                    }
                 }
+                else
+                {
+                    Grid sidebar = AdminPanelWindow.sidebar;
+                    sidebar.Visibility = Visibility.Visible;
 
-                MessageBox.Show("Prescription has been saved", "Success");
+                    AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+
+                    NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+
+                    patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
+                    prescription.user_id = patient.id;
+
+                    SavePrescription();
+                }                                               
             }
             else
             {
                 MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }            
+        }
+
+        void SavePrescription()
+        {
+            prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
+            prescription.blood_pressure = BloodPresure.Text;
+            prescription.temperature = Temperature.Text;
+            prescription.doctores_notes = DoctorsNotes.Text;
+            prescription.other_instructions = OtherInstructions.Text;
+            prescription.status = true;
+            prescription.created = DateTime.Now;
+
+            db.presceiptions.Add(prescription);
+            int result_add_prescription = db.SaveChanges();
+
+            if (result_add_prescription > 0)
+            {
+                //Add Prescription Diagnosis
+                AddPrescriptionDiagnosis(prescription.id);
+
+                //Add Prescription Medicines
+                AddPrescriptionMedicines(prescription.id);
+
+                //Add Prescription Tests
+                AddPrescriptionTests(prescription.id);
+
+                diagnosisTemplateIds.Clear();
+                DiagnosisMedicineChosenControl.selectedIds.Clear();
+                DiagnosisTestChosenControl.selectedIds.Clear();
+
+                MessageBox.Show("Prescription has been saved", "Success");
+            }
         }
 
         void AddPrescriptionDiagnosis(int PrescriptionId)

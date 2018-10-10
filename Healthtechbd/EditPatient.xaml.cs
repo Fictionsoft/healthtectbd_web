@@ -59,12 +59,12 @@ namespace Healthtechbd
             {
                 int patientId = int.Parse(PatientId.Text);
 
-                var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patientId);
+                try
+                {
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patientId);
 
-                if(havePhone == null)
-                {                    
-                    try
-                    {
+                    if(havePhone == null)
+                    {                                        
                         user = db.users.FirstOrDefault(x => x.id == patientId);
 
                         user.first_name = PatientName.Text.Trim();
@@ -76,17 +76,17 @@ namespace Healthtechbd
                         db.SaveChanges();
 
                         NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
-                        MessageBox.Show("Update Successfully", "Success");
+                        MessageBox.Show("Update Successfully", "Success");                   
                     }
-                    catch
+                    else
                     {
-                        MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("The Phone already exist.", "Already Exit");
                     }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("The Phone already exist.", "Already Exit");
-                }                              
+                    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             else
             {

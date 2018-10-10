@@ -27,7 +27,7 @@
                             <ColumnDefinition Width="40"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox Style="{StaticResource SearchBox}"  Grid.Column="0" Text="Type here for search..."/>
+                        <TextBox x:Name="" Style="{StaticResource SearchBox}"  Grid.Column="0"/>
                         <Button Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
