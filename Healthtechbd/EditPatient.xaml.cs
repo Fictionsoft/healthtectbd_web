@@ -61,7 +61,7 @@ namespace Healthtechbd
 
                 try
                 {
-                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patientId);
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patientId && x.doctor_id == MainWindow.Session.doctorId);
 
                     if(havePhone == null)
                     {                                        

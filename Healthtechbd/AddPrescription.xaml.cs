@@ -77,12 +77,45 @@ namespace Healthtechbd
                     PatientPhone.Text = patient.phone;
                     PatientAddress.Text = patient.address_line1;
                     PatientAge.Text = patient.age;
+
+                    PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == patient.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
+                }
+            
+                AllPrescription.Children.Clear();
+                if (patient.prescription.Count() > 0)
+                {                    
+                    foreach (var prescription in patient.prescription)
+                    {
+                        TextBlock textBlock = new TextBlock();
+                        textBlock.VerticalAlignment = VerticalAlignment.Center;
+                        textBlock.Padding = new Thickness(10,5,10,5);
+                        textBlock.DataContext = prescription.id;
+                        textBlock.Text = prescription.created.ToString("dd MMM yyyy");
+
+                        textBlock.AddHandler(TextBlock.MouseDownEvent, new RoutedEventHandler(AllPrescriptionClick));
+
+                        AllPrescription.Children.Add(textBlock);
+                    }
                 }
             }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+
+        private void AllPrescriptionClick(object sender, RoutedEventArgs e)
+        {
+            TextBlock textBlock = sender as TextBlock;
+
+            MainWindow.Session.editRecordId = int.Parse(textBlock.DataContext.ToString()) ;
+
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Visible;
+
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+            NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
         }
 
         private void NewPatientCheck(object sender, RoutedEventArgs e)
@@ -210,12 +243,12 @@ namespace Healthtechbd
 
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
         {
-            if((PatientComboBox.Text != "" || NewPatientName.Text != "") && PatientPhone.Text != "" && PatientAge.Text != "")
+            if ((PatientComboBox.Text != "" || NewPatientName.Text != "") && PatientPhone.Text != "" && PatientAge.Text != "")
             {                
                 if(NewPatientName.Text != "")
                 {
                 
-                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text);
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
 
                     if (havePhone == null)
                     {
@@ -224,8 +257,15 @@ namespace Healthtechbd
 
                         AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
 
-                        NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-
+                        if(((Button)sender).Name == "SaveAddPrescription")
+                        {
+                            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+                        }
+                        else
+                        {
+                            NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));                            
+                        }
+                        
                         patient.first_name = NewPatientName.Text.Trim();
                         patient.phone = PatientPhone.Text.Trim();
                         patient.age = PatientAge.Text.Trim();
@@ -238,7 +278,7 @@ namespace Healthtechbd
                         db.SaveChanges();                                                
                         prescription.user_id = patient.id;
 
-                        SavePrescription();                                       
+                        SavePrescription(((Button)sender).Name);
                     }
                     else
                     {
@@ -252,12 +292,19 @@ namespace Healthtechbd
 
                     AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
 
-                    NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+                    if (((Button)sender).Name == "SaveAddPrescription")
+                    {
+                        NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+                    }
+                    else
+                    {
+                        NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
+                    }
 
                     patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
                     prescription.user_id = patient.id;
 
-                    SavePrescription();
+                    SavePrescription(((Button)sender).Name);
                 }                                               
             }
             else
@@ -266,7 +313,7 @@ namespace Healthtechbd
             }            
         }
 
-        void SavePrescription()
+        void SavePrescription(string buttonType)
         {
             prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
             prescription.blood_pressure = BloodPresure.Text;
@@ -278,6 +325,8 @@ namespace Healthtechbd
 
             db.presceiptions.Add(prescription);
             int result_add_prescription = db.SaveChanges();
+
+            MainWindow.Session.editRecordId = prescription.id;//id save to session 
 
             if (result_add_prescription > 0)
             {
@@ -292,9 +341,10 @@ namespace Healthtechbd
 
                 diagnosisTemplateIds.Clear();
                 DiagnosisMedicineChosenControl.selectedIds.Clear();
-                DiagnosisTestChosenControl.selectedIds.Clear();
-
+                DiagnosisTestChosenControl.selectedIds.Clear();            
+                
                 MessageBox.Show("Prescription has been saved", "Success");
+                               
             }
         }
 

@@ -27,8 +27,8 @@
                             <ColumnDefinition Width="40"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox x:Name="" Style="{StaticResource SearchBox}"  Grid.Column="0"/>
-                        <Button Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0">
+                        <TextBox x:Name="patientPhone" Style="{StaticResource SearchBox}"  Grid.Column="0"/>
+                        <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
                     </Grid>

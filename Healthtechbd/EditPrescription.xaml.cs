@@ -62,8 +62,27 @@ namespace Healthtechbd
                 BloodPresure.Text = prescription.blood_pressure;
                 Temperature.Text = prescription.temperature;
 
+                PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == prescription.user.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
+
                 DoctorsNotes.Text = prescription.doctores_notes;
                 OtherInstructions.Text = prescription.other_instructions;
+
+                AllPrescription.Children.Clear();
+                if (prescription.user.prescription.Count() > 0)
+                {
+                    foreach (var item in prescription.user.prescription)
+                    {
+                        TextBlock textBlock = new TextBlock();
+                        textBlock.VerticalAlignment = VerticalAlignment.Center;
+                        textBlock.Padding = new Thickness(10, 5, 10, 5);
+                        textBlock.DataContext = item.id;
+                        textBlock.Text = item.created.ToString("dd MMM yyyy");
+
+                        textBlock.AddHandler(TextBlock.MouseDownEvent, new RoutedEventHandler(AllPrescriptionClick));
+
+                        AllPrescription.Children.Add(textBlock);
+                    }
+                }
             }
             catch
             {
@@ -110,12 +129,44 @@ namespace Healthtechbd
                     PatientPhone.Text = patient.phone;
                     PatientAddress.Text = patient.address_line1;
                     PatientAge.Text = patient.age;
+
+                    PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == patient.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
+                }
+
+                AllPrescription.Children.Clear();
+                if (patient.prescription.Count() > 0)
+                {
+                    foreach (var prescription in patient.prescription)
+                    {
+                        TextBlock textBlock = new TextBlock();
+                        textBlock.VerticalAlignment = VerticalAlignment.Center;
+                        textBlock.Padding = new Thickness(10, 5, 10, 5);
+                        textBlock.DataContext = prescription.id;
+                        textBlock.Text = prescription.created.ToString("dd MMM yyyy");
+
+                        textBlock.AddHandler(TextBlock.MouseDownEvent, new RoutedEventHandler(AllPrescriptionClick));
+
+                        AllPrescription.Children.Add(textBlock);
+                    }
                 }
             }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void AllPrescriptionClick(object sender, RoutedEventArgs e)
+        {
+            TextBlock textBlock = sender as TextBlock;
+
+            MainWindow.Session.editRecordId = int.Parse(textBlock.DataContext.ToString());
+
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Visible;
+
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+            NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
         }
 
         //Load Patient Combobox.....
@@ -235,13 +286,21 @@ namespace Healthtechbd
 
                 AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
 
-                NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+
+                if (((Button)sender).Name == "UpdatePrescription")
+                {
+                    NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+                }
+                else
+                {
+                    NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
+                }
 
                 try
                 {
                     patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
 
-                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patient.id);
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patient.id && x.doctor_id == MainWindow.Session.doctorId);
 
                     if (havePhone == null)
                     {                   
@@ -377,6 +436,5 @@ namespace Healthtechbd
 
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
         }
-
     }
 }

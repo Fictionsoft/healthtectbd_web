@@ -106,7 +106,7 @@
                                 <!--Last Visit Date-->
                                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,0,0,105">
                                     <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Last Visit Date :"/>
-                                    <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="23 April 2018"/>
+                                    <TextBlock x:Name="PatientLastVisit" FontWeight="Normal" Style="{StaticResource Level}" Text="23 April 2018"/>
                                 </StackPanel>
 
                             </Grid>

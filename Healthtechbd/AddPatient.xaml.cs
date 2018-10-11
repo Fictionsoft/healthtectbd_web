@@ -33,7 +33,7 @@ namespace Healthtechbd
         {
             if(PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
             {
-                var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text);
+                var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
 
                 if(havePhone == null)
                 {

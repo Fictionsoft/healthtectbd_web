@@ -21,10 +21,14 @@ namespace Healthtechbd
     /// </summary>
     public partial class ViewPrescription : Page
     {
+        public static Button buttonPrintPrescription; 
+
         public ViewPrescription()
         {
             InitializeComponent();
             LoadViewPrescriptionInfo();
+
+            buttonPrintPrescription = ButtonPrintPrescription;
         }
 
         private void ButtonPrintPrescription_Click(object sender, RoutedEventArgs e)
@@ -68,6 +72,8 @@ namespace Healthtechbd
             PatientAge.Text = prescription.user.age;
             PatientPhone.Text = prescription.user.phone;
             PatientAddress.Text = prescription.user.address_line1;
+
+            PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == prescription.user.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
 
             var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
 
@@ -124,7 +130,7 @@ namespace Healthtechbd
 
             //Singnature & Date
             DoctorSingnature.Text = doctor.first_name + " " + doctor.last_name;
-            CreatedDate.Text = prescription.created.ToString();
+            CreatedDate.Text = prescription.created.ToString("dd MMM yyyy");
         }
 
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
