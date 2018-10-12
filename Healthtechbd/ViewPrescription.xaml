@@ -26,7 +26,8 @@
                     </StackPanel>
                 </Border>
 
-                <Button x:Name="ButtonPrintPrescription" Grid.Column="1" Margin="0 0 20 0" Content="PRINT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonPrintPrescription_Click" />
+                <Button x:Name="ButtonPrintPrescription" Margin="0,13,184,12" Content="PRINT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonPrintPrescription_Click" />
+                <Button x:Name="ButtonEditPrescription" Content="EDIT PRESCRIPTION" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="36"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,12,22,12" Click="ButtonEditPrescription_Click"/>
             </Grid>
 
             <!--Page Heading Bottom-->
@@ -117,7 +118,7 @@
                             <Grid>
                                 <StackPanel x:Name="PrescriptioMedicines" Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Medicines"/>
-                                    
+
                                     <!--<StackPanel Orientation="Horizontal">
                                         <TextBlock Style="{StaticResource Level}" Margin="0 0 3 0" Text="Premil 2 Tablet :"/>
                                         <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="( 1-1-1 )"/>

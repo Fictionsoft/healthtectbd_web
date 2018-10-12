@@ -137,5 +137,26 @@ namespace Healthtechbd
         {
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
         }
+
+        private void ButtonEditPrescription_Click(object sender, RoutedEventArgs e)
+        {
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Hidden;
+
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(0);
+
+            int prescriptionId = MainWindow.Session.editRecordId;
+            MainWindow.Session.editRecordId = prescriptionId;
+            EditPrescription editPrescription = new EditPrescription(prescriptionId);
+
+            EditPrescription.diagnosisTemplateIds.Clear();
+            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescriptionId).ToList();
+            foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
+            {
+                EditPrescription.diagnosisTemplateIds.Add(prescriptions_diagnosi.diagnosis_id);
+            }
+
+            NavigationService.Navigate(editPrescription);
+        }
     }
 }
