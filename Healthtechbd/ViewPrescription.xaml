@@ -174,7 +174,7 @@
                                     <TextBlock Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Others Instruction"/>
 
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock x:Name="OthersIns" FontWeight="Normal" Style="{StaticResource Level}" Text="Instructions goes here1, instructions goes here1"/>
+                                        <TextBlock TextWrapping="WrapWithOverflow" x:Name="OthersIns" FontWeight="Normal" Style="{StaticResource Level}" Text="Instructions goes here1, instructions goes here1"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
