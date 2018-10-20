@@ -143,7 +143,7 @@ namespace Healthtechbd
         private void btnViewPrescriptionRow_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Session.editRecordId = (dataGridPrescriptions.SelectedItem as prescription).id;
-            NavigationService.Navigate(new Uri("prescriptionTemplates/ClassicTemplate.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("prescriptionTemplates/GeneralTemplate.xaml", UriKind.Relative));
         }
 
         private void btnEditPrescriptionRow_Click(object sender, RoutedEventArgs e)

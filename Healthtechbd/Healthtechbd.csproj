@@ -169,6 +169,12 @@
     <Compile Include="prescriptionTemplates\ClassicTemplate.xaml.cs">
       <DependentUpon>ClassicTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="prescriptionTemplates\CustomTemplate.xaml.cs">
+      <DependentUpon>CustomTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="prescriptionTemplates\GeneralTemplate.xaml.cs">
+      <DependentUpon>GeneralTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
@@ -293,6 +299,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="prescriptionTemplates\ClassicTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="prescriptionTemplates\CustomTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="prescriptionTemplates\GeneralTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

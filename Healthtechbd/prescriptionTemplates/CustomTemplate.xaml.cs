@@ -17,11 +17,11 @@ using WpfChosenControl.model;
 namespace Healthtechbd.prescriptionTemplates
 {
     /// <summary>
-    /// Interaction logic for ClassicTemplate.xaml
+    /// Interaction logic for CustomTemplate.xaml
     /// </summary>
-    public partial class ClassicTemplate : Page
+    public partial class CustomTemplate : Page
     {
-        public ClassicTemplate()
+        public CustomTemplate()
         {
             InitializeComponent();
             LoadViewPrescriptionInfo();
@@ -103,7 +103,7 @@ namespace Healthtechbd.prescriptionTemplates
             }
 
             //Doctros Note
-            DoctorsNote.Text = prescription.doctores_notes;          
+            DoctorsNote.Text = prescription.doctores_notes;
 
             //Singnature & Date
             CreatedDate.Text = prescription.created.ToString("dd MMM yyyy");
