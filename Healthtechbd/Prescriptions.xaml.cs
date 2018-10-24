@@ -140,10 +140,31 @@ namespace Healthtechbd
             loadPrescriptions();
         }
 
+        string PrescriptionTem;
         private void btnViewPrescriptionRow_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Session.editRecordId = (dataGridPrescriptions.SelectedItem as prescription).id;
-            NavigationService.Navigate(new Uri("prescriptionTemplates/GeneralTemplate.xaml", UriKind.Relative));
+
+            int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+            
+            if (doctorPrescriptionTemId == 1)
+            {
+                PrescriptionTem = "StandardTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 2)
+            {
+                PrescriptionTem = "ClassicTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 3)
+            {
+                PrescriptionTem = "CustomTemplate.xaml";
+            }
+            else
+            {
+                PrescriptionTem = "GeneralTemplate.xaml";
+            }
+
+            NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
         }
 
         private void btnEditPrescriptionRow_Click(object sender, RoutedEventArgs e)

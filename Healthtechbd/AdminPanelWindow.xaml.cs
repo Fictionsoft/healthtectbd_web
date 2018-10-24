@@ -24,7 +24,9 @@ namespace Healthtechbd
         private RegistrationWindow registrationWindow;
         private ResetPasswordWindow resetPasswordWindow;
         public static TextBlock userName;
-        public static Image profilePic;       
+        public static Image profilePic;
+
+        public static Frame mainContent;
 
         public AdminPanelWindow(MainWindow mainWindow)
         {
@@ -34,6 +36,8 @@ namespace Healthtechbd
             sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
             userName = UserName; // To get user name textblock     
             profilePic = ProfilePic;
+
+            mainContent = MainContent;
         }
 
         public AdminPanelWindow(RegistrationWindow registrationWindow)
@@ -50,6 +54,11 @@ namespace Healthtechbd
             userName = UserName; // To get user name textblock
 
             this.resetPasswordWindow = resetPasswordWindow;
+        }
+
+        public AdminPanelWindow()
+        {
+            InitializeComponent();
         }
 
         private void header_MouseDown(object sender, MouseButtonEventArgs e)
@@ -149,6 +158,15 @@ namespace Healthtechbd
         private void ButtonChangeProfilePic_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new ChangeProfilePic();
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Visible;
+
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).
+        }
+
+        private void ButtonChangePrescriptionTem_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new PrescriptionTemplates();
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 

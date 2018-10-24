@@ -31,9 +31,14 @@ namespace Healthtechbd
             public static string doctorLastName;                      
             public static string doctorPhone;                      
             public static string doctorEmail;
+            public static int doctorPrescriptionTemId;
+            public static int editRecordId;
+
+            public static string imageName;
+            public static string imagePath;
             #endregion
 
-            public static int editRecordId;                    
+
         }
 
         public MainWindow()
@@ -88,6 +93,7 @@ namespace Healthtechbd
                         Session.doctorFirstName = user.first_name;
                         Session.doctorLastName = user.last_name;
                         Session.doctorEmail = user.email;
+                        Session.doctorPrescriptionTemId = user.prescription_template_id;                      
                         
                         if (MessageBox.Show("Login successfully", "Success") == MessageBoxResult.OK)
                         {
@@ -97,7 +103,7 @@ namespace Healthtechbd
                             if(user.profile_picture != "")
                             {
                                 Image ProfilePic = AdminPanelWindow.profilePic;
-                                ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images//" + user.profile_picture));
+                                ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/" + user.profile_picture));
                             }
                         }
                     }

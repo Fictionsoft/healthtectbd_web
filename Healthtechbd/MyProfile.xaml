@@ -22,7 +22,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="1" Text="Dashboard" MouseDown="CancelMyProfile_Click" />
                     <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="2" Text="/" />
-                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="0" Text="Update"/>
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Grid.Column="0" Text="My Profile"/>
                 </StackPanel>
             </Border>
 
@@ -36,7 +36,7 @@
 
                     <!--Panel Head-->
                     <Grid Height="40" Background="#F6F8F7">
-                        <TextBlock Text="Update Setting" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
+                        <TextBlock Text="Update My Profile" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
                     </Grid>
 
                     <!--Info Area-->

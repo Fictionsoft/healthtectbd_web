@@ -1,0 +1,122 @@
+﻿<Page x:Class="Healthtechbd.PrescriptionTemplates"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Healthtechbd"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="800"
+      Title="PrescriptionTemplates" Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <Style TargetType="Image" x:Key="PrescriptionTemImg">
+            <Setter Property="Height" Value="200" />
+            <Setter Property="StretchDirection" Value="Both"/>
+            <Setter Property="Stretch" Value="Fill"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="SingleTem">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#eee"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="Margin" Value="0 0 10 0"/>
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="Width" Value="80" />
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0 0 0 20"/>
+        </Style>
+        
+    </Page.Resources>
+    
+    <StackPanel x:Name="test">
+        <!--Page Heading-->
+        <Grid Height="60" Background="#fff" VerticalAlignment="top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Border Margin="20 0 0 0">
+                <StackPanel Orientation="Horizontal" Margin="0,0,-134,0">
+                    <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Change Prescription Templates"/>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+
+        <!--Page Heading Bottom-->
+        <ScrollViewer Height="430" VerticalScrollBarVisibility="Auto">
+
+            <Border Margin="20">
+                <StackPanel>
+
+                    <!--Panel Head-->
+                    <Grid Height="40" Background="#F6F8F7">
+                        <TextBlock Text="Change Prescription Template" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
+                    </Grid>
+
+                    <!--Info Area-->
+                    <Grid Background="#fff">
+
+                        <Border Padding="20">
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Style="{StaticResource SingleTem}" Grid.Column="0">
+                                    <StackPanel>
+                                        <RadioButton  x:Name="BtnStandard" DataContext="1" Content="Standard"  Click="BtnStandard_Click" />
+                                        <Border BorderBrush="#eee" BorderThickness="1">
+                                            <Image Style="{StaticResource PrescriptionTemImg}" DataContext="standard.jpg" Source="images\prescription template\standard.jpg" MouseDown="Image_MouseDown"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource SingleTem}" Grid.Column="1">
+                                    <StackPanel>
+                                        <RadioButton x:Name="BtnClassic" DataContext="2" Content="Classic"  Click="BtnStandard_Click" />
+                                        <Border BorderThickness="1" BorderBrush="#eee">
+                                            <Image Style="{StaticResource PrescriptionTemImg}" DataContext="classic.jpg" Source="images\prescription template\classic.jpg"  MouseDown="Image_MouseDown"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource SingleTem}" Grid.Column="2">
+                                    <StackPanel>
+                                        <RadioButton x:Name="BtnCustom" DataContext="3" Content="Custom"  Click="BtnStandard_Click" />
+                                        <Border BorderBrush="#eee" BorderThickness="1">
+                                            <Image Style="{StaticResource PrescriptionTemImg}" DataContext="custom.jpg" Source="images\prescription template\custom.jpg"  MouseDown="Image_MouseDown"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border Style="{StaticResource SingleTem}" Grid.Column="3">
+                                    <StackPanel>
+                                        <RadioButton x:Name="BtnGeneral" DataContext="4" Content="General"  Click="BtnStandard_Click" />
+                                        <Border BorderBrush="#eee" BorderThickness="1">
+                                            <Image Style="{StaticResource PrescriptionTemImg}" DataContext="general.jpg" Source="images\prescription template\general.jpg"  MouseDown="Image_MouseDown" />
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                            </Grid>
+                        </Border>
+
+                    </Grid>
+
+                </StackPanel>
+
+            </Border>
+        </ScrollViewer>
+    </StackPanel>
+</Page>

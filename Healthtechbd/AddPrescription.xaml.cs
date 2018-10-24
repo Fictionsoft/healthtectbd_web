@@ -115,7 +115,26 @@ namespace Healthtechbd
             sidebar.Visibility = Visibility.Visible;
 
             AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
-            NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
+            int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+
+            if (doctorPrescriptionTemId == 1)
+            {
+                PrescriptionTem = "StandardTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 2)
+            {
+                PrescriptionTem = "ClassicTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 3)
+            {
+                PrescriptionTem = "CustomTemplate.xaml";
+            }
+            else
+            {
+                PrescriptionTem = "GeneralTemplate.xaml";
+            }
+
+            NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
         }
 
         private void NewPatientCheck(object sender, RoutedEventArgs e)
@@ -239,8 +258,9 @@ namespace Healthtechbd
                 DiagnosisTestChosenControl.selectedIds.Add(diagnosisTest.Id);
                 diagnosisTestChosenControl._nodeList.Add(new Node(new IdNameModel() { Id = diagnosisTest.Id, Name = diagnosisTest.Name }));
             }
-        }        
+        }
 
+        string PrescriptionTem;
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
         {
             if ((PatientComboBox.Text != "" || NewPatientName.Text != "") && PatientPhone.Text != "" && PatientAge.Text != "")
@@ -263,7 +283,26 @@ namespace Healthtechbd
                         }
                         else
                         {
-                            NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));                            
+                            int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+
+                            if (doctorPrescriptionTemId == 1)
+                            {
+                                PrescriptionTem = "StandardTemplate.xaml";
+                            }
+                            else if (doctorPrescriptionTemId == 2)
+                            {
+                                PrescriptionTem = "ClassicTemplate.xaml";
+                            }
+                            else if (doctorPrescriptionTemId == 3)
+                            {
+                                PrescriptionTem = "CustomTemplate.xaml";
+                            }
+                            else
+                            {
+                                PrescriptionTem = "GeneralTemplate.xaml";
+                            }
+
+                            NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
                         }
                         
                         patient.first_name = NewPatientName.Text.Trim();
@@ -278,7 +317,7 @@ namespace Healthtechbd
                         db.SaveChanges();                                                
                         prescription.user_id = patient.id;
 
-                        SavePrescription(((Button)sender).Name);
+                        SavePrescription();
                     }
                     else
                     {
@@ -298,13 +337,32 @@ namespace Healthtechbd
                     }
                     else
                     {
-                        NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
+                        int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+
+                        if (doctorPrescriptionTemId == 1)
+                        {
+                            PrescriptionTem = "StandardTemplate.xaml";
+                        }
+                        else if (doctorPrescriptionTemId == 2)
+                        {
+                            PrescriptionTem = "ClassicTemplate.xaml";
+                        }
+                        else if (doctorPrescriptionTemId == 3)
+                        {
+                            PrescriptionTem = "CustomTemplate.xaml";
+                        }
+                        else
+                        {
+                            PrescriptionTem = "GeneralTemplate.xaml";
+                        }
+
+                        NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
                     }
 
                     patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
                     prescription.user_id = patient.id;
 
-                    SavePrescription(((Button)sender).Name);
+                    SavePrescription();
                 }                                               
             }
             else
@@ -313,7 +371,7 @@ namespace Healthtechbd
             }            
         }
 
-        void SavePrescription(string buttonType)
+        void SavePrescription()
         {
             prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
             prescription.blood_pressure = BloodPresure.Text;
@@ -343,8 +401,7 @@ namespace Healthtechbd
                 DiagnosisMedicineChosenControl.selectedIds.Clear();
                 DiagnosisTestChosenControl.selectedIds.Clear();            
                 
-                MessageBox.Show("Prescription has been saved", "Success");
-                               
+                MessageBox.Show("Prescription has been saved", "Success");                               
             }
         }
 

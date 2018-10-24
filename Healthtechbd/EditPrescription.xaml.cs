@@ -166,7 +166,26 @@ namespace Healthtechbd
             sidebar.Visibility = Visibility.Visible;
 
             AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
-            NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
+            int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+
+            if (doctorPrescriptionTemId == 1)
+            {
+                PrescriptionTem = "StandardTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 2)
+            {
+                PrescriptionTem = "ClassicTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 3)
+            {
+                PrescriptionTem = "CustomTemplate.xaml";
+            }
+            else
+            {
+                PrescriptionTem = "GeneralTemplate.xaml";
+            }
+
+            NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
         }
 
         //Load Patient Combobox.....
@@ -276,7 +295,7 @@ namespace Healthtechbd
             }
         }
 
-
+        string PrescriptionTem;
         private void UpdatePrescription_Click(object sender, RoutedEventArgs e)
         {
             if (PatientComboBox.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
@@ -293,7 +312,26 @@ namespace Healthtechbd
                 }
                 else
                 {
-                    NavigationService.Navigate(new Uri("ViewPrescription.xaml", UriKind.Relative));
+                    int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+
+                    if (doctorPrescriptionTemId == 1)
+                    {
+                        PrescriptionTem = "StandardTemplate.xaml";
+                    }
+                    else if (doctorPrescriptionTemId == 2)
+                    {
+                        PrescriptionTem = "ClassicTemplate.xaml";
+                    }
+                    else if (doctorPrescriptionTemId == 3)
+                    {
+                        PrescriptionTem = "CustomTemplate.xaml";
+                    }
+                    else
+                    {
+                        PrescriptionTem = "GeneralTemplate.xaml";
+                    }
+
+                    NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
                 }
 
                 try

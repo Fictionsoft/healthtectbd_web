@@ -176,7 +176,6 @@ namespace Healthtechbd
         private void DiagnosisComboBox_GotFocus(object sender, RoutedEventArgs e)
         {
             DiagnosisComboBox.IsDropDownOpen = true;
-        }
-
+        }        
     }
 }

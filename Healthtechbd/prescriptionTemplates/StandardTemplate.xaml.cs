@@ -14,17 +14,32 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfChosenControl.model;
 
+
 namespace Healthtechbd.prescriptionTemplates
 {
     /// <summary>
-    /// Interaction logic for CustomTemplate.xaml
+    /// Interaction logic for StandardTemplate.xaml
     /// </summary>
-    public partial class CustomTemplate : Page
+    public partial class StandardTemplate : Page
     {
-        public CustomTemplate()
+        public static Button buttonPrintPrescription;
+
+        public StandardTemplate()
         {
             InitializeComponent();
             LoadViewPrescriptionInfo();
+
+            buttonPrintPrescription = ButtonPrintPrescription;
+        }
+
+        private void ButtonPrintPrescription_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog printDialog = new PrintDialog();
+
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintVisual(PrintArea, "Print Your Prescription");
+            }
         }
 
         contextd_db db = new contextd_db();
@@ -42,6 +57,7 @@ namespace Healthtechbd.prescriptionTemplates
             DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorWebsite.Visibility = (doctor.website == "") ? Visibility.Collapsed : Visibility.Visible;
+            PatientAddressArea.Visibility = (prescription.user.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
 
             //More Prescriptions
             if (prescription.user.prescription.Count() > 1)
@@ -50,7 +66,7 @@ namespace Healthtechbd.prescriptionTemplates
                 {
                     TextBlock textBlock = new TextBlock();
 
-                    if (MainWindow.Session.editRecordId == prescription.id)
+                    if(MainWindow.Session.editRecordId == prescription.id)
                     {
                         textBlock.Foreground = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString("#3cc2bb"));
                         textBlock.TextDecorations = System.Windows.TextDecorations.Underline;
@@ -58,7 +74,7 @@ namespace Healthtechbd.prescriptionTemplates
 
                     textBlock.Style = this.FindResource("BreadcrumbItem") as Style;
                     textBlock.DataContext = prescription.id;
-                    textBlock.Text = prescription.created.ToString("dd MMM yyyy") +
+                    textBlock.Text = prescription.created.ToString("dd MMM yyyy") + 
                                     (prescription.Equals(prescription.user.prescription.OrderBy(x => x.created).Last()) ? "." : ", ");
 
                     textBlock.AddHandler(TextBlock.MouseDownEvent, new RoutedEventHandler(MorePrescriptionClick));
@@ -66,6 +82,7 @@ namespace Healthtechbd.prescriptionTemplates
                     MorePrescriptions.Children.Add(textBlock);
                 }
             }
+
 
             //Doctor Info
             DoctorName.Text = doctor.first_name + " " + doctor.last_name;
@@ -81,62 +98,70 @@ namespace Healthtechbd.prescriptionTemplates
             PatientPhone.Text = prescription.user.phone;
             PatientAddress.Text = prescription.user.address_line1;
 
+            PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == prescription.user.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
+
             var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
 
             //Prescription Medicines 
-            var i = 1;
             foreach (var prescriptions_medicine in prescriptions_medicines)
             {
                 TextBlock textBlock = new TextBlock();
-                textBlock.FontWeight = FontWeights.Normal;
                 textBlock.Style = this.FindResource("Level") as Style;
-                textBlock.Text = i + ". " + prescriptions_medicine.medicine.name;
+                textBlock.Text = prescriptions_medicine.medicine.name +
+                                (prescriptions_medicine.Equals(prescriptions_medicines.Last()) ? "." : ", ");
 
                 PrescriptioMedicines.Children.Add(textBlock);
-                i++;
             }
 
             var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
 
             //Prescription Diagnosis 
-            var j = 1;
             foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.FontWeight = FontWeights.Normal;
                 textBlock.Style = this.FindResource("Level") as Style;
-                textBlock.Text = j + ". " + prescriptions_diagnosi.diagnosis_template.diagnosis.name;
+                textBlock.Text = prescriptions_diagnosi.diagnosis_template.diagnosis.name +
+                                (prescriptions_diagnosi.Equals(prescriptions_diagnosis.Last()) ? "." : ", ");
 
                 PatientDiagnosis.Children.Add(textBlock);
-                j++;
             }
 
             var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
 
             //Prescription Examinations
-            var k = 1;
             foreach (var prescriptions_test in prescriptions_tests)
             {
                 TextBlock textBlock = new TextBlock();
-                textBlock.FontWeight = FontWeights.Normal;
+                textBlock.FontWeight = FontWeights.Normal;                
                 textBlock.Style = this.FindResource("Level") as Style;
-                textBlock.Text = k + ". " + prescriptions_test.test.name;
+                textBlock.Text = prescriptions_test.test.name +
+                                (prescriptions_test.Equals(prescriptions_tests.Last()) ? "." : ", ");
 
                 PatientExamination.Children.Add(textBlock);
-                k++;
             }
 
             //Doctros Note
             DoctorsNote.Text = prescription.doctores_notes;
 
+            //Others Note
+            OthersIns.Text = prescription.other_instructions;
+
+            PrescriptioMedicinesArea.Visibility = (prescriptions_medicines.Count() < 0) ? Visibility.Collapsed : Visibility.Visible;
+            PatientDiagnosisArea.Visibility = (prescriptions_diagnosis.Count() < 0) ? Visibility.Collapsed : Visibility.Visible;
+            DoctorsNoteArea.Visibility = (prescription.doctores_notes == "") ? Visibility.Collapsed : Visibility.Visible;
+            OthersInsArea.Visibility = (prescription.other_instructions == "") ? Visibility.Collapsed : Visibility.Visible;
+
+
             //Singnature & Date
+            DoctorSingnature.Text = doctor.first_name + " " + doctor.last_name;
             CreatedDate.Text = prescription.created.ToString("dd MMM yyyy");
         }
 
         private void MorePrescriptionClick(object sender, RoutedEventArgs e)
         {
             TextBlock textBlock = sender as TextBlock;
-
+            
             MainWindow.Session.editRecordId = int.Parse(textBlock.DataContext.ToString());
 
             int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
@@ -158,17 +183,12 @@ namespace Healthtechbd.prescriptionTemplates
             else
             {
                 mainContent.Content = new GeneralTemplate();
-            }
+            }                      
         }
 
-        private void ButtonPrintPrescription_Click(object sender, RoutedEventArgs e)
+        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            PrintDialog printDialog = new PrintDialog();
-
-            if (printDialog.ShowDialog() == true)
-            {
-                printDialog.PrintVisual(PrintArea, "Print Your Prescription");
-            }
+            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
         }
 
         private void ButtonEditPrescription_Click(object sender, RoutedEventArgs e)
@@ -191,11 +211,5 @@ namespace Healthtechbd.prescriptionTemplates
 
             NavigationService.Navigate(editPrescription);
         }
-
-        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-        }
     }
-
 }

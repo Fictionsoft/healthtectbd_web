@@ -166,6 +166,9 @@
     <Compile Include="Prescriptions.xaml.cs">
       <DependentUpon>Prescriptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PrescriptionTemplates.xaml.cs">
+      <DependentUpon>PrescriptionTemplates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="prescriptionTemplates\ClassicTemplate.xaml.cs">
       <DependentUpon>ClassicTemplate.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,12 @@
     </Compile>
     <Compile Include="prescriptionTemplates\GeneralTemplate.xaml.cs">
       <DependentUpon>GeneralTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="prescriptionTemplates\StandardTemplate.xaml.cs">
+      <DependentUpon>StandardTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="prescriptionTemplates\TemImageView.xaml.cs">
+      <DependentUpon>TemImageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
@@ -298,6 +307,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PrescriptionTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="prescriptionTemplates\ClassicTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -307,6 +320,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="prescriptionTemplates\GeneralTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="prescriptionTemplates\StandardTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="prescriptionTemplates\TemImageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -367,13 +388,16 @@
     <Resource Include="images\dashboard-students.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\download %281%29.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\wpf-chosen-control\WpfChosenControl\WpfChosenControl.csproj">
       <Project>{07db70c6-e069-4c37-90c1-a4358c4b1fb3}</Project>
       <Name>WpfChosenControl</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\prescription template\classic.jpg" />
+    <Resource Include="images\prescription template\custom.jpg" />
+    <Resource Include="images\prescription template\general.jpg" />
+    <Resource Include="images\prescription template\standard.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

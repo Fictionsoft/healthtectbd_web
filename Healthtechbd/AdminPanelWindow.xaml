@@ -23,23 +23,6 @@
 
                 <Image Name="ProfilePic" Height="50" Margin="0 0 10 0"/>
 
-                <!--<Grid Margin="0 0 5 0" Height="50" Width="50">
-                    <Border Name="Mask"
-                    Background="White"
-                    BorderBrush="#FF3B5998"
-                    CornerRadius="100">
-                    </Border>
-
-                    <StackPanel >
-                        <Image Name="ProfilePic" Height="60" Width="60"  />
-                        <StackPanel.OpacityMask>
-                            <VisualBrush Visual="{Binding ElementName=Mask}" />
-                        </StackPanel.OpacityMask>
-                    </StackPanel>
-
-                </Grid>-->
-
-
                 <TextBlock x:Name="UserName" Text="" VerticalAlignment="Center" FontSize="16" Foreground="#fff" />
                 <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Padding="15" Foreground="#fff">
                     <StackPanel>
@@ -51,6 +34,11 @@
                         <Grid>
                             <materialDesign:PackIcon Kind="Image" VerticalAlignment="Center" Foreground="#576069" />
                             <Button x:Name="ButtonChangeProfilePic" Content="Change Profile Picture" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangeProfilePic_Click"  />
+                        </Grid>
+                        
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Image" VerticalAlignment="Center" Foreground="#576069" />
+                            <Button x:Name="ButtonChangePrescriptionTem" Content="Change Prescription Template" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangePrescriptionTem_Click" />
                         </Grid>
 
                         <Grid>
