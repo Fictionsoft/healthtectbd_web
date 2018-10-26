@@ -219,16 +219,26 @@
 
                                 <StackPanel>
                                     <Grid>
-                                        <TextBlock Text="Medicines" Width="300" HorizontalAlignment="Left" Foreground="#333" FontWeight="SemiBold" Margin="0 10 0 5"/>
-                                        <materialDesign:PackIcon Kind="Plus" Margin="0 -8 0 0" Foreground="#fff" VerticalAlignment="Top" Height="40" Width="40"  HorizontalAlignment="Right" />
+                                        <TextBlock VerticalAlignment="Center" Text="Medicines" Width="300" HorizontalAlignment="Left" Foreground="#333" FontWeight="SemiBold"/>
+                                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Background="#EBEBEB" Foreground="#000" Height="40" Width="40"  HorizontalAlignment="Right" MouseDown="PackIcon_MouseDown" />
                                     </Grid>
 
-                                    <Grid Background="#fff" Height="245">
-                                        <Grid DataContext="{StaticResource diagnosisMedicineModel}" Height="102">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                                        <StackPanel x:Name="test" Background="#fff" Height="233">
+
+                                            <Grid x:Name="SingleMedicineSec" VerticalAlignment="Top" Background="Red" Margin="0 5 0 10" Height="80">
+                                                <TextBox Margin="10 0 0 0" MinWidth="260" HorizontalAlignment="Left" Style="{StaticResource InputField}"/>
+                                                <TextBox Margin="278,20,0,20" MinWidth="174" HorizontalAlignment="Left" Style="{StaticResource InputField}"/>
+                                                <Button Content="Del" MinWidth="20" Padding="0" Margin="462,0,6,0"></Button>
+                                            </Grid>
+
+                                            <!--<Grid DataContext="{StaticResource diagnosisMedicineModel}" Height="102">
                                             <control:DiagnosisMedicineChosenControl x:Name="medicineChosen" MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,-66,1,-56"  />
-                                        </Grid>
-                                    </Grid>
+                                        </Grid>-->
 
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                    
                                 </StackPanel>
                             </Border>
                         </Grid>

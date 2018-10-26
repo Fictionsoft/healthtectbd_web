@@ -482,5 +482,59 @@ namespace Healthtechbd
 
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
         }
+
+        //Add More Button
+        private void PackIcon_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //Main Div
+            Grid grid = new Grid();
+
+            grid.Name = "SingleMedicineSec";
+            grid.Background = Brushes.Red;
+            grid.Height = 80;
+            grid.VerticalAlignment = VerticalAlignment.Top;
+            grid.Margin = new Thickness(0, 0, 0, 10);
+
+            test.Children.Add(grid);
+
+            //Select Box
+            TextBox textBox1 = new TextBox();
+
+            textBox1.Margin = new Thickness(10, 0, 0, 0);
+            textBox1.MinWidth = 260;
+            textBox1.HorizontalAlignment = HorizontalAlignment.Left;
+            textBox1.Style = this.FindResource("InputField") as Style;
+
+            grid.Children.Add(textBox1);
+
+            //Dos Input
+            TextBox textBox2 = new TextBox();
+
+            textBox2.Margin = new Thickness(278, 20, 0, 20);
+            textBox2.MinWidth = 174;
+            textBox2.HorizontalAlignment = HorizontalAlignment.Left;
+            textBox2.Style = this.FindResource("InputField") as Style;
+
+            grid.Children.Add(textBox2);
+
+            //Delete Button
+            Button button = new Button();
+
+            button.Content = "Del";
+            button.Padding = new Thickness(0);
+            button.MinWidth = 20;
+            button.Margin = new Thickness(462, 0, 6, 0);
+
+            button.AddHandler(Button.ClickEvent, new RoutedEventHandler(DelBtnClick));
+
+            grid.Children.Add(button);
+        }
+
+        private void DelBtnClick(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement parent = (FrameworkElement)((Button)sender).Parent;
+            parent.Visibility = Visibility.Collapsed;
+            
+        }
     }
 }
