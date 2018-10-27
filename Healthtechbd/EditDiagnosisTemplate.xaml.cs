@@ -52,6 +52,7 @@ namespace Healthtechbd
 
             try
             {
+                //To Selected this Diagnosis Template Diagnosis 
                 var diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == id);
                 DiagnosisComboBox.SelectedItem = diagnosis_template.diagnosis.name;
 
@@ -122,7 +123,7 @@ namespace Healthtechbd
                 }
                 catch
                 {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Please select a diagnosis", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else

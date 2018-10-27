@@ -199,11 +199,15 @@
                             <Border CornerRadius="5 5 0 0" Background="#EBEBEB" Padding="8 8">
 
                                 <StackPanel>
-                                    <TextBlock Text="Diagnosis" Foreground="#333" FontWeight="SemiBold" Margin="0 10 0 5"/>
+                                    <TextBlock Text="Diagnosis*" Foreground="#333" FontWeight="SemiBold" Margin="0 10 0 5"/>
 
                                     <Grid Background="#fff" Height="118">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="37*"/>
+                                            <ColumnDefinition Width="517*"/>
+                                        </Grid.ColumnDefinitions>
                                         <!--<ScrollViewer Margin="0 -12 0 0" Height="233" VerticalScrollBarVisibility="Auto">-->
-                                        <WrapPanel x:Name="DiagnosisCheckbox" Margin="5 10" VerticalAlignment="Top" Orientation="Horizontal">
+                                        <WrapPanel x:Name="DiagnosisCheckbox" Margin="5,10,5,0" VerticalAlignment="Top" Orientation="Horizontal" Grid.ColumnSpan="2">
 
                                         </WrapPanel>
                                         <!--</ScrollViewer>-->
@@ -224,21 +228,25 @@
                                     </Grid>
 
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-                                        <StackPanel x:Name="test" Background="#fff" Height="233">
+                                        <StackPanel x:Name="MedicineSec" Background="#fff" Height="225">
 
-                                            <Grid x:Name="SingleMedicineSec" VerticalAlignment="Top" Background="Red" Margin="0 5 0 10" Height="80">
-                                                <TextBox Margin="10 0 0 0" MinWidth="260" HorizontalAlignment="Left" Style="{StaticResource InputField}"/>
-                                                <TextBox Margin="278,20,0,20" MinWidth="174" HorizontalAlignment="Left" Style="{StaticResource InputField}"/>
-                                                <Button Content="Del" MinWidth="20" Padding="0" Margin="462,0,6,0"></Button>
-                                            </Grid>
-
+                                            <Border x:Name="MainSection" Margin="5" CornerRadius="3" BorderBrush="#eee" BorderThickness="1" Height="50">
+                                                <Grid x:Name="SingleMedicineSec" VerticalAlignment="Center" Background="#EBEBEB" Height="50">
+                                                    <ComboBox x:Name="MedicineCombobox" Style="{StaticResource DosMedicineComboBox}"/>
+                                                    <TextBox Style="{StaticResource DosInputField}"/>
+                                                    <Button Background="AliceBlue" BorderBrush="AliceBlue" MinWidth="20" Height="25" Padding="0" Margin="456,0,4,0">
+                                                        <Image Source="images/minus.png"/>
+                                                    </Button>
+                                                </Grid>
+                                            </Border>
+                                            
                                             <!--<Grid DataContext="{StaticResource diagnosisMedicineModel}" Height="102">
                                             <control:DiagnosisMedicineChosenControl x:Name="medicineChosen" MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,-66,1,-56"  />
                                         </Grid>-->
 
                                         </StackPanel>
                                     </ScrollViewer>
-                                    
+
                                 </StackPanel>
                             </Border>
                         </Grid>

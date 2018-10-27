@@ -399,5 +399,8 @@
     <Resource Include="images\prescription template\general.jpg" />
     <Resource Include="images\prescription template\standard.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\minus.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

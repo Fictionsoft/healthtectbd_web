@@ -37,7 +37,10 @@ namespace Healthtechbd
             LoadDiagnosisCheckbox();
 
             PatientComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
-                   new System.Windows.Controls.TextChangedEventHandler(PatientComboBox_TextChanged));           
+                   new System.Windows.Controls.TextChangedEventHandler(PatientComboBox_TextChanged));
+
+            MedicineCombobox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
+                  new System.Windows.Controls.TextChangedEventHandler(MedicineComboBox_TextChanged));
         }        
 
         contextd_db db = new contextd_db();
@@ -79,24 +82,29 @@ namespace Healthtechbd
                     PatientAge.Text = patient.age;
 
                     PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == patient.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
-                }
-            
-                AllPrescription.Children.Clear();
-                if (patient.prescription.Count() > 0)
-                {                    
-                    foreach (var prescription in patient.prescription)
+
+                    AllPrescription.Children.Clear();
+                    if (patient.prescription.Count() > 0)
                     {
-                        TextBlock textBlock = new TextBlock();
-                        textBlock.VerticalAlignment = VerticalAlignment.Center;
-                        textBlock.Padding = new Thickness(10,5,10,5);
-                        textBlock.DataContext = prescription.id;
-                        textBlock.Text = prescription.created.ToString("dd MMM yyyy");
+                        foreach (var prescription in patient.prescription)
+                        {
+                            TextBlock textBlock = new TextBlock();
+                            textBlock.VerticalAlignment = VerticalAlignment.Center;
+                            textBlock.Padding = new Thickness(10, 5, 10, 5);
+                            textBlock.DataContext = prescription.id;
+                            textBlock.Text = prescription.created.ToString("dd MMM yyyy");
 
-                        textBlock.AddHandler(TextBlock.MouseDownEvent, new RoutedEventHandler(AllPrescriptionClick));
+                            textBlock.AddHandler(TextBlock.MouseDownEvent, new RoutedEventHandler(AllPrescriptionClick));
 
-                        AllPrescription.Children.Add(textBlock);
+                            AllPrescription.Children.Add(textBlock);
+                        }
                     }
                 }
+                else
+                {
+                    PatientPhone.Text = PatientAddress.Text = PatientAge.Text = "";
+                    AllPrescription.Children.Clear();
+                }                         
             }
             catch
             {
@@ -165,7 +173,7 @@ namespace Healthtechbd
             var searchBy = obj.Text;
 
             var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) && 
-                           (x.first_name.Contains(searchBy))).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+                           (x.first_name.Contains(searchBy))).Take(10).ToList(); //patient_id 3
 
             PatientComboBox.Items.Clear();
 
@@ -264,106 +272,122 @@ namespace Healthtechbd
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
         {
             if ((PatientComboBox.Text != "" || NewPatientName.Text != "") && PatientPhone.Text != "" && PatientAge.Text != "")
-            {                
-                if(NewPatientName.Text != "")
+            {   
+                if(diagnosisTemplateIds.Count() > 0)
                 {
-                
-                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
-
-                    if (havePhone == null)
+                    if (NewPatientName.Text != "") //Add a new Patient
                     {
-                        Grid sidebar = AdminPanelWindow.sidebar;
-                        sidebar.Visibility = Visibility.Visible;
 
-                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+                        var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
 
-                        if(((Button)sender).Name == "SaveAddPrescription")
+                        if (havePhone == null)
                         {
-                            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-                        }
-                        else
-                        {
-                            int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+                            Grid sidebar = AdminPanelWindow.sidebar;
+                            sidebar.Visibility = Visibility.Visible;
 
-                            if (doctorPrescriptionTemId == 1)
+                            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+
+                            if (((Button)sender).Name == "SaveAddPrescription")
                             {
-                                PrescriptionTem = "StandardTemplate.xaml";
-                            }
-                            else if (doctorPrescriptionTemId == 2)
-                            {
-                                PrescriptionTem = "ClassicTemplate.xaml";
-                            }
-                            else if (doctorPrescriptionTemId == 3)
-                            {
-                                PrescriptionTem = "CustomTemplate.xaml";
+                                NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
                             }
                             else
                             {
-                                PrescriptionTem = "GeneralTemplate.xaml";
+                                int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+
+                                if (doctorPrescriptionTemId == 1)
+                                {
+                                    PrescriptionTem = "StandardTemplate.xaml";
+                                }
+                                else if (doctorPrescriptionTemId == 2)
+                                {
+                                    PrescriptionTem = "ClassicTemplate.xaml";
+                                }
+                                else if (doctorPrescriptionTemId == 3)
+                                {
+                                    PrescriptionTem = "CustomTemplate.xaml";
+                                }
+                                else
+                                {
+                                    PrescriptionTem = "GeneralTemplate.xaml";
+                                }
+
+                                NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
                             }
 
-                            NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
+                            //Save New Patient 
+                            patient.first_name = NewPatientName.Text.Trim();
+                            patient.phone = PatientPhone.Text.Trim();
+                            patient.age = PatientAge.Text.Trim();
+                            patient.address_line1 = PatientAddress.Text.Trim();
+                            patient.created = DateTime.Now;
+                            patient.doctor_id = MainWindow.Session.doctorId;
+                            patient.role_id = 3; // role_id 3 = Patient
+
+                            db.users.Add(patient);
+                            db.SaveChanges();
+                            prescription.user_id = patient.id;
+
+                            SavePrescription();
                         }
-                        
-                        patient.first_name = NewPatientName.Text.Trim();
-                        patient.phone = PatientPhone.Text.Trim();
-                        patient.age = PatientAge.Text.Trim();
-                        patient.address_line1 = PatientAddress.Text.Trim();
-                        patient.created = DateTime.Now;
-                        patient.doctor_id = MainWindow.Session.doctorId;
-                        patient.role_id = 3; // role_id 3 = Patient
-
-                        db.users.Add(patient);                        
-                        db.SaveChanges();                                                
-                        prescription.user_id = patient.id;
-
-                        SavePrescription();
+                        else
+                        {
+                            MessageBox.Show("The Phone Number already exist", "Already Exit");
+                        }
                     }
-                    else
+                    else //Select a patient from combobox
                     {
-                        MessageBox.Show("The Phone Number already exist", "Already Exit");
+                        patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
+
+                        if (patient != null)
+                        {
+                            Grid sidebar = AdminPanelWindow.sidebar;
+                            sidebar.Visibility = Visibility.Visible;
+
+                            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+
+                            if (((Button)sender).Name == "SaveAddPrescription")
+                            {
+                                NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+                            }
+                            else
+                            {
+                                int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+
+                                if (doctorPrescriptionTemId == 1)
+                                {
+                                    PrescriptionTem = "StandardTemplate.xaml";
+                                }
+                                else if (doctorPrescriptionTemId == 2)
+                                {
+                                    PrescriptionTem = "ClassicTemplate.xaml";
+                                }
+                                else if (doctorPrescriptionTemId == 3)
+                                {
+                                    PrescriptionTem = "CustomTemplate.xaml";
+                                }
+                                else
+                                {
+                                    PrescriptionTem = "GeneralTemplate.xaml";
+                                }
+
+                                NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
+                            }
+
+                            prescription.user_id = patient.id;
+
+                            SavePrescription();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please select a valid patient", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
                     }
                 }
                 else
                 {
-                    Grid sidebar = AdminPanelWindow.sidebar;
-                    sidebar.Visibility = Visibility.Visible;
-
-                    AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
-
-                    if (((Button)sender).Name == "SaveAddPrescription")
-                    {
-                        NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-                    }
-                    else
-                    {
-                        int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
-
-                        if (doctorPrescriptionTemId == 1)
-                        {
-                            PrescriptionTem = "StandardTemplate.xaml";
-                        }
-                        else if (doctorPrescriptionTemId == 2)
-                        {
-                            PrescriptionTem = "ClassicTemplate.xaml";
-                        }
-                        else if (doctorPrescriptionTemId == 3)
-                        {
-                            PrescriptionTem = "CustomTemplate.xaml";
-                        }
-                        else
-                        {
-                            PrescriptionTem = "GeneralTemplate.xaml";
-                        }
-
-                        NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
-                    }
-
-                    patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
-                    prescription.user_id = patient.id;
-
-                    SavePrescription();
-                }                                               
+                    MessageBox.Show("Please select a diagnosis", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }                                                               
             }
             else
             {
@@ -487,35 +511,44 @@ namespace Healthtechbd
         private void PackIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             //Main Div
+            Border border = new Border();
+
+            BrushConverter bc = new BrushConverter();
+            border.Margin = new Thickness(5);
+            border.CornerRadius = new CornerRadius(3);
+            border.BorderBrush = (Brush)bc.ConvertFrom("#eee");
+            border.BorderThickness = new Thickness(1);
+            border.Height = 50;
+            
+            MedicineSec.Children.Add(border);
+
+            //Grid 
             Grid grid = new Grid();
-
-            grid.Name = "SingleMedicineSec";
-            grid.Background = Brushes.Red;
-            grid.Height = 80;
+            
+            grid.Background = (Brush)bc.ConvertFrom("#EBEBEB");
+            grid.Height = 50;
             grid.VerticalAlignment = VerticalAlignment.Top;
-            grid.Margin = new Thickness(0, 0, 0, 10);
 
-            test.Children.Add(grid);
+            border.Child = grid;
 
-            //Select Box
-            TextBox textBox1 = new TextBox();
+            //Combobox Box
+            ComboBox comboBox = new ComboBox();
 
-            textBox1.Margin = new Thickness(10, 0, 0, 0);
-            textBox1.MinWidth = 260;
-            textBox1.HorizontalAlignment = HorizontalAlignment.Left;
-            textBox1.Style = this.FindResource("InputField") as Style;
+            comboBox.Style = this.FindResource("DosMedicineComboBox") as Style;
 
-            grid.Children.Add(textBox1);
+            comboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
+                 new System.Windows.Controls.TextChangedEventHandler(MedicineComboBox_TextChanged));
+
+            comboBox.GotFocus += new RoutedEventHandler(MedicineCombobox_Gotfocus);
+
+            grid.Children.Add(comboBox);
 
             //Dos Input
-            TextBox textBox2 = new TextBox();
+            TextBox dosInput = new TextBox();
 
-            textBox2.Margin = new Thickness(278, 20, 0, 20);
-            textBox2.MinWidth = 174;
-            textBox2.HorizontalAlignment = HorizontalAlignment.Left;
-            textBox2.Style = this.FindResource("InputField") as Style;
+            dosInput.Style = this.FindResource("DosInputField") as Style;
 
-            grid.Children.Add(textBox2);
+            grid.Children.Add(dosInput);
 
             //Delete Button
             Button button = new Button();
@@ -523,18 +556,66 @@ namespace Healthtechbd
             button.Content = "Del";
             button.Padding = new Thickness(0);
             button.MinWidth = 20;
-            button.Margin = new Thickness(462, 0, 6, 0);
+            button.Height = 25;
+            button.Margin = new Thickness(456, 0, 4, 0);
+            button.Background = Brushes.AliceBlue;
+            button.BorderBrush = Brushes.AliceBlue;
 
             button.AddHandler(Button.ClickEvent, new RoutedEventHandler(DelBtnClick));
 
             grid.Children.Add(button);
+
+            Image image = new Image();
+
+            var SourceUri = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/minus.png"));
+            image.Source = SourceUri;
+
+            button.Content = image;
         }
 
         private void DelBtnClick(object sender, RoutedEventArgs e)
         {
-            FrameworkElement parent = (FrameworkElement)((Button)sender).Parent;
-            parent.Visibility = Visibility.Collapsed;
-            
+            FrameworkElement parent = (FrameworkElement)((Button)sender).Parent;                    
+            FrameworkElement parent1 = (FrameworkElement)parent.Parent;
+            parent1.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void MedicineCombobox_Gotfocus(object sender, RoutedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            comboBox.IsDropDownOpen = true;
+
+            var medicines = db.medicines.OrderByDescending(x => x.created).Take(10).ToList(); //
+
+            foreach (var medicine in medicines)
+            {
+                comboBox.Items.Add(medicine.name);
+            }
+        }
+
+        private void MedicineComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            comboBox.IsDropDownOpen = true;
+
+            var searchBy = comboBox.Text;
+
+            var medicines = db.medicines.Where(x => x.name.Contains(searchBy)).Take(10).ToList(); //
+
+            comboBox.Items.Clear();
+
+            foreach (var medicine in medicines)
+            {
+                comboBox.Items.Add(medicine.name);
+            }
+
+            if (medicines.Count() == 0)
+            {
+                comboBox.Items.Add("No results mached with " + searchBy);
+            }
         }
     }
 }

@@ -120,7 +120,7 @@ namespace Healthtechbd
                 }
                 catch
                 {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Please select a diagnosis", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else

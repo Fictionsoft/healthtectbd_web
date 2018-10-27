@@ -39,7 +39,35 @@
                 <Setter Property="Padding" Value="9" />
                 <Setter Property="FontSize" Value="14" />
             </Style>
+            
+             <!--Dos Medicine Combobox-->
+            <Style TargetType="ComboBox" x:Key="DosMedicineComboBox" >
+                <Setter Property="Foreground" Value="#7d7d7d"/>
+                <Setter Property="BorderBrush" Value="#eee"/>
+                <Setter Property="Margin" Value="10 0 0 0"/>
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Padding" Value="5 3 0 0" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="MinWidth" Value="260" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="IsEditable" Value="True" />
+                <Setter Property="IsTextSearchEnabled" Value="False" />
+            </Style>
+            
+            <!--Dos InputField-->
+            <Style TargetType="TextBox" x:Key="DosInputField" >
+                <Setter Property="Foreground" Value="#7d7d7d"/>
+                <Setter Property="BorderBrush" Value="#eee"/>
+                <Setter Property="Margin" Value="278,0,0,0"/>
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Padding" Value="5 3 0 0" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="MinWidth" Value="174" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>               
 
+            <!--Diagnosis Combobox-->
             <Style TargetType="ComboBox" x:Key="DiagnosisComboBox" >
                 <Setter Property="Foreground" Value="#7d7d7d"/>
                 <Setter Property="BorderBrush" Value="#eee"/>
