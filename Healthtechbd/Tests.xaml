@@ -21,7 +21,7 @@
         </Grid>
 
         <!--Page Heading Bottom-->
-        <Border Margin="20" MinHeight="430">
+        <Border Margin="20" MinHeight="300">
             <StackPanel>
                 <!--Search Section-->
                 <Grid Height="60" Background="#F6F8F7">
@@ -33,7 +33,7 @@
                             <ColumnDefinition Width="80"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0"/>
+                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" TextChanged="searchField_TextChanged"/>
                         <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Margin="0 0 10 0" Click="btnSearch_Click" Grid.Column="1">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
@@ -42,11 +42,10 @@
                 </Grid>
 
                 <!--Info Area-->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="370">
                     <Border Padding="10 0">
                         <Grid>
 
-                            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridTests" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="-10, 0, 10, 0" Background="White">
+                            <DataGrid MaxHeight="400" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridTests" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="-10, 0, -10, 0" Background="White">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Name" Binding="{Binding name}" />
                                     <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />
@@ -77,7 +76,6 @@
 
                         </Grid>
                     </Border>
-                </ScrollViewer>
 
             </StackPanel>
 

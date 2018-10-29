@@ -89,7 +89,7 @@ namespace Healthtechbd
             var medicinesIds = MedicineChosenControl.selectedIds;
             var tetsIds = TestChosenControl.selectedIds;
 
-            if (DiagnosisComboBox.SelectedItem != "Type here..." && Instruction.Text != "")
+            if (DiagnosisComboBox.SelectedItem != "Type here...")
             {
                 int diagnosisTemplateId = int.Parse(DiagnosisTemplateId.Text);
 
@@ -98,10 +98,10 @@ namespace Healthtechbd
                     diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == diagnosisTemplateId);
                     diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
 
-                    //var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
+                    var haveDiagnosisTemplate = db.diagnosis_templates.Where(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId && diagnosis_template.diagnosis_list_id != diagnosis.id).FirstOrDefault();
 
-                    //if(haveDiagnosisTemplate == null)
-                    //{
+                    if (haveDiagnosisTemplate == null)
+                    {
                         diagnosis_template.diagnosis_list_id = diagnosis.id;
                         diagnosis_template.instructions = Instruction.Text;
 
@@ -115,11 +115,11 @@ namespace Healthtechbd
 
                         NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
                         MessageBox.Show("Update Successfully", "Success");
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("The Diagnosis Template already exist", "Already Exit");
-                    //}                    
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Diagnosis Template already exist", "Already Exit");
+                    }
                 }
                 catch
                 {
@@ -128,7 +128,7 @@ namespace Healthtechbd
             }
             else
             {
-                MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select a diagnosis", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
            
         }

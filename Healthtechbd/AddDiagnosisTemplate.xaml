@@ -62,7 +62,7 @@
                             </StackPanel>
 
                             <StackPanel Grid.Row="0" Grid.Column="1"  Margin="5 0">
-                                <TextBlock Style="{StaticResource Level}" Text="Instructions *"/>
+                                <TextBlock Style="{StaticResource Level}" Text="Instructions"/>
                                 <TextBox x:Name="Instruction" Style="{StaticResource InputField}" Text=""/>
                             </StackPanel>
 

@@ -35,7 +35,7 @@
             </Grid>
             
             <!--Page Heading Bottom-->
-            <Border Margin="20">
+            <Border  Width="740" Margin="20">
                 <StackPanel x:Name="PrintArea">
 
                     <Grid Background="#fff">
@@ -114,7 +114,7 @@
                             <Grid>
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="1.5*"></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
@@ -152,7 +152,7 @@
 
 
                                 <!--Medicines-->
-                                <Border Grid.Column="1" x:Name="PrescriptioMedicinesArea" Padding="12 0">
+                                <Border HorizontalAlignment="Center" Grid.Column="1" x:Name="PrescriptioMedicinesArea" Padding="12 0">
                                     <Grid>
                                         <StackPanel x:Name="PrescriptioMedicines" Margin="5 0">
                                             <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Medicines:"/>

@@ -40,7 +40,7 @@ namespace Healthtechbd
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }                       
+            }
         }
 
         private void ButtonAddPatient_Click(object sender, RoutedEventArgs e)
@@ -66,7 +66,7 @@ namespace Healthtechbd
                 catch
                 {
                     MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }                
+                }
             }
         }
 
@@ -85,7 +85,7 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if(searchField.Text != "")
+            if (searchField.Text != "")
             {
                 string searchBy = searchField.Text.ToString();
 
@@ -97,7 +97,7 @@ namespace Healthtechbd
                                                 x.phone.Trim().Contains(searchBy) ||
                                                 x.email.Trim().Contains(searchBy) ||
                                                 x.age.Trim().Contains(searchBy))
-                                          ).OrderByDescending(x => x.created).Take(10).ToList();
+                                               ).OrderByDescending(x => x.created).Take(10).ToList();
 
                     if (users.Count == 0)
                     {
@@ -112,7 +112,33 @@ namespace Healthtechbd
                 {
                     MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-            }                       
+            }
+        }
+
+        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (searchField.Text != "")
+            {
+                string searchBy = searchField.Text.ToString();
+
+                try
+                {
+                    var users = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) &&
+                                                (x.first_name.Trim().Contains(searchBy) ||
+                                                x.last_name.Trim().Contains(searchBy) ||
+                                                x.phone.Trim().Contains(searchBy) ||
+                                                x.email.Trim().Contains(searchBy) ||
+                                                x.age.Trim().Contains(searchBy))
+                                               ).OrderByDescending(x => x.created).Take(10).ToList();
+                    
+                     dataGridPatients.ItemsSource = users;
+                    
+                }
+                catch
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
         }
     }
 }

@@ -22,7 +22,7 @@
         </Grid>
 
         <!--Page Heading Bottom-->
-        <Border Margin="20" Height="430">
+        <Border Margin="20" MinHeight="300">
             <StackPanel>
                 <!--Search Section-->
                 <Grid Height="60" Background="#F6F8F7">
@@ -34,7 +34,7 @@
                             <ColumnDefinition Width="80"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text=""/>
+                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text="" TextChanged="searchField_TextChanged"/>
                         <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
@@ -43,10 +43,9 @@
                 </Grid>
 
                 <!--Info Area-->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="370">
                     <Border Padding="10 0">
                         <Grid>
-                            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridPrescriptions" ItemsSource="{Binding}" HorizontalAlignment="Left"  Margin="-10, 0, 10, 0" Background="White">
+                            <DataGrid MaxHeight="400" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridPrescriptions" ItemsSource="{Binding}" HorizontalAlignment="Left"  Margin="-10, 0, -10, 0" Background="White">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Patient" Binding="{Binding user.first_name}" />
                                     <DataGridTextColumn Width="*" Header="Phone" Binding="{Binding user.phone}" />
@@ -88,7 +87,6 @@
                             </DataGrid>
                         </Grid>
                     </Border>
-                </ScrollViewer> 
 
             </StackPanel>
 

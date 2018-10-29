@@ -108,5 +108,21 @@ namespace Healthtechbd
             EditMedicine editMedicine = new EditMedicine(medicineId);
             NavigationService.Navigate(editMedicine);
         }
+
+        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchBy = searchField.Text.ToString();
+
+            try
+            {
+                var medicines = db.medicines.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+
+                dataGridMedicines.ItemsSource = medicines;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

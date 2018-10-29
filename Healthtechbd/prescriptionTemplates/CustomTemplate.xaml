@@ -35,7 +35,7 @@
             </Grid>
             
             <!--Page Heading Bottom-->
-            <Border Margin="20">
+            <Border  Width="740" Margin="20">
                 <StackPanel x:Name="PrintArea">
 
                     <Grid Background="#fff">

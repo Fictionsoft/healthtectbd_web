@@ -188,5 +188,23 @@ namespace Healthtechbd
 
             NavigationService.Navigate(editPrescription);                      
         }
+
+        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchBy = searchField.Text.ToString();
+
+            try
+            {
+                var prescriptions = db.presceiptions.Where(x => x.user.first_name.Trim().Contains(searchBy) ||
+                                    x.user.phone.Trim().Contains(searchBy))
+                                    .OrderByDescending(x => x.created).ToList();
+                
+                dataGridPrescriptions.ItemsSource = prescriptions;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace Healthtechbd
 
         private void SubmitAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if (DiagnosisComboBox.SelectedItem != "Type here..." && Instruction.Text != "")
+            if (DiagnosisComboBox.SelectedItem != "Type here...")
             {
                 try
                 {
@@ -125,7 +125,7 @@ namespace Healthtechbd
             }
             else
             {
-                MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select a diagnosis", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

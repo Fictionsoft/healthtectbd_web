@@ -21,7 +21,7 @@
         </Grid>
 
         <!--Page Heading Bottom-->
-        <Border Margin="20" Height="430">
+        <Border Margin="20" MinHeight="300">
             <StackPanel>
                 <!--Search Section-->
                 <Grid Height="60" Background="#F6F8F7">
@@ -42,10 +42,10 @@
                 </Grid>
 
                 <!--Info Area-->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF" Height="370">
+                <!--<ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF"  Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=Height}">-->
                     <Border Padding="10 0">
                         <Grid>
-                            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridDiagnosis" ItemsSource="{Binding}" HorizontalAlignment="Left"  Margin="-10, 0, 10, 0" Background="White">
+                            <DataGrid MaxHeight="400" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridDiagnosis" ItemsSource="{Binding}" HorizontalAlignment="Left"  Margin="-10, 0, -10, 0" Background="White">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Name" Binding="{Binding name}" />
                                     <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />
@@ -75,7 +75,7 @@
                             </DataGrid>
                         </Grid>
                     </Border>
-                </ScrollViewer>
+                <!--</ScrollViewer>-->
 
             </StackPanel>
 

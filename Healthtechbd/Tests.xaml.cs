@@ -107,5 +107,21 @@ namespace Healthtechbd
             searchField.Clear();
             loadTests();
         }
+
+        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchBy = searchField.Text.ToString();
+
+            try
+            {
+                var tests = db.tests.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+
+                dataGridTests.ItemsSource = tests;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

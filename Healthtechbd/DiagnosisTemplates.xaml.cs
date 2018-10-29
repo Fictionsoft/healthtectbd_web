@@ -130,5 +130,21 @@ namespace Healthtechbd
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }            
         }
+
+        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchBy = searchField.Text.ToString();
+
+            try
+            {
+                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+
+                dataGridDiagnosisTemplates.ItemsSource = diagnosis_templates;
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

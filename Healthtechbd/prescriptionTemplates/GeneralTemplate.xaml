@@ -35,7 +35,7 @@
             </Grid>
             
             <!--Page Heading Bottom-->
-            <Border Margin="20">
+            <Border Width="740" Margin="20">
                 <StackPanel x:Name="PrintArea">
 
                     <Grid Background="#fff">
@@ -140,7 +140,7 @@
                                 <Border Grid.Column="1" Margin="72 0 0 0" Padding="12 0">
                                     <Grid>
 
-                                        <StackPanel Margin="0 6 0 0" x:Name="PatientExamination" Grid.Row="1">
+                                        <StackPanel Margin="0" x:Name="PatientExamination" Grid.Row="1">
                                             <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Tests:"/>
 
                                             <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Test 1"/>
