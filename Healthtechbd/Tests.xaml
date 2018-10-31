@@ -45,7 +45,7 @@
                     <Border Padding="10 0">
                         <Grid>
 
-                            <DataGrid MaxHeight="400" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridTests" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="-10, 0, -10, 0" Background="White">
+                            <DataGrid MaxHeight="480" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridTests" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="-10, 0, -10, 0" Background="White">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Name" Binding="{Binding name}" />
                                     <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />

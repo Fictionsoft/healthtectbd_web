@@ -110,34 +110,21 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            string searchBy = searchField.Text.ToString();
-
-            try
-            {
-                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
-
-                if (diagnosis_templates.Count == 0)
-                {
-                    MessageBox.Show("DiagnosisTemplate not found", "Wraning");
-                }
-                else
-                {
-                    dataGridDiagnosisTemplates.ItemsSource = diagnosis_templates;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }            
+            search();           
         }
 
         private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            search();
+        }
+
+        public void search()
         {
             string searchBy = searchField.Text.ToString();
 
             try
             {
-                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Trim().Contains(searchBy) && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(10).ToList();
 
                 dataGridDiagnosisTemplates.ItemsSource = diagnosis_templates;
             }

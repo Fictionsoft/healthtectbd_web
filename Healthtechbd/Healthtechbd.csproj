@@ -153,7 +153,6 @@
     <Compile Include="Medicines.xaml.cs">
       <DependentUpon>Medicines.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DiagnosisMedicineModel.cs" />
     <Compile Include="Model\DiagnosisTestModel.cs" />
     <Compile Include="Model\MedicineModel.cs" />
     <Compile Include="Model\TestModel.cs" />
@@ -195,9 +194,6 @@
     </Compile>
     <Compile Include="Tests.xaml.cs">
       <DependentUpon>Tests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewPrescription.xaml.cs">
-      <DependentUpon>ViewPrescription.xaml</DependentUpon>
     </Compile>
     <Page Include="AddDiagnosis.xaml">
       <SubType>Designer</SubType>
@@ -344,10 +340,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tests.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewPrescription.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

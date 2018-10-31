@@ -85,37 +85,15 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (searchField.Text != "")
-            {
-                string searchBy = searchField.Text.ToString();
-
-                try
-                {
-                    var users = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) &&
-                                                (x.first_name.Trim().Contains(searchBy) ||
-                                                x.last_name.Trim().Contains(searchBy) ||
-                                                x.phone.Trim().Contains(searchBy) ||
-                                                x.email.Trim().Contains(searchBy) ||
-                                                x.age.Trim().Contains(searchBy))
-                                               ).OrderByDescending(x => x.created).Take(10).ToList();
-
-                    if (users.Count == 0)
-                    {
-                        MessageBox.Show("Patient not found");
-                    }
-                    else
-                    {
-                        dataGridPatients.ItemsSource = users;
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
+            search();
         }
 
         private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            search();
+        }
+
+        public void search()
         {
             if (searchField.Text != "")
             {
@@ -130,15 +108,22 @@ namespace Healthtechbd
                                                 x.email.Trim().Contains(searchBy) ||
                                                 x.age.Trim().Contains(searchBy))
                                                ).OrderByDescending(x => x.created).Take(10).ToList();
-                    
-                     dataGridPatients.ItemsSource = users;
-                    
+
+                    dataGridPatients.ItemsSource = users;
+
                 }
                 catch
                 {
                     MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
+        }
+
+        private void btnViewPatientPrescription_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+
+            MainWindow.Session.setPatientId = (dataGridPatients.SelectedItem as user).id;
         }
     }
 }

@@ -36,6 +36,8 @@ namespace Healthtechbd
 
             public static string imageName;
             public static string imagePath;
+
+            public static int setPatientId;
             #endregion
 
 
@@ -93,36 +95,41 @@ namespace Healthtechbd
                         Session.doctorFirstName = user.first_name;
                         Session.doctorLastName = user.last_name;
                         Session.doctorEmail = user.email;
+                        Session.doctorPhone = user.phone;
                         Session.doctorPrescriptionTemId = user.prescription_template_id;                      
                         
                         if (MessageBox.Show("Login successfully", "Success") == MessageBoxResult.OK)
                         {
                             TextBlock UserName = AdminPanelWindow.userName;
-                            UserName.Text = Session.doctorFirstName +" "+ Session.doctorLastName;
+                            UserName.Text =  Session.doctorFirstName +" "+ Session.doctorLastName;
 
-                            if(user.profile_picture != "")
+                            Image ProfilePic = AdminPanelWindow.profilePic;
+                           
+                            if (user.profile_picture != null)
                             {
-                                Image ProfilePic = AdminPanelWindow.profilePic;
                                 ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/" + user.profile_picture));
                             }
+                            else
+                            {
+                                ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
+                            }                            
                         }
                     }
                     else
                     {
                         MessageBox.Show("Email or Password are invalid", "Invalid User", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
             }
+                catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
             else
             {
                 MessageBox.Show("Please fill the all field", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }        
-
 
         //Placeholder.................................................
         private void EmailAddress_GotFocus(object sender, RoutedEventArgs e)

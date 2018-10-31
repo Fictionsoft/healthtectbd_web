@@ -71,11 +71,24 @@ namespace Healthtechbd
                     MainWindow.Session.doctorFirstName = user.first_name;
                     MainWindow.Session.doctorLastName = user.last_name;
                     MainWindow.Session.doctorEmail = user.email;
+                    MainWindow.Session.doctorPhone = user.phone;
+                    MainWindow.Session.doctorPrescriptionTemId = user.prescription_template_id;
 
                     if (MessageBox.Show("Password has been reset and Login Successfully", "Success") == MessageBoxResult.OK)
                     {
                         TextBlock UserName = AdminPanelWindow.userName;
                         UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
+
+                        Image ProfilePic = AdminPanelWindow.profilePic;
+
+                        if (user.profile_picture != null)
+                        {
+                            ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/" + user.profile_picture));
+                        }
+                        else
+                        {
+                            ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
+                        }                        
                     }                    
                 }
                 else

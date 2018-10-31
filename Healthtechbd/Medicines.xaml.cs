@@ -74,26 +74,7 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-           
-            string searchBy = searchField.Text.ToString();
-
-            try
-            {
-                var medicines = db.medicines.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
-
-                if (medicines.Count == 0)
-                {
-                    MessageBox.Show("Medicine not found", "Warning");
-                }
-                else
-                {
-                    dataGridMedicines.ItemsSource = medicines;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }                                 
+            search();                                        
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
@@ -110,6 +91,11 @@ namespace Healthtechbd
         }
 
         private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            search();                                                                         
+        }
+
+        public void search()
         {
             string searchBy = searchField.Text.ToString();
 

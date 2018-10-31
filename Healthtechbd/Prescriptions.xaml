@@ -49,7 +49,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Width="*" Header="Patient" Binding="{Binding user.first_name}" />
                                     <DataGridTextColumn Width="*" Header="Phone" Binding="{Binding user.phone}" />
-                                    <DataGridTextColumn Width="*" Header="Diagnosis" />
+                                <DataGridTextColumn Width="*" Header="Diagnosis" Binding="{Binding diagnosis.name}" />
                                     <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />
                                     <DataGridTextColumn Width="*" Visibility="Hidden" Binding="{Binding id}" />
 

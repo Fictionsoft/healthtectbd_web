@@ -57,7 +57,7 @@ namespace Healthtechbd
             {
                 try
                 {
-                    user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.role_id == 1); //user = doctor,,,role_id 1 = doctor
+                    user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.role_id == 2); //user = doctor,,,role_id 2 = doctor
 
                     if (user != null)
                     {

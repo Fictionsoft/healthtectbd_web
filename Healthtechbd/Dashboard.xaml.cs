@@ -60,7 +60,6 @@ namespace Healthtechbd
                 {
                     MainWindow.Session.editRecordId = 0;
                     AddPrescription.diagnosisTemplateIds.Clear();
-                    DiagnosisMedicineChosenControl.selectedIds.Clear();
                     DiagnosisTestChosenControl.selectedIds.Clear();
 
                     Grid sidebar = AdminPanelWindow.sidebar;

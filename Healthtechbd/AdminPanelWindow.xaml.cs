@@ -36,22 +36,31 @@ namespace Healthtechbd
             sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
             userName = UserName; // To get user name textblock     
             profilePic = ProfilePic;
-
             mainContent = MainContent;
         }
 
         public AdminPanelWindow(RegistrationWindow registrationWindow)
         {
-            InitializeComponent();          
-            userName = UserName; // To get user name textblock
+            InitializeComponent();
+
+            sidebar = Sidebar; // To get sidebar
+            sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
+            userName = UserName; // To get user name textblock     
+            profilePic = ProfilePic;
+            mainContent = MainContent;
 
             this.registrationWindow = registrationWindow;
         }
 
         public AdminPanelWindow(ResetPasswordWindow resetPasswordWindow)
         {
-            InitializeComponent();            
-            userName = UserName; // To get user name textblock
+            InitializeComponent();
+
+            sidebar = Sidebar; // To get sidebar
+            sidebarColumnDefination = SidebarColumnDefination;// To get sidebarColumnDefenation 
+            userName = UserName; // To get user name textblock     
+            profilePic = ProfilePic;
+            mainContent = MainContent;
 
             this.resetPasswordWindow = resetPasswordWindow;
         }
@@ -143,6 +152,7 @@ namespace Healthtechbd
 
         private void ButtonPrescriptions_GotFocus(object sender, RoutedEventArgs e)
         {
+            MainWindow.Session.setPatientId = 0;
             MainContent.Content = new Prescriptions();
         }
 

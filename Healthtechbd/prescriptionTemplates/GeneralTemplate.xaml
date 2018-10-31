@@ -124,9 +124,9 @@
                                         <StackPanel x:Name="PatientDiagnosis">
                                             <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Diagnosis:"/>
 
-                                            <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 1"/>
+                                            <!--<TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 1"/>
                                             <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 2"/>
-                                            <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 3"/>
+                                            <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 3"/>-->
 
                                         </StackPanel>
                                        
@@ -143,9 +143,9 @@
                                         <StackPanel Margin="0" x:Name="PatientExamination" Grid.Row="1">
                                             <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Tests:"/>
 
-                                            <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Test 1"/>
+                                            <!--<TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Test 1"/>
                                             <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Test 2"/>
-                                            <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Test 3"/>
+                                            <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Test 3"/>-->
 
                                         </StackPanel>
 
@@ -171,7 +171,7 @@
                                     <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Medicines:"/>
 
                                             
-                                    <StackPanel Orientation="Horizontal">
+                                    <!--<StackPanel Orientation="Horizontal">
                                         <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Premil 2 Tablet :"/>
                                         <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="( 1-1-1 )"/>
                                     </StackPanel>
@@ -189,7 +189,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock FontWeight="Normal" Margin="0 0 3 0" Style="{StaticResource Level}" Text="Aciflox 200 Tablet :"/>
                                         <TextBlock FontWeight="Normal"  Style="{StaticResource Level}" Text=" ( 1+1+1 )"/>
-                                    </StackPanel>
+                                    </StackPanel>-->
 
                                 </StackPanel>
 

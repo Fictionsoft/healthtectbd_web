@@ -23,14 +23,12 @@ namespace Healthtechbd
     /// </summary>
     public partial class AddPrescription : Page
     {
-        private DiagnosisMedicineChosenControl diagnosisMedicineChosenControl = null;
         private DiagnosisTestChosenControl diagnosisTestChosenControl = null;
 
         public AddPrescription()
         {
             InitializeComponent();
 
-            diagnosisMedicineChosenControl = (DiagnosisMedicineChosenControl)FindName("medicineChosen");
             diagnosisTestChosenControl = (DiagnosisTestChosenControl)FindName("testChosen");
 
             LoadPatientCombobox();
@@ -39,8 +37,8 @@ namespace Healthtechbd
             PatientComboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
                    new System.Windows.Controls.TextChangedEventHandler(PatientComboBox_TextChanged));
 
-            MedicineCombobox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
-                  new System.Windows.Controls.TextChangedEventHandler(MedicineComboBox_TextChanged));
+            //MedicineCombobox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
+            //      new System.Windows.Controls.TextChangedEventHandler(MedicineComboBox_TextChanged));
         }        
 
         contextd_db db = new contextd_db();
@@ -191,7 +189,7 @@ namespace Healthtechbd
         //Load Diagnosis CheckBox.....
         void LoadDiagnosisCheckbox()
         {
-            var diagnosis_templates = db.diagnosis_templates.ToList();
+            var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctorId).ToList();
             foreach (var diagnosis_template in diagnosis_templates)
             {
                 CheckBox checkbox = new CheckBox();                                                    
@@ -220,14 +218,14 @@ namespace Healthtechbd
                 diagnosisTemplateIds.Remove(diagnosisTemplateId);
             }
 
-            var diagnosis_templates = db.diagnosis_templates
+            var diagnosis_templates_instructions = db.diagnosis_templates
                 .Where(x => diagnosisTemplateIds.Contains(x.id))
                 .Select(x => x.instructions).ToList();
 
             var instructions = "";
-            foreach (var instruction in diagnosis_templates)
+            foreach (var instruction in diagnosis_templates_instructions)
             {
-                instructions += instruction + (instruction.Equals(diagnosis_templates.Last()) ?".":", ");
+                instructions += instruction + (instruction.Equals(diagnosis_templates_instructions.Last()) ?".":", ");
             }
 
             DoctorsNotes.Text = instructions;
@@ -240,6 +238,13 @@ namespace Healthtechbd
                 })
                 .ToList();
 
+            //Create Medicine Section
+            MedicineSection.Children.Clear();
+            foreach (var diagnosisMedicine in diagnosisMedicines)
+            {
+                CreateMedicineSection(diagnosisMedicine.Name, "");
+            }
+
             var diagnosisTests = db.diagnosis_tests.Where(x => diagnosisTemplateIds.Contains(x.diagnosis_id))
                 .Select(x => new IdNameModel
                 {
@@ -248,16 +253,7 @@ namespace Healthtechbd
                 })
                 .ToList();
 
-            ((DiagnosisMedicineModel)diagnosisMedicineChosenControl.DataContext).SelectedMedicines = diagnosisMedicines;
             ((DiagnosisTestModel)diagnosisTestChosenControl.DataContext).SelectedTests = diagnosisTests;
-
-            // store mediciene ids to save into database
-            DiagnosisMedicineChosenControl.selectedIds.Clear();
-            foreach (var diagnosisMedicine in diagnosisMedicines)
-            {
-                DiagnosisMedicineChosenControl.selectedIds.Add(diagnosisMedicine.Id);
-                diagnosisMedicineChosenControl._nodeList.Add(new Node(new IdNameModel() { Id = diagnosisMedicine.Id, Name = diagnosisMedicine.Name }));
-            }
 
             // store test ids to save into database
             DiagnosisTestChosenControl.selectedIds.Clear();
@@ -270,10 +266,10 @@ namespace Healthtechbd
 
         string PrescriptionTem;
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
-        {
+        {            
             if ((PatientComboBox.Text != "" || NewPatientName.Text != "") && PatientPhone.Text != "" && PatientAge.Text != "")
             {   
-                if(diagnosisTemplateIds.Count() > 0)
+                if(diagnosisTemplateIds.Count() > 0)// check for diagnosis select
                 {
                     if (NewPatientName.Text != "") //Add a new Patient
                     {
@@ -422,7 +418,6 @@ namespace Healthtechbd
                 AddPrescriptionTests(prescription.id);
 
                 diagnosisTemplateIds.Clear();
-                DiagnosisMedicineChosenControl.selectedIds.Clear();
                 DiagnosisTestChosenControl.selectedIds.Clear();            
                 
                 MessageBox.Show("Prescription has been saved", "Success");                               
@@ -462,16 +457,33 @@ namespace Healthtechbd
             }
 
             //prescription medicines add
-            var medicinesIds = DiagnosisMedicineChosenControl.selectedIds;
-            foreach (int medicine_id in medicinesIds)
+            int i = 0;
+            foreach (Border SingleMedicine in MedicineSection.Children)
             {
-                prescriptions_medicine.prescription_id = PrescriptionId;
-                prescriptions_medicine.medicine_id = medicine_id;
-                prescriptions_medicine.status = true;
-                prescriptions_medicine.created = DateTime.Now;
-                db.prescriptions_medicines.Add(prescriptions_medicine);
-                int retult_prescription_medecines = db.SaveChanges();
-            }            
+                if(SingleMedicine.Visibility != Visibility.Collapsed)
+                {
+                    var medicineField = (ComboBox)SingleMedicine.FindName("MedicineCombobox_" + i);
+
+                    if(medicineField.Text != "")
+                    {
+                        var medicine = db.medicines.FirstOrDefault(x => x.name == medicineField.Text);
+                        if (medicine != null)
+                        {
+                            var dosField = (TextBox)SingleMedicine.FindName("Dos_" + i);
+
+                            prescriptions_medicine.prescription_id = PrescriptionId;
+                            prescriptions_medicine.medicine_id = medicine.id;
+                            prescriptions_medicine.rule = dosField.Text;
+                            prescriptions_medicine.status = true;
+                            prescriptions_medicine.created = DateTime.Now;
+                            db.prescriptions_medicines.Add(prescriptions_medicine);
+                            int retult_prescription_medecines = db.SaveChanges();
+                        }                                               
+                    }                   
+                }               
+                               
+                i++;
+            }          
         }
 
         void AddPrescriptionTests(int PrescriptionId)
@@ -507,24 +519,31 @@ namespace Healthtechbd
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
         }
 
+        int clickCount = 0;
         //Add More Button
         private void PackIcon_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            CreateMedicineSection("", "");
+        }
+
+        public void CreateMedicineSection(String medicineName, string rule)
         {
             //Main Div
             Border border = new Border();
 
+            border.Name = "SingleMedicine";
             BrushConverter bc = new BrushConverter();
-            border.Margin = new Thickness(5);
+            border.Margin = new Thickness(5, 5, 5, 0);
             border.CornerRadius = new CornerRadius(3);
             border.BorderBrush = (Brush)bc.ConvertFrom("#eee");
             border.BorderThickness = new Thickness(1);
             border.Height = 50;
-            
-            MedicineSec.Children.Add(border);
+
+            MedicineSection.Children.Add(border);
 
             //Grid 
             Grid grid = new Grid();
-            
+
             grid.Background = (Brush)bc.ConvertFrom("#EBEBEB");
             grid.Height = 50;
             grid.VerticalAlignment = VerticalAlignment.Top;
@@ -534,21 +553,29 @@ namespace Healthtechbd
             //Combobox Box
             ComboBox comboBox = new ComboBox();
 
+            RegisterName("MedicineCombobox_" + clickCount, comboBox);
+            comboBox.Text = medicineName;
+
             comboBox.Style = this.FindResource("DosMedicineComboBox") as Style;
 
             comboBox.AddHandler(System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent,
-                 new System.Windows.Controls.TextChangedEventHandler(MedicineComboBox_TextChanged));
+                new System.Windows.Controls.TextChangedEventHandler(MedicineComboBox_TextChanged));
 
             comboBox.GotFocus += new RoutedEventHandler(MedicineCombobox_Gotfocus);
 
-            grid.Children.Add(comboBox);
+            grid.Children.Add(comboBox);            
 
             //Dos Input
             TextBox dosInput = new TextBox();
 
+            RegisterName("Dos_" + clickCount, dosInput);
+            dosInput.Text = rule;
             dosInput.Style = this.FindResource("DosInputField") as Style;
 
             grid.Children.Add(dosInput);
+
+            //Increment Click 
+            clickCount++;
 
             //Delete Button
             Button button = new Button();
@@ -598,8 +625,11 @@ namespace Healthtechbd
         private void MedicineComboBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-
-            comboBox.IsDropDownOpen = true;
+           
+            //if(checkMedicineName == "")
+            //{
+            //    comboBox.IsDropDownOpen = true;
+            //}
 
             var searchBy = comboBox.Text;
 

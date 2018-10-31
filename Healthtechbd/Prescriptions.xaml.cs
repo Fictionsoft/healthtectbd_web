@@ -33,13 +33,23 @@ namespace Healthtechbd
         prescription prescription = new prescription();
 
         void loadPrescriptions()
-        {
+        {            
             try
             {
-                var prescriptions = db.presceiptions.Where(x => x.doctor_id  == MainWindow.Session.doctorId)
-                                   .OrderByDescending(x => x.created).Take(10).ToList();
+                if (MainWindow.Session.setPatientId > 0)
+                {
+                    var prescriptions = db.presceiptions.Where(x => x.doctor_id == MainWindow.Session.doctorId && x.user_id == MainWindow.Session.setPatientId)
+                                  .OrderByDescending(x => x.created).Take(15).ToList();
 
-               dataGridPrescriptions.ItemsSource = prescriptions;
+                    dataGridPrescriptions.ItemsSource = prescriptions;
+                }
+                else
+                {
+                    var prescriptions = db.presceiptions.Where(x => x.doctor_id == MainWindow.Session.doctorId)
+                                 .OrderByDescending(x => x.created).Take(15).ToList();                    
+
+                    dataGridPrescriptions.ItemsSource = prescriptions;
+                }              
             }
             catch
             {
@@ -51,7 +61,6 @@ namespace Healthtechbd
         {
             MainWindow.Session.editRecordId = 0;
             AddPrescription.diagnosisTemplateIds.Clear();
-            DiagnosisMedicineChosenControl.selectedIds.Clear();
             DiagnosisTestChosenControl.selectedIds.Clear();
 
             Grid sidebar = AdminPanelWindow.sidebar;
@@ -111,32 +120,13 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            string searchBy = searchField.Text.ToString();
-
-            try
-            {
-                var prescriptions = db.presceiptions.Where(x => x.user.first_name.Trim().Contains(searchBy) ||
-                                    x.user.phone.Trim().Contains(searchBy))
-                                    .OrderByDescending(x => x.created).ToList();
-
-                if (prescriptions.Count == 0)
-                {
-                    MessageBox.Show("Prescription not found");
-                }
-                else
-                {
-                    dataGridPrescriptions.ItemsSource = prescriptions;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            search();
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             searchField.Clear();
+            MainWindow.Session.setPatientId = 0;
             loadPrescriptions();
         }
 
@@ -185,21 +175,36 @@ namespace Healthtechbd
                 EditPrescription.diagnosisTemplateIds.Add(prescriptions_diagnosi.diagnosis_id);
             }
 
-
             NavigationService.Navigate(editPrescription);                      
         }
 
         private void searchField_TextChanged(object sender, TextChangedEventArgs e)
         {
+            search();
+        }
+
+        public void search()
+        {
             string searchBy = searchField.Text.ToString();
 
             try
             {
-                var prescriptions = db.presceiptions.Where(x => x.user.first_name.Trim().Contains(searchBy) ||
-                                    x.user.phone.Trim().Contains(searchBy))
+                if(MainWindow.Session.setPatientId > 0)
+                {
+                    var prescriptions = db.presceiptions.Where(x => (x.user.first_name.Trim().Contains(searchBy) ||
+                                    x.user.phone.Trim().Contains(searchBy)) && x.user_id == MainWindow.Session.setPatientId && x.doctor_id == MainWindow.Session.doctorId)
                                     .OrderByDescending(x => x.created).ToList();
-                
-                dataGridPrescriptions.ItemsSource = prescriptions;
+
+                    dataGridPrescriptions.ItemsSource = prescriptions;
+                }
+                else
+                {
+                    var prescriptions = db.presceiptions.Where(x => (x.user.first_name.Trim().Contains(searchBy) ||
+                                   x.user.phone.Trim().Contains(searchBy)) && x.doctor_id == MainWindow.Session.doctorId)
+                                   .OrderByDescending(x => x.created).ToList();
+
+                    dataGridPrescriptions.ItemsSource = prescriptions;
+                }                                
             }
             catch
             {

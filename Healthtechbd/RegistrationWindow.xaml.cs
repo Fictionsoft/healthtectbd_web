@@ -71,11 +71,12 @@ namespace Healthtechbd
                     {
                         if (havePhone == null)
                         {
-                            user.role_id = 1; //Doctor role_id = 1
+                            user.role_id = 2; //Doctor role_id = 1
                             user.first_name = FirstName.Text;
                             user.last_name = LastName.Text;
                             user.email = EmailAddress.Text;
                             user.password = Password.Password;
+                            user.prescription_template_id = 1;//Default Prescription Template id
                             user.created = DateTime.Now;
 
                             db.users.Add(user);
@@ -86,6 +87,7 @@ namespace Healthtechbd
                             MainWindow.Session.doctorLastName = LastName.Text;
                             MainWindow.Session.doctorPhone = Phone.Text;
                             MainWindow.Session.doctorEmail = EmailAddress.Text;
+                            MainWindow.Session.doctorPrescriptionTemId = user.prescription_template_id;
 
                             this.Hide();
                             AdminPanelWindow adminpanelWindow = new AdminPanelWindow(this);
@@ -95,6 +97,17 @@ namespace Healthtechbd
                             {
                                 TextBlock UserName = AdminPanelWindow.userName;
                                 UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
+
+                                Image ProfilePic = AdminPanelWindow.profilePic;
+  
+                                if (user.profile_picture != null)
+                                {
+                                    ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/" + user.profile_picture));
+                                }
+                                else
+                                {
+                                    ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
+                                }                                
                             }
                         }
                         else

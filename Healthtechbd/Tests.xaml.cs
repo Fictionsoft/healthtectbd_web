@@ -40,7 +40,7 @@ namespace Healthtechbd
         {
             try
             {
-                var tests = db.tests.OrderByDescending(x => x.created).Take(10).ToList();
+                var tests = db.tests.OrderByDescending(x => x.created).Take(20).ToList();
                 dataGridTests.ItemsSource = tests;
             }
             catch
@@ -81,25 +81,7 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            string searchBy = searchField.Text.ToString();
-
-            try
-            {
-                var tests = db.tests.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
-
-                if (tests.Count == 0)
-                {
-                    MessageBox.Show("Test not found", "Warning");
-                }
-                else
-                {
-                    dataGridTests.ItemsSource = tests;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }                                        
+            search();                                      
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
@@ -109,6 +91,11 @@ namespace Healthtechbd
         }
 
         private void searchField_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            search();   
+        }
+
+        public void search()
         {
             string searchBy = searchField.Text.ToString();
 
