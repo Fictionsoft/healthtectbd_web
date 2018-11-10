@@ -255,14 +255,17 @@ namespace Healthtechbd
                 diagnosisTemplateIds.Remove(diagnosisTemplateId);
             }
 
-            var diagnosis_templates = db.diagnosis_templates
-                .Where(x => diagnosisTemplateIds.Contains(x.id))
-                .Select(x => x.instructions).ToList();
+            var diagnosis_templates_instructions = db.diagnosis_templates
+                 .Where(x => diagnosisTemplateIds.Contains(x.id) && x.instructions != "")
+                 .Select(x => x.instructions).ToList();
 
             var instructions = "";
-            foreach (var instruction in diagnosis_templates)
+            foreach (var instruction in diagnosis_templates_instructions)
             {
-                instructions += instruction + (instruction.Equals(diagnosis_templates.Last()) ? "." : ", ");
+                if (instruction != "")
+                {
+                    instructions += instruction + (instruction.Equals(diagnosis_templates_instructions.Last()) ? "." : ", ");
+                }
             }
 
             DoctorsNotes.Text = instructions;
@@ -275,6 +278,13 @@ namespace Healthtechbd
                 })
                 .ToList();
 
+            //Create Medicine Section
+            MedicineSection.Children.Clear();
+            foreach (var diagnosisMedicine in diagnosisMedicines)
+            {
+                CreateMedicineSection(diagnosisMedicine.Name, "");
+            }
+
             var diagnosisTests = db.diagnosis_tests.Where(x => diagnosisTemplateIds.Contains(x.diagnosis_id))
                 .Select(x => new IdNameModel
                 {
@@ -283,17 +293,7 @@ namespace Healthtechbd
                 })
                 .ToList();
 
-            //((DiagnosisMedicineModel)diagnosisMedicineChosenControl.DataContext).SelectedMedicines = diagnosisMedicines;
             ((DiagnosisTestModel)diagnosisTestChosenControl.DataContext).SelectedTests = diagnosisTests;
-
-            // store mediciene ids to save into database
-
-            //DiagnosisMedicineChosenControl.selectedIds.Clear();
-            //foreach (var diagnosisMedicine in diagnosisMedicines)
-            //{
-            //    DiagnosisMedicineChosenControl.selectedIds.Add(diagnosisMedicine.Id);
-            //    diagnosisMedicineChosenControl._nodeList.Add(new Node(new IdNameModel() { Id = diagnosisMedicine.Id, Name = diagnosisMedicine.Name }));
-            //}
 
             // store test ids to save into database
             DiagnosisTestChosenControl.selectedIds.Clear();
@@ -370,25 +370,21 @@ namespace Healthtechbd
                             prescription.temperature = Temperature.Text;
                             prescription.doctores_notes = DoctorsNotes.Text;
                             prescription.other_instructions = OtherInstructions.Text;
-                            prescription.status = true;
-                            prescription.created = DateTime.Now;
 
-                            int result_add_prescription = db.SaveChanges();
+                            db.SaveChanges();
+                           
+                            //Add Prescription Diagnosis
+                            AddPrescriptionDiagnosis(MainWindow.Session.editRecordId);
 
-                            if (result_add_prescription > 0)
-                            {
-                                //Add Prescription Diagnosis
-                                AddPrescriptionDiagnosis(MainWindow.Session.editRecordId);
+                            //Add Prescription Medicines
+                            AddPrescriptionMedicines(MainWindow.Session.editRecordId);
 
-                                //Add Prescription Medicines
-                                AddPrescriptionMedicines(MainWindow.Session.editRecordId);
+                            //Add Prescription Tests
+                            AddPrescriptionTests(MainWindow.Session.editRecordId);
 
-                                //Add Prescription Tests
-                                AddPrescriptionTests(MainWindow.Session.editRecordId);
-
-                                diagnosisTemplateIds.Clear();
-                                DiagnosisTestChosenControl.selectedIds.Clear();
-                            }
+                            diagnosisTemplateIds.Clear();
+                            DiagnosisTestChosenControl.selectedIds.Clear();
+                            
 
                             MessageBox.Show("Prescription has been saved", "Success");
                         }
@@ -535,7 +531,7 @@ namespace Healthtechbd
 
             border.Name = "SingleMedicine";
             BrushConverter bc = new BrushConverter();
-            border.Margin = new Thickness(5);
+            border.Margin = new Thickness(5, 5, 5, 0);
             border.CornerRadius = new CornerRadius(3);
             border.BorderBrush = (Brush)bc.ConvertFrom("#eee");
             border.BorderThickness = new Thickness(1);
@@ -588,8 +584,8 @@ namespace Healthtechbd
             button.MinWidth = 20;
             button.Height = 25;
             button.Margin = new Thickness(456, 0, 4, 0);
-            button.Background = Brushes.AliceBlue;
-            button.BorderBrush = Brushes.AliceBlue;
+            button.Background = (Brush)bc.ConvertFrom("#B6B6B6");
+            button.BorderBrush = (Brush)bc.ConvertFrom("#B6B6B6");
 
             button.AddHandler(Button.ClickEvent, new RoutedEventHandler(DelBtnClick));
 

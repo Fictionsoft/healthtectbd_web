@@ -140,7 +140,7 @@ namespace Healthtechbd
             if (diagnosis_medicines.Count() > 0)
             {
                 db.diagnosis_medicines.RemoveRange(diagnosis_medicines);
-                int delete_result = db.SaveChanges();
+                db.SaveChanges();
             }
 
             //medicines add
@@ -152,7 +152,7 @@ namespace Healthtechbd
                 diagnosis_medecine.status = true;
                 diagnosis_medecine.created = DateTime.Now;
                 db.diagnosis_medicines.Add(diagnosis_medecine);
-                int retult_diagnosis_medecines = db.SaveChanges();
+                db.SaveChanges();
             }
 
             MedicineChosenControl.selectedIds.Clear();
@@ -165,7 +165,7 @@ namespace Healthtechbd
             if (diagnosis_tests.Count() > 0)
             {
                 db.diagnosis_tests.RemoveRange(diagnosis_tests);
-                int delete_result = db.SaveChanges();
+                db.SaveChanges();
             }
 
             //tets add
@@ -177,7 +177,7 @@ namespace Healthtechbd
                 diagnosis_test.status = true;
                 diagnosis_test.created = DateTime.Now;
                 db.diagnosis_tests.Add(diagnosis_test);
-                int retult_diagnosis_tests = db.SaveChanges();
+                db.SaveChanges();
             }
 
             TestChosenControl.selectedIds.Clear();

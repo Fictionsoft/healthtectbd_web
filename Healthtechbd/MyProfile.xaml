@@ -51,6 +51,8 @@
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
@@ -88,17 +90,42 @@
                                     <TextBox x:Name="AddressLine2" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
-                                <StackPanel Grid.Row="3" Margin="5 0" Grid.ColumnSpan="2">
+                                <StackPanel Grid.Row="3" Margin="5 0" Grid.Column="0">
                                     <TextBlock Style="{StaticResource Level}" Text="Educational Qualification"/>
                                     <TextBox x:Name="EducationalQualification" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
-                                <StackPanel Grid.Row="4" Grid.Column="0"  Margin="5 0">
+                                <StackPanel Grid.Row="3" Margin="5 0" Grid.Column="1">
+                                    <TextBlock Style="{StaticResource Level}" Text="Specialist"/>
+                                    <TextBox x:Name="Specialist" Style="{StaticResource InputField}" Text=""/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="4" Margin="5 0" Grid.Column="0">
+                                    <TextBlock Style="{StaticResource Level}" Text="Chamber Name"/>
+                                    <TextBox x:Name="ChamberName" Style="{StaticResource InputField}" Text=""/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="4" Margin="5 0" Grid.Column="1">
+                                    <TextBlock Style="{StaticResource Level}" Text="Chamber Name"/>
+                                    <TextBox x:Name="ChamberAddress" Style="{StaticResource InputField}" Text=""/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="5" Margin="5 0" Grid.Column="0">
+                                    <TextBlock Style="{StaticResource Level}" Text="Off Day"/>
+                                    <TextBox x:Name="OffDay" Style="{StaticResource InputField}" Text=""/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="5" Margin="5 0" Grid.Column="1">
+                                    <TextBlock Style="{StaticResource Level}" Text="Visiting Time"/>
+                                    <TextBox x:Name="VisitingTime" Style="{StaticResource InputField}" Text=""/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="6" Grid.Column="0"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Clinic/Hospital Name"/>
                                     <TextBox x:Name="ClinicName" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>
 
-                                <StackPanel Grid.Row="4" Grid.Column="1"  Margin="5 0">
+                                <StackPanel Grid.Row="6" Grid.Column="1"  Margin="5 0">
                                     <TextBlock Style="{StaticResource Level}" Text="Website"/>
                                     <TextBox x:Name="Website" Style="{StaticResource InputField}" Text=""/>
                                 </StackPanel>

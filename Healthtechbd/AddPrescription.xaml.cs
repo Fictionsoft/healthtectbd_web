@@ -219,13 +219,16 @@ namespace Healthtechbd
             }
 
             var diagnosis_templates_instructions = db.diagnosis_templates
-                .Where(x => diagnosisTemplateIds.Contains(x.id))
+                .Where(x => diagnosisTemplateIds.Contains(x.id) && x.instructions != "")
                 .Select(x => x.instructions).ToList();
 
             var instructions = "";
             foreach (var instruction in diagnosis_templates_instructions)
             {
-                instructions += instruction + (instruction.Equals(diagnosis_templates_instructions.Last()) ?".":", ");
+                if(instruction != "")
+                {
+                    instructions += instruction + (instruction.Equals(diagnosis_templates_instructions.Last()) ? "." : ", ");
+                }
             }
 
             DoctorsNotes.Text = instructions;
@@ -579,14 +582,14 @@ namespace Healthtechbd
 
             //Delete Button
             Button button = new Button();
-
+           
             button.Content = "Del";
             button.Padding = new Thickness(0);
             button.MinWidth = 20;
             button.Height = 25;
             button.Margin = new Thickness(456, 0, 4, 0);
-            button.Background = Brushes.AliceBlue;
-            button.BorderBrush = Brushes.AliceBlue;
+            button.Background = (Brush)bc.ConvertFrom("#B6B6B6");
+            button.BorderBrush = (Brush)bc.ConvertFrom("#B6B6B6");
 
             button.AddHandler(Button.ClickEvent, new RoutedEventHandler(DelBtnClick));
 

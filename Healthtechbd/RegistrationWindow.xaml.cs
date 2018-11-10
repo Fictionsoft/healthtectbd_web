@@ -71,13 +71,17 @@ namespace Healthtechbd
                     {
                         if (havePhone == null)
                         {
-                            user.role_id = 2; //Doctor role_id = 1
+                            user.role_id = 2; //Doctor role_id = 2
                             user.first_name = FirstName.Text;
                             user.last_name = LastName.Text;
                             user.email = EmailAddress.Text;
+                            user.phone = Phone.Text;
                             user.password = Password.Password;
-                            user.prescription_template_id = 1;//Default Prescription Template id
-                            user.created = DateTime.Now;
+                            user.prescription_template_id = 1; //Default Prescription Template id
+                            user.is_localhost = 1;
+                            user.created = DateTime.Now; 
+                            
+                            user.expire_date = DateTime.Now.AddYears(1).ToString("dd/MM/yyyy");
 
                             db.users.Add(user);
                             db.SaveChanges();
@@ -93,7 +97,7 @@ namespace Healthtechbd
                             AdminPanelWindow adminpanelWindow = new AdminPanelWindow(this);
                             adminpanelWindow.Show();
 
-                            if (MessageBox.Show("Registration is successfull", "Success") == MessageBoxResult.OK)
+                            if (MessageBox.Show("Registration and Login is successfull", "Success") == MessageBoxResult.OK)
                             {
                                 TextBlock UserName = AdminPanelWindow.userName;
                                 UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;

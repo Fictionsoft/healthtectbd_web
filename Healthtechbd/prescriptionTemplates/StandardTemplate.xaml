@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Healthtechbd.prescriptionTemplates"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="800"
+      d:DesignHeight="5000" d:DesignWidth="800"
       Title="StandardTemplate">
 
     <Page.Resources>
@@ -61,10 +61,11 @@
                         <Border Padding="0 20 0 0" Grid.Row="0" HorizontalAlignment="Center">
                             <Grid>
                                 <StackPanel Margin="5 0">
+                                    <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Text="Clinic Name"/>
                                     <TextBlock x:Name="DoctorName" Style="{StaticResource Level}" Text="Arafat Khan"/>
+                                    <TextBlock x:Name="DoctorSpecialist" Style="{StaticResource Level}" Text="Neurologist"/>
                                     <TextBlock x:Name="DoctorQualification" Style="{StaticResource Level}" Text="MBBS; FCPS( Medicine)"/>
                                     <TextBlock x:Name="DoctorAddress" Style="{StaticResource Level}" Text="384/1 , West Nakhalpara,Tejgaon, Mohakhali"/>
-                                    <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Text="Clinic Name"/>
                                     <TextBlock x:Name="DoctorWebsite" Style="{StaticResource Level}" Text="www.sitename.com"/>
                                     <TextBlock x:Name="DoctorPhone" Style="{StaticResource Level}" Text="Call: 34565"/>
                                 </StackPanel>

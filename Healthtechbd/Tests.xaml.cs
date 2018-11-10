@@ -40,7 +40,7 @@ namespace Healthtechbd
         {
             try
             {
-                var tests = db.tests.OrderByDescending(x => x.created).Take(20).ToList();
+                var tests = db.tests.OrderByDescending(x => x.created).Take(40).ToList();
                 dataGridTests.ItemsSource = tests;
             }
             catch
@@ -90,18 +90,13 @@ namespace Healthtechbd
             loadTests();
         }
 
-        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            search();   
-        }
-
         public void search()
         {
             string searchBy = searchField.Text.ToString();
 
             try
             {
-                var tests = db.tests.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+                var tests = db.tests.Where(x => x.name.Trim().Contains(searchBy)).Take(40).ToList();
 
                 dataGridTests.ItemsSource = tests;
             }

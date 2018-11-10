@@ -45,6 +45,11 @@ namespace Healthtechbd
                 AddressLine1.Text = doctor.address_line1;
                 AddressLine2.Text = doctor.address_line2;
                 EducationalQualification.Text = doctor.educational_qualification;
+                Specialist.Text = doctor.specialist;
+                ChamberName.Text = doctor.cember_name;
+                ChamberAddress.Text = doctor.cember_address;
+                OffDay.Text = doctor.off_day;
+                VisitingTime.Text = doctor.visiting_time;
                 ClinicName.Text = doctor.clinic_name;
                 Website.Text = doctor.website;
             }
@@ -58,16 +63,15 @@ namespace Healthtechbd
         {   
             if(FirstName.Text != "" && LastName.Text != "" && Phone.Text != "")
             {
-                try
-                {
+                //try
+                //{
                     NavigationService.Navigate(new Uri("MyProfile.xaml", UriKind.Relative));
 
                     var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text && x.id != MainWindow.Session.doctorId);
 
                     if (havePhone == null)
                     {
-                        doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
-
+                        doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);                        
                         doctor.first_name = FirstName.Text;
                         doctor.last_name = LastName.Text;
                         //doctor.email = Email.Text;
@@ -75,6 +79,11 @@ namespace Healthtechbd
                         doctor.address_line1 = AddressLine1.Text;
                         doctor.address_line2 = AddressLine2.Text;
                         doctor.educational_qualification = EducationalQualification.Text;
+                        doctor.specialist = Specialist.Text;
+                        doctor.cember_name = ChamberName.Text;
+                        doctor.cember_address = ChamberAddress.Text;
+                        doctor.off_day = OffDay.Text;
+                        doctor.visiting_time = VisitingTime.Text;
                         doctor.clinic_name = ClinicName.Text;
                         doctor.website = Website.Text;
 
@@ -96,11 +105,11 @@ namespace Healthtechbd
                     {
                         MessageBox.Show("The Phone Number already exist", "Already Exit");
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                //}
             }
             else
             {

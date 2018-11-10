@@ -35,7 +35,7 @@ namespace Healthtechbd
         {
             try
             {
-                var diagnosis = db.diagnosis.OrderByDescending(x => x.created).Take(10).ToList();
+                var diagnosis = db.diagnosis.OrderByDescending(x => x.created).Take(40).ToList();
                 dataGridDiagnosis.ItemsSource = diagnosis;
             }
             catch
@@ -89,18 +89,13 @@ namespace Healthtechbd
             search();                    
         }
 
-        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            search();
-        }
-
         public void search()
         {
             string searchBy = searchField.Text.ToString();
 
             try
             {
-                var diagnosis = db.diagnosis.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).ToList();
+                var diagnosis = db.diagnosis.Where(x => x.name.Trim().Contains(searchBy)).Take(40).ToList();
 
                 dataGridDiagnosis.ItemsSource = diagnosis;
             }

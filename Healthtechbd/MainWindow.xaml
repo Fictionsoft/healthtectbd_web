@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Healthtechbd"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Closed="Window_Closed" >
+        Title="LoginWindow" WindowState="Maximized" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Closed="Window_Closed" >
    
 
     <Grid>
@@ -32,7 +32,8 @@
                 <!--Registration & Forgot Password-->
                 <Grid Margin="0 15 0 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
@@ -40,7 +41,11 @@
                         <TextBlock Style="{StaticResource RegistrationLink}" x:Name="registrationLink" Text="Registration" MouseDown="registrationLink_MouseDown"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="1">
+                    <StackPanel x:Name="activeSection" Visibility="Hidden" Grid.Column="1" HorizontalAlignment="Center">
+                        <TextBlock Style="{StaticResource RegistrationLink}" x:Name="activeLink" Text="Active Application" MouseDown="activeLink_MouseDown"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
                         <TextBlock Style="{StaticResource RegistrationLink}" x:Name="forgotPasswordLink" Text="Forgot Password" TextAlignment="Right" MouseDown="forgotPasswordLink_MouseDown"/>
                     </StackPanel>
                 </Grid>

@@ -34,7 +34,7 @@ namespace Healthtechbd
         {
             try
             {
-                var users = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(10).ToList();
+                var users = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(40).ToList();
                 dataGridPatients.ItemsSource = users; // role_id 3 = Patient 
             }
             catch
@@ -88,11 +88,6 @@ namespace Healthtechbd
             search();
         }
 
-        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            search();
-        }
-
         public void search()
         {
             if (searchField.Text != "")
@@ -107,7 +102,7 @@ namespace Healthtechbd
                                                 x.phone.Trim().Contains(searchBy) ||
                                                 x.email.Trim().Contains(searchBy) ||
                                                 x.age.Trim().Contains(searchBy))
-                                               ).OrderByDescending(x => x.created).Take(10).ToList();
+                                               ).Take(40).ToList();
 
                     dataGridPatients.ItemsSource = users;
 

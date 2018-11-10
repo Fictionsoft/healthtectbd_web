@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Healthtechbd"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="RegistrationWindow" Height="600" Width="1200" Closed="Window_Closed" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="RegistrationWindow" WindowState="Maximized" Height="600" Width="1200" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.Background>
@@ -41,14 +41,14 @@
 
                 <!--Login-->
                 <Grid Margin="0 15 0 0">
-                    <StackPanel>
+                    <StackPanel Width="50" HorizontalAlignment="Left">
                         <TextBlock Style="{StaticResource RegistrationLink}" x:Name="loginLink" Text="Login" MouseDown="loginLink_MouseDown"/>
                     </StackPanel>
                 </Grid>
 
             </StackPanel>
         </Border>
-        <Border Height="5" Background="#37B5AE" Width="475" Margin="360,508,360,57">
+        <Border Height="5" Background="#37B5AE" Width="475" Margin="350,531,350,33">
 
         </Border>
     </Grid>

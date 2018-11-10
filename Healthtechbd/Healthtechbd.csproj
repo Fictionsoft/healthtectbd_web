@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Desktop\Healthtechbd_WPF\</OutputPath>
+    <OutputPath>..\..\..\..\Desktop\Healthtechbd\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -90,6 +90,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActiveWindow.xaml.cs">
+      <DependentUpon>ActiveWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddDiagnosis.xaml.cs">
       <DependentUpon>AddDiagnosis.xaml</DependentUpon>
     </Compile>
@@ -195,6 +198,10 @@
     <Compile Include="Tests.xaml.cs">
       <DependentUpon>Tests.xaml</DependentUpon>
     </Compile>
+    <Page Include="ActiveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddDiagnosis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

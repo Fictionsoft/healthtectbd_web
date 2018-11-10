@@ -213,7 +213,7 @@
                         </Grid>
 
                         <!--Medicines-->
-                        <Grid Height="280" Grid.Column="1" Margin="30 0 10 0">
+                        <Grid Height="281" Grid.Column="1" Margin="30 0 10 0">
                             <Border Background="#EEEEEE" CornerRadius="5 5 0 0" Padding="8 8">
 
                                 <StackPanel>
@@ -223,7 +223,7 @@
                                     </Grid>
 
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
-                                        <StackPanel x:Name="MedicineSection" Background="#fff" Height="225">
+                                        <StackPanel x:Name="MedicineSection" Background="#fff" Height="226">
 
                                             <!--<Border x:Name="SingleMedicine" Margin="5" CornerRadius="3" BorderBrush="#eee" BorderThickness="1" Height="50">
                                                 <Grid VerticalAlignment="Center" Background="#EEEEEE" Height="50">

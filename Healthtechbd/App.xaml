@@ -84,6 +84,7 @@
                 <Setter Property="FontWeight" Value="SemiBold"/>
                 <Setter Property="Foreground" Value="#5d5d5d"/>
                 <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
             </Style>
             
             <!--Registration & Forgot Password-->

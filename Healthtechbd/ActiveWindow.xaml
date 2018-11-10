@@ -1,0 +1,42 @@
+﻿<Window x:Class="Healthtechbd.ActiveWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Healthtechbd"
+        mc:Ignorable="d"
+        Title="ApplicationActiveWindow" WindowState="Maximized" Height="600" Width="1200" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="images/login-bg.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <Border Padding="40" Height="340" Width="475" BorderBrush="#eee" BorderThickness="1" Background="#fff">
+            <StackPanel>
+                <TextBlock Text="ACTIVE APPLICATION"  Foreground="#545454" FontSize="25" TextAlignment="Center" ></TextBlock>
+                <Separator/>
+
+                <!--Email-->
+                <TextBox x:Name="EmailAddress" Style="{StaticResource InputField}" Text="Email Address" GotFocus="EmailAddress_GotFocus" LostFocus="EmailAddress_LostFocus" />
+
+                <TextBox x:Name="Token" Style="{StaticResource InputField}" Text="Token" GotFocus="Token_GotFocus" LostFocus="Token_LostFocus"/>
+
+                <!--Login Button-->
+                <Button x:Name="ButtonActiveApplication" Content="ACTIVE" Foreground="#fff" Background="#3CC2BB" Margin="0 0 0 10" Padding="9" Height="38" BorderBrush="#eee" BorderThickness="0" Click="ButtonActiveApplication_Click"></Button>
+
+                <!--Login-->
+                <Grid Margin="0 15 0 0">
+                    <StackPanel HorizontalAlignment="Left" Width="50">
+                        <TextBlock Style="{StaticResource RegistrationLink}" x:Name="loginLink" Text="Login" MouseDown="loginLink_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
+        </Border>
+        <Border Height="5" Background="#37B5AE" Width="475" Margin="358,450,358,114">
+
+        </Border>
+    </Grid>
+
+</Window>

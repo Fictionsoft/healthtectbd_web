@@ -35,7 +35,7 @@ namespace Healthtechbd
         {
             try
             {
-                var medicines = db.medicines.OrderByDescending(x => x.created).Take(10).ToList();
+                var medicines = db.medicines.OrderByDescending(x => x.created).Take(40).ToList();
                 dataGridMedicines.ItemsSource = medicines;
             }
             catch
@@ -90,18 +90,13 @@ namespace Healthtechbd
             NavigationService.Navigate(editMedicine);
         }
 
-        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            search();                                                                         
-        }
-
         public void search()
         {
             string searchBy = searchField.Text.ToString();
 
             try
             {
-                var medicines = db.medicines.Where(x => x.name.Trim().Contains(searchBy)).OrderByDescending(x => x.created).Take(10).ToList();
+                var medicines = db.medicines.Where(x => x.name.Trim().Contains(searchBy)).Take(40).ToList();
 
                 dataGridMedicines.ItemsSource = medicines;
             }

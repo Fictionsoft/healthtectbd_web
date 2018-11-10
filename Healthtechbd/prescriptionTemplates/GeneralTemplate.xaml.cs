@@ -40,6 +40,7 @@ namespace Healthtechbd.prescriptionTemplates
 
             DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorWebsite.Visibility = (doctor.website == "") ? Visibility.Collapsed : Visibility.Visible;
 
@@ -71,6 +72,7 @@ namespace Healthtechbd.prescriptionTemplates
             DoctorName.Text = doctor.first_name + " " + doctor.last_name;
             DoctorQualification.Text = doctor.educational_qualification;
             DoctorAddress.Text = doctor.address_line1 + " " + doctor.address_line2;
+            DoctorSpecialist.Text = doctor.specialist;
             DoctorClinicName.Text = doctor.clinic_name;
             DoctorWebsite.Text = doctor.website;
             DoctorPhone.Text = doctor.phone;
@@ -87,14 +89,30 @@ namespace Healthtechbd.prescriptionTemplates
             var i = 1;
             foreach (var prescriptions_medicine in prescriptions_medicines)
             {
-                TextBlock textBlock = new TextBlock();
-                textBlock.FontWeight = FontWeights.Normal;
-                textBlock.Style = this.FindResource("Level") as Style;
-                textBlock.Text = i + ". " + prescriptions_medicine.medicine.name;
+                StackPanel stackPanel = new StackPanel();
+                stackPanel.Orientation = Orientation.Horizontal;
 
-                PrescriptioMedicines.Children.Add(textBlock);
+                PrescriptioMedicines.Children.Add(stackPanel);
+
+                //Medicine Name
+                TextBlock medicine = new TextBlock();
+                medicine.Margin = new Thickness(0, 0, 3, 0);
+                medicine.FontWeight = FontWeights.Normal;
+                medicine.Style = this.FindResource("Level") as Style;
+                medicine.Text = i + ". " + prescriptions_medicine.medicine.name + " : ";
+
+                stackPanel.Children.Add(medicine);
+
+                //Dos
+                TextBlock dos = new TextBlock();
+                dos.FontWeight = FontWeights.Normal;
+                dos.Style = this.FindResource("Level") as Style;
+                dos.Text = "( " + prescriptions_medicine.rule + " )";
+
+                stackPanel.Children.Add(dos);
+
                 i++;
-            }
+            }            
 
             var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
 
@@ -131,6 +149,12 @@ namespace Healthtechbd.prescriptionTemplates
 
             //Singnature & Date
             CreatedDate.Text = prescription.created.ToString("dd MMM yyyy");
+
+            //Footer
+            ChamberName.Text = doctor.cember_name;
+            ChamberAddress.Text = doctor.cember_address;
+            VisitingTime.Text = doctor.visiting_time;
+            OffDay.Text = doctor.off_day;
         }
 
         private void MorePrescriptionClick(object sender, RoutedEventArgs e)

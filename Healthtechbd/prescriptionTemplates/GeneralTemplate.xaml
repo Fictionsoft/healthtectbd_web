@@ -59,6 +59,7 @@
                                     <TextBlock x:Name="DoctorName" Style="{StaticResource Level}" Foreground="#000" FontSize="15" Text="Arafat Khan"/>
 
                                     <TextBlock Width="300" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" x:Name="DoctorQualification" Style="{StaticResource Level}" Foreground="#fff" Text="MBBS; FCPS( Medicine), MBBS; FCPS( Medicine), MBBS; FCPS( Medicine)"/>
+                                    <TextBlock x:Name="DoctorSpecialist" Style="{StaticResource Level}" Foreground="#000" Text="Neurologist"/>
                                     <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Foreground="#000" Text="Clinic Name"/>
                                     <TextBlock x:Name="DoctorAddress" Style="{StaticResource Level}" Foreground="#000" Text="384/1 , West Nakhalpara,Tejgaon, Mohakhali"/>
 
@@ -167,7 +168,7 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <StackPanel HorizontalAlignment="Center" Grid.Column="1" x:Name="PrescriptioMedicines" Margin="5 0">
+                                <StackPanel Grid.ColumnSpan="2" Grid.Column="1" x:Name="PrescriptioMedicines" Margin="5 0">
                                     <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Medicines:"/>
 
                                             
@@ -226,17 +227,21 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Cember:"/>
+                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Chamber:"/>
 
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#fff" Text="Islamic Bank Hospital"/>
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#fff" Text="Lokkhipur Mour, Rajshahi"/>
+                                    <TextBlock x:Name="ChamberName" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Islamic Bank Hospital"/>
+                                    <TextBlock x:Name="ChamberAddress" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Lokkhipur Mour, Rajshahi"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">
                                     <TextBlock TextAlignment="Center" Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Patient Show Time:"/>
 
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#fff" Text="Everyday Midday 2.30PM - Night 8PM"/>
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#fff" Text="( Friday Off )"/>
+                                    <TextBlock x:Name="VisitingTime" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Everyday Midday 2.30PM - Night 8PM"/>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Bold" Foreground="#000" Text="Off Day : "/>
+                                        <TextBlock x:Name="OffDay" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Bold" Foreground="#000" Text="Friday"/>
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>

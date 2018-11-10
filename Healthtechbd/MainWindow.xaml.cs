@@ -39,13 +39,11 @@ namespace Healthtechbd
 
             public static int setPatientId;
             #endregion
-
-
         }
 
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         public MainWindow(ResetPasswordWindow resetPasswordWindow) : this()
@@ -78,53 +76,66 @@ namespace Healthtechbd
        
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (EmailAddress.Text != "" && Password.Password != "")
+            if (EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
                 try
                 {
-                    user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password);
+                    user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password && x.role_id == 2); // Doctor role_id = 2 
 
                     if (user != null) //User = Doctor
                     {
-                        this.Hide();
-                        AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
-                        adminpanelwindow.Show();
-                        
-                        //Doctor Info Save to Session....
-                        Session.doctorId = user.id;
-                        Session.doctorFirstName = user.first_name;
-                        Session.doctorLastName = user.last_name;
-                        Session.doctorEmail = user.email;
-                        Session.doctorPhone = user.phone;
-                        Session.doctorPrescriptionTemId = user.prescription_template_id;                      
-                        
-                        if (MessageBox.Show("Login successfully", "Success") == MessageBoxResult.OK)
-                        {
-                            TextBlock UserName = AdminPanelWindow.userName;
-                            UserName.Text =  Session.doctorFirstName +" "+ Session.doctorLastName;
 
-                            Image ProfilePic = AdminPanelWindow.profilePic;
-                           
-                            if (user.profile_picture != null)
+                        DateTime expireDate = DateTime.ParseExact(user.expire_date, "dd/MM/yyyy", null);
+
+                        if (DateTime.Now < expireDate)
+                        {
+                            this.Hide();
+                            AdminPanelWindow adminpanelwindow = new AdminPanelWindow(this);
+                            adminpanelwindow.Show();
+
+                            //Doctor Info Save to Session....
+                            Session.doctorId = user.id;
+                            Session.doctorFirstName = user.first_name;
+                            Session.doctorLastName = user.last_name;
+                            Session.doctorEmail = user.email;
+                            Session.doctorPhone = user.phone;
+                            Session.doctorPrescriptionTemId = user.prescription_template_id;
+
+                            if (MessageBox.Show("Login successfully", "Success") == MessageBoxResult.OK)
                             {
-                                ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/" + user.profile_picture));
+                                TextBlock UserName = AdminPanelWindow.userName;
+                                UserName.Text = Session.doctorFirstName + " " + Session.doctorLastName;
+
+                                Image ProfilePic = AdminPanelWindow.profilePic;
+
+                                if (user.profile_picture != null)
+                                {
+                                    ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/" + user.profile_picture));
+                                }
+                                else
+                                {
+                                    ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
+                                }
                             }
-                            else
-                            {
-                                ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
-                            }                            
                         }
+                        else
+                        {
+                            if (MessageBox.Show(" Your registration has been expired, Please contact with Admin", "Expired") == MessageBoxResult.OK)
+                            {
+                                activeSection.Visibility = Visibility.Visible;                         
+                            }
+                        }                       
                     }
                     else
                     {
                         MessageBox.Show("Email or Password are invalid", "Invalid User", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-            }
+                }
                 catch
-            {
-                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
-        }
             else
             {
                 MessageBox.Show("Please fill the all field", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -162,6 +173,13 @@ namespace Healthtechbd
             {
                 Password.Password = "Password";
             }
-        }       
+        }
+
+        private void activeLink_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Hide();
+            ActiveWindow activeWindow = new ActiveWindow(this);
+            activeWindow.Show();
+        }
     }
 }

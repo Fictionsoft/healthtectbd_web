@@ -55,7 +55,8 @@ namespace Healthtechbd.prescriptionTemplates
 
             DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorWebsite.Visibility = (doctor.website == "") ? Visibility.Collapsed : Visibility.Visible;
             PatientAddressArea.Visibility = (prescription.user.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
 
@@ -85,10 +86,11 @@ namespace Healthtechbd.prescriptionTemplates
 
 
             //Doctor Info
-            DoctorName.Text = doctor.first_name + " " + doctor.last_name;
-            DoctorQualification.Text = doctor.educational_qualification;
-            DoctorAddress.Text = doctor.address_line1 + " " + doctor.address_line2;
             DoctorClinicName.Text = doctor.clinic_name;
+            DoctorName.Text = doctor.first_name + " " + doctor.last_name;
+            DoctorSpecialist.Text = doctor.specialist;
+            DoctorQualification.Text = doctor.educational_qualification;
+            DoctorAddress.Text = doctor.address_line1 + " " + doctor.address_line2;            
             DoctorWebsite.Text = doctor.website;
             DoctorPhone.Text = doctor.phone;
 
@@ -105,12 +107,27 @@ namespace Healthtechbd.prescriptionTemplates
             //Prescription Medicines 
             foreach (var prescriptions_medicine in prescriptions_medicines)
             {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Style = this.FindResource("Level") as Style;
-                textBlock.Text = prescriptions_medicine.medicine.name +
-                                (prescriptions_medicine.Equals(prescriptions_medicines.Last()) ? "." : ", ");
+                StackPanel stackPanel = new StackPanel();
+                stackPanel.Orientation = Orientation.Horizontal;
 
-                PrescriptioMedicines.Children.Add(textBlock);
+                PrescriptioMedicines.Children.Add(stackPanel);
+
+                //Medicine Name
+                TextBlock medicine = new TextBlock();
+                medicine.Margin = new Thickness(0,0,3,0);
+                medicine.FontWeight = FontWeights.Normal;
+                medicine.Style = this.FindResource("Level") as Style;
+                medicine.Text = prescriptions_medicine.medicine.name + " : ";
+
+                stackPanel.Children.Add(medicine);
+
+                //Dos
+                TextBlock dos = new TextBlock();
+                dos.FontWeight = FontWeights.Normal;
+                dos.Style = this.FindResource("Level") as Style;
+                dos.Text = "( " + prescriptions_medicine.rule + " )";
+
+                stackPanel.Children.Add(dos);
             }
 
             var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();

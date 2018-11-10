@@ -32,7 +32,6 @@ namespace Healthtechbd
         private void Window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
-            //this.mainWindow.Show();
         }
 
         private void registrationLink_MouseDown(object sender, MouseButtonEventArgs e)
@@ -55,25 +54,33 @@ namespace Healthtechbd
         {       
             if(EmailAddress.Text != "Email Address")
             {
-                try
-                {
+               
                     user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.role_id == 2); //user = doctor,,,role_id 2 = doctor
 
                     if (user != null)
                     {
-                        this.Hide();
-                        ResetPasswordWindow resetPasswordWindow = new ResetPasswordWindow(user.email);
-                        resetPasswordWindow.Show();
+                        DateTime expireDate = DateTime.ParseExact(user.expire_date, "dd/MM/yyyy", null);
+
+                        if (DateTime.Now < expireDate)
+                        {
+                            this.Hide();
+                            ResetPasswordWindow resetPasswordWindow = new ResetPasswordWindow(user.email);
+                            resetPasswordWindow.Show();
+                        }
+                        else
+                        {
+                            if (MessageBox.Show(" Your registration has been expired, Please contact with Admin", "Expired") == MessageBoxResult.OK)
+
+                            this.Hide();                            
+                            this.mainWindow.Show();
+                            this.mainWindow.activeSection.Visibility = Visibility.Visible;
+                        }                        
                     }
                     else
                     {
                         MessageBox.Show("Email not found", "Invalid Doctor", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }                
+                               
             }
             else
             {

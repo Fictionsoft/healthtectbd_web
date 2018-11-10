@@ -75,6 +75,11 @@ namespace Healthtechbd
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-        }        
+        }
+
+        private void CancelUpdateProPic_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Dashboard.xaml", UriKind.Relative));
+        }
     }
 }

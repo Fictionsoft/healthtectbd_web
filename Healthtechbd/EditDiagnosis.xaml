@@ -22,7 +22,7 @@
         </Grid>
 
         <!--Page Heading Bottom-->
-        <Border Margin="20" Height="390">
+        <Border Margin="20" Height="Auto">
             <StackPanel>
 
                 <!--Panel Head-->
@@ -48,7 +48,7 @@
             </StackPanel>
 
         </Border>
-        <Grid Height="60" Background="#E3E7EB" >
+        <Grid Height="60" Background="#E3E7EB" Margin="20" >
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
                 <Button x:Name="CancelEditDiagnosis" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelEditDiagnosis_Click" />

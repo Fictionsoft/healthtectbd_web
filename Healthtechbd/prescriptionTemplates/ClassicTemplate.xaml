@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Healthtechbd.prescriptionTemplates"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="800"
+      d:DesignHeight="5000" d:DesignWidth="800"
       Title="ClassicTemplate">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -62,6 +62,7 @@
                                         <TextBlock TextWrapping="WrapWithOverflow" x:Name="DoctorQualification" Style="{StaticResource Level}" Foreground="#fff" Text="MBBS; FCPS( Medicine), MBBS; FCPS( Medicine), MBBS; FCPS( Medicine)"/>
                                     </Border>
 
+                                    <TextBlock x:Name="DoctorSpecialist" Style="{StaticResource Level}" Foreground="#000" Text="Neurologist"/>
                                     <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Foreground="#000" Text="Clinic Name"/>
                                     <TextBlock x:Name="DoctorAddress" Style="{StaticResource Level}" Foreground="#000" Text="384/1 , West Nakhalpara,Tejgaon, Mohakhali"/>
 
@@ -130,7 +131,7 @@
                                         <StackPanel Grid.Row="0" x:Name="PatientDiagnosis">
                                             <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Diagnosis:"/>
 
-                                            <!--<TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 1"/>
+                                            <!--<TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 1 fdg hgfhf hgfhf hgfhf gfhf fghgfh fghfh ghfg hfgh "/>
                                             <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 2"/>
                                             <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Diagnosis 3"/>-->
                                             
@@ -152,14 +153,14 @@
 
 
                                 <!--Medicines-->
-                                <Border HorizontalAlignment="Center" Grid.Column="1" x:Name="PrescriptioMedicinesArea" Padding="12 0">
+                                <Border HorizontalAlignment="Left" Grid.ColumnSpan="2" Grid.Column="1" x:Name="PrescriptioMedicinesArea" Padding="12 0">
                                     <Grid>
                                         <StackPanel x:Name="PrescriptioMedicines" Margin="5 0">
                                             <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Medicines:"/>
 
                                             <!--<StackPanel Orientation="Horizontal">
                                                 <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Premil 2 Tablet :"/>
-                                                <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="( 1-1-1 )"/>
+                                                <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="( 1-1-1)"/>
                                             </StackPanel>
 
                                             <StackPanel Orientation="Horizontal">
@@ -213,17 +214,22 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Cember:"/>
+                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Chamber:"/>
 
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Islamic Bank Hospital"/>
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Lokkhipur Mour, Rajshahi"/>
+                                    <TextBlock x:Name="ChamberName" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Islamic Bank Hospital"/>
+                                    <TextBlock x:Name="ChamberAddress" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Lokkhipur Mour, Rajshahi"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">
                                     <TextBlock TextAlignment="Center" Style="{StaticResource Level}" Foreground="Black" FontSize="20" Text="Patient Show Time:"/>
 
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Everyday Midday 2.30PM - Night 8PM"/>
-                                    <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="( Friday Off )"/>
+                                    <TextBlock x:Name="VisitingTime" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Normal" Foreground="#000" Text="Everyday Midday 2.30PM - Night 8PM"/>
+                                   
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Bold" Foreground="#000" Text="Off Day : "/>
+                                        <TextBlock x:Name="OffDay" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Bold" Foreground="#000" Text="Friday"/>
+                                    </StackPanel>
+                                    
                                 </StackPanel>
                             </Grid>
                         </Border>

@@ -30,8 +30,8 @@ namespace Healthtechbd
         user user = new user();
 
         private void SubmitAddPatient_Click(object sender, RoutedEventArgs e)
-        {
-            if(PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
+        {       
+            if (PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
             {
                 var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
 

@@ -39,7 +39,7 @@ namespace Healthtechbd
                 var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctorId)
                     .Include(x => x.diagnosis)
                     .OrderByDescending(x => x.created)
-                    .Take(10)
+                    .Take(40)
                     .ToList();
 
                 dataGridDiagnosisTemplates.ItemsSource = diagnosis_templates;
@@ -111,11 +111,6 @@ namespace Healthtechbd
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             search();           
-        }
-
-        private void searchField_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            search();
         }
 
         public void search()

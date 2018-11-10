@@ -36,7 +36,7 @@
                             <ColumnDefinition Width="80"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text="" TextChanged="searchField_TextChanged"/>
+                        <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text=""/>
                         <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
@@ -47,7 +47,7 @@
                 <!--Info Area-->
                     <Border Padding="10 0">
                         <Grid>
-                        <DataGrid MaxHeight="400" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridDiagnosisTemplates" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="-10, 0, -10, 0" Background="White">
+                        <DataGrid Height="750" AutoGenerateColumns="False" CanUserAddRows="False" x:Name="dataGridDiagnosisTemplates" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="-10, 0, -10, 0" Background="White">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="*" Header="Name" Binding="{Binding diagnosis.name}" />
                                 <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />
