@@ -36,6 +36,7 @@ namespace Healthtechbd
         private void loginLink_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.Hide();
+            MainWindow mainWindow = new MainWindow(this);
             mainWindow.Show();
         }
 
@@ -51,28 +52,35 @@ namespace Healthtechbd
         {
             if (Token.Text != "Token" && EmailAddress.Text != "Email Address")
             {
-                var token = System.Convert.FromBase64String(Token.Text);
-                var emailAndDate = System.Text.Encoding.UTF8.GetString(token);
-
-                string[] words = emailAndDate.Split('|');
-                string email = words[0];
-                string expireDate = words[1];
-
-                if(email == EmailAddress.Text)
+                try
                 {
-                    user = db.users.FirstOrDefault(x => x.email == email);// words[0] = email
+                    var token = System.Convert.FromBase64String(Token.Text);
+                    var emailAndDate = System.Text.Encoding.UTF8.GetString(token);
 
-                    user.expire_date = expireDate; // words[1] = Expire Date
-                    db.SaveChanges();
+                    string[] words = emailAndDate.Split('|');
+                    string email = words[0];
+                    string expireDate = words[1];
 
-                    Token.Text = EmailAddress.Text = "";// Clear Fields
+                    if (email == EmailAddress.Text)
+                    {
+                        user = db.users.FirstOrDefault(x => x.email == email);// words[0] = email
 
-                    MessageBox.Show("Application has been activated. You can login now.", "Success");
+                        user.expire_date = expireDate; // words[1] = Expire Date
+                        db.SaveChanges();
+
+                        Token.Text = EmailAddress.Text = "";// Clear Fields
+
+                        MessageBox.Show("Application has been activated. You can login now.", "Success");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Your email and token didn't not match", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("Your email and token didn't not match", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }               
+                    MessageBox.Show("Your token is Invalid", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             else
             {

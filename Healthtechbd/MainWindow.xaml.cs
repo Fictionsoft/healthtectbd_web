@@ -51,9 +51,15 @@ namespace Healthtechbd
             this.resetPasswordWindow = resetPasswordWindow;
         }
 
+        public MainWindow(ActiveWindow activeWindow) : this()
+        {
+            this.activeWindow = activeWindow;
+        }
+
         contextd_db db = new contextd_db();
         user user = new user();
         private ResetPasswordWindow resetPasswordWindow;
+        private ActiveWindow activeWindow;
 
         private void registrationLink_MouseDown(object sender, MouseButtonEventArgs e)
         {
