@@ -54,27 +54,48 @@ namespace Healthtechbd
             {
                 try
                 {
-                    var token = System.Convert.FromBase64String(Token.Text);
-                    var emailAndDate = System.Text.Encoding.UTF8.GetString(token);
+                    user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text);
 
-                    string[] words = emailAndDate.Split('|');
-                    string email = words[0];
-                    string expireDate = words[1];
-
-                    if (email == EmailAddress.Text)
+                    if (user != null) //User = Doctor
                     {
-                        user = db.users.FirstOrDefault(x => x.email == email);// words[0] = email
+                        var token = System.Convert.FromBase64String(Token.Text);
+                        var emailAndDate = System.Text.Encoding.UTF8.GetString(token);
 
-                        user.expire_date = expireDate; // words[1] = Expire Date
-                        db.SaveChanges();
+                        string[] words = emailAndDate.Split('|');
+                        string email = words[0];
+                        string expireDate = words[1];
 
-                        Token.Text = EmailAddress.Text = "";// Clear Fields
+                        if (email == EmailAddress.Text)
+                        {
+                            try
+                            {
+                                DateTime loadedDate = DateTime.ParseExact(expireDate, "dd/MM/yyyy", null);
 
-                        MessageBox.Show("Application has been activated. You can login now.", "Success");
+                                user.expire_date = expireDate; // words[1] = Expire Date
+                                db.SaveChanges();
+
+                                Token.Text = EmailAddress.Text = "";// Clear Fields
+
+                                if (MessageBox.Show("Application has been activated. You can login now.", "Success") == MessageBoxResult.OK)
+                                {
+                                    this.Hide();
+                                    MainWindow mainWindow = new MainWindow(this);
+                                    mainWindow.Show();
+                                }
+                            }
+                            catch
+                            {
+                                MessageBox.Show("Your token is Invalid", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Your email and token didn't not match", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Your email and token didn't not match", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Your email not found", "Invalid Email", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch

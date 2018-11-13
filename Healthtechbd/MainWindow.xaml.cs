@@ -126,7 +126,7 @@ namespace Healthtechbd
                         }
                         else
                         {
-                            if (MessageBox.Show(" Your registration has been expired, Please contact with Admin", "Expired") == MessageBoxResult.OK)
+                            if (MessageBox.Show("Your registration has been expired, Please contact with Admin", "Expired") == MessageBoxResult.OK)
                             {
                                 activeSection.Visibility = Visibility.Visible;                         
                             }
@@ -139,7 +139,7 @@ namespace Healthtechbd
                 }
                 catch
                 {
-                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else

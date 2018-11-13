@@ -69,7 +69,7 @@ namespace Healthtechbd
                         }
                         else
                         {
-                            if (MessageBox.Show(" Your registration has been expired, Please contact with Admin", "Expired") == MessageBoxResult.OK)
+                            if (MessageBox.Show("Your registration has been expired, Please contact with Admin", "Expired") == MessageBoxResult.OK)
 
                             this.Hide();                            
                             this.mainWindow.Show();
