@@ -63,11 +63,114 @@ namespace Healthtechbd
         private void btnRegistration_Click(object sender, RoutedEventArgs e)
         {
 
+            if (FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
+            {
+                if(IsValidEmail(EmailAddress.Text) == true)
+                {
+                    try
+                    {
+                        var haveEmail = db.users.FirstOrDefault(x => x.email == EmailAddress.Text);
+                        var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text);
+
+                        if (haveEmail == null)
+                        {
+                            if (havePhone == null)
+                            {
+                                if (CheckForInternetConnection() == true)
+                                {
+                                    apiRegister();
+                                    user.is_sync = 1;
+                                }
+
+                                user.role_id = 2; //Doctor role_id = 2
+                                user.first_name = FirstName.Text;
+                                user.last_name = LastName.Text;
+                                user.email = EmailAddress.Text;
+                                user.phone = Phone.Text;
+                                user.password = Password.Password;
+                                user.prescription_template_id = 1; //Default Prescription Template id
+                                user.is_localhost = 1;
+                                user.created = DateTime.Now;
+
+                                user.expire_date = DateTime.Now.AddYears(1).ToString("dd/MM/yyyy");
+
+                                db.users.Add(user);
+                                db.SaveChanges();
+
+                                MainWindow.Session.doctorId = user.id;
+                                MainWindow.Session.doctorFirstName = FirstName.Text;
+                                MainWindow.Session.doctorLastName = LastName.Text;
+                                MainWindow.Session.doctorPhone = Phone.Text;
+                                MainWindow.Session.doctorEmail = EmailAddress.Text;
+                                MainWindow.Session.doctorPrescriptionTemId = user.prescription_template_id;
+
+                                this.Hide();
+                                AdminPanelWindow adminpanelWindow = new AdminPanelWindow(this);
+                                adminpanelWindow.Show();
+
+                                if (MessageBox.Show("Registration and Login is successfull", "Success") == MessageBoxResult.OK)
+                                {
+                                    TextBlock UserName = AdminPanelWindow.userName;
+                                    UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
+
+                                    Image ProfilePic = AdminPanelWindow.profilePic;
+
+                                    if (user.profile_picture != null)
+                                    {
+                                        ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/" + user.profile_picture));
+                                    }
+                                    else
+                                    {
+                                        ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("The Phone Number already exist.", "Already Exit");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("The Email already exist.", "Already Exit");
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid email.", "Invalid");
+                }                
+            }
+            else
+            {
+                MessageBox.Show("Please fill up the all field.", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void apiRegister()
+        {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/pms/admin/users/apiRegistration");
             request.Method = "POST";
 
             string postData = string.Format(
-                                            "first_name=" + FirstName.Text + "&last_name=" + LastName.Text +
+                                            "first_name=" + FirstName.Text  + "&last_name=" + LastName.Text +
                                             "&email=" + EmailAddress.Text + "&phone=" + Phone.Text +
                                             "&password=" + Password.Password
                                            );
@@ -90,91 +193,29 @@ namespace Healthtechbd
                     // Do something with response
 
                     var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
                 }
             }
             catch (WebException ex)
             {
                 // Handle error
             }
+        }
 
-
-
-
-            //if (FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
-            //{
-            //    try
-            //    {
-            //        var haveEmail = db.users.FirstOrDefault(x => x.email == EmailAddress.Text);
-            //        var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text);
-
-            //        if (haveEmail == null)
-            //        {
-            //            if (havePhone == null)
-            //            {
-            //                user.role_id = 2; //Doctor role_id = 2
-            //                user.first_name = FirstName.Text;
-            //                user.last_name = LastName.Text;
-            //                user.email = EmailAddress.Text;
-            //                user.phone = Phone.Text;
-            //                user.password = Password.Password;
-            //                user.prescription_template_id = 1; //Default Prescription Template id
-            //                user.is_localhost = 1;
-            //                user.created = DateTime.Now; 
-                            
-            //                user.expire_date = DateTime.Now.AddYears(1).ToString("dd/MM/yyyy");
-
-            //                db.users.Add(user);
-            //                db.SaveChanges();
-
-            //                MainWindow.Session.doctorId = user.id;
-            //                MainWindow.Session.doctorFirstName = FirstName.Text;
-            //                MainWindow.Session.doctorLastName = LastName.Text;
-            //                MainWindow.Session.doctorPhone = Phone.Text;
-            //                MainWindow.Session.doctorEmail = EmailAddress.Text;
-            //                MainWindow.Session.doctorPrescriptionTemId = user.prescription_template_id;
-
-            //                this.Hide();
-            //                AdminPanelWindow adminpanelWindow = new AdminPanelWindow(this);
-            //                adminpanelWindow.Show();
-
-            //                if (MessageBox.Show("Registration and Login is successfull", "Success") == MessageBoxResult.OK)
-            //                {
-            //                    TextBlock UserName = AdminPanelWindow.userName;
-            //                    UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
-
-            //                    Image ProfilePic = AdminPanelWindow.profilePic;
-  
-            //                    if (user.profile_picture != null)
-            //                    {
-            //                        ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/" + user.profile_picture));
-            //                    }
-            //                    else
-            //                    {
-            //                        ProfilePic.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
-            //                    }                                
-            //                }
-            //            }
-            //            else
-            //            {
-            //                MessageBox.Show("The Phone Number already exist.", "Already Exit");
-            //            }
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("The Email already exist.", "Already Exit");
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Please fill up the all field.", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}                                  
-        }        
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://clients3.google.com/generate_204"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         private void FirstName_GotFocus(object sender, RoutedEventArgs e)
         {

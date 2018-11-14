@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
 using WpfChosenControl.model;
+using System.Net;
+using System.IO;
 
 namespace Healthtechbd
 {
@@ -80,6 +82,7 @@ namespace Healthtechbd
             Application.Current.Shutdown();
         }
        
+
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
             if (EmailAddress.Text != "Email Address" && Password.Password != "Password")
@@ -90,6 +93,13 @@ namespace Healthtechbd
 
                     if (user != null) //User = Doctor
                     {
+                        if(user.is_sync == 0 && CheckForInternetConnection() == true)
+                        {
+                            apiRegister(user.first_name, user.last_name, user.email, user.phone, user.password);
+
+                            user.is_sync = 1;
+                            db.SaveChanges();
+                        }
 
                         DateTime expireDate = DateTime.ParseExact(user.expire_date, "dd/MM/yyyy", null);
 
@@ -146,7 +156,60 @@ namespace Healthtechbd
             {
                 MessageBox.Show("Please fill the all field", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-        }        
+        }
+
+        public void apiRegister(string firstName, string lastName, string email, string phone, string password)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/pms/admin/users/apiRegistration");
+            request.Method = "POST";
+
+            string postData = string.Format(
+                                            "first_name=" + firstName + "&last_name=" + lastName +
+                                            "&email=" + email + "&phone=" + phone +
+                                            "&password=" + password
+                                           );
+
+            byte[] data = Encoding.UTF8.GetBytes(postData);
+
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Accept = "application/json";
+            request.ContentLength = data.Length;
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(data, 0, data.Length);
+            }
+
+            try
+            {
+                using (WebResponse response = request.GetResponse())
+                {
+                    // Do something with response
+
+                    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                }
+            }
+            catch (WebException ex)
+            {
+                // Handle error
+            }
+        }
+
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://clients3.google.com/generate_204"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         //Placeholder.................................................
         private void EmailAddress_GotFocus(object sender, RoutedEventArgs e)
