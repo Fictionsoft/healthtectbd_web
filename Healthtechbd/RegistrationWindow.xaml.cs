@@ -166,7 +166,7 @@ namespace Healthtechbd
 
         public void apiRegister()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost/pms/admin/users/apiRegistration");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://app.healthtechbd.com/admin/users/apiRegistration");
             request.Method = "POST";
 
             string postData = string.Format(
