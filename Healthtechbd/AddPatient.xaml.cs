@@ -46,6 +46,7 @@ namespace Healthtechbd
                     user.created = DateTime.Now;
                     user.doctor_id = MainWindow.Session.doctorId;
                     user.role_id = 3; // role_id 3 = Patient
+                    user.expire_date = "00/00/0000";
 
                     db.users.Add(user);
                     try

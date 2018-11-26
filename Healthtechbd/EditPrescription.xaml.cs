@@ -178,13 +178,17 @@ namespace Healthtechbd
 
             if (doctorPrescriptionTemId == 1)
             {
-                PrescriptionTem = "StandardTemplate.xaml";
+                PrescriptionTem = "DefaultTemplate.xaml";
             }
             else if (doctorPrescriptionTemId == 2)
             {
-                PrescriptionTem = "ClassicTemplate.xaml";
+                PrescriptionTem = "StandardTemplate.xaml";
             }
             else if (doctorPrescriptionTemId == 3)
+            {
+                PrescriptionTem = "ClassicTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 4)
             {
                 PrescriptionTem = "CustomTemplate.xaml";
             }

@@ -36,10 +36,10 @@
                             <Button x:Name="ButtonChangeProfilePic" Content="Change Profile Picture" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangeProfilePic_Click"  />
                         </Grid>
                         
-                        <Grid>
+                        <!--<Grid>
                             <materialDesign:PackIcon Kind="ViewQuilt" VerticalAlignment="Center" Foreground="#576069" />
                             <Button x:Name="ButtonChangePrescriptionTem" Content="Change Prescription Template" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangePrescriptionTem_Click" />
-                        </Grid>
+                        </Grid>-->
 
                         <Grid>
                             <materialDesign:PackIcon Kind="Security" Foreground="#576069"  VerticalAlignment="Center"/>

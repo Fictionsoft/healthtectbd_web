@@ -50,7 +50,7 @@
         </Grid>
 
         <!--Page Heading Bottom-->
-        <ScrollViewer Height="430" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Height="600" VerticalScrollBarVisibility="Auto">
 
             <Border Margin="20">
                 <StackPanel>
@@ -66,6 +66,11 @@
                         <Border Padding="20">
                             <Grid>
 
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>    
+                                    <RowDefinition></RowDefinition>    
+                                </Grid.RowDefinitions>
+                                
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
@@ -73,41 +78,51 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
-                                <Border Style="{StaticResource SingleTem}" Grid.Column="0">
+                                <Border Style="{StaticResource SingleTem}" Grid.Row="0" Grid.Column="0">
                                     <StackPanel>
-                                        <RadioButton  x:Name="BtnStandard" DataContext="1" Content="Standard"  Click="BtnStandard_Click" />
+                                        <RadioButton x:Name="BtnDefault" DataContext="1" Content="Default" Click="BtnStandard_Click" />
+                                        <Border BorderBrush="#eee" BorderThickness="1">
+                                            <Image Style="{StaticResource PrescriptionTemImg}" DataContext="default.jpg" Source="images\prescription template\default.jpg" MouseDown="Image_MouseDown"/>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <Border Style="{StaticResource SingleTem}" Grid.Row="0" Grid.Column="1">
+                                    <StackPanel>
+                                        <RadioButton  x:Name="BtnStandard" DataContext="2" Content="Standard"  Click="BtnStandard_Click" />
                                         <Border BorderBrush="#eee" BorderThickness="1">
                                             <Image Style="{StaticResource PrescriptionTemImg}" DataContext="standard.jpg" Source="images\prescription template\standard.jpg" MouseDown="Image_MouseDown"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
 
-                                <Border Style="{StaticResource SingleTem}" Grid.Column="1">
+                                <Border Style="{StaticResource SingleTem}" Grid.Row="0" Grid.Column="2">
                                     <StackPanel>
-                                        <RadioButton x:Name="BtnClassic" DataContext="2" Content="Classic"  Click="BtnStandard_Click" />
+                                        <RadioButton x:Name="BtnClassic" DataContext="3" Content="Classic"  Click="BtnStandard_Click" />
                                         <Border BorderThickness="1" BorderBrush="#eee">
                                             <Image Style="{StaticResource PrescriptionTemImg}" DataContext="classic.jpg" Source="images\prescription template\classic.jpg"  MouseDown="Image_MouseDown"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
 
-                                <Border Style="{StaticResource SingleTem}" Grid.Column="2">
+                                <Border Style="{StaticResource SingleTem}" Grid.Row="0" Grid.Column="3">
                                     <StackPanel>
-                                        <RadioButton x:Name="BtnCustom" DataContext="3" Content="Custom"  Click="BtnStandard_Click" />
+                                        <RadioButton x:Name="BtnCustom" DataContext="4" Content="Custom"  Click="BtnStandard_Click" />
                                         <Border BorderBrush="#eee" BorderThickness="1">
                                             <Image Style="{StaticResource PrescriptionTemImg}" DataContext="custom.jpg" Source="images\prescription template\custom.jpg"  MouseDown="Image_MouseDown"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
 
-                                <Border Style="{StaticResource SingleTem}" Grid.Column="3">
+                                <Border Style="{StaticResource SingleTem}" Grid.Row="5" Grid.Column="0">
                                     <StackPanel>
-                                        <RadioButton x:Name="BtnGeneral" DataContext="4" Content="General"  Click="BtnStandard_Click" />
+                                        <RadioButton x:Name="BtnGeneral" DataContext="5" Content="General"  Click="BtnStandard_Click" />
                                         <Border BorderBrush="#eee" BorderThickness="1">
                                             <Image Style="{StaticResource PrescriptionTemImg}" DataContext="general.jpg" Source="images\prescription template\general.jpg"  MouseDown="Image_MouseDown" />
                                         </Border>
                                     </StackPanel>
                                 </Border>
+                                
 
                             </Grid>
                         </Border>

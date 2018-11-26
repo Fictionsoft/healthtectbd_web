@@ -125,13 +125,17 @@ namespace Healthtechbd
 
             if (doctorPrescriptionTemId == 1)
             {
-                PrescriptionTem = "StandardTemplate.xaml";
+                PrescriptionTem = "DefaultTemplate.xaml";
             }
             else if (doctorPrescriptionTemId == 2)
             {
-                PrescriptionTem = "ClassicTemplate.xaml";
+                PrescriptionTem = "StandardTemplate.xaml";
             }
             else if (doctorPrescriptionTemId == 3)
+            {
+                PrescriptionTem = "ClassicTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 4)
             {
                 PrescriptionTem = "CustomTemplate.xaml";
             }
@@ -315,13 +319,14 @@ namespace Healthtechbd
                             }
 
                             //Save New Patient 
-                            patient.first_name = NewPatientName.Text.Trim();
+                            patient.first_name = NewPatientName.Text;
                             patient.phone = PatientPhone.Text.Trim();
                             patient.age = PatientAge.Text.Trim();
-                            patient.address_line1 = PatientAddress.Text.Trim();
+                            patient.address_line1 = PatientAddress.Text;
                             patient.created = DateTime.Now;
                             patient.doctor_id = MainWindow.Session.doctorId;
                             patient.role_id = 3; // role_id 3 = Patient
+                            patient.expire_date = "00/00/0000";
 
                             db.users.Add(patient);
                             db.SaveChanges();
@@ -355,13 +360,17 @@ namespace Healthtechbd
 
                                 if (doctorPrescriptionTemId == 1)
                                 {
-                                    PrescriptionTem = "StandardTemplate.xaml";
+                                    PrescriptionTem = "DefaultTemplate.xaml";
                                 }
                                 else if (doctorPrescriptionTemId == 2)
                                 {
-                                    PrescriptionTem = "ClassicTemplate.xaml";
+                                    PrescriptionTem = "StandardTemplate.xaml";
                                 }
                                 else if (doctorPrescriptionTemId == 3)
+                                {
+                                    PrescriptionTem = "ClassicTemplate.xaml";
+                                }
+                                else if (doctorPrescriptionTemId == 4)
                                 {
                                     PrescriptionTem = "CustomTemplate.xaml";
                                 }

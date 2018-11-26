@@ -177,6 +177,9 @@
     <Compile Include="prescriptionTemplates\CustomTemplate.xaml.cs">
       <DependentUpon>CustomTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="prescriptionTemplates\DefaultTemplate.xaml.cs">
+      <DependentUpon>DefaultTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="prescriptionTemplates\GeneralTemplate.xaml.cs">
       <DependentUpon>GeneralTemplate.xaml</DependentUpon>
     </Compile>
@@ -322,6 +325,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="prescriptionTemplates\DefaultTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="prescriptionTemplates\GeneralTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -400,6 +407,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\prescription template\default.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -104,13 +104,15 @@ namespace Healthtechbd.prescriptionTemplates
                 stackPanel.Children.Add(medicine);
 
                 //Dos
-                TextBlock dos = new TextBlock();
-                dos.FontWeight = FontWeights.Normal;
-                dos.Style = this.FindResource("Level") as Style;
-                dos.Text = "( " + prescriptions_medicine.rule + " )";
+                if (prescriptions_medicine.rule != "")
+                {
+                    TextBlock dos = new TextBlock();
+                    dos.FontWeight = FontWeights.Normal;
+                    dos.Style = this.FindResource("defaultViewLevel") as Style;
+                    dos.Text = "( " + prescriptions_medicine.rule + " )";
 
-                stackPanel.Children.Add(dos);
-
+                    stackPanel.Children.Add(dos);
+                }
                 i++;
             }
 

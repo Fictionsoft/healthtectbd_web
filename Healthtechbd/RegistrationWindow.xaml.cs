@@ -92,7 +92,7 @@ namespace Healthtechbd
                                 user.is_localhost = 1;
                                 user.created = DateTime.Now;
 
-                                user.expire_date = DateTime.Now.AddYears(1).ToString("dd/MM/yyyy");
+                                user.expire_date = DateTime.Now.AddDays(1).ToString("dd/MM/yyyy");
 
                                 db.users.Add(user);
                                 db.SaveChanges();

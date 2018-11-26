@@ -122,12 +122,16 @@ namespace Healthtechbd.prescriptionTemplates
                 stackPanel.Children.Add(medicine);
 
                 //Dos
-                TextBlock dos = new TextBlock();
-                dos.FontWeight = FontWeights.Normal;
-                dos.Style = this.FindResource("Level") as Style;
-                dos.Text = "( " + prescriptions_medicine.rule + " )";
 
-                stackPanel.Children.Add(dos);
+                if (prescriptions_medicine.rule != "")
+                {
+                    TextBlock dos = new TextBlock();
+                    dos.FontWeight = FontWeights.Normal;
+                    dos.Style = this.FindResource("Level") as Style;
+                    dos.Text = "( " + prescriptions_medicine.rule + " )";
+
+                    stackPanel.Children.Add(dos);
+                }                    
             }
 
             var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();

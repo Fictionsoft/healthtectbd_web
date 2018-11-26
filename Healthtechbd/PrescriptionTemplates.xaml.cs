@@ -39,17 +39,21 @@ namespace Healthtechbd
             int prescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
             if (prescriptionTemId == 1)
             {
-                BtnStandard.IsChecked = true;
+                BtnDefault.IsChecked = true;
             }
-            if(prescriptionTemId == 2)
+            if (prescriptionTemId == 2)
             {
-                BtnClassic.IsChecked = true;
+                BtnStandard.IsChecked = true;
             }
             if(prescriptionTemId == 3)
             {
+                BtnClassic.IsChecked = true;
+            }
+            if(prescriptionTemId == 4)
+            {
                 BtnCustom.IsChecked = true;
             }
-            if (prescriptionTemId == 4)
+            if (prescriptionTemId == 5)
             {
                 BtnGeneral.IsChecked = true;
             }
