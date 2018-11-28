@@ -240,7 +240,7 @@
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Bold" Foreground="#000" Text="Off Day : "/>
-                                        <TextBlock x:Name="OffDay" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Bold" Foreground="#000" Text="Friday"/>
+                                        <TextBlock x:Name="OffDay" TextAlignment="Center" Style="{StaticResource Level}" Foreground="#000" Text="Friday"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>

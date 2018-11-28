@@ -58,8 +58,8 @@ namespace Healthtechbd
 
                     if (user != null) //User = Doctor
                     {
-                        var token = System.Convert.FromBase64String(Token.Text);
-                        var emailAndDate = System.Text.Encoding.UTF8.GetString(token);
+                        var key = System.Convert.FromBase64String(Token.Text);
+                        var emailAndDate = System.Text.Encoding.UTF8.GetString(key);
 
                         string[] words = emailAndDate.Split('|');
                         string email = words[0];
@@ -85,12 +85,12 @@ namespace Healthtechbd
                             }
                             catch
                             {
-                                MessageBox.Show("Your token is Invalid", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                MessageBox.Show("Your key is Invalid", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Your email and token didn't not match", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show("Your email and key didn't not match", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                     else
@@ -100,7 +100,7 @@ namespace Healthtechbd
                 }
                 catch
                 {
-                    MessageBox.Show("Your token is Invalid", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Your key is Invalid", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else

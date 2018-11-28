@@ -51,6 +51,7 @@ namespace Healthtechbd.prescriptionTemplates
             DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorChamberArea.Visibility = (doctor.cember_name == "" && doctor.cember_address == "") ? Visibility.Collapsed : Visibility.Visible;
 
             //More Prescriptions
@@ -80,6 +81,7 @@ namespace Healthtechbd.prescriptionTemplates
             //Doctor Info
             DoctorName.Text = doctor.first_name + " " + doctor.last_name;
             DoctorQualification.Text = doctor.educational_qualification;           
+            DoctorSpecialist.Text = doctor.specialist;           
             DoctorClinicName.Text = doctor.clinic_name;
             DoctorChamber.Text = doctor.cember_name + ", " + doctor.cember_address; ;
 
@@ -89,6 +91,9 @@ namespace Healthtechbd.prescriptionTemplates
             PatientPhone.Text = prescription.user.phone;
             PatientAddress.Text = prescription.user.address_line1;
 
+            PatientBp.Text = prescription.blood_pressure;
+            PatientTemparature.Text = prescription.temperature;
+
             var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
 
             //Prescription Medicines 
@@ -96,7 +101,6 @@ namespace Healthtechbd.prescriptionTemplates
             foreach (var prescriptions_medicine in prescriptions_medicines)
             {
                 StackPanel stackPanel = new StackPanel();
-                stackPanel.Orientation = Orientation.Horizontal;
 
                 PrescriptioMedicines.Children.Add(stackPanel);
 
@@ -113,6 +117,7 @@ namespace Healthtechbd.prescriptionTemplates
                 {
                     TextBlock dos = new TextBlock();
                     dos.FontWeight = FontWeights.Normal;
+                    dos.Padding = new Thickness(5, 0, 5, 0);
                     dos.Style = this.FindResource("defaultViewLevel") as Style;
                     dos.Text = "( " + prescriptions_medicine.rule + " )";
 
@@ -152,6 +157,7 @@ namespace Healthtechbd.prescriptionTemplates
             }
 
             //Doctros Note
+            OthersInstructions.Text = prescription.other_instructions;
             DoctorsNote.Text = prescription.doctores_notes;
 
             //Date
@@ -160,6 +166,9 @@ namespace Healthtechbd.prescriptionTemplates
             //Footer
             DoctorAddress.Text = doctor.address_line1 + " " + doctor.address_line2;
             DoctorPhone.Text = doctor.phone;
+            VisitingTime.Text = doctor.visiting_time;
+            OffDay.Text = doctor.off_day;
+            DoctorWebsite.Text = doctor.website;
         }
 
         private void MorePrescriptionClick(object sender, RoutedEventArgs e)
@@ -174,13 +183,17 @@ namespace Healthtechbd.prescriptionTemplates
 
             if (doctorPrescriptionTemId == 1)
             {
-                mainContent.Content = new StandardTemplate();
+                mainContent.Content = new DefaultTemplate();
             }
             else if (doctorPrescriptionTemId == 2)
             {
-                mainContent.Content = new ClassicTemplate();
+                mainContent.Content = new StandardTemplate();
             }
             else if (doctorPrescriptionTemId == 3)
+            {
+                mainContent.Content = new ClassicTemplate();
+            }
+            else if (doctorPrescriptionTemId == 4)
             {
                 mainContent.Content = new CustomTemplate();
             }

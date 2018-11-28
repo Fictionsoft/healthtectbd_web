@@ -20,7 +20,7 @@
                 <!--Email-->
                 <TextBox x:Name="EmailAddress" Style="{StaticResource InputField}" Text="Email Address" GotFocus="EmailAddress_GotFocus" LostFocus="EmailAddress_LostFocus" />
 
-                <TextBox x:Name="Token" Style="{StaticResource InputField}" Text="Token" GotFocus="Token_GotFocus" LostFocus="Token_LostFocus"/>
+                <TextBox x:Name="Token" Style="{StaticResource InputField}" Text="Key" GotFocus="Token_GotFocus" LostFocus="Token_LostFocus"/>
 
                 <!--Login Button-->
                 <Button x:Name="ButtonActiveApplication" Content="ACTIVE" Foreground="#fff" Background="#3CC2BB" Margin="0 0 0 10" Padding="9" Height="38" BorderBrush="#eee" BorderThickness="0" Click="ButtonActiveApplication_Click"></Button>

@@ -227,7 +227,7 @@
 
                                 <Border Grid.Column="2">
                                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <TextBlock Margin="0 0 3 0" Style="{StaticResource Level}" Text="Date :"/>
+                                        <TextBlock FontWeight="Bold" Margin="0 0 3 0" Style="{StaticResource Level}" Text="Date :"/>
                                         <TextBlock x:Name="CreatedDate" FontWeight="Normal" Style="{StaticResource Level}" Text="23 April 2018"/>
                                     </StackPanel>
                                 </Border>
@@ -288,7 +288,7 @@
                                     
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <TextBlock TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Bold" Foreground="#000" Text="Off Day : "/>
-                                        <TextBlock x:Name="OffDay" TextAlignment="Center" Style="{StaticResource Level}" FontWeight="Bold" Foreground="#000" Text="Friday"/>
+                                        <TextBlock x:Name="OffDay" TextAlignment="Center" Style="{StaticResource Level}" Foreground="#000" Text="Friday"/>
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>

@@ -191,20 +191,24 @@ namespace Healthtechbd.prescriptionTemplates
 
             if (doctorPrescriptionTemId == 1)
             {
-                mainContent.Content = new StandardTemplate();
+                mainContent.Content = new DefaultTemplate();
             }
             else if (doctorPrescriptionTemId == 2)
             {
-                mainContent.Content = new ClassicTemplate();
+                mainContent.Content = new StandardTemplate();
             }
             else if (doctorPrescriptionTemId == 3)
+            {
+                mainContent.Content = new ClassicTemplate();
+            }
+            else if (doctorPrescriptionTemId == 4)
             {
                 mainContent.Content = new CustomTemplate();
             }
             else
             {
                 mainContent.Content = new GeneralTemplate();
-            }                      
+            }
         }
 
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)

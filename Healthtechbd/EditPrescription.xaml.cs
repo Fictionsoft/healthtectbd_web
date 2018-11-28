@@ -221,7 +221,7 @@ namespace Healthtechbd
         //Load Diagnosis CheckBox.....
         void LoadDiagnosisCheckbox()
         {
-            var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctorId).ToList();
+            var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).ToList();
             foreach (var diagnosis_template in diagnosis_templates)
             {
                 CheckBox checkbox = new CheckBox();
@@ -336,13 +336,17 @@ namespace Healthtechbd
 
                             if (doctorPrescriptionTemId == 1)
                             {
-                                PrescriptionTem = "StandardTemplate.xaml";
+                                PrescriptionTem = "DefaultTemplate.xaml";
                             }
                             else if (doctorPrescriptionTemId == 2)
                             {
-                                PrescriptionTem = "ClassicTemplate.xaml";
+                                PrescriptionTem = "StandardTemplate.xaml";
                             }
                             else if (doctorPrescriptionTemId == 3)
+                            {
+                                PrescriptionTem = "ClassicTemplate.xaml";
+                            }
+                            else if (doctorPrescriptionTemId == 4)
                             {
                                 PrescriptionTem = "CustomTemplate.xaml";
                             }
