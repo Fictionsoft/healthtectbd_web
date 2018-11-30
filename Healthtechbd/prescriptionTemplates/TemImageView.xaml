@@ -34,7 +34,7 @@
                 <!--Panel Head-->
                 <Grid Height="40" Background="#F6F8F7">
                     <TextBlock Text="Template Image" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
-                    <Button x:Name="ButtonBack" Content="BACK" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="28"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="ButtonBack_Click" />
+                    <Button ToolTip="Back" x:Name="ButtonBack" Content="BACK" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="28"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0" Click="ButtonBack_Click" />
                 </Grid>
 
                 <!--Info Area-->

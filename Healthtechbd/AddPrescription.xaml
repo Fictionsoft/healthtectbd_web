@@ -166,7 +166,7 @@
 
                             <Border Background="#EEEEEE" CornerRadius="5" Padding="5">
                                 <Grid Height="130">
-                                    <TextBox x:Name="DoctorsNotes" TextWrapping="Wrap" Height="130" BorderThickness="0" Style="{StaticResource PrescriptionInputField}" Text=""/>
+                                    <TextBox AcceptsReturn="True" x:Name="DoctorsNotes" TextWrapping="Wrap" Height="130" BorderThickness="0" Style="{StaticResource PrescriptionInputField}" Text=""/>
                                 </Grid>
                             </Border>
 
@@ -219,7 +219,7 @@
                                 <StackPanel>
                                     <Grid>
                                         <TextBlock VerticalAlignment="Center" Text="Medicines" Width="300" HorizontalAlignment="Left" Foreground="#333" FontWeight="SemiBold"/>
-                                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" Background="#EEEEEE" Foreground="#000" Height="40" Width="40"  HorizontalAlignment="Right" MouseDown="PackIcon_MouseDown" />
+                                        <materialDesign:PackIcon ToolTip="Add Medicine" Kind="Plus" VerticalAlignment="Center" Background="#EEEEEE" Foreground="#000" Height="40" Width="40"  HorizontalAlignment="Right" MouseDown="AddMedicine_MouseDown" />
                                     </Grid>
 
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
@@ -227,17 +227,14 @@
 
                                             <!--<Border x:Name="SingleMedicine" Margin="5" CornerRadius="3" BorderBrush="#eee" BorderThickness="1" Height="50">
                                                 <Grid VerticalAlignment="Center" Background="#EEEEEE" Height="50">
-                                                    <ComboBox x:Name="MedicineCombobox_0" Style="{StaticResource DosMedicineComboBox}"/>
-                                                    <TextBox Style="{StaticResource DosInputField}"/>
+                                                    <ComboBox x:Name="MedicineCombobox" Style="{StaticResource DosMedicineComboBox}"/>
+                                                    <ComboBox Style="{StaticResource DosMedicineComboBox}" Margin="278 0 0 0" Width="174"/>
+                                                    --><!--<TextBox Style="{StaticResource DosInputField}"/>--><!--
                                                     <Button Background="AliceBlue" BorderBrush="AliceBlue" MinWidth="20" Height="25" Padding="0" Margin="456,0,4,0">
                                                         <Image Source="images/minus.png"/>
                                                     </Button>
                                                 </Grid>
-                                            </Border>-->
-                                            
-                                            <!--<Grid DataContext="{StaticResource diagnosisMedicineModel}" Height="102">
-                                            <control:DiagnosisMedicineChosenControl x:Name="medicineChosen" MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="-1,-66,1,-56"  />
-                                        </Grid>-->
+                                            </Border>-->                                                                                        
 
                                         </StackPanel>
                                     </ScrollViewer>
@@ -277,7 +274,7 @@
                                 <StackPanel>
                                     <TextBlock Text="Other Instructions" Foreground="#333" FontWeight="SemiBold" Margin="0 0 0 5"/>
 
-                                    <TextBox x:Name="OtherInstructions" Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="130"/>
+                                    <TextBox  AcceptsReturn="True" x:Name="OtherInstructions" Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="130"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -292,9 +289,9 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                            <Button x:Name="CancelAddPrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelAddPrescription_Click"/>
-                            <Button x:Name="SaveAddPrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="SaveAddPrescription_Click" />
-                            <Button x:Name="SavePrintAddPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SaveAddPrescription_Click"/>
+                            <Button ToolTip="Cancel" x:Name="CancelAddPrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelAddPrescription_Click"/>
+                            <Button ToolTip="Save"  x:Name="SaveAddPrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="SaveAddPrescription_Click" />
+                            <Button ToolTip="Save and Print" x:Name="SavePrintAddPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SaveAddPrescription_Click"/>
                         </StackPanel>
 
                     </Grid>

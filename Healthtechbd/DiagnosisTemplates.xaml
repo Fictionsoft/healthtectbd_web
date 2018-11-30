@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="DIAGNOSIS TEMPLATES" VerticalAlignment="Center" Margin="20" Foreground="#252834" FontSize="18"/>
-                <Button x:Name="ButtonAddDiagnosisTemplate" Grid.Column="1" Margin="0 0 20 0" Content="ADD DIAGNOSIS TEMPLATE" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddDiagnosisTemplate_Click" />
+                <Button ToolTip="Add Diagnosis Template" x:Name="ButtonAddDiagnosisTemplate" Grid.Column="1" Margin="0 0 20 0" Content="ADD DIAGNOSIS TEMPLATE" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddDiagnosisTemplate_Click" />
             </Grid>
         </Grid>
 
@@ -37,10 +37,10 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text=""/>
-                        <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
+                        <Button ToolTip="Search" x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
-                        <Button x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
+                        <Button ToolTip="Reset" x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
                     </Grid>
                 </Grid>
 
@@ -56,7 +56,7 @@
                                 <DataGridTemplateColumn Header="Action">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="btnEditDiagnosisTemplateRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnEditDiagnosisTemplateRow_Click"  >
+                                            <Button ToolTip="Edit" x:Name="btnEditDiagnosisTemplateRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnEditDiagnosisTemplateRow_Click"  >
                                                 <materialDesign:PackIcon Kind="TableEdit"/>
                                             </Button>
                                         </DataTemplate>
@@ -66,7 +66,7 @@
                                 <DataGridTemplateColumn>
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button x:Name="btnDeleteDiagnosisTemplateRow" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnDeleteDiagnosisTemplateRow_Click" >
+                                            <Button ToolTip="Delete" x:Name="btnDeleteDiagnosisTemplateRow" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnDeleteDiagnosisTemplateRow_Click" >
                                                 <materialDesign:PackIcon Kind="Delete"/>
                                             </Button>
                                         </DataTemplate>

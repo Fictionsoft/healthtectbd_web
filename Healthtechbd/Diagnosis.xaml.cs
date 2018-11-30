@@ -95,7 +95,7 @@ namespace Healthtechbd
 
             try
             {
-                var diagnosis = db.diagnosis.Where(x => x.name.Trim().Contains(searchBy)).Take(40).ToList();
+                var diagnosis = db.diagnosis.Where(x => x.name.Contains(searchBy)).Take(40).ToList();
 
                 dataGridDiagnosis.ItemsSource = diagnosis;
             }

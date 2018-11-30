@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Healthtechbd"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="RegistrationWindow" WindowState="Maximized" Height="600" Width="1200" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
+        Title="RegistrationWindow" Icon="images/logo.png" WindowState="Maximized" Height="600" Width="1200" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.Background>

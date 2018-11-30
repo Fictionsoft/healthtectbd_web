@@ -120,7 +120,10 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            search();
+            if(searchField.Text != "")
+            {
+                search();
+            }           
         }
 
         private void btnReset_Click(object sender, RoutedEventArgs e)
@@ -190,16 +193,16 @@ namespace Healthtechbd
             {
                 if(MainWindow.Session.setPatientId > 0)
                 {
-                    var prescriptions = db.presceiptions.Where(x => (x.user.first_name.Trim().Contains(searchBy) ||
-                                    x.user.phone.Trim().Contains(searchBy)) && x.user_id == MainWindow.Session.setPatientId && x.doctor_id == MainWindow.Session.doctorId)
+                    var prescriptions = db.presceiptions.Where(x => (x.user.first_name.Contains(searchBy) ||
+                                    x.user.phone.Contains(searchBy)) && x.user_id == MainWindow.Session.setPatientId && x.doctor_id == MainWindow.Session.doctorId)
                                     .Take(40).ToList();
 
                     dataGridPrescriptions.ItemsSource = prescriptions;
                 }
                 else
                 {
-                    var prescriptions = db.presceiptions.Where(x => (x.user.first_name.Trim().Contains(searchBy) ||
-                                   x.user.phone.Trim().Contains(searchBy)) && x.doctor_id == MainWindow.Session.doctorId)
+                    var prescriptions = db.presceiptions.Where(x => (x.user.first_name.Contains(searchBy) ||
+                                   x.user.phone.Contains(searchBy)) && x.doctor_id == MainWindow.Session.doctorId)
                                    .Take(40).ToList();
 
                     dataGridPrescriptions.ItemsSource = prescriptions;

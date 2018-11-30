@@ -81,8 +81,7 @@ namespace Healthtechbd
         {
             Application.Current.Shutdown();
         }
-       
-
+              
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
             if (EmailAddress.Text != "Email Address" && Password.Password != "Password")

@@ -119,7 +119,7 @@ namespace Healthtechbd
 
             try
             {
-                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Trim().Contains(searchBy) && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(10).ToList();
+                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Contains(searchBy) && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(10).ToList();
 
                 dataGridDiagnosisTemplates.ItemsSource = diagnosis_templates;
             }

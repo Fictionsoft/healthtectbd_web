@@ -96,7 +96,7 @@ namespace Healthtechbd
 
             try
             {
-                var medicines = db.medicines.Where(x => x.name.Trim().Contains(searchBy)).Take(40).ToList();
+                var medicines = db.medicines.Where(x => x.name.Contains(searchBy)).Take(40).ToList();
 
                 dataGridMedicines.ItemsSource = medicines;
             }

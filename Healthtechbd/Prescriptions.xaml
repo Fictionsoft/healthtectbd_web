@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="PRESCRIPTIONS" Style="{StaticResource PageHeading}"/>
-            <Button x:Name="ButtonAddPrescription" Grid.Column="1" Margin="0 0 20 0" Content="ADD PRESCRIPTION" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddPrescription_Click" />
+            <Button ToolTip="Add Prescription" x:Name="ButtonAddPrescription" Grid.Column="1" Margin="0 0 20 0" Content="ADD PRESCRIPTION" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddPrescription_Click" />
         </Grid>
 
         <!--Page Heading Bottom-->
@@ -35,10 +35,10 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBox x:Name="searchField" Style="{StaticResource SearchBox}" Grid.Column="0" Text=""/>
-                        <Button x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
+                        <Button ToolTip="Search" x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
-                        <Button x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
+                        <Button ToolTip="Reset"  x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
                     </Grid>
                 </Grid>
 
@@ -55,7 +55,7 @@
                                     <DataGridTemplateColumn Header="Action">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="btnViewPrescriptionRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnViewPrescriptionRow_Click"  >
+                                            <Button ToolTip="View" x:Name="btnViewPrescriptionRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnViewPrescriptionRow_Click"  >
                                                     <materialDesign:PackIcon Kind="Eye"/>
                                                 </Button>
                                             </DataTemplate>
@@ -65,7 +65,7 @@
                                     <DataGridTemplateColumn>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="btnEditPrescriptionRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnEditPrescriptionRow_Click"  >
+                                            <Button ToolTip="Edit" x:Name="btnEditPrescriptionRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnEditPrescriptionRow_Click"  >
                                                     <materialDesign:PackIcon Kind="TableEdit"/>
                                                 </Button>
                                             </DataTemplate>
@@ -75,7 +75,7 @@
                                     <DataGridTemplateColumn>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="btnDeletePrescriptionRow" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnDeletePrescriptionRow_Click" >
+                                            <Button ToolTip="Delete" x:Name="btnDeletePrescriptionRow" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnDeletePrescriptionRow_Click" >
                                                     <materialDesign:PackIcon Kind="Delete"/>
                                                 </Button>
                                             </DataTemplate>

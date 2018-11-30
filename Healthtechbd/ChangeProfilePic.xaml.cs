@@ -46,34 +46,42 @@ namespace Healthtechbd
                 string imageName = System.IO.Path.GetFileName(op.FileName);
 
                 FilePath.Text = op.FileName; //FileName = FilePath
-                CorrectImageName.Text = imageName;
+                ProfileImageName.Text = imageName;
             }
         }
 
         private void SubmitUpdateProPic_Click(object sender, RoutedEventArgs e)
         {           
-            OpenFileDialog op = new OpenFileDialog();
-            Random rnd = new Random();
-            string fullImageName = rnd.Next() + "_" + CorrectImageName.Text;
-
-            string destination = System.AppDomain.CurrentDomain.BaseDirectory + "images//";            
-            System.IO.File.Copy(FilePath.Text, destination + fullImageName);
-
-            user = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
-
-            user.profile_picture = fullImageName;
-            var uploadProfilePic = db.SaveChanges();
-
-            if (uploadProfilePic > 0)
+            if(ProfileImageName.Text != "")
             {
-                MessageBox.Show("Profile picture update successfully", "Success");
-                Image ProfilePic = AdminPanelWindow.profilePic;
+                OpenFileDialog op = new OpenFileDialog();
+                Random rnd = new Random();
+                string fullImageName = rnd.Next() + "_" + ProfileImageName.Text;
 
-                ProfilePic.Source = new BitmapImage(new Uri(destination + user.profile_picture));                
+                string destination = System.AppDomain.CurrentDomain.BaseDirectory + "images//";
+                System.IO.File.Copy(FilePath.Text, destination + fullImageName);
+
+                user = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
+
+                user.profile_picture = fullImageName;
+                var uploadProfilePic = db.SaveChanges();
+
+                if (uploadProfilePic > 0)
+                {
+                    MessageBox.Show("Profile picture update successfully", "Success");
+                    Image ProfilePic = AdminPanelWindow.profilePic;
+
+                    ProfilePic.Source = new BitmapImage(new Uri(destination + user.profile_picture));
+                }
+                else
+                {
+                    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
             else
             {
-                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select a image", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+
             }
         }
 

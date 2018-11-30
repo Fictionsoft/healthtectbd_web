@@ -121,30 +121,7 @@ namespace Healthtechbd
             sidebar.Visibility = Visibility.Visible;
 
             AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
-            int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
-
-            if (doctorPrescriptionTemId == 1)
-            {
-                PrescriptionTem = "DefaultTemplate.xaml";
-            }
-            else if (doctorPrescriptionTemId == 2)
-            {
-                PrescriptionTem = "StandardTemplate.xaml";
-            }
-            else if (doctorPrescriptionTemId == 3)
-            {
-                PrescriptionTem = "ClassicTemplate.xaml";
-            }
-            else if (doctorPrescriptionTemId == 4)
-            {
-                PrescriptionTem = "CustomTemplate.xaml";
-            }
-            else
-            {
-                PrescriptionTem = "GeneralTemplate.xaml";
-            }
-
-            NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
+            SelectPrescriptionViewtemp();
         }
 
         private void NewPatientCheck(object sender, RoutedEventArgs e)
@@ -246,7 +223,7 @@ namespace Healthtechbd
                 .ToList();
 
             //Create Medicine Section
-            MedicineSection.Children.Clear();
+            RemoveMedicineSectionName();
             foreach (var diagnosisMedicine in diagnosisMedicines)
             {
                 CreateMedicineSection(diagnosisMedicine.Name, "");
@@ -296,26 +273,7 @@ namespace Healthtechbd
                             }
                             else
                             {
-                                int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
-
-                                if (doctorPrescriptionTemId == 1)
-                                {
-                                    PrescriptionTem = "StandardTemplate.xaml";
-                                }
-                                else if (doctorPrescriptionTemId == 2)
-                                {
-                                    PrescriptionTem = "ClassicTemplate.xaml";
-                                }
-                                else if (doctorPrescriptionTemId == 3)
-                                {
-                                    PrescriptionTem = "CustomTemplate.xaml";
-                                }
-                                else
-                                {
-                                    PrescriptionTem = "GeneralTemplate.xaml";
-                                }
-
-                                NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
+                                SelectPrescriptionViewtemp();
                             }
 
                             //Save New Patient 
@@ -356,30 +314,7 @@ namespace Healthtechbd
                             }
                             else
                             {
-                                int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
-
-                                if (doctorPrescriptionTemId == 1)
-                                {
-                                    PrescriptionTem = "DefaultTemplate.xaml";
-                                }
-                                else if (doctorPrescriptionTemId == 2)
-                                {
-                                    PrescriptionTem = "StandardTemplate.xaml";
-                                }
-                                else if (doctorPrescriptionTemId == 3)
-                                {
-                                    PrescriptionTem = "ClassicTemplate.xaml";
-                                }
-                                else if (doctorPrescriptionTemId == 4)
-                                {
-                                    PrescriptionTem = "CustomTemplate.xaml";
-                                }
-                                else
-                                {
-                                    PrescriptionTem = "GeneralTemplate.xaml";
-                                }
-
-                                NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
+                                SelectPrescriptionViewtemp();
                             }
 
                             prescription.user_id = patient.id;
@@ -401,6 +336,35 @@ namespace Healthtechbd
             {
                 MessageBox.Show("Please fill in the required fields", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
             }            
+        }
+
+
+        void SelectPrescriptionViewtemp()
+        {
+             int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
+
+            if (doctorPrescriptionTemId == 1)
+            {
+                PrescriptionTem = "DefaultTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 2)
+            {
+                PrescriptionTem = "StandardTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 3)
+            {
+                PrescriptionTem = "ClassicTemplate.xaml";
+            }
+            else if (doctorPrescriptionTemId == 4)
+            {
+                PrescriptionTem = "CustomTemplate.xaml";
+            }
+            else
+            {
+                PrescriptionTem = "GeneralTemplate.xaml";
+            }
+
+            NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
         }
 
         void SavePrescription()
@@ -481,7 +445,7 @@ namespace Healthtechbd
                         var medicine = db.medicines.FirstOrDefault(x => x.name == medicineField.Text);
                         if (medicine != null)
                         {
-                            var dosField = (TextBox)SingleMedicine.FindName("Dos_" + i);
+                            var dosField = (ComboBox)SingleMedicine.FindName("Dos_" + i);
 
                             prescriptions_medicine.prescription_id = PrescriptionId;
                             prescriptions_medicine.medicine_id = medicine.id;
@@ -533,7 +497,7 @@ namespace Healthtechbd
 
         int clickCount = 0;
         //Add More Button
-        private void PackIcon_MouseDown(object sender, MouseButtonEventArgs e)
+        private void AddMedicine_MouseDown(object sender, MouseButtonEventArgs e)
         {
             CreateMedicineSection("", "");
         }
@@ -577,12 +541,18 @@ namespace Healthtechbd
 
             grid.Children.Add(comboBox);            
 
-            //Dos Input
-            TextBox dosInput = new TextBox();
+            //Doc Combobx
+            ComboBox dosInput = new ComboBox();
 
             RegisterName("Dos_" + clickCount, dosInput);
             dosInput.Text = rule;
-            dosInput.Style = this.FindResource("DosInputField") as Style;
+            dosInput.Style = this.FindResource("DosMedicineComboBox") as Style;
+            dosInput.Margin = new Thickness(278, 0, 0, 0);
+            dosInput.Width = 174;
+            dosInput.IsTextSearchEnabled = true;
+            dosInput.IsEditable = true;
+
+            dosInput.GotFocus += new RoutedEventHandler(DosCombobox_Gotfocus);
 
             grid.Children.Add(dosInput);
 
@@ -596,9 +566,10 @@ namespace Healthtechbd
             button.Padding = new Thickness(0);
             button.MinWidth = 20;
             button.Height = 25;
-            button.Margin = new Thickness(456, 0, 4, 0);
+            button.Margin = new Thickness(460, 0, 4, 0);
             button.Background = (Brush)bc.ConvertFrom("#B6B6B6");
             button.BorderBrush = (Brush)bc.ConvertFrom("#B6B6B6");
+            button.ToolTip = "Remove Medicine";
 
             button.AddHandler(Button.ClickEvent, new RoutedEventHandler(DelBtnClick));
 
@@ -634,14 +605,25 @@ namespace Healthtechbd
             }
         }
 
-        private void MedicineComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void DosCombobox_Gotfocus(object sender, RoutedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
+            comboBox.Items.Clear();
+            comboBox.IsDropDownOpen = true;
+            
+            comboBox.Items.Add("1 + 1 + 1");
+            comboBox.Items.Add("1 + 1 + 0");
+            comboBox.Items.Add("1 + 0 + 1");
+            comboBox.Items.Add("1 + 0 + 0");
+            comboBox.Items.Add("0 + 1 + 1");
+            comboBox.Items.Add("0 + 0 + 1");
+            comboBox.Items.Add("0 + 1 + 0");
            
-            //if(checkMedicineName == "")
-            //{
-            //    comboBox.IsDropDownOpen = true;
-            //}
+        }
+
+        private void MedicineComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;                      
 
             var searchBy = comboBox.Text;
 
@@ -657,6 +639,14 @@ namespace Healthtechbd
             if (medicines.Count() == 0)
             {
                 comboBox.Items.Add("No results mached with " + searchBy);
+            }
+        }
+
+        public void RemoveMedicineSectionName()
+        {
+            foreach (Border SingleMedicine in MedicineSection.Children)
+            {
+                SingleMedicine.Visibility = Visibility.Collapsed;
             }
         }
     }

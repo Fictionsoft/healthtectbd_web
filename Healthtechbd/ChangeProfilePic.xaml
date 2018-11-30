@@ -34,10 +34,10 @@
                     <Border Padding="20">
                         <Grid>
                             <StackPanel Grid.Row="4" Grid.Column="1"  Margin="5 0">
-                                <Button x:Name="ButtonBrowse" Content="Browse" Foreground="Black" Background="Transparent" Width="150" Height="40" HorizontalAlignment="Left" Click="ButtonBrowse_Click"/>
+                                <Button ToolTip="No File Chosen" x:Name="ButtonBrowse" Content="Browse" Foreground="Black" Background="Transparent" Width="150" Height="40" HorizontalAlignment="Left" Click="ButtonBrowse_Click"/>
                                 <Image Height="200" Width="200" Name="ReviewProfilePic" Stretch="Fill"  />
 
-                                <TextBlock x:Name="CorrectImageName" Visibility="Hidden" Text=""/>
+                                <TextBlock x:Name="ProfileImageName" Visibility="Hidden" Text=""/>
                                 <TextBlock x:Name="FilePath" Visibility="Hidden" Text=""/>
                             </StackPanel>
                         </Grid>
@@ -50,8 +50,8 @@
         <Grid Height="60" Background="#E3E7EB" Margin="20">
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                <Button x:Name="CancelUpdateProPic" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelUpdateProPic_Click"/>
-                <Button x:Name="SubmitUpdateProPic" Content="SUBMIT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitUpdateProPic_Click" />
+                <Button ToolTip="Cancel" x:Name="CancelUpdateProPic" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelUpdateProPic_Click"/>
+                <Button ToolTip="Submit" x:Name="SubmitUpdateProPic" Content="SUBMIT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitUpdateProPic_Click" />
             </StackPanel>
 
         </Grid>

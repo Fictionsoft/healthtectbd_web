@@ -29,41 +29,70 @@ namespace Healthtechbd
         contextd_db db = new contextd_db();
         user user = new user();
 
+        public bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void SubmitAddPatient_Click(object sender, RoutedEventArgs e)
         {       
             if (PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
             {
-                var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
-
-                if(havePhone == null)
+                if ((PatientEmail.Text != "" && IsValidEmail(PatientEmail.Text) == true) || PatientEmail.Text == "")
                 {
-                    NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
-                    user.first_name = PatientName.Text.Trim();
-                    user.phone = PatientPhone.Text.Trim();
-                    user.email = PatientEmail.Text.Trim();
-                    user.age = PatientAge.Text.Trim();
-                    user.address_line1 = PatientAddress.Text.Trim();
-                    user.created = DateTime.Now;
-                    user.doctor_id = MainWindow.Session.doctorId;
-                    user.role_id = 3; // role_id 3 = Patient
-                    user.expire_date = "00/00/0000";
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
 
-                    db.users.Add(user);
-                    try
+                    if (havePhone == null)
                     {
-                        db.SaveChanges();
-                        clear();
-                        MessageBox.Show("Patient has been saved", "Success");
+                        var haveEmail = db.users.FirstOrDefault(x => x.email == PatientEmail.Text && x.doctor_id == MainWindow.Session.doctorId);
+
+                        if(haveEmail == null)
+                        {
+                            NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
+                            user.first_name = PatientName.Text.Trim();
+                            user.phone = PatientPhone.Text.Trim();
+                            user.email = PatientEmail.Text.Trim();
+                            user.age = PatientAge.Text.Trim();
+                            user.address_line1 = PatientAddress.Text.Trim();
+                            user.created = DateTime.Now;
+                            user.doctor_id = MainWindow.Session.doctorId;
+                            user.role_id = 3; // role_id 3 = Patient
+                            user.expire_date = "00/00/0000";
+
+                            db.users.Add(user);
+                            try
+                            {
+                                db.SaveChanges();
+                                clear();
+                                MessageBox.Show("Patient has been saved", "Success");
+                            }
+                            catch
+                            {
+                                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("The Email already exist, Please enter another Email Address.", "Already Exit");
+                        }
                     }
-                    catch
+                    else
                     {
-                        MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("The Phone Number already exist", "Already Exit");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("The Phone Number already exist", "Already Exit");
-                }                             
+                    MessageBox.Show("Please enter a valid email.", "Invalid");
+                }
             }
             else
             {

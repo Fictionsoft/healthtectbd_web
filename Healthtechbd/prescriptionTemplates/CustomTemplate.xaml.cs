@@ -90,7 +90,6 @@ namespace Healthtechbd.prescriptionTemplates
             foreach (var prescriptions_medicine in prescriptions_medicines)
             {
                 StackPanel stackPanel = new StackPanel();
-                stackPanel.Orientation = Orientation.Horizontal;
 
                 PrescriptioMedicines.Children.Add(stackPanel);
 
@@ -108,7 +107,7 @@ namespace Healthtechbd.prescriptionTemplates
                 {
                     TextBlock dos = new TextBlock();
                     dos.FontWeight = FontWeights.Normal;
-                    dos.Style = this.FindResource("defaultViewLevel") as Style;
+                    dos.Style = this.FindResource("Level") as Style;
                     dos.Text = "( " + prescriptions_medicine.rule + " )";
 
                     stackPanel.Children.Add(dos);

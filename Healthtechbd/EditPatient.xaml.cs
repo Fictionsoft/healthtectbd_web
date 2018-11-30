@@ -53,39 +53,68 @@ namespace Healthtechbd
             NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
         }
 
+        public bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void SubmitUpdatePatient_Click(object sender, RoutedEventArgs e)
         {
             if (PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
             {
-                int patientId = int.Parse(PatientId.Text);
-
-                try
+                if ((PatientEmail.Text != "" && IsValidEmail(PatientEmail.Text) == true) || PatientEmail.Text == "")
                 {
+                    int patientId = int.Parse(PatientId.Text);
+                  
                     var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patientId && x.doctor_id == MainWindow.Session.doctorId);
 
-                    if(havePhone == null)
-                    {                                        
-                        user = db.users.FirstOrDefault(x => x.id == patientId);
+                    if (havePhone == null)
+                    {
+                        var haveEmail = db.users.FirstOrDefault(x => x.email == PatientEmail.Text && x.id != patientId && x.doctor_id == MainWindow.Session.doctorId);
 
-                        user.first_name = PatientName.Text.Trim();
-                        user.phone = PatientPhone.Text.Trim();
-                        user.email = PatientEmail.Text.Trim();
-                        user.age = PatientAge.Text.Trim();
-                        user.address_line1 = PatientAddress.Text.Trim();
+                        if (haveEmail == null)
+                        {
+                            user = db.users.FirstOrDefault(x => x.id == patientId);
 
-                        db.SaveChanges();
+                            user.first_name = PatientName.Text.Trim();
+                            user.phone = PatientPhone.Text.Trim();
+                            user.email = PatientEmail.Text.Trim();
+                            user.age = PatientAge.Text.Trim();
+                            user.address_line1 = PatientAddress.Text.Trim();
 
-                        NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
-                        MessageBox.Show("Update Successfully", "Success");                   
+                            try
+                            {
+                                db.SaveChanges();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+
+                            NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
+                            MessageBox.Show("Update Successfully", "Success");
+                        }
+                        else
+                        {
+                            MessageBox.Show("The Email already exist, Please enter another Email Address.", "Already Exit");
+                        }
                     }
                     else
                     {
                         MessageBox.Show("The Phone already exist.", "Already Exit");
-                    }
-                }
-                catch
+                    }                   
+                }            
+                else
                 {
-                    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Please enter a valid email.", "Invalid");
                 }
             }
             else

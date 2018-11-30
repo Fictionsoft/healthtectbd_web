@@ -97,11 +97,11 @@ namespace Healthtechbd
                 try
                 {
                     var users = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) &&
-                                                (x.first_name.Trim().Contains(searchBy) ||
-                                                x.last_name.Trim().Contains(searchBy) ||
-                                                x.phone.Trim().Contains(searchBy) ||
-                                                x.email.Trim().Contains(searchBy) ||
-                                                x.age.Trim().Contains(searchBy))
+                                                (x.first_name.Contains(searchBy) ||
+                                                x.last_name.Contains(searchBy) ||
+                                                x.phone.Contains(searchBy) ||
+                                                x.email.Contains(searchBy) ||
+                                                x.age.Contains(searchBy))
                                                ).Take(40).ToList();
 
                     dataGridPatients.ItemsSource = users;

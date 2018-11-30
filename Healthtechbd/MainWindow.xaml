@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:Healthtechbd"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="LoginWindow" WindowState="Maximized" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Closed="Window_Closed" >
-   
+        Title="LoginWindow" Icon="images/logo.png" WindowState="Maximized" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Closed="Window_Closed" >
 
     <Grid>
         <Grid.Background>
@@ -15,8 +14,7 @@
         </Grid.Background>
 
         <Border Padding="40" Height="340" Width="475" BorderBrush="#eee" BorderThickness="1" Background="#fff">
-            <StackPanel>
-
+            <StackPanel>               
                 <TextBlock Text="LOGIN" Foreground="#545454" FontSize="25" TextAlignment="Center" ></TextBlock>
                 <Separator/>
 

@@ -86,8 +86,8 @@
         <Grid Height="60" Background="#E3E7EB" Margin="20">
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                <Button x:Name="CancelUpdatePatient" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="CancelUpdatePatient_Click" />
-                <Button x:Name="SubmitUpdatePatient" Content="UPDATE" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitUpdatePatient_Click" />
+                <Button ToolTip="Cancel" x:Name="CancelUpdatePatient" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="CancelUpdatePatient_Click" />
+                <Button ToolTip="Update" x:Name="SubmitUpdatePatient" Content="UPDATE" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitUpdatePatient_Click" />
             </StackPanel>
 
         </Grid>

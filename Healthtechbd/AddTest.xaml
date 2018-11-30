@@ -50,8 +50,8 @@
         <Grid Height="60" Background="#E3E7EB" Margin="20">
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                <Button x:Name="CancelAddTest" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelAddTest_Click"/>
-                <Button x:Name="SubmitAddTest" Content="SUBMIT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitAddTest_Click" />
+                <Button ToolTip="Cancel" x:Name="CancelAddTest" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelAddTest_Click"/>
+                <Button ToolTip="Submit" x:Name="SubmitAddTest" Content="SUBMIT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitAddTest_Click" />
             </StackPanel>
 
         </Grid>
