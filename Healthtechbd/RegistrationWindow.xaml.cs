@@ -186,9 +186,12 @@ namespace Healthtechbd
                 requestStream.Write(data, 0, data.Length);
             }
 
+            WebResponse response = null;
+            response = request.GetResponse();
+
             try
             {
-                using (WebResponse response = request.GetResponse())
+                using (response)
                 {
                     // Do something with response
 

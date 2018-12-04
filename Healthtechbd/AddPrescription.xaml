@@ -225,16 +225,23 @@
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                                         <StackPanel x:Name="MedicineSection" Background="#fff" Height="226">
 
-                                            <!--<Border x:Name="SingleMedicine" Margin="5" CornerRadius="3" BorderBrush="#eee" BorderThickness="1" Height="50">
+                                            <Border x:Name="SingleMedicine" Margin="5" CornerRadius="3" BorderBrush="#eee" BorderThickness="1" Height="50">
                                                 <Grid VerticalAlignment="Center" Background="#EEEEEE" Height="50">
-                                                    <ComboBox x:Name="MedicineCombobox" Style="{StaticResource DosMedicineComboBox}"/>
-                                                    <ComboBox Style="{StaticResource DosMedicineComboBox}" Margin="278 0 0 0" Width="174"/>
-                                                    --><!--<TextBox Style="{StaticResource DosInputField}"/>--><!--
-                                                    <Button Background="AliceBlue" BorderBrush="AliceBlue" MinWidth="20" Height="25" Padding="0" Margin="456,0,4,0">
+
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                        <ColumnDefinition></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    
+                                                    <ComboBox Grid.Column="0" x:Name="MedicineCombobox" Style="{StaticResource DosMedicineComboBox}"/>
+                                                    <ComboBox Grid.Column="1" Style="{StaticResource DosMedicineComboBox}"/>
+                                                    <Button Margin="10 0" Grid.Column="2" Background="AliceBlue" BorderBrush="AliceBlue" Height="25" Padding="0">
                                                         <Image Source="images/minus.png"/>
                                                     </Button>
                                                 </Grid>
-                                            </Border>-->                                                                                        
+                                            </Border> 
+                                                                                                                                                                                
 
                                         </StackPanel>
                                     </ScrollViewer>

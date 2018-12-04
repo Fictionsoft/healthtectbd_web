@@ -526,9 +526,20 @@ namespace Healthtechbd
 
             border.Child = grid;
 
+            ColumnDefinition columnDefinition0 = new ColumnDefinition();
+            //columnDefinition0.Width = new GridLength(2);
+
+            ColumnDefinition columnDefinition1 = new ColumnDefinition();
+            ColumnDefinition columnDefinition2 = new ColumnDefinition();
+
+            grid.ColumnDefinitions.Add(columnDefinition0);
+            grid.ColumnDefinitions.Add(columnDefinition1);
+            grid.ColumnDefinitions.Add(columnDefinition2);
+
             //Combobox Box
             ComboBox comboBox = new ComboBox();
 
+            Grid.SetColumn(comboBox, 0);
             RegisterName("MedicineCombobox_" + clickCount, comboBox);
             comboBox.Text = medicineName;
 
@@ -544,13 +555,10 @@ namespace Healthtechbd
             //Doc Combobx
             ComboBox dosInput = new ComboBox();
 
+            Grid.SetColumn(dosInput, 1);
             RegisterName("Dos_" + clickCount, dosInput);
             dosInput.Text = rule;
-            dosInput.Style = this.FindResource("DosMedicineComboBox") as Style;
-            dosInput.Margin = new Thickness(278, 0, 0, 0);
-            dosInput.Width = 174;
-            dosInput.IsTextSearchEnabled = true;
-            dosInput.IsEditable = true;
+            dosInput.Style = this.FindResource("DosMedicineComboBox") as Style;          
 
             dosInput.GotFocus += new RoutedEventHandler(DosCombobox_Gotfocus);
 
@@ -561,12 +569,12 @@ namespace Healthtechbd
 
             //Delete Button
             Button button = new Button();
-           
-            button.Content = "Del";
+
+            Grid.SetColumn(button, 2);
             button.Padding = new Thickness(0);
             button.MinWidth = 20;
             button.Height = 25;
-            button.Margin = new Thickness(460, 0, 4, 0);
+            button.Margin = new Thickness(10, 0, 10, 0);
             button.Background = (Brush)bc.ConvertFrom("#B6B6B6");
             button.BorderBrush = (Brush)bc.ConvertFrom("#B6B6B6");
             button.ToolTip = "Remove Medicine";
