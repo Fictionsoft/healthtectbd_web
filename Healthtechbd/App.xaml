@@ -61,8 +61,6 @@
                 <Setter Property="Height" Value="30" />
                 <Setter Property="Padding" Value="5 3 0 0" />
                 <Setter Property="FontSize" Value="14" />
-                <!--<Setter Property="Width" Value="260" />-->
-                <!--<Setter Property="HorizontalAlignment" Value="Left" />-->
                 <Setter Property="IsEditable" Value="True" />
                 <Setter Property="IsTextSearchEnabled" Value="False" />
             </Style>

@@ -51,38 +51,29 @@ namespace Healthtechbd
                     var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
 
                     if (havePhone == null)
-                    {
-                        var haveEmail = db.users.FirstOrDefault(x => x.email == PatientEmail.Text && x.doctor_id == MainWindow.Session.doctorId);
+                    {                       
+                        NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
+                        user.first_name = PatientName.Text.Trim();
+                        user.phone = PatientPhone.Text.Trim();
+                        user.email = PatientEmail.Text.Trim();
+                        user.age = PatientAge.Text.Trim();
+                        user.address_line1 = PatientAddress.Text.Trim();
+                        user.created = DateTime.Now;
+                        user.doctor_id = MainWindow.Session.doctorId;
+                        user.role_id = 3; // role_id 3 = Patient
+                        user.expire_date = "00/00/0000";
 
-                        if(haveEmail == null)
+                        db.users.Add(user);
+                        try
                         {
-                            NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
-                            user.first_name = PatientName.Text.Trim();
-                            user.phone = PatientPhone.Text.Trim();
-                            user.email = PatientEmail.Text.Trim();
-                            user.age = PatientAge.Text.Trim();
-                            user.address_line1 = PatientAddress.Text.Trim();
-                            user.created = DateTime.Now;
-                            user.doctor_id = MainWindow.Session.doctorId;
-                            user.role_id = 3; // role_id 3 = Patient
-                            user.expire_date = "00/00/0000";
-
-                            db.users.Add(user);
-                            try
-                            {
-                                db.SaveChanges();
-                                clear();
-                                MessageBox.Show("Patient has been saved", "Success");
-                            }
-                            catch
-                            {
-                                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
+                            db.SaveChanges();
+                            clear();
+                            MessageBox.Show("Patient has been saved", "Success");
                         }
-                        else
+                        catch
                         {
-                            MessageBox.Show("The Email already exist, Please enter another Email Address.", "Already Exit");
-                        }
+                            MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }                        
                     }
                     else
                     {

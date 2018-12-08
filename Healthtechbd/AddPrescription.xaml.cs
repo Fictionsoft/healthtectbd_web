@@ -527,10 +527,13 @@ namespace Healthtechbd
             border.Child = grid;
 
             ColumnDefinition columnDefinition0 = new ColumnDefinition();
-            //columnDefinition0.Width = new GridLength(2);
+            columnDefinition0.Width = new GridLength(50, GridUnitType.Star);
 
             ColumnDefinition columnDefinition1 = new ColumnDefinition();
+            columnDefinition1.Width = new GridLength(30, GridUnitType.Star);
+
             ColumnDefinition columnDefinition2 = new ColumnDefinition();
+            columnDefinition2.Width = new GridLength(20, GridUnitType.Star);
 
             grid.ColumnDefinitions.Add(columnDefinition0);
             grid.ColumnDefinitions.Add(columnDefinition1);

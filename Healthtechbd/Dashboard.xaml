@@ -9,34 +9,47 @@
       d:DesignHeight="600" d:DesignWidth="800"
       Title="Dashboard">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBox" x:Key="dashboardSearchBox">
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="#3CC2BB"/>
+                <Setter Property="Height" Value="43"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Width" Value="393"/>
+                <Setter Property="Margin" Value="0 0 0 15"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Foreground" Value="#5d5d5d"/>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+
     <StackPanel>
 
         <Grid Height="60" Background="#fff" VerticalAlignment="top">
             <TextBlock Text="DASHBOARD" Style="{StaticResource PageHeading}"/>
         </Grid>
 
-        <Border Margin="20" Height="430">
-            <StackPanel>
-                <Grid Height="100" Background="#fff" Margin="0 0 0 20">
-                    <TextBlock Text="Welcome to Healthtechbd"  Margin="20 0 0 0" FontSize="16" Foreground="#252834" FontWeight="Bold" VerticalAlignment="Center"/>
-                </Grid>
-                <Grid Height="60" Background="#F6F8F7">
-                    <Grid Height="30" Margin="20 0 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="180"></ColumnDefinition>
-                            <ColumnDefinition Width="40"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+        <Border Margin="20" Padding="35" Background="#fff">
 
-                        <TextBox x:Name="patientPhone" Style="{StaticResource SearchBox}"  Grid.Column="0"/>
-                        <Button ToolTip="Search Patient Prescription" x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
-                            <materialDesign:PackIcon Kind="DatabaseSearch"/>
-                        </Button>
-                    </Grid>
-                </Grid>
+            <StackPanel>
+
+                <TextBlock Text="Welcome To Patient Management System" Width="490"  Margin="0 0 0 10" FontSize="25" Foreground="#252834" FontWeight="Bold"/>
+                <TextBlock Text="You can manage your patient easily" Width="282" Margin="0 0 0 30" FontSize="15" Foreground="#252834"/>
+
+                <TextBox x:Name="patientPhone" Width="393" Style="{StaticResource dashboardSearchBox}"/>
+
+                <Button Padding="0 10 0 10" Height="Auto" ToolTip="Search Patient Prescription" Width="252" Content="SEARCH PATIENT PRESCRIPTION" x:Name="btnSearch" Click="btnSearch_Click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                            <GradientStop Color="#2096ff" Offset="0"/>
+                            <GradientStop Color="#05ffa3" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
 
             </StackPanel>
 
         </Border>
-
     </StackPanel>
 </Page>

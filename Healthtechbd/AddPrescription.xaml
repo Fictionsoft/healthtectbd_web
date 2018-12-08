@@ -39,7 +39,7 @@
             <StackPanel>
 
                 <!--Page Heading-->
-                <Grid Margin="-30 -20 -20 30"  Height="60" Background="#fff" VerticalAlignment="top">
+                <Grid Margin="-30 -20 -20 5"  Height="30" Background="#fff" VerticalAlignment="top">
 
                     <Border Margin="20 0 0 0">
                         <StackPanel Orientation="Horizontal">
@@ -51,22 +51,18 @@
 
                 </Grid>
                 <StackPanel Background="#fff">
-                    <Grid Height="40" Background="#F6F8F7">
-                        <TextBlock Text="Add Prescription" Margin="15 0 0 0" FontSize="14" VerticalAlignment="Center" Foreground="#333" />
-                    </Grid>
-
+                    
                     <!--Panel Head-->
-
-                    <Grid Margin="10 0 0 20">
+                    <Grid Margin="10 0 0 10">
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="380"/>
+                            <ColumnDefinition Width="30*"/>
                             <!--Patient Deatils-->
-                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="20*"/>
                             <!--Health Data-->
-                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="30*"/>
                             <!--Doctors Notes-->
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20*"/>
                             <!--Prescriptions-->
                         </Grid.ColumnDefinitions>
 
@@ -92,7 +88,7 @@
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="43" FontWeight="SemiBold" Margin="0,4,5,5" Text="Name*:" VerticalAlignment="Center"/>
                                             <ToggleButton Margin="-10 0 0 0" Content="New" Checked = "NewPatientCheck" Unchecked = "NewPatientUncheck" Width="42" />
-                                            <ComboBox IsTextSearchEnabled="False" IsEditable="True" Width="290" Padding="0 -0.5 0 0" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
+                                            <ComboBox IsTextSearchEnabled="False" IsEditable="True" Width="300" Padding="0 -0.5 0 0" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
 
                                             <TextBox x:Name="NewPatientName" Visibility="Hidden" Margin="-310 0 0 0" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="290" HorizontalAlignment="Right" Text=""/>
                                         </StackPanel>
@@ -101,21 +97,21 @@
                                     <Border Grid.Row="1" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Phone*:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="PatientPhone" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="310" Text=""/>
+                                            <TextBox x:Name="PatientPhone" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="320" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="2" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Address:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="PatientAddress" Width="310" Style="{StaticResource PrescriptionInputField}" Text=""/>
+                                            <TextBox x:Name="PatientAddress" Width="320" Style="{StaticResource PrescriptionInputField}" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="3" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Age*:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="PatientAge" Padding="0 -0.5 0 0" Width="310" Style="{StaticResource PrescriptionInputField}"  Text=""/>
+                                            <TextBox x:Name="PatientAge" Padding="0 -0.5 0 0" Width="320" Style="{StaticResource PrescriptionInputField}"  Text=""/>
                                         </StackPanel>
                                     </Border>
 
@@ -124,7 +120,7 @@
                         </StackPanel>
 
                         <!--Health Data-->
-                        <StackPanel Grid.Column="1" Margin="10 0">
+                        <StackPanel Grid.Column="1" Margin="10 0 8 0">
                             <Label Foreground="#333" FontWeight="SemiBold" Content="Health Data"/>
                             <Border Background="#EEEEEE" CornerRadius="5">
                                 <Grid Height="140">
@@ -138,14 +134,14 @@
                                     <Border Grid.Row="0" Padding="5">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="BP:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="BloodPresure" Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
+                                            <TextBox x:Name="BloodPresure" Style="{StaticResource PrescriptionInputField}" Width="160" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="1" Padding="5">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="70" FontWeight="SemiBold" Margin="0 0 5 0" Text="Temperature:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="Temperature" Style="{StaticResource PrescriptionInputField}" Width="95" Text=""/>
+                                            <TextBox x:Name="Temperature" Style="{StaticResource PrescriptionInputField}" Width="160" Text=""/>
                                         </StackPanel>
                                     </Border>
 
@@ -195,10 +191,10 @@
 
                         <!--Diagnosis-->
                         <Grid Height="160" Grid.Column="0" VerticalAlignment="Top"  Margin="10 0 0 0">
-                            <Border CornerRadius="5 5 0 0" Background="#EEEEEE" Padding="8 8">
+                            <Border CornerRadius="5 5 0 0" Background="#EEEEEE" Padding="8 0">
 
                                 <StackPanel>
-                                    <TextBlock Text="Diagnosis*" Foreground="#333" FontWeight="SemiBold" Margin="0 10 0 5"/>
+                                    <TextBlock Text="Diagnosis*" Foreground="#333" FontWeight="SemiBold" Margin="0 5 0 5"/>
 
                                     <Grid Background="#fff" Height="114">
                                         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -213,19 +209,19 @@
                         </Grid>
 
                         <!--Medicines-->
-                        <Grid Height="281" Grid.Column="1" Margin="30 0 10 0">
-                            <Border Background="#EEEEEE" CornerRadius="5 5 0 0" Padding="8 8">
+                        <Grid Height="265" Grid.Column="1" Margin="17 0 10 0">
+                            <Border Background="#EEEEEE" CornerRadius="5 5 0 0" Padding="8 0">
 
                                 <StackPanel>
                                     <Grid>
                                         <TextBlock VerticalAlignment="Center" Text="Medicines" Width="300" HorizontalAlignment="Left" Foreground="#333" FontWeight="SemiBold"/>
-                                        <materialDesign:PackIcon ToolTip="Add Medicine" Kind="Plus" VerticalAlignment="Center" Background="#EEEEEE" Foreground="#000" Height="40" Width="40"  HorizontalAlignment="Right" MouseDown="AddMedicine_MouseDown" />
+                                        <materialDesign:PackIcon ToolTip="Add Medicine" Kind="Plus" VerticalAlignment="Center" Background="#EEEEEE" Foreground="#000" Height="30" Width="40"  HorizontalAlignment="Right" MouseDown="AddMedicine_MouseDown" />
                                     </Grid>
 
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                                         <StackPanel x:Name="MedicineSection" Background="#fff" Height="226">
 
-                                            <Border x:Name="SingleMedicine" Margin="5" CornerRadius="3" BorderBrush="#eee" BorderThickness="1" Height="50">
+                                            <!--<Border x:Name="SingleMedicine" Margin="5" CornerRadius="3" BorderBrush="#eee" BorderThickness="1" Height="50">
                                                 <Grid VerticalAlignment="Center" Background="#EEEEEE" Height="50">
 
                                                     <Grid.ColumnDefinitions>
@@ -240,7 +236,7 @@
                                                         <Image Source="images/minus.png"/>
                                                     </Button>
                                                 </Grid>
-                                            </Border> 
+                                            </Border>--> 
                                                                                                                                                                                 
 
                                         </StackPanel>
@@ -259,13 +255,13 @@
                         </Grid.ColumnDefinitions>
 
                         <!--Examination-->
-                        <Grid VerticalAlignment="Top" Height="170" Grid.Column="0" Margin="10 0 0 0">
-                            <Border Background="#EEEEEE" CornerRadius="0 0 5 5" Padding="8 8" Margin="0,-122,0,0">
+                        <Grid VerticalAlignment="Top" Height="114" Grid.Column="0" Margin="10 13 0 0">
+                            <Border Background="#EEEEEE" CornerRadius="0 0 5 5" Padding="8 0" Margin="0,-134,0,0">
                                 <StackPanel>
-                                    <TextBlock Text="Tests" Width="300" HorizontalAlignment="Left" Foreground="#333" FontWeight="SemiBold" Margin="0 10 0 5"/>
+                                    <TextBlock Text="Examinations" Width="300" HorizontalAlignment="Left" Foreground="#333" FontWeight="SemiBold" Margin="0 0 0 5"/>
 
-                                    <Grid Background="#fff" Height="245">
-                                        <Grid DataContext="{StaticResource diagnosisTestModel}" Height="102">
+                                    <Grid Background="#fff" Height="220">
+                                        <Grid DataContext="{StaticResource diagnosisTestModel}" Height="102" Margin="0 26 0 0">
                                             <control:DiagnosisTestChosenControl x:Name="testChosen" TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="0,-66,0,-69" VerticalAlignment="Top" Height="237"  />
                                         </Grid>
                                     </Grid>
@@ -275,13 +271,12 @@
                         </Grid>
 
                         <!--Others Instruction-->
-                        <Grid Height="170" Grid.Column="1" Margin="30 0 10 0">
-                            <Border CornerRadius="0 0 5 5" Padding="8 8" Background="#EEEEEE">
+                        <Grid Height="126" Grid.Column="1" Margin="17 0 10 0">
+                            <Border CornerRadius="0 0 5 5" Padding="8 0" Background="#EEEEEE" Margin="0 -7 0 0">
 
                                 <StackPanel>
                                     <TextBlock Text="Other Instructions" Foreground="#333" FontWeight="SemiBold" Margin="0 0 0 5"/>
-
-                                    <TextBox  AcceptsReturn="True" x:Name="OtherInstructions" Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="130"/>
+                                    <TextBox AcceptsReturn="True" x:Name="OtherInstructions" Style="{StaticResource PrescriptionInputField}" TextWrapping="Wrap" Text="" Padding="3" Background="#fff" Height="106"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -289,16 +284,16 @@
                     </Grid>
 
                     <!--Buttons-->
-                    <Grid Height="60" >
+                    <Grid Height="39" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="116*"/>
                             <ColumnDefinition Width="179*"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                            <Button ToolTip="Cancel" x:Name="CancelAddPrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelAddPrescription_Click"/>
-                            <Button ToolTip="Save"  x:Name="SaveAddPrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="SaveAddPrescription_Click" />
-                            <Button ToolTip="Save and Print" x:Name="SavePrintAddPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SaveAddPrescription_Click"/>
+                            <Button ToolTip="Cancel" x:Name="CancelAddPrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="28" Foreground="#2c3144" Background="#edf1f5" Click="CancelAddPrescription_Click"/>
+                            <Button ToolTip="Save"  x:Name="SaveAddPrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="28" Background="#3CC2BB" Click="SaveAddPrescription_Click" />
+                            <Button ToolTip="Save and Print" x:Name="SavePrintAddPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="28"  Background="#3CC2BB" Click="SaveAddPrescription_Click"/>
                         </StackPanel>
 
                     </Grid>
