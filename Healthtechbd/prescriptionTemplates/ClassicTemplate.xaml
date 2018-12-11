@@ -35,9 +35,9 @@
             </Grid>
             
             <!--Page Heading Bottom-->
-            <Border Width="810" Margin="20">
+            <Border Width="794" Margin="20">
                 <StackPanel x:Name="PrintArea">
-                    <Border Padding="50 80" Background="#fff">
+                    <Border Padding="48" Background="#fff">
                         <Grid Background="#fff">
 
                             <Grid.RowDefinitions>
@@ -158,10 +158,10 @@
                                             <StackPanel x:Name="PrescriptioMedicines" Margin="5 0">
                                                 <TextBlock FontWeight="Bold" Style="{StaticResource Level}" Text="Medicines:"/>
 
-                                            <!--<StackPanel>
+                                            <StackPanel>
                                                 <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Margin="0 0 3 0" Text="Premil 2 Tablet :"/>
                                                 <TextBlock FontWeight="Normal" Style="{StaticResource Level}" Text="( 1-1-1)"/>
-                                            </StackPanel>-->
+                                            </StackPanel>
                                            
 
                                             </StackPanel>

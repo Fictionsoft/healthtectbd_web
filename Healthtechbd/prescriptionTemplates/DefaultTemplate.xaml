@@ -14,10 +14,8 @@
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="CornerRadius" Value="10"/>
         </Style>
-
-        
-        
-        <Style TargetType="TextBlock" x:Key="borderHead">
+                
+        <Style TargetType="TextBlock" x:Key="blockHaead">
             <Setter Property="Foreground" Value="#fff"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="TextAlignment" Value="Center"/>
@@ -54,9 +52,9 @@
             </Grid>
 
             <!--Page Heading Bottom-->
-            <Border Width="810" Margin="20">
+            <Border Width="794" Margin="20">
                 <StackPanel x:Name="PrintArea">
-                    <Border Padding="50 80" Background="#fff">
+                    <Border Padding="48" Background="#fff">
                         <Grid Background="#fff">
 
                             <Grid.RowDefinitions>
@@ -121,7 +119,7 @@
 
                                             <StackPanel>
                                                 <Border CornerRadius="10" Background="#0000EF" BorderBrush="#0000EF" BorderThickness="1">
-                                                    <TextBlock Style="{StaticResource borderHead}" Text="PATIENT"/>
+                                                    <TextBlock Style="{StaticResource blockHaead}" Text="PATIENT"/>
                                                 </Border>
 
                                                 <Border Padding="10 0">
@@ -157,7 +155,7 @@
                                             <StackPanel>
 
                                                 <Border CornerRadius="10" Background="#0000EF" BorderBrush="#0000EF" BorderThickness="1">
-                                                    <TextBlock Style="{StaticResource borderHead}" Text="DIAGNOSIS"/>
+                                                    <TextBlock Style="{StaticResource blockHaead}" Text="DIAGNOSIS"/>
                                                 </Border>
 
                                                 <Border Padding="10 0">
@@ -198,25 +196,25 @@
                                     <Border Grid.Column="1" Style="{StaticResource ResourceKey=singleBorder}" >
                                         <StackPanel>
                                             <Border CornerRadius="10" Background="#0000EF" BorderBrush="#0000EF" BorderThickness="1">
-                                                <TextBlock Background="Transparent" Style="{StaticResource borderHead}"  Text="MEDICINES"/>
+                                                <TextBlock Background="Transparent" Style="{StaticResource blockHaead}"  Text="MEDICINES"/>
                                             </Border>
 
                                             <Border Padding="10 0">
                                                 <StackPanel x:Name="PrescriptioMedicines">
-                                                    <!--<StackPanel>
-                                                    <TextBlock Style="{StaticResource defaultViewLevel}" Text="Premil 2 Tablet :"/>
-                                                    <TextBlock Style="{StaticResource defaultViewLevel}" Padding="5 0" Text="( 1-1-1 )"/>
-                                                </StackPanel>
+                                                <!--<WrapPanel>
+                                                    <TextBlock Style="{StaticResource defaultViewLevel}" Text="Premil 2 :"/>
+                                                    <TextBlock Style="{StaticResource defaultViewLevel}" Text="( 1-1-1 )"/>
+                                                </WrapPanel>
 
-                                                <StackPanel>
+                                                <WrapPanel>
                                                     <TextBlock Style="{StaticResource defaultViewLevel}" Text="Premil 2 Tablet :"/>
                                                     <TextBlock Style="{StaticResource defaultViewLevel}" Padding="5 0" Text="( 1-1-1 )"/>
-                                                </StackPanel>
+                                                </WrapPanel>
 
-                                                <StackPanel>
+                                                <WrapPanel>
                                                     <TextBlock Style="{StaticResource defaultViewLevel}" Text="Premil 2 Tablet :"/>
                                                     <TextBlock Style="{StaticResource defaultViewLevel}" Padding="5 0" Text="( 1-1-1 )"/>
-                                                </StackPanel>-->
+                                                </WrapPanel>-->
                                                 </StackPanel>
                                             </Border>
 
@@ -237,7 +235,7 @@
 
                                         <StackPanel>
                                             <Border CornerRadius="10" Background="#0000EF" BorderBrush="#0000EF" BorderThickness="1">
-                                                <TextBlock Style="{StaticResource borderHead}" Text="EXAMINATION"/>
+                                                <TextBlock Style="{StaticResource blockHaead}" Text="EXAMINATION"/>
                                             </Border>
 
                                             <Border Padding="10 0">
@@ -254,7 +252,7 @@
                                     <Border Grid.Column="1" Style="{StaticResource ResourceKey=singleBorder}" >
                                         <StackPanel>
                                             <Border CornerRadius="10" Background="#0000EF" BorderBrush="#0000EF" BorderThickness="1">
-                                                <TextBlock Style="{StaticResource borderHead}" Text="OTHERS INSTRUCTIONS"/>
+                                                <TextBlock Style="{StaticResource blockHaead}" Text="OTHERS INSTRUCTIONS"/>
                                             </Border>
 
                                             <Border Padding="10 0">
@@ -273,7 +271,7 @@
                                 <Border Style="{StaticResource ResourceKey=singleBorder}" >
                                     <StackPanel>
                                         <Border CornerRadius="10" Background="#0000EF" BorderBrush="#0000EF" BorderThickness="1">
-                                            <TextBlock Style="{StaticResource borderHead}" Text="DOCTORS NOTE"/>
+                                            <TextBlock Style="{StaticResource blockHaead}" Text="DOCTORS NOTE"/>
                                         </Border>
 
                                         <Border Padding="10 0">

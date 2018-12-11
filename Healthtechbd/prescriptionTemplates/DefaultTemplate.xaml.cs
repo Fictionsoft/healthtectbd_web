@@ -100,9 +100,9 @@ namespace Healthtechbd.prescriptionTemplates
             var i = 1;
             foreach (var prescriptions_medicine in prescriptions_medicines)
             {
-                StackPanel stackPanel = new StackPanel();
+                WrapPanel wrapPanel = new WrapPanel();
 
-                PrescriptioMedicines.Children.Add(stackPanel);
+                PrescriptioMedicines.Children.Add(wrapPanel);
 
                 //Medicine Name
                 TextBlock medicine = new TextBlock();
@@ -110,18 +110,16 @@ namespace Healthtechbd.prescriptionTemplates
                 medicine.Style = this.FindResource("defaultViewLevel") as Style;
                 medicine.Text = i + ". " + prescriptions_medicine.medicine.name + " : ";
 
-                stackPanel.Children.Add(medicine);
+                wrapPanel.Children.Add(medicine);
 
                 //Dos
                 if (prescriptions_medicine.rule != "")
                 {
                     TextBlock dos = new TextBlock();
-                    dos.FontWeight = FontWeights.Normal;
-                    dos.Padding = new Thickness(5, 0, 5, 0);
                     dos.Style = this.FindResource("defaultViewLevel") as Style;
                     dos.Text = "( " + prescriptions_medicine.rule + " )";
 
-                    stackPanel.Children.Add(dos);
+                    wrapPanel.Children.Add(dos);
                 }                
                 i++;
             }

@@ -17,7 +17,7 @@
         <!--Header-->
         <Grid x:Name="header" Height="60" Background="#3CC2BB" VerticalAlignment="top" MouseDown="header_MouseDown">
 
-            <TextBlock x:Name="Logo" Text="HEALTHTECHBD" HorizontalAlignment="Left" Margin="43 0 0 0" Foreground="#fff" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" MouseDown="Logo_MouseDown"/>
+            <Image x:Name="Logo" Source="images/site_logo.png" HorizontalAlignment="Left" Height="120" Width="190" Margin="25 0 0 0" VerticalAlignment="Center" MouseDown="Logo_MouseDown"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
@@ -35,7 +35,7 @@
                             <materialDesign:PackIcon Kind="Image" VerticalAlignment="Center" Foreground="#576069" />
                             <Button x:Name="ButtonChangeProfilePic" Content="Change Profile Picture" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangeProfilePic_Click"  />
                         </Grid>
-                        
+
                         <!--<Grid>
                             <materialDesign:PackIcon Kind="ViewQuilt" VerticalAlignment="Center" Foreground="#576069" />
                             <Button x:Name="ButtonChangePrescriptionTem" Content="Change Prescription Template" Foreground="#576069" VerticalAlignment="Center" Margin="3 0 0 0" Click="ButtonChangePrescriptionTem_Click" />
@@ -62,7 +62,7 @@
         </Grid>
 
         <!--NavItem-->
-        <Grid >
+        <Grid Margin="0 60 0 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="242" x:Name="SidebarColumnDefination"/>
                 <ColumnDefinition Width="*"/>
@@ -85,7 +85,9 @@
 
 
                 <ListView Foreground="#fff" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0 0 0 0" Grid.ColumnSpan="2">
-                    <TextBlock x:Name="ButtonLogo" Text="HEALTHTECHBD" HorizontalAlignment="Center" Padding="0 8 0 0" Margin="0 0 0 10" Width="225" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" GotFocus="ButtonDashboard_GotFocus" />
+                    <!--<TextBlock x:Name="ButtonLogo" Text="HEALTHTECHBD" HorizontalAlignment="Center" Padding="0 8 0 0" Margin="0 0 0 10" Width="225" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" TextAlignment="Center" GotFocus="ButtonDashboard_GotFocus" />-->
+
+                    <!--<Image x:Name="ButtonLogo" Source="images/site_logo.jpg" Margin="0 0 0 10" Height="20" Width="226" VerticalAlignment="Center" MouseDown="Logo_MouseDown"/>-->
 
                     <ListViewItem x:Name="ButtonDashboard" Loaded="ButtonDashboard_Loaded" GotFocus="ButtonDashboard_GotFocus">
                         <StackPanel Orientation="Horizontal"  >
@@ -154,7 +156,7 @@
             </Grid>
 
             <!--MainContent Frame-->
-            <Frame Margin="0 60 0 0" x:Name="MainContent" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2">
+            <Frame x:Name="MainContent" Grid.Column="1" NavigationUIVisibility="Hidden" Grid.ColumnSpan="2">
 
             </Frame>
 

@@ -8,22 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
       Title="Dashboard">
-
-    <Page.Resources>
-        <ResourceDictionary>
-            <Style TargetType="TextBox" x:Key="dashboardSearchBox">
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="BorderBrush" Value="#3CC2BB"/>
-                <Setter Property="Height" Value="43"/>
-                <Setter Property="Padding" Value="10"/>
-                <Setter Property="Width" Value="393"/>
-                <Setter Property="Margin" Value="0 0 0 15"/>
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="Foreground" Value="#5d5d5d"/>
-            </Style>
-        </ResourceDictionary>
-    </Page.Resources>
-
+    
     <StackPanel>
 
         <Grid Height="60" Background="#fff" VerticalAlignment="top">
@@ -34,20 +19,13 @@
 
             <StackPanel>
 
-                <TextBlock Text="Welcome To Patient Management System" Width="490"  Margin="0 0 0 10" FontSize="25" Foreground="#252834" FontWeight="Bold"/>
-                <TextBlock Text="You can manage your patient easily" Width="282" Margin="0 0 0 30" FontSize="15" Foreground="#252834"/>
+                <TextBlock Text="Search Patient" Width="170"  Margin="0 0 0 10" FontSize="25" Foreground="#252834" FontWeight="Bold"/>
 
-                <TextBox x:Name="patientPhone" Width="393" Style="{StaticResource dashboardSearchBox}"/>
-
-                <Button Padding="0 10 0 10" Height="Auto" ToolTip="Search Patient Prescription" Width="252" Content="SEARCH PATIENT PRESCRIPTION" x:Name="btnSearch" Click="btnSearch_Click">
-                    <Button.Background>
-                        <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
-                            <GradientStop Color="#2096ff" Offset="0"/>
-                            <GradientStop Color="#05ffa3" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
-
+                <Grid>
+                    <TextBox Text="Phone number" x:Name="patientPhone" Width="300" Style="{StaticResource InputField}" GotFocus="patientPhone_GotFocus" LostFocus="patientPhone_LostFocus"/>
+                    <Button Background="#3CC2BB"  BorderBrush="#eee" BorderThickness="0" Padding="9" Height="40" ToolTip="Search" Width="100" FontWeight="Normal" Content="SEARCH" x:Name="btnSearch" Click="btnSearch_Click" Margin="490,0,28,16"/>
+                </Grid>
+               
             </StackPanel>
 
         </Border>

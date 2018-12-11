@@ -35,21 +35,8 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FFFFFF">
 
-        <Border Padding="20" Background="#EDF1F5">
+        <Border Padding="20 10 20 20" Background="#EDF1F5">
             <StackPanel>
-
-                <!--Page Heading-->
-                <Grid Margin="-30 -20 -20 5"  Height="30" Background="#fff" VerticalAlignment="top">
-
-                    <Border Margin="20 0 0 0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Prescriptions" MouseDown="CancelUpdatePrescription_Click" />
-                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="/" />
-                            <TextBlock Style="{StaticResource BreadcrumbItem}" Text="Add Prescription"/>
-                        </StackPanel>
-                    </Border>
-
-                </Grid>
                 <StackPanel Background="#fff">
 
                     <!--Panel Head-->
@@ -282,16 +269,16 @@
                     </Grid>
 
                     <!--Buttons-->
-                    <Grid Height="39" >
+                    <Grid Height="50" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="116*"/>
                             <ColumnDefinition Width="179*"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                            <Button ToolTip="Cancel" x:Name="CancelAddPrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="28" Foreground="#2c3144" Background="#edf1f5" Click="CancelUpdatePrescription_Click"/>
-                            <Button ToolTip="Save"  x:Name="SaveAddPrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="28" Background="#3CC2BB" Click="UpdatePrescription_Click" />
-                            <Button ToolTip="Save and Print" x:Name="SavePrintAddPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="28"  Background="#3CC2BB" Click="UpdatePrescription_Click"/>
+                            <Button ToolTip="Cancel" x:Name="CancelAddPrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelUpdatePrescription_Click"/>
+                            <Button ToolTip="Save"  x:Name="SaveAddPrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="UpdatePrescription_Click" />
+                            <Button ToolTip="Save and Print" x:Name="SavePrintAddPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="UpdatePrescription_Click"/>
                         </StackPanel>
 
                     </Grid>

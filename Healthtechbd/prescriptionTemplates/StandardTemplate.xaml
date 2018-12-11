@@ -40,9 +40,9 @@
             </Grid>
 
             <!--Page Heading Bottom-->
-            <Border Width="810" Margin="20">
+            <Border Width="794" Margin="20">
                 <StackPanel x:Name="PrintArea">
-                    <Border Padding="50 80" Background="#fff">
+                    <Border Padding="48" Background="#fff">
                         <Grid Background="#fff">
 
                             <Grid.RowDefinitions>
@@ -58,7 +58,7 @@
                         </Grid.RowDefinitions>
 
                         <!--Doctors Info-->
-                        <Border Padding="0 20 0 0" Grid.Row="0" HorizontalAlignment="Center">
+                        <Border Grid.Row="0" HorizontalAlignment="Center">
                             <Grid>
                                 <StackPanel Margin="5 0">
                                     <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Text="Clinic Name"/>
@@ -194,7 +194,7 @@
                         <Separator Grid.Row="7" Margin="12 150 12 0" Background="#eee"/>
 
                         <!--Singnature & Date-->
-                        <Border Padding="12" Grid.Row="8">
+                        <Border Padding="12 12 0 0" Grid.Row="8">
                             <Grid>
 
                                 <Grid.ColumnDefinitions>

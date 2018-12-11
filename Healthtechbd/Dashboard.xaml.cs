@@ -31,7 +31,7 @@ namespace Healthtechbd
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {           
-            if(patientPhone.Text.Trim() != "")
+            if(patientPhone.Text != "Phone number")
             {
                 var prescription = db.presceiptions.Where(x => x.user.phone == patientPhone.Text && x.user.role_id == 3 && x.user.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).FirstOrDefault();
 
@@ -72,6 +72,22 @@ namespace Healthtechbd
                     MessageBox.Show("Patient not found, Please select a patient", "Not Found");
                 }
             }                                    
+        }
+
+        private void patientPhone_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (patientPhone.Text == "Type phone number")
+            {
+                patientPhone.Text = "";
+            }
+        }
+
+        private void patientPhone_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (patientPhone.Text == "")
+            {
+                patientPhone.Text = "Type phone number";
+            }
         }
     }
 }
