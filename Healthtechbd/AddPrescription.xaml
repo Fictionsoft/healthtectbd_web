@@ -14,15 +14,19 @@
         <local:DiagnosisTestModel x:Key="diagnosisTestModel"/>
 
         <Style TargetType="ComboBox" x:Key="DiagnosisComboBox">
-            <Setter Property="BorderBrush" Value="#eee"/>
+            <Setter Property="BorderBrush" Value="#dde3e5"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="#7d7d7d"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="5 1 0 0"/>
         </Style>
 
         <Style TargetType="TextBox" x:Key="PrescriptionInputField">
-            <Setter Property="BorderBrush" Value="#eee"/>
+            <Setter Property="BorderBrush" Value="#dde3e5"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="#7d7d7d"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="5 1 0 0"/>
         </Style>
 
         <Style TargetType="CheckBox">
@@ -75,16 +79,16 @@
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="43" FontWeight="SemiBold" Margin="0,4,5,5" Text="Name*:" VerticalAlignment="Center"/>
                                             <ToggleButton Margin="-10 0 0 0" Content="New" Checked = "NewPatientCheck" Unchecked = "NewPatientUncheck" Width="42" />
-                                            <ComboBox IsTextSearchEnabled="False" IsEditable="True" Width="300" Padding="0 -0.5 0 0" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
+                                            <ComboBox ItemsSource="{Binding}" IsTextSearchEnabled="False" IsEditable="True" Width="300" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
 
-                                            <TextBox x:Name="NewPatientName" Visibility="Hidden" Margin="-310 0 0 0" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="290" HorizontalAlignment="Right" Text=""/>
+                                            <TextBox x:Name="NewPatientName" Visibility="Hidden" Margin="-310 0 0 0" Style="{StaticResource PrescriptionInputField}" Width="290" HorizontalAlignment="Right" Text=""/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="1" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Phone*:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="PatientPhone" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="320" Text=""/>
+                                            <TextBox x:Name="PatientPhone" Style="{StaticResource PrescriptionInputField}" Width="320" Text=""/>
                                         </StackPanel>
                                     </Border>
 
@@ -98,7 +102,7 @@
                                     <Border Grid.Row="3" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Age*:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="PatientAge" Padding="0 -0.5 0 0" Width="320" Style="{StaticResource PrescriptionInputField}"  Text=""/>
+                                            <TextBox x:Name="PatientAge" Width="320" Style="{StaticResource PrescriptionInputField}"  Text=""/>
                                         </StackPanel>
                                     </Border>
 

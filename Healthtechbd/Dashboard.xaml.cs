@@ -33,50 +33,41 @@ namespace Healthtechbd
         {           
             if(patientPhone.Text != "Phone number")
             {
-                var prescription = db.presceiptions.Where(x => x.user.phone == patientPhone.Text && x.user.role_id == 3 && x.user.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).FirstOrDefault();
+                var patients = db.users.Where(x => x.phone == patientPhone.Text && x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(40).ToList();// role_id 3 = Patient
 
-                if (prescription != null)
+                if (patients.Count() > 0)
                 {
-                    Grid sidebar = AdminPanelWindow.sidebar;
-                    sidebar.Visibility = Visibility.Hidden;
+                    //Grid sidebar = AdminPanelWindow.sidebar;
+                    //sidebar.Visibility = Visibility.Hidden;
 
-                    AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(0);
+                    //AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(0);
 
-                    int prescriptionId = prescription.id;
-                    MainWindow.Session.editRecordId = prescriptionId;
-                    EditPrescription editPrescription = new EditPrescription(prescriptionId);
+                    //int prescriptionId = prescription.id;
+                    //MainWindow.Session.editRecordId = prescriptionId;
+                    //EditPrescription editPrescription = new EditPrescription(prescriptionId);
 
-                    EditPrescription.diagnosisTemplateIds.Clear();
-                    var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescriptionId).ToList();
-                    foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
-                    {
-                        EditPrescription.diagnosisTemplateIds.Add(prescriptions_diagnosi.diagnosis_id);
-                    }
+                    //EditPrescription.diagnosisTemplateIds.Clear();
+                    //var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescriptionId).ToList();
+                    //foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
+                    //{
+                    //    EditPrescription.diagnosisTemplateIds.Add(prescriptions_diagnosi.diagnosis_id);
+                    //}
+                    Patients patientIndex = new Patients(patients);
 
-
-                    NavigationService.Navigate(editPrescription);
+                    NavigationService.Navigate(patientIndex);
                 }
                 else
-                {
-                    MainWindow.Session.editRecordId = 0;
-                    AddPrescription.diagnosisTemplateIds.Clear();
-                    DiagnosisTestChosenControl.selectedIds.Clear();
+                {                    
+                    NavigationService.Navigate(new Uri("AddPatient.xaml", UriKind.Relative));
 
-                    Grid sidebar = AdminPanelWindow.sidebar;
-                    sidebar.Visibility = Visibility.Hidden;
-
-                    AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(0);
-
-                    NavigationService.Navigate(new Uri("AddPrescription.xaml", UriKind.Relative));
-
-                    MessageBox.Show("Patient not found, Please select a patient", "Not Found");
+                    MessageBox.Show("Patient not found, Please create a patient", "Not Found");
                 }
             }                                    
         }
 
         private void patientPhone_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (patientPhone.Text == "Type phone number")
+            if (patientPhone.Text == "Phone number")
             {
                 patientPhone.Text = "";
             }
@@ -86,7 +77,7 @@ namespace Healthtechbd
         {
             if (patientPhone.Text == "")
             {
-                patientPhone.Text = "Type phone number";
+                patientPhone.Text = "Phone number";
             }
         }
     }

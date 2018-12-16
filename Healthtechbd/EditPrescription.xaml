@@ -14,15 +14,19 @@
         <local:DiagnosisTestModel x:Key="diagnosisTestModel"/>
 
         <Style TargetType="ComboBox" x:Key="DiagnosisComboBox">
-            <Setter Property="BorderBrush" Value="#eee"/>
+            <Setter Property="BorderBrush" Value="#dde3e5"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="#7d7d7d"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="5 1 0 0"/>
         </Style>
 
         <Style TargetType="TextBox" x:Key="PrescriptionInputField">
-            <Setter Property="BorderBrush" Value="#eee"/>
+            <Setter Property="BorderBrush" Value="#dde3e5"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="#7d7d7d"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Padding" Value="5 1 0 0"/>
         </Style>
 
         <Style TargetType="CheckBox">
@@ -74,14 +78,14 @@
                                     <Border Grid.Row="0" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Name*:" VerticalAlignment="Center"/>
-                                            <ComboBox IsTextSearchEnabled="False" IsEditable="True" Width="320" Padding="0 -0.5 0 0" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
+                                            <ComboBox IsTextSearchEnabled="False" IsEditable="True" Width="320" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
                                         </StackPanel>
                                     </Border>
 
                                     <Border Grid.Row="1" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Phone*:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="PatientPhone" Padding="0 -0.5 0 0" Style="{StaticResource PrescriptionInputField}" Width="320" Text=""/>
+                                            <TextBox IsReadOnly="True" Background="#EEEEEE" x:Name="PatientPhone" Style="{StaticResource PrescriptionInputField}" Width="320" Text=""/>
                                         </StackPanel>
                                     </Border>
 
@@ -95,7 +99,7 @@
                                     <Border Grid.Row="3" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Age*:" VerticalAlignment="Center"/>
-                                            <TextBox x:Name="PatientAge" Padding="0 -0.5 0 0" Width="320" Style="{StaticResource PrescriptionInputField}"  Text=""/>
+                                            <TextBox x:Name="PatientAge" Width="320" Style="{StaticResource PrescriptionInputField}"  Text=""/>
                                             
                                             <TextBox x:Name="PrescriptionId" Visibility="Hidden"  Text=""/>
                                         </StackPanel>
@@ -276,9 +280,9 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                            <Button ToolTip="Cancel" x:Name="CancelAddPrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelUpdatePrescription_Click"/>
-                            <Button ToolTip="Save"  x:Name="SaveAddPrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="UpdatePrescription_Click" />
-                            <Button ToolTip="Save and Print" x:Name="SavePrintAddPrescription" Content="SAVE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="UpdatePrescription_Click"/>
+                            <Button ToolTip="Cancel" x:Name="CancelUpdatePrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelUpdatePrescription_Click"/>
+                            <Button ToolTip="UPDATE" x:Name="UpdatePrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="UpdatePrescription_Click" />
+                            <Button ToolTip="Update and Print" x:Name="UpdatePrintPrescription" Content="UPDATE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="UpdatePrescription_Click"/>
                         </StackPanel>
 
                     </Grid>

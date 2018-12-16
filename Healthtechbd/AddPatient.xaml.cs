@@ -48,7 +48,7 @@ namespace Healthtechbd
             {
                 if ((PatientEmail.Text != "" && IsValidEmail(PatientEmail.Text) == true) || PatientEmail.Text == "")
                 {
-                    var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
+                    var havePhone = db.users.FirstOrDefault(x => x.first_name == PatientName.Text && x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
 
                     if (havePhone == null)
                     {                       
@@ -77,7 +77,7 @@ namespace Healthtechbd
                     }
                     else
                     {
-                        MessageBox.Show("The Phone Number already exist", "Already Exit");
+                        MessageBox.Show("The patient already exit.", "Already Exit");
                     }
                 }
                 else

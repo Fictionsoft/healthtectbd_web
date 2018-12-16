@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Healthtechbd.Model;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +34,8 @@ namespace Healthtechbd
         public RegistrationWindow(MainWindow mainWindow)
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;            
+            this.mainWindow = mainWindow;
+            apiRegister();
         }
 
         public RegistrationWindow(ForgotPasswordWindow forgotPasswordWindow)
@@ -47,7 +52,7 @@ namespace Healthtechbd
 
         private void loginLink_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.Hide();            
+            this.Hide();
             this.mainWindow.Show();
         }
 
@@ -65,7 +70,7 @@ namespace Healthtechbd
 
             if (FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
-                if(IsValidEmail(EmailAddress.Text) == true)
+                if (IsValidEmail(EmailAddress.Text) == true)
                 {
                     try
                     {
@@ -143,7 +148,7 @@ namespace Healthtechbd
                 else
                 {
                     MessageBox.Show("Please enter a valid email.", "Invalid");
-                }                
+                }
             }
             else
             {
@@ -162,47 +167,67 @@ namespace Healthtechbd
             {
                 return false;
             }
-        }       
+        }
 
-        public void apiRegister()
+        async void apiRegister()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://app.healthtechbd.com/admin/users/apiRegistration");
-            request.Method = "POST";
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost/pms/");
+            client.DefaultRequestHeaders.Accept.Add(
+               new MediaTypeWithQualityHeaderValue("application/json"));
 
-            string postData = string.Format(
-                                            "first_name=" + FirstName.Text  + "&last_name=" + LastName.Text +
-                                            "&email=" + EmailAddress.Text + "&phone=" + Phone.Text +
-                                            "&password=" + Password.Password
-                                           );
-
-            byte[] data = Encoding.UTF8.GetBytes(postData);
-
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.Accept = "application/json";
-            request.ContentLength = data.Length;
-
-            using (Stream requestStream = request.GetRequestStream())
+            HttpResponseMessage response = client.GetAsync("admin/users/api-registration").Result;
+            if (response.IsSuccessStatusCode)
             {
-                requestStream.Write(data, 0, data.Length);
+                //List<object> Patients = new List<object>();
+                var employees = response.Content.ReadAsStringAsync();
+                employees.Wait();
+                MessageBox.Show(employees.Result);
             }
-
-            WebResponse response = null;
-            response = request.GetResponse();
-
-            try
+            else
             {
-                using (response)
-                {
-                    // Do something with response
-
-                    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                }
-            }
-            catch (WebException ex)
-            {
-                // Handle error
+                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
             }
         }
+        //public void apiRegister()
+        //{
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://app.healthtechbd.com/admin/users/apiRegistration");
+        //    request.Method = "POST";
+
+        //    string postData = string.Format(
+        //                                    "first_name=" + FirstName.Text  + "&last_name=" + LastName.Text +
+        //                                    "&email=" + EmailAddress.Text + "&phone=" + Phone.Text +
+        //                                    "&password=" + Password.Password
+        //                                   );
+
+        //    byte[] data = Encoding.UTF8.GetBytes(postData);
+
+        //    request.ContentType = "application/x-www-form-urlencoded";
+        //    request.Accept = "application/json";
+        //    request.ContentLength = data.Length;
+
+        //    using (Stream requestStream = request.GetRequestStream())
+        //    {
+        //        requestStream.Write(data, 0, data.Length);
+        //    }
+
+        //    WebResponse response = null;
+        //    response = request.GetResponse();
+
+        //    try
+        //    {
+        //        using (response)
+        //        {
+        //            // Do something with response
+
+        //            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+        //        }
+        //    }
+        //    catch (WebException ex)
+        //    {
+        //        // Handle error
+        //    }
+        //}
 
         public static bool CheckForInternetConnection()
         {
@@ -280,7 +305,7 @@ namespace Healthtechbd
         {
             if (Password.Password == "")
             {
-               Password.Password = "Password";
+                Password.Password = "Password";
             }
         }
 
@@ -300,4 +325,5 @@ namespace Healthtechbd
             }
         }
     }
+   
 }

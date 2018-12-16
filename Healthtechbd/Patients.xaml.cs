@@ -27,15 +27,22 @@ namespace Healthtechbd
             loadPatients();
         }
 
+        //From Dashboard 
+        public Patients(List<user> patients) : this()
+        {
+            dataGridPatients.ItemsSource = patients; //Patients = Users   
+        }
+
         contextd_db db = new contextd_db();
         user user = new user();
+        prescription prescription = new prescription();
 
-        void loadPatients()   //User = Patient
+        void loadPatients() //User = Patient
         {
             try
-            {
-                var users = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(40).ToList();
-                dataGridPatients.ItemsSource = users; // role_id 3 = Patient 
+            {               
+                var patients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(40).ToList();// role_id 3 = Patient
+                dataGridPatients.ItemsSource = patients; //Patients = Users                
             }
             catch
             {
@@ -119,6 +126,18 @@ namespace Healthtechbd
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
 
             MainWindow.Session.setPatientId = (dataGridPatients.SelectedItem as user).id;
+        }
+
+        private void btnCreatePatientPrescription_Click(object sender, RoutedEventArgs e)
+        {
+            Grid sidebar = AdminPanelWindow.sidebar;
+            sidebar.Visibility = Visibility.Hidden;
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(0);
+
+            int patientId = (dataGridPatients.SelectedItem as user).id;
+
+            AddPrescription addPrescription = new AddPrescription(patientId);            
+            NavigationService.Navigate(addPrescription);
         }
     }
 }

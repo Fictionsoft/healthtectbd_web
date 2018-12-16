@@ -62,7 +62,7 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
 
-                                    <DataGridTemplateColumn>
+                                    <!--<DataGridTemplateColumn>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                             <Button ToolTip="Edit" x:Name="btnEditPrescriptionRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnEditPrescriptionRow_Click"  >
@@ -70,7 +70,7 @@
                                                 </Button>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
+                                    </DataGridTemplateColumn>-->
 
                                     <DataGridTemplateColumn>
                                         <DataGridTemplateColumn.CellTemplate>

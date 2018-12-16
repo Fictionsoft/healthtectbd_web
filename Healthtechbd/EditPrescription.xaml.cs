@@ -52,26 +52,26 @@ namespace Healthtechbd
             PrescriptionId.Text = id.ToString();
 
             try
-            {        
+            {
                 //To Selected this presceiption User 
                 var prescription = db.presceiptions.FirstOrDefault(x => x.id == id);
-                PatientComboBox.SelectedItem = prescription.user.first_name;                
+                PatientComboBox.SelectedItem = prescription.user.first_name + "-" + prescription.user.phone;                
 
                 PatientPhone.Text = prescription.user.phone;
                 PatientAddress.Text = prescription.user.address_line1;
                 PatientAge.Text = prescription.user.age;
 
                 BloodPresure.Text = prescription.blood_pressure;
-                Temperature.Text = prescription.temperature;
-
-                PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == prescription.user.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
-
+                Temperature.Text = prescription.temperature;                       
                 DoctorsNotes.Text = prescription.doctores_notes;
                 OtherInstructions.Text = prescription.other_instructions;
 
+                //All prescription link
                 AllPrescription.Children.Clear();
                 if (prescription.user.prescription.Count() > 0)
                 {
+                    PatientLastVisit.Text = prescription.user.prescription.Last().created.ToString("dd MMM yyyy");
+
                     foreach (var item in prescription.user.prescription)
                     {
                         TextBlock textBlock = new TextBlock();
@@ -85,28 +85,27 @@ namespace Healthtechbd
                         AllPrescription.Children.Add(textBlock);
                     }
                 }
-
-            }
+        }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-        }
+}
 
         private void PatientComboBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ComboBox obj = sender as ComboBox;
+           ComboBox obj = sender as ComboBox;
 
             var searchBy = obj.Text;
 
-            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) &&
+            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) && 
                            (x.first_name.Contains(searchBy))).Take(10).ToList(); //patient_id 3
 
             PatientComboBox.Items.Clear();
 
             foreach (var patient in patients)
             {
-                PatientComboBox.Items.Add(patient.first_name);
+                PatientComboBox.Items.Add(patient.first_name + "-" + patient.phone);
             }
 
             if (patients.Count == 0)
@@ -123,44 +122,22 @@ namespace Healthtechbd
         //Patient Combobox DropDown Closed..........
         private void PatientComboBox_DropDownClosed(object sender, EventArgs e)
         {
-            try
+            if (PatientComboBox.Text != "")
             {
-                patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
-
-                if (patient != null)
+                try
                 {
-                    PatientPhone.Text = patient.phone;
-                    PatientAddress.Text = patient.address_line1;
-                    PatientAge.Text = patient.age;
+                    string[] words = PatientComboBox.Text.Split('-');
+                    string patientName = words[0];
+                    string patientPhone = words[1];
 
-                    PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == patient.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
+                    int patientId = db.users.Where(x => x.first_name == patientName && x.phone == patientPhone && x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).Select(x => x.id).FirstOrDefault();
 
-                    AllPrescription.Children.Clear();
-                    if (patient.prescription.Count() > 0)
-                    {
-                        foreach (var prescription in patient.prescription)
-                        {
-                            TextBlock textBlock = new TextBlock();
-                            textBlock.VerticalAlignment = VerticalAlignment.Center;
-                            textBlock.Padding = new Thickness(10, 5, 10, 5);
-                            textBlock.DataContext = prescription.id;
-                            textBlock.Text = prescription.created.ToString("dd MMM yyyy");
-
-                            textBlock.AddHandler(TextBlock.MouseDownEvent, new RoutedEventHandler(AllPrescriptionClick));
-
-                            AllPrescription.Children.Add(textBlock);
-                        }
-                    }
+                    FillUpPatientInfo(patientId);
                 }
-                else
+                catch
                 {
-                    PatientPhone.Text = PatientAddress.Text = PatientAge.Text = "";
-                    AllPrescription.Children.Clear();
+
                 }
-            }
-            catch
-            {
-                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -186,7 +163,7 @@ namespace Healthtechbd
 
                 foreach (var patient in patients)
                 {
-                    PatientComboBox.Items.Add(patient.first_name);
+                    PatientComboBox.Items.Add(patient.first_name + "-" + patient.phone);
                 }
             }
             catch
@@ -293,77 +270,86 @@ namespace Healthtechbd
         {
             if (PatientComboBox.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
             {
-                patient = db.users.FirstOrDefault(x => x.first_name == PatientComboBox.Text);
-
-                if (patient != null)
+                try
                 {
-                    if (diagnosisTemplateIds.Count() > 0)// check for diagnosis select
+                    string[] words = PatientComboBox.Text.Split('-');
+                    string patientName = words[0];
+                    string patientPhone = words[1];
+
+                    var patient = db.users.FirstOrDefault(x => x.first_name == patientName && x.phone == patientPhone && x.doctor_id == MainWindow.Session.doctorId);
+
+                    if (patient != null)
                     {
-                        Grid sidebar = AdminPanelWindow.sidebar;
-
-                        sidebar.Visibility = Visibility.Visible;
-
-                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
-
-
-                        if (((Button)sender).Name == "UpdatePrescription")
+                        if (diagnosisTemplateIds.Count() > 0)// check for diagnosis select
                         {
-                            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+                            Grid sidebar = AdminPanelWindow.sidebar;
+
+                            sidebar.Visibility = Visibility.Visible;
+
+                            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+
+                            if (((Button)sender).Name == "UpdatePrescription")
+                            {
+                                NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+                            }
+                            else
+                            {
+                                SelectPrescriptionViewtemp();
+                            }
+
+                            var phone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.first_name == patientName && x.id != patient.id && x.doctor_id == MainWindow.Session.doctorId);
+
+                            if (phone == null)
+                            {
+                                patient.first_name = patientName;
+                                patient.phone = PatientPhone.Text.Trim();
+                                patient.age = PatientAge.Text.Trim();
+                                patient.address_line1 = PatientAddress.Text.Trim();
+
+                                db.SaveChanges();
+
+                                prescription = db.presceiptions.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
+
+                                prescription.user_id = patient.id;
+                                prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
+                                prescription.blood_pressure = BloodPresure.Text;
+                                prescription.temperature = Temperature.Text;
+                                prescription.doctores_notes = DoctorsNotes.Text;
+                                prescription.other_instructions = OtherInstructions.Text;
+
+                                db.SaveChanges();
+
+                                //Add Prescription Diagnosis
+                                AddPrescriptionDiagnosis(MainWindow.Session.editRecordId);
+
+                                //Add Prescription Medicines
+                                AddPrescriptionMedicines(MainWindow.Session.editRecordId);
+
+                                //Add Prescription Tests
+                                AddPrescriptionTests(MainWindow.Session.editRecordId);
+
+                                diagnosisTemplateIds.Clear();
+                                DiagnosisTestChosenControl.selectedIds.Clear();
+
+
+                                MessageBox.Show("Prescription has been saved", "Success");
+                            }
+                            else
+                            {
+                                MessageBox.Show("The Phone already exist.", "Already Exit");
+                            }
                         }
                         else
                         {
-                            SelectPrescriptionViewtemp();
-                        }
-
-
-                        var havePhone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.id != patient.id && x.doctor_id == MainWindow.Session.doctorId);
-
-                        if (havePhone == null)
-                        {
-                            patient.first_name = PatientComboBox.Text.Trim();
-                            patient.phone = PatientPhone.Text.Trim();
-                            patient.age = PatientAge.Text.Trim();
-                            patient.address_line1 = PatientAddress.Text.Trim();
-
-                            db.SaveChanges();
-
-                            prescription = db.presceiptions.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
-
-                            prescription.user_id = patient.id;
-                            prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
-                            prescription.blood_pressure = BloodPresure.Text;
-                            prescription.temperature = Temperature.Text;
-                            prescription.doctores_notes = DoctorsNotes.Text;
-                            prescription.other_instructions = OtherInstructions.Text;
-
-                            db.SaveChanges();
-                           
-                            //Add Prescription Diagnosis
-                            AddPrescriptionDiagnosis(MainWindow.Session.editRecordId);
-
-                            //Add Prescription Medicines
-                            AddPrescriptionMedicines(MainWindow.Session.editRecordId);
-
-                            //Add Prescription Tests
-                            AddPrescriptionTests(MainWindow.Session.editRecordId);
-
-                            diagnosisTemplateIds.Clear();
-                            DiagnosisTestChosenControl.selectedIds.Clear();
-                            
-
-                            MessageBox.Show("Prescription has been saved", "Success");
-                        }
-                        else
-                        {
-                            MessageBox.Show("The Phone already exist.", "Already Exit");
+                            MessageBox.Show("Please select a diagnosis", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Please select a diagnosis", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Please select a valid patient", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Please select a valid patient", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -673,6 +659,52 @@ namespace Healthtechbd
             {
                 SingleMedicine.Visibility = Visibility.Collapsed;
             }
+        }
+
+        public void FillUpPatientInfo(int patientId)
+        {
+            try
+            {
+                ClearPatientInfo();
+
+                var patient = db.users.FirstOrDefault(x => x.id == patientId);
+
+                if (patient != null)
+                {
+                    PatientComboBox.SelectedItem = patient.first_name + "-" + patient.phone;
+                    PatientPhone.Text = patient.phone;
+                    PatientAddress.Text = patient.address_line1;
+                    PatientAge.Text = patient.age;
+
+                    if (patient.prescription.Count() > 0)
+                    {
+                        PatientLastVisit.Text = patient.prescription.Last().created.ToString("dd MMM yyyy");
+
+                        foreach (var prescription in patient.prescription)
+                        {
+                            TextBlock textBlock = new TextBlock();
+                            textBlock.VerticalAlignment = VerticalAlignment.Center;
+                            textBlock.Padding = new Thickness(10, 5, 10, 5);
+                            textBlock.DataContext = prescription.id;
+                            textBlock.Text = prescription.created.ToString("dd MMM yyyy");
+
+                            textBlock.AddHandler(TextBlock.MouseDownEvent, new RoutedEventHandler(AllPrescriptionClick));
+
+                            AllPrescription.Children.Add(textBlock);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        public void ClearPatientInfo()
+        {
+            PatientPhone.Text = PatientAddress.Text = PatientAge.Text = PatientLastVisit.Text = "";
+            AllPrescription.Children.Clear();
         }
     }
 }
