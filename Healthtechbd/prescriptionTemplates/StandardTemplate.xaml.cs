@@ -51,7 +51,7 @@ namespace Healthtechbd.prescriptionTemplates
         public void LoadViewPrescriptionInfo()
         {
             doctor = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
-            prescription = db.presceiptions.Where(x => x.id == MainWindow.Session.editRecordId).FirstOrDefault();
+            prescription = db.prescriptions.Where(x => x.id == MainWindow.Session.editRecordId).FirstOrDefault();
 
             DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
@@ -100,7 +100,7 @@ namespace Healthtechbd.prescriptionTemplates
             PatientPhone.Text = prescription.user.phone;
             PatientAddress.Text = prescription.user.address_line1;
 
-            PatientLastVisit.Text = db.presceiptions.Where(x => x.user_id == prescription.user.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
+            PatientLastVisit.Text = db.prescriptions.Where(x => x.user_id == prescription.user.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
 
             var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
 

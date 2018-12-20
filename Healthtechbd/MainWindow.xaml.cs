@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using WpfChosenControl.model;
 using System.Net;
 using System.IO;
+using System.Threading;
 
 namespace Healthtechbd
 {
@@ -40,6 +41,9 @@ namespace Healthtechbd
             public static string imagePath;
 
             public static int setPatientId;
+            //public static string apiBaseUrl = "http://app.healthtechbd.com/";
+            public static string apiBaseUrl = "http://localhost/pms/";
+            
             #endregion
         }
 
@@ -86,6 +90,9 @@ namespace Healthtechbd
         {
             if (EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
+                loginLoader.Visibility = Visibility.Visible;
+                Thread.Sleep(5000);
+
                 try
                 {
                     user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password && x.role_id == 2); // Doctor role_id = 2 
@@ -149,7 +156,7 @@ namespace Healthtechbd
                 catch
                 {
                     MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                }               
             }
             else
             {

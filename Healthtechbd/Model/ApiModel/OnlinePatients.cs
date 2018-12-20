@@ -1,14 +1,12 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Healthtechbd.Model
+namespace Healthtechbd.Model.ApiModel
 {
-
-    public class ApiPatients
+    public class OnlinePatients
     {
         public List<Patients> patients { get; set; }
     }
@@ -45,11 +43,11 @@ namespace Healthtechbd.Model
         public DateTime created { get; set; }
     }
 
-    public class Product
+    public class SuccessMessages
     {
-        public string Id { get; set; }
         public string status { get; set; }
-        public decimal Price { get; set; }
-        public string Category { get; set; }
+        public int off_line_total { get; set; }
+        public int off_line_success { get; set; }
+        public int off_line_duplicate { get; set; }
     }
 }

@@ -38,14 +38,14 @@ namespace Healthtechbd
             {
                 if (MainWindow.Session.setPatientId > 0)
                 {
-                    var prescriptions = db.presceiptions.Where(x => x.doctor_id == MainWindow.Session.doctorId && x.user_id == MainWindow.Session.setPatientId)
+                    var prescriptions = db.prescriptions.Where(x => x.doctor_id == MainWindow.Session.doctorId && x.user_id == MainWindow.Session.setPatientId)
                                   .OrderByDescending(x => x.created).Take(40).ToList();
 
                     dataGridPrescriptions.ItemsSource = prescriptions;
                 }
                 else
                 {
-                    var prescriptions = db.presceiptions.Where(x => x.doctor_id == MainWindow.Session.doctorId)
+                    var prescriptions = db.prescriptions.Where(x => x.doctor_id == MainWindow.Session.doctorId)
                                  .OrderByDescending(x => x.created).Take(40).ToList();                    
 
                     dataGridPrescriptions.ItemsSource = prescriptions;
@@ -79,9 +79,9 @@ namespace Healthtechbd
                 int prescriptionId = (dataGridPrescriptions.SelectedItem as prescription).id;
                 try
                 {
-                    prescription = db.presceiptions.FirstOrDefault(x => x.id == prescriptionId);
+                    prescription = db.prescriptions.FirstOrDefault(x => x.id == prescriptionId);
 
-                    db.presceiptions.Remove(prescription);
+                    db.prescriptions.Remove(prescription);
 
                     //prescription diagnosis delete
                     var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescriptionId);
@@ -193,7 +193,7 @@ namespace Healthtechbd
             {
                 if(MainWindow.Session.setPatientId > 0)
                 {
-                    var prescriptions = db.presceiptions.Where(x => (x.user.first_name.Contains(searchBy) ||
+                    var prescriptions = db.prescriptions.Where(x => (x.user.first_name.Contains(searchBy) ||
                                     x.user.phone.Contains(searchBy)) && x.user_id == MainWindow.Session.setPatientId && x.doctor_id == MainWindow.Session.doctorId)
                                     .Take(40).ToList();
 
@@ -201,7 +201,7 @@ namespace Healthtechbd
                 }
                 else
                 {
-                    var prescriptions = db.presceiptions.Where(x => (x.user.first_name.Contains(searchBy) ||
+                    var prescriptions = db.prescriptions.Where(x => (x.user.first_name.Contains(searchBy) ||
                                    x.user.phone.Contains(searchBy)) && x.doctor_id == MainWindow.Session.doctorId)
                                    .Take(40).ToList();
 

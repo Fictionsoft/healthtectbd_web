@@ -54,7 +54,7 @@ namespace Healthtechbd
             try
             {
                 //To Selected this presceiption User 
-                var prescription = db.presceiptions.FirstOrDefault(x => x.id == id);
+                var prescription = db.prescriptions.FirstOrDefault(x => x.id == id);
                 PatientComboBox.SelectedItem = prescription.user.first_name + "-" + prescription.user.phone;                
 
                 PatientPhone.Text = prescription.user.phone;
@@ -308,7 +308,7 @@ namespace Healthtechbd
 
                                 db.SaveChanges();
 
-                                prescription = db.presceiptions.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
+                                prescription = db.prescriptions.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
 
                                 prescription.user_id = patient.id;
                                 prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id

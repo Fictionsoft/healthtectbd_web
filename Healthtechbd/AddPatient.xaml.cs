@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,9 +44,13 @@ namespace Healthtechbd
         }
 
         private void SubmitAddPatient_Click(object sender, RoutedEventArgs e)
-        {       
-            if (PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
-            {
+        {
+            Regex pattern = new Regex("[-]");
+            var patientName = pattern.Replace(PatientName.Text, " ");
+            var patientPhone = pattern.Replace(PatientPhone.Text, " ");
+
+            if (patientName != "" && patientPhone != "" && PatientAge.Text != "")
+            {                                
                 if ((PatientEmail.Text != "" && IsValidEmail(PatientEmail.Text) == true) || PatientEmail.Text == "")
                 {
                     var havePhone = db.users.FirstOrDefault(x => x.first_name == PatientName.Text && x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
@@ -53,14 +58,14 @@ namespace Healthtechbd
                     if (havePhone == null)
                     {                       
                         NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
-                        user.first_name = PatientName.Text.Trim();
-                        user.phone = PatientPhone.Text.Trim();
-                        user.email = PatientEmail.Text.Trim();
-                        user.age = PatientAge.Text.Trim();
-                        user.address_line1 = PatientAddress.Text.Trim();
-                        user.created = DateTime.Now;
                         user.doctor_id = MainWindow.Session.doctorId;
                         user.role_id = 3; // role_id 3 = Patient
+                        user.first_name = patientName;
+                        user.phone = patientPhone;
+                        user.email = PatientEmail.Text;
+                        user.age = PatientAge.Text;
+                        user.address_line1 = PatientAddress.Text;
+                        user.created = DateTime.Now;                      
                         user.expire_date = "00/00/0000";
 
                         db.users.Add(user);

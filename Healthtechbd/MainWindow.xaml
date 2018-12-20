@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Healthtechbd"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="LoginWindow" Icon="images/logo.png" WindowState="Maximized" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Closed="Window_Closed" >
 
@@ -14,7 +15,7 @@
         </Grid.Background>
 
         <Border Padding="40" Height="340" Width="475" BorderBrush="#eee" BorderThickness="1" Background="#fff">
-            <StackPanel>               
+            <StackPanel>
                 <TextBlock Text="LOGIN" Foreground="#545454" FontSize="25" TextAlignment="Center" ></TextBlock>
                 <Separator/>
 
@@ -26,6 +27,7 @@
                 
                 <!--Login Button-->
                 <Button x:Name="ButtonLogin" Content="LOGIN" Foreground="#fff" Background="#3CC2BB" Margin="0 0 0 10" Padding="9" Height="38" BorderBrush="#eee" BorderThickness="0" Click="ButtonLogin_Click" />
+                <fa:ImageAwesome Height="20" x:Name="loginLoader" Icon="Spinner" Spin="True" SpinDuration="4" Visibility="Collapsed" />
 
                 <!--Registration & Forgot Password-->
                 <Grid Margin="0 15 0 0">

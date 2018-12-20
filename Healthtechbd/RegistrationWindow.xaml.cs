@@ -35,7 +35,8 @@ namespace Healthtechbd
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            apiRegister();
+
+            //ApiSetPatients();
         }
 
         public RegistrationWindow(ForgotPasswordWindow forgotPasswordWindow)
@@ -83,7 +84,7 @@ namespace Healthtechbd
                             {
                                 if (CheckForInternetConnection() == true)
                                 {
-                                    apiRegister();
+                                    //apiRegister();
                                     user.is_sync = 1;
                                 }
 
@@ -167,67 +168,50 @@ namespace Healthtechbd
             {
                 return false;
             }
-        }
+        }        
 
-        async void apiRegister()
+        async void ApiSetPatients()
         {
+            //try
+            //{
+            //var patients = db.users.Where(x => x.role_id == 3).OrderByDescending(x => x.created).Take(2).ToArray();// role_id 3 = Patient              
+            var patients = db.users.Select(
+                x => new
+                {
+                    role_id = x.role_id,
+                    doctor_id = x.doctor_id,
+                    first_name = x.first_name,
+                    address_line1 = x.address_line1,
+                    phone = x.phone,
+                    email = x.email,
+                    age = x.age,
+                    created = x.created,
+                    is_sync = x.is_sync
+                })
+                .Where(x => x.doctor_id == MainWindow.Session.doctorId && x.role_id == 3 && x.is_sync == 0)
+                .OrderByDescending(x => x.created)
+                .Take(2)
+                .ToList();
+
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost/pms/");
-            client.DefaultRequestHeaders.Accept.Add(
-               new MediaTypeWithQualityHeaderValue("application/json"));
+                client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
 
-            HttpResponseMessage response = client.GetAsync("admin/users/api-registration").Result;
-            if (response.IsSuccessStatusCode)
-            {
-                //List<object> Patients = new List<object>();
-                var employees = response.Content.ReadAsStringAsync();
-                employees.Wait();
-                MessageBox.Show(employees.Result);
-            }
-            else
-            {
-                MessageBox.Show("Error Code" + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+                HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients", patients).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var employees = response.Content.ReadAsStringAsync();
+                    employees.Wait();
+                }
+                else
+                {
+                    MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //}
         }
-        //public void apiRegister()
-        //{
-        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://app.healthtechbd.com/admin/users/apiRegistration");
-        //    request.Method = "POST";
-
-        //    string postData = string.Format(
-        //                                    "first_name=" + FirstName.Text  + "&last_name=" + LastName.Text +
-        //                                    "&email=" + EmailAddress.Text + "&phone=" + Phone.Text +
-        //                                    "&password=" + Password.Password
-        //                                   );
-
-        //    byte[] data = Encoding.UTF8.GetBytes(postData);
-
-        //    request.ContentType = "application/x-www-form-urlencoded";
-        //    request.Accept = "application/json";
-        //    request.ContentLength = data.Length;
-
-        //    using (Stream requestStream = request.GetRequestStream())
-        //    {
-        //        requestStream.Write(data, 0, data.Length);
-        //    }
-
-        //    WebResponse response = null;
-        //    response = request.GetResponse();
-
-        //    try
-        //    {
-        //        using (response)
-        //        {
-        //            // Do something with response
-
-        //            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-        //        }
-        //    }
-        //    catch (WebException ex)
-        //    {
-        //        // Handle error
-        //    }
-        //}
 
         public static bool CheckForInternetConnection()
         {
@@ -323,7 +307,7 @@ namespace Healthtechbd
             {
                 Phone.Text = "Phone Number";
             }
-        }
+        }       
     }
    
 }

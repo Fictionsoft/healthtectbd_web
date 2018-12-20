@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -225,14 +226,18 @@ namespace Healthtechbd
 
         string PrescriptionTem;
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
-        {            
-            if ((PatientComboBox.Text != "" || NewPatientName.Text != "") && PatientPhone.Text != "" && PatientAge.Text != "")
+        {
+            Regex pattern = new Regex("[-]");
+            var newPatientName = pattern.Replace(NewPatientName.Text, " ");
+            var patientPhoneNumber = pattern.Replace(PatientPhone.Text, " ");
+
+            if ((PatientComboBox.Text != "" || newPatientName != "") && patientPhoneNumber != "" && PatientAge.Text != "")
             {   
                 if(diagnosisTemplateIds.Count() > 0)// check for diagnosis select
                 {
-                    if (NewPatientName.Text != "") //Add a new Patient
+                    if (newPatientName != "") //Add a new Patient
                     {
-                        var patientExit = db.users.FirstOrDefault(x => x.first_name == NewPatientName.Text && x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
+                        var patientExit = db.users.FirstOrDefault(x => x.first_name == newPatientName && x.phone == patientPhoneNumber && x.doctor_id == MainWindow.Session.doctorId);
 
                         if (patientExit == null)
                         {
@@ -251,8 +256,8 @@ namespace Healthtechbd
                             }
 
                             //Save New Patient 
-                            patient.first_name = NewPatientName.Text;
-                            patient.phone = PatientPhone.Text.Trim();
+                            patient.first_name = newPatientName;
+                            patient.phone = patientPhoneNumber;
                             patient.age = PatientAge.Text.Trim();
                             patient.address_line1 = PatientAddress.Text;
                             patient.created = DateTime.Now;
@@ -361,7 +366,7 @@ namespace Healthtechbd
             prescription.status = true;
             prescription.created = DateTime.Now;
 
-            db.presceiptions.Add(prescription);
+            db.prescriptions.Add(prescription);
             int result_add_prescription = db.SaveChanges();
 
             MainWindow.Session.editRecordId = prescription.id;//id save to session 

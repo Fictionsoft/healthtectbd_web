@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +29,7 @@ namespace Healthtechbd
 
         contextd_db db = new contextd_db();
         user user = new user();
+        prescription prescription = new prescription();
 
         public EditPatient(int id) : this()
         {
@@ -68,7 +70,11 @@ namespace Healthtechbd
 
         private void SubmitUpdatePatient_Click(object sender, RoutedEventArgs e)
         {
-            if (PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
+            Regex pattern = new Regex("[-]");
+            var patientName = pattern.Replace(PatientName.Text, " ");
+            var patientPhone = pattern.Replace(PatientPhone.Text, " ");
+
+            if (patientName != "" && patientPhone != "" && PatientAge.Text != "")
             {
                 if ((PatientEmail.Text != "" && IsValidEmail(PatientEmail.Text) == true) || PatientEmail.Text == "")
                 {
@@ -77,35 +83,26 @@ namespace Healthtechbd
                     var havePhone = db.users.FirstOrDefault(x => x.first_name == PatientName.Text && x.phone == PatientPhone.Text && x.id != patientId && x.doctor_id == MainWindow.Session.doctorId);
 
                     if (havePhone == null)
-                    {
-                        var haveEmail = db.users.FirstOrDefault(x => x.email == PatientEmail.Text && x.id != patientId && x.doctor_id == MainWindow.Session.doctorId);
+                    {                        
+                        user = db.users.FirstOrDefault(x => x.id == patientId);
 
-                        if (haveEmail == null)
+                        user.first_name = patientName;
+                        user.phone = patientPhone;
+                        user.email = PatientEmail.Text.Trim();
+                        user.age = PatientAge.Text.Trim();
+                        user.address_line1 = PatientAddress.Text.Trim();
+
+                        try
                         {
-                            user = db.users.FirstOrDefault(x => x.id == patientId);
-
-                            user.first_name = PatientName.Text.Trim();
-                            user.phone = PatientPhone.Text.Trim();
-                            user.email = PatientEmail.Text.Trim();
-                            user.age = PatientAge.Text.Trim();
-                            user.address_line1 = PatientAddress.Text.Trim();
-
-                            try
-                            {
-                                db.SaveChanges();
-                            }
-                            catch
-                            {
-                                MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
-
-                            NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
-                            MessageBox.Show("Update Successfully", "Success");
+                            db.SaveChanges();
                         }
-                        else
+                        catch
                         {
-                            MessageBox.Show("The Email already exist, Please enter another Email Address.", "Already Exit");
+                            MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
+
+                        NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
+                        MessageBox.Show("Update Successfully", "Success");                       
                     }
                     else
                     {

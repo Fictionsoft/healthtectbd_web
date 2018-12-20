@@ -36,7 +36,7 @@ namespace Healthtechbd.prescriptionTemplates
         public void LoadViewPrescriptionInfo()
         {
             doctor = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
-            prescription = db.presceiptions.Where(x => x.id == MainWindow.Session.editRecordId).FirstOrDefault();
+            prescription = db.prescriptions.Where(x => x.id == MainWindow.Session.editRecordId).FirstOrDefault();
 
             DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
