@@ -37,7 +37,6 @@ namespace Healthtechbd
             try
             {
                 var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctorId)
-                    .Include(x => x.diagnosis)
                     .OrderByDescending(x => x.created)
                     .Take(40)
                     .ToList();

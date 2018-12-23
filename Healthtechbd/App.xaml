@@ -23,7 +23,7 @@
 
             <Style TargetType="TextBlock" x:Key="defaultViewLevel">
                 <Setter Property="Padding" Value="2 5"/>
-                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontSize" Value="14"/>
                 <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
             </Style>
 

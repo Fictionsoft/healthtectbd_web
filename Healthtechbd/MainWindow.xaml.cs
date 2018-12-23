@@ -17,6 +17,9 @@ using WpfChosenControl.model;
 using System.Net;
 using System.IO;
 using System.Threading;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace Healthtechbd
 {
@@ -88,23 +91,18 @@ namespace Healthtechbd
               
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
+
             if (EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
-                loginLoader.Visibility = Visibility.Visible;
-                Thread.Sleep(5000);
-
                 try
                 {
                     user = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.password == Password.Password && x.role_id == 2); // Doctor role_id = 2 
 
                     if (user != null) //User = Doctor
                     {
-                        if(user.is_sync == 0 && CheckForInternetConnection() == true)
+                        if (user.is_sync == 0 && CheckForInternetConnection() == true)
                         {
-                            apiRegister(user.first_name, user.last_name, user.email, user.phone, user.password);
-
-                            user.is_sync = 1;
-                            db.SaveChanges();
+                            ApiRegister(user.id, user.first_name, user.last_name, user.email, user.phone, user.password, user.expire_date);
                         }
 
                         DateTime expireDate = DateTime.ParseExact(user.expire_date, "dd/MM/yyyy", null);
@@ -144,9 +142,9 @@ namespace Healthtechbd
                         {
                             if (MessageBox.Show("Your registration has been expired, Please contact with Admin", "Expired") == MessageBoxResult.OK)
                             {
-                                activeSection.Visibility = Visibility.Visible;                         
+                                activeSection.Visibility = Visibility.Visible;
                             }
-                        }                       
+                        }
                     }
                     else
                     {
@@ -156,7 +154,7 @@ namespace Healthtechbd
                 catch
                 {
                     MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }               
+                }
             }
             else
             {
@@ -164,40 +162,42 @@ namespace Healthtechbd
             }
         }
 
-        public void apiRegister(string firstName, string lastName, string email, string phone, string password)
+        public void ApiRegister(int id, string first_name, string last_name, string phone, string email, string password, string expire_date)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://app.healthtechbd.com/admin/users/apiRegistration");
-            request.Method = "POST";
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            string postData = string.Format(
-                                            "first_name=" + firstName + "&last_name=" + lastName +
-                                            "&email=" + email + "&phone=" + phone +
-                                            "&password=" + password
-                                           );
+            var doctor = db.users.FirstOrDefault(x => x.id == id);
 
-            byte[] data = Encoding.UTF8.GetBytes(postData);
-
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.Accept = "application/json";
-            request.ContentLength = data.Length;
-
-            using (Stream requestStream = request.GetRequestStream())
+            var content = new FormUrlEncodedContent(new[]
             {
-                requestStream.Write(data, 0, data.Length);
-            }
+                new KeyValuePair<string, string>("first_name", first_name),
+                new KeyValuePair<string, string>("last_name", last_name),
+                new KeyValuePair<string, string>("phone", phone),
+                new KeyValuePair<string, string>("email", email),
+                new KeyValuePair<string, string>("password", password),
+                new KeyValuePair<string, string>("expire_date", expire_date)
+            });
 
-            try
+            HttpResponseMessage response = client.PostAsync("admin/users/api-register", content).Result;
+            if (response.IsSuccessStatusCode)
             {
-                using (WebResponse response = request.GetResponse())
+                var patients = response.Content.ReadAsStringAsync();
+                patients.Wait();
+
+                dynamic status = JsonConvert.DeserializeObject(patients.Result);
+
+                if (status["status"] == "success")
                 {
-                    // Do something with response
-
-                    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    user = db.users.FirstOrDefault(x => x.id == id);
+                    user.is_sync = 1;
+                    db.SaveChanges();
                 }
             }
-            catch (WebException ex)
+            else
             {
-                // Handle error
+                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
             }
         }
 

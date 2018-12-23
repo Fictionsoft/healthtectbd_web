@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Healthtechbd.Model.ApiModel
 {
-    public class OnlinePatients
-    {
-        public List<Patients> patients { get; set; }
-    }
-
-    public class Patients
+    public class ViewPatients
     {
         public int id { get; set; }
         public int role_id { get; set; }
@@ -46,8 +41,8 @@ namespace Healthtechbd.Model.ApiModel
     public class SuccessMessages
     {
         public string status { get; set; }
-        public int off_line_total { get; set; }
-        public int off_line_success { get; set; }
-        public int off_line_duplicate { get; set; }
+        public int online_total { get; set; }
+        public int online_success { get; set; }
+        public int online_duplicate { get; set; }
     }
 }

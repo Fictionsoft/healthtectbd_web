@@ -35,8 +35,6 @@ namespace Healthtechbd
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-
-            //ApiSetPatients();
         }
 
         public RegistrationWindow(ForgotPasswordWindow forgotPasswordWindow)
@@ -81,13 +79,7 @@ namespace Healthtechbd
                         if (haveEmail == null)
                         {
                             if (havePhone == null)
-                            {
-                                if (CheckForInternetConnection() == true)
-                                {
-                                    //apiRegister();
-                                    user.is_sync = 1;
-                                }
-
+                            {                                
                                 user.role_id = 2; //Doctor role_id = 2
                                 user.first_name = FirstName.Text;
                                 user.last_name = LastName.Text;
@@ -101,7 +93,15 @@ namespace Healthtechbd
                                 user.expire_date = DateTime.Now.AddDays(1).ToString("dd/MM/yyyy");
 
                                 db.users.Add(user);
-                                db.SaveChanges();
+                                var status = db.SaveChanges();
+
+                                if(status == 1) // Save Success
+                                {
+                                    if (CheckForInternetConnection() == true)
+                                    {
+                                        ApiRegister(user.id);
+                                    }
+                                }
 
                                 MainWindow.Session.doctorId = user.id;
                                 MainWindow.Session.doctorFirstName = FirstName.Text;
@@ -168,7 +168,46 @@ namespace Healthtechbd
             {
                 return false;
             }
-        }        
+        }  
+        
+        public void ApiRegister(int id)
+        {                                                                                                                                                               
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var doctor = db.users.FirstOrDefault(x => x.id == id);
+
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("first_name", doctor.first_name),
+                new KeyValuePair<string, string>("last_name", doctor.last_name),
+                new KeyValuePair<string, string>("phone", doctor.phone),
+                new KeyValuePair<string, string>("email", doctor.email),
+                new KeyValuePair<string, string>("password", doctor.password),
+                new KeyValuePair<string, string>("expire_date", doctor.expire_date)
+            });
+
+            HttpResponseMessage response = client.PostAsync("admin/users/api-register", content).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var patients = response.Content.ReadAsStringAsync();
+                patients.Wait();
+
+                dynamic status = JsonConvert.DeserializeObject(patients.Result);
+
+                if(status["status"] == "success")
+                {
+                    user = db.users.FirstOrDefault(x => x.id == id);
+                    user.is_sync = 1;
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+            }
+        }
 
         async void ApiSetPatients()
         {

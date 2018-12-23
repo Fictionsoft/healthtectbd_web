@@ -161,7 +161,12 @@ namespace Healthtechbd
                 GetOnlinePatients();
                 GetLocalPatients();
 
-                MessageBox.Show("Patients sync Report:");
+               if((MessageBox.Show("Offline: \n Total :- " + OfflineTotal + "\n Success :- " + OfflineSuccess + "\n Duplicate :- " + OfflineDuplicate
+                                + "\n \n Online: \n Total :- " + OnlineTotal + "\n Sucess :- " + OnlineSuccess + "\n Duplicate :- " + OnlineDuplicate,
+                                "Patients sync report", MessageBoxButton.OK, MessageBoxImage.Information)) == MessageBoxResult.OK)
+                {
+                    loadPatients();
+                } 
 
                 OfflineTotal = OfflineSuccess = OfflineDuplicate = OnlineTotal = OnlineSuccess = OnlineDuplicate = 0; // Clear Value
             }
@@ -182,11 +187,11 @@ namespace Healthtechbd
             {
                 var patients = response.Content.ReadAsStringAsync();
                 patients.Wait();
-                var onlinePatients = JsonConvert.DeserializeObject<OnlinePatients>(patients.Result);
+                var onlinePatients = JsonConvert.DeserializeObject<List<ViewPatients>>(patients.Result);
 
                 if (SaveOnlinePatientsToLocal(onlinePatients))
                 {
-                    HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/users/get-online-patients", onlinePatients.patients).Result;
+                    HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/users/get-online-patients", onlinePatients).Result;
                 }
             }
             else
@@ -195,12 +200,12 @@ namespace Healthtechbd
             }
         }
 
-        public bool SaveOnlinePatientsToLocal(OnlinePatients onlinePatients)
+        public bool SaveOnlinePatientsToLocal(List<ViewPatients> onlinePatients)
         {
             //Count Total Sync Patients From On-line
-            OfflineTotal = (onlinePatients.patients.Count() > 0)?onlinePatients.patients.Count():0;
+            OfflineTotal = (onlinePatients.Count() > 0)?onlinePatients.Count():0;
 
-            foreach (var patient in onlinePatients.patients)
+            foreach (var patient in onlinePatients)
             {
                 var havePatient = db.users.Where(x => x.first_name == patient.first_name && x.phone == patient.phone && x.doctor_id == MainWindow.Session.doctorId).FirstOrDefault();
 
@@ -233,7 +238,7 @@ namespace Healthtechbd
                 }                                              
             }
 
-            if(OnlineSuccess > 0 || OnlineDuplicate > 0)
+            if(OfflineTotal > 0 || OfflineDuplicate > 0)
             {
                 return true;
             }
@@ -263,9 +268,9 @@ namespace Healthtechbd
 
                     if(OnlineResponse != null && OnlineResponse.status == "success")
                     {
-                        OnlineTotal = OnlineResponse.off_line_total;
-                        OnlineSuccess = OnlineResponse.off_line_success;
-                        OnlineDuplicate = OnlineResponse.off_line_duplicate;
+                        OnlineTotal = OnlineResponse.online_total;
+                        OnlineSuccess = OnlineResponse.online_success;
+                        OnlineDuplicate = OnlineResponse.online_duplicate;
 
                         ChangeIsSyncLocalPatients(LocalPatients);
                     }                    
@@ -283,20 +288,7 @@ namespace Healthtechbd
 
         public void ChangeIsSyncLocalPatients(List<user> LocalPatients)
         {
-            foreach(var LocalPatient in LocalPatients)
-            {
-                user = db.users.FirstOrDefault(x => x.id == LocalPatient.id);
-                user.is_sync = 1;
-
-                //try
-                //{
-                db.SaveChanges();
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("There is a problem, Please try again.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //}
-            }
+            // 
         }
 
         public static bool CheckForInternetConnection()
