@@ -143,8 +143,8 @@
         <Grid Height="60" Background="#E3E7EB" >
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                <Button ToolTip="Cancel" x:Name="CancelMyProfile" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelMyProfile_Click" />
-                <Button ToolTip="Update" x:Name="SubmitMyProfile" Content="UPDATE" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitMyProfile_Click" />
+                <Button  x:Name="CancelMyProfile" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelMyProfile_Click" />
+                <Button x:Name="SubmitMyProfile" Content="UPDATE" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitMyProfile_Click" />
             </StackPanel>
 
         </Grid>

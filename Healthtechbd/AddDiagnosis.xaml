@@ -54,8 +54,8 @@
         <Grid Height="60" Background="#E3E7EB" Margin="20" >
 
             <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                <Button ToolTip="Cancel" x:Name="CancelAddDiagnosis" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelAddDiagnosis_Click" />
-                <Button ToolTip="Submit" Content="SUBMIT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitAddDiagnosis_Click" />
+                <Button x:Name="CancelAddDiagnosis" Content="CANCEL" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="CancelAddDiagnosis_Click" />
+                <Button Content="SUBMIT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="SubmitAddDiagnosis_Click" />
             </StackPanel>
 
         </Grid>

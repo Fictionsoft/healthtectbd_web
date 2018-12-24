@@ -192,6 +192,7 @@
     <Compile Include="Medicines.xaml.cs">
       <DependentUpon>Medicines.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ApiModel\ViewDiagnosisTemplates.cs" />
     <Compile Include="Model\ApiModel\ViewPatients.cs" />
     <Compile Include="Model\DiagnosisTestModel.cs" />
     <Compile Include="Model\MedicineModel.cs" />

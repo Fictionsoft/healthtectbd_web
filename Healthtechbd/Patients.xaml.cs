@@ -161,8 +161,8 @@ namespace Healthtechbd
                 GetOnlinePatients();
                 GetLocalPatients();
 
-               if((MessageBox.Show("Offline: \n Total :- " + OfflineTotal + "\n Success :- " + OfflineSuccess + "\n Duplicate :- " + OfflineDuplicate
-                                + "\n \n Online: \n Total :- " + OnlineTotal + "\n Sucess :- " + OnlineSuccess + "\n Duplicate :- " + OnlineDuplicate,
+               if((MessageBox.Show("Online to offline: \n Total : " + OfflineTotal + "\n Success : " + OfflineSuccess + "\n Duplicate : " + OfflineDuplicate
+                                + "\n \n Offline to online: \n Total : " + OnlineTotal + "\n Sucess : " + OnlineSuccess + "\n Duplicate : " + OnlineDuplicate,
                                 "Patients sync report", MessageBoxButton.OK, MessageBoxImage.Information)) == MessageBoxResult.OK)
                 {
                     loadPatients();
@@ -249,13 +249,12 @@ namespace Healthtechbd
         {
             //try
             //{
-                var LocalPatients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId && x.is_sync == 0).Take(100).ToList();// role_id 3 = Patient                              
-                foreach ( var LocalPatient in LocalPatients)
-                {
-                    LocalPatient.prescription.Clear();
-                }
-
-                HttpClient client = new HttpClient();
+            var LocalPatients = db.users
+                .Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId && x.is_sync == 0)
+                .Take(100)
+                .ToList();// role_id 3 = Patient                              
+            
+            HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
 
                 HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients?doctor_email="+MainWindow.Session.doctorEmail, LocalPatients).Result;
@@ -288,7 +287,11 @@ namespace Healthtechbd
 
         public void ChangeIsSyncLocalPatients(List<user> LocalPatients)
         {
-            // 
+            foreach (var LocalPatient in LocalPatients)
+            {
+                LocalPatient.is_sync = 1;
+                db.SaveChanges();
+            }
         }
 
         public static bool CheckForInternetConnection()

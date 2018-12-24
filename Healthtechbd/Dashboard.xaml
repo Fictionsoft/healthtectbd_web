@@ -23,7 +23,7 @@
 
                 <Grid>
                     <TextBox Text="Phone number" x:Name="patientPhone" Width="300" Style="{StaticResource InputField}" GotFocus="patientPhone_GotFocus" LostFocus="patientPhone_LostFocus"/>
-                    <Button Background="#3CC2BB"  BorderBrush="#eee" BorderThickness="0" Padding="9" Height="40" ToolTip="Search" Width="100" FontWeight="Normal" Content="SEARCH" x:Name="btnSearch" Click="btnSearch_Click" Margin="490,0,28,16"/>
+                    <Button Background="#3CC2BB"  BorderBrush="#eee" BorderThickness="0" Padding="9" Height="40" Width="100" FontWeight="Normal" Content="SEARCH" x:Name="btnSearch" Click="btnSearch_Click" Margin="490,0,28,16"/>
                 </Grid>
                
             </StackPanel>

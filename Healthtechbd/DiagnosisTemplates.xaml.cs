@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Healthtechbd.Model.ApiModel;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,10 +31,30 @@ namespace Healthtechbd
         {
             InitializeComponent();
             loadDiagnosisTemplates();
+            GetOnlineDiagnosisTemplates();
         }
 
         contextd_db db = new contextd_db();        
-        diagnosis_template diagnosis_template = new diagnosis_template();        
+        diagnosis_template diagnosis_template = new diagnosis_template();
+        
+        public void GetOnlineDiagnosisTemplates()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("admin/diagnosis/get-online-diagnosis-templates?doctor_email=" + MainWindow.Session.doctorEmail).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var diagnosisTemplates = response.Content.ReadAsStringAsync();
+                diagnosisTemplates.Wait();
+                var onlineDiagnosisTemplates = JsonConvert.DeserializeObject<List<ViewDiagnosisTemplates>>(diagnosisTemplates.Result);
+            }
+            else
+            {
+                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+            }
+        }
 
         void loadDiagnosisTemplates()
         {

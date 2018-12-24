@@ -17,8 +17,8 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="PATIENTS" Style="{StaticResource PageHeading}"/>
-            <Button ToolTip="Add Patient" x:Name="ButtonAddPatient" Grid.Column="1" Margin="0 0 20 0" Content="ADD PATIENT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddPatient_Click" />
-            <Button ToolTip="Synchronize Patient" x:Name="ButtonSyncPatient" Grid.Column="1" Margin="0 0 140 0" Content="SYNC PATIENT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonSyncPatient_Click" />
+            <Button x:Name="ButtonAddPatient" Grid.Column="1" Margin="0 0 20 0" Content="ADD PATIENT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddPatient_Click" />
+            <Button x:Name="ButtonSyncPatient" Grid.Column="1" Margin="0 0 140 0" Content="SYNC PATIENT" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonSyncPatient_Click" />
         </Grid>
 
         <!--Page Heading Bottom-->
@@ -38,7 +38,7 @@
                         <Button ToolTip="Search" x:Name="btnSearch" Style="{StaticResource SearchButton}" Grid.Column="1" Margin="0 0 10 0" Click="btnSearch_Click">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
-                        <Button ToolTip="Reset" x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
+                        <Button  x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
                     </Grid>
                 </Grid>
 
@@ -54,36 +54,36 @@
                                     <DataGridTextColumn Width="*" Header="Created" Binding="{Binding created}" />
                                     <DataGridTextColumn Width="*" Visibility="Hidden" Binding="{Binding id}" />
 
-                                <DataGridTemplateColumn>
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button ToolTip="Create Prescription" x:Name="btnCreatePatientPrescription" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnCreatePatientPrescription_Click" >
-                                                <materialDesign:PackIcon Kind="Plus"/>
-                                            </Button>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Action">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button ToolTip="Create Prescription" x:Name="btnCreatePatientPrescription" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnCreatePatientPrescription_Click" >
+                                                    <materialDesign:PackIcon Kind="Plus"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
-                                <DataGridTemplateColumn>
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button ToolTip="View Prescription" x:Name="btnViewPatientPrescription" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnViewPatientPrescription_Click" >
-                                                <materialDesign:PackIcon Kind="Teamviewer"/>
-                                            </Button>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button ToolTip="Edit" x:Name="btnEditPatientRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnEditPatientRow_Click" >
+                                                    <materialDesign:PackIcon Kind="TableEdit"/>
+                                                </Button>
+                                         </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
-                                <DataGridTemplateColumn Header="Action">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button ToolTip="Edit" x:Name="btnEditPatientRow" Background="#3CC2BB" Height="20" Width="30" Padding="0" Click="btnEditPatientRow_Click" >
-                                                <materialDesign:PackIcon Kind="TableEdit"/>
-                                            </Button>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-
+                                    <DataGridTemplateColumn>
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button ToolTip="View Prescription" x:Name="btnViewPatientPrescription" Background="#3CC2BB" Height="20" Width="30"  Padding="0" Click="btnViewPatientPrescription_Click" >
+                                                    <materialDesign:PackIcon Kind="Teamviewer"/>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>   
+                                    
                                 <!--<DataGridTemplateColumn>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>

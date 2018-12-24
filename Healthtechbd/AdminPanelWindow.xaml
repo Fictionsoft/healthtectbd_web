@@ -110,13 +110,6 @@
                         </StackPanel>
                     </ListViewItem>
 
-                    <ListViewItem x:Name="ButtonDiagnosisTemplates" Height="60" GotFocus="ButtonDiagnosisTemplates_GotFocus">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Notebook" Style="{StaticResource NavItemIcon}"/>
-                            <TextBlock Style="{StaticResource NavItem}" Text="DIAGNOSIS TEMPLATES"/>
-                        </StackPanel>
-                    </ListViewItem>
-
                     <ListViewItem x:Name="ButtonMedicines" Height="60" GotFocus="ButtonMedicines_GotFocus">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="MedicalBag" Style="{StaticResource NavItemIcon}"/>
@@ -135,6 +128,13 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="AccountCircle" Style="{StaticResource NavItemIcon}"/>
                             <TextBlock Style="{StaticResource NavItem}" Text="PATIENTS"/>
+                        </StackPanel>
+                    </ListViewItem>
+
+                    <ListViewItem x:Name="ButtonDiagnosisTemplates" Height="60" GotFocus="ButtonDiagnosisTemplates_GotFocus">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Notebook" Style="{StaticResource NavItemIcon}"/>
+                            <TextBlock Style="{StaticResource NavItem}" Text="DIAGNOSIS TEMPLATES"/>
                         </StackPanel>
                     </ListViewItem>
 
