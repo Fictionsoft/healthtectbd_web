@@ -254,7 +254,7 @@ namespace Healthtechbd
                 .Take(100)
                 .ToList();// role_id 3 = Patient                              
             
-            HttpClient client = new HttpClient();
+                HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
 
                 HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients?doctor_email="+MainWindow.Session.doctorEmail, LocalPatients).Result;

@@ -38,7 +38,7 @@ namespace Healthtechbd
         diagnosis_template diagnosis_template = new diagnosis_template();
         contextd_db db = new contextd_db();
         diagnosis diagnosis = new diagnosis();
-        diagnosis_medicine diagnosis_medecine = new diagnosis_medicine();
+        diagnosis_medicine diagnosis_medicine = new diagnosis_medicine();
         diagnosis_test diagnosis_test = new diagnosis_test();        
 
         private void CancelAddDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
@@ -147,11 +147,11 @@ namespace Healthtechbd
             var medicinesIds = MedicineChosenControl.selectedIds;
             foreach (int medicine_id in medicinesIds)
             {
-                diagnosis_medecine.diagnosis_id = diagnosisTemplateId;
-                diagnosis_medecine.medicine_id = medicine_id;
-                diagnosis_medecine.status = true;
-                diagnosis_medecine.created = DateTime.Now;
-                db.diagnosis_medicines.Add(diagnosis_medecine);
+                diagnosis_medicine.diagnosis_id = diagnosisTemplateId;
+                diagnosis_medicine.medicine_id = medicine_id;
+                diagnosis_medicine.status = true;
+                diagnosis_medicine.created = DateTime.Now;
+                db.diagnosis_medicines.Add(diagnosis_medicine);
                 db.SaveChanges();
             }
 

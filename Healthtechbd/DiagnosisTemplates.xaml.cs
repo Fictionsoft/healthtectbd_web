@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -31,30 +32,17 @@ namespace Healthtechbd
         {
             InitializeComponent();
             loadDiagnosisTemplates();
-            GetOnlineDiagnosisTemplates();
+            //GetOnlineDiagnosisTemplates();
+            GetLocalDiagnosisTemplates();
         }
 
         contextd_db db = new contextd_db();        
         diagnosis_template diagnosis_template = new diagnosis_template();
-        
-        public void GetOnlineDiagnosisTemplates()
-        {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = client.GetAsync("admin/diagnosis/get-online-diagnosis-templates?doctor_email=" + MainWindow.Session.doctorEmail).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var diagnosisTemplates = response.Content.ReadAsStringAsync();
-                diagnosisTemplates.Wait();
-                var onlineDiagnosisTemplates = JsonConvert.DeserializeObject<List<ViewDiagnosisTemplates>>(diagnosisTemplates.Result);
-            }
-            else
-            {
-                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
-        }
+        diagnosis diagnosis = new diagnosis();
+        medicine medicine = new medicine();
+        test test = new test();
+        diagnosis_medicine diagnosis_medicine = new diagnosis_medicine();
+        diagnosis_test diagnosis_test = new diagnosis_test();
 
         void loadDiagnosisTemplates()
         {
@@ -149,6 +137,139 @@ namespace Healthtechbd
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void SyncDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckForInternetConnection() == true)
+            {
+                GetOnlineDiagnosisTemplates();
+            }
+            else
+            {
+                MessageBox.Show("Check your Internet connection", "Warning");
+            }
+        }
+
+        public void GetOnlineDiagnosisTemplates()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("admin/diagnosis/get-online-diagnosis-templates?doctor_email=" + MainWindow.Session.doctorEmail).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var diagnosisTemplates = response.Content.ReadAsStringAsync();
+                diagnosisTemplates.Wait();
+                var onlineDiagnosisTemplates = JsonConvert.DeserializeObject<List<ViewDiagnosisTemplates>>(diagnosisTemplates.Result);
+
+                SaveOnlineDiagnosisTemplatesToLocal(onlineDiagnosisTemplates);
+            }
+            else
+            {
+                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+            }
+        }
+        
+        public void SaveOnlineDiagnosisTemplatesToLocal(List<ViewDiagnosisTemplates> onlineDiagnosisTemplates)
+        {  
+            foreach (var onlineDiagnosisTemplate in onlineDiagnosisTemplates)
+            {
+                var haveDiagnosis = db.diagnosis.FirstOrDefault(x => x.name == onlineDiagnosisTemplate.diagnosis_list.name);                
+
+                if(haveDiagnosis != null && haveDiagnosis.diagnosis_template.Count() == 0)
+                {
+                    //create template
+                    diagnosis_template.diagnosis_list_id = haveDiagnosis.id;
+                    diagnosis_template.doctor_id = MainWindow.Session.doctorId;
+                    diagnosis_template.instructions = onlineDiagnosisTemplate.instructions;
+                    diagnosis_template.status = true;
+                    diagnosis_template.created = DateTime.Now;
+                    db.diagnosis_templates.Add(diagnosis_template);
+
+                    int diagnossisSaveResult = db.SaveChanges();  
+                    
+                    if(diagnossisSaveResult == 1) // True
+                    {
+                        if(onlineDiagnosisTemplate.medicines.Count() > 0)
+                        {
+                            SaveOnlineDiagnosisMedicinesToLocal(onlineDiagnosisTemplate.medicines, diagnosis_template.id);
+                        }
+                    }
+                }                                                           
+            }
+        }
+
+        public void SaveOnlineDiagnosisMedicinesToLocal(List<ViewName> online_diagnosis_medicines, int online_diagnosis_template_id)
+        {
+            foreach (var online_diagnosis_medicine in online_diagnosis_medicines)
+            {
+                var haveMedicines = db.medicines.FirstOrDefault(x => x.name == online_diagnosis_medicine.name);
+
+                if(haveMedicines != null)
+                {
+                    diagnosis_medicine.diagnosis_id = online_diagnosis_template_id; //Diagnosis Template id
+                    diagnosis_medicine.medicine_id = haveMedicines.id;
+                    diagnosis_medicine.status = true;
+                    diagnosis_medicine.created = DateTime.Now;
+                    db.diagnosis_medicines.Add(diagnosis_medicine);
+                    db.SaveChanges();
+                }                
+            }
+        }
+
+        public static bool CheckForInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://clients3.google.com/generate_204"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void GetLocalDiagnosisTemplates()
+        {
+            var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctorId)
+                    .OrderByDescending(x => x.created)
+                    .Take(40)
+                    .ToList();
+
+
+            var json_diagnosis_templates = JsonConvert.SerializeObject(diagnosis_templates, Formatting.Indented,
+            new JsonSerializerSettings
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            });
+
+
+            //                       config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+            //= Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+            //       config.Formatters.JsonFormatter.SerializerSettings.PreserveReferencesHandling
+            //            = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.PostAsJsonAsync("admin/diagnosis/get-local-diagnosis-templates?doctor_email=" + MainWindow.Session.doctorEmail, json_diagnosis_templates).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var diagnosisTemplates = response.Content.ReadAsStringAsync();
+                diagnosisTemplates.Wait();
+                var onlineDiagnosisTemplates = JsonConvert.DeserializeObject(diagnosisTemplates.Result);
+            }
+            else
+            {
+                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
             }
         }
     }

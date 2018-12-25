@@ -27,7 +27,7 @@
                 
                 <!--Login Button-->
                 <Button x:Name="ButtonLogin" Content="LOGIN" Foreground="#fff" Background="#3CC2BB" Margin="0 0 0 10" Padding="9" Height="38" BorderBrush="#eee" BorderThickness="0" Click="ButtonLogin_Click" />
-                <fa:ImageAwesome Height="20" x:Name="loginLoader" Icon="Spinner" Spin="True" SpinDuration="4" Visibility="Collapsed" />
+                <fa:ImageAwesome Height="20" x:Name="loginLoader" Icon="Spinner" Spin="True" SpinDuration="4" Visibility="Collapsed"/>
 
                 <!--Registration & Forgot Password-->
                 <Grid Margin="0 15 0 0">
