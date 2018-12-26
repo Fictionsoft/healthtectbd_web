@@ -232,14 +232,59 @@ namespace Healthtechbd
             var patientPhoneNumber = pattern.Replace(PatientPhone.Text, " ");
 
             if ((PatientComboBox.Text != "" || newPatientName != "") && patientPhoneNumber != "" && PatientAge.Text != "")
-            {   
-                if(diagnosisTemplateIds.Count() > 0)// check for diagnosis select
+            {                   
+                if (newPatientName != "") //Add a new Patient
                 {
-                    if (newPatientName != "") //Add a new Patient
-                    {
-                        var patientExit = db.users.FirstOrDefault(x => x.first_name == newPatientName && x.phone == patientPhoneNumber && x.doctor_id == MainWindow.Session.doctorId);
+                    var patientExit = db.users.FirstOrDefault(x => x.first_name == newPatientName && x.phone == patientPhoneNumber && x.doctor_id == MainWindow.Session.doctorId);
 
-                        if (patientExit == null)
+                    if (patientExit == null)
+                    {
+                        Grid sidebar = AdminPanelWindow.sidebar;
+                        sidebar.Visibility = Visibility.Visible;
+
+                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+
+                        if (((Button)sender).Name == "SaveAddPrescription")
+                        {
+                            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
+                        }
+                        else
+                        {
+                            SelectPrescriptionViewtemp();
+                        }
+
+                        //Save New Patient 
+                        patient.first_name = newPatientName;
+                        patient.phone = patientPhoneNumber;
+                        patient.age = PatientAge.Text.Trim();
+                        patient.address_line1 = PatientAddress.Text;
+                        patient.created = DateTime.Now;
+                        patient.doctor_id = MainWindow.Session.doctorId;
+                        patient.role_id = 3; // role_id 3 = Patient
+                        patient.expire_date = "00/00/0000";
+
+                        db.users.Add(patient);
+                        db.SaveChanges();
+                        prescription.user_id = patient.id;
+
+                        SavePrescription();
+                    }
+                    else
+                    {
+                        MessageBox.Show("The patient already exist", "Already Exit");
+                    }
+                }
+                else //Select a patient from combobox
+                {
+                    try
+                    {
+                        string[] words = PatientComboBox.Text.Split('-');
+                        string patientName = words[0];
+                        string patientPhone = words[1];
+
+                        var patient = db.users.FirstOrDefault(x => x.first_name == patientName && x.phone == patientPhone && x.doctor_id == MainWindow.Session.doctorId);
+
+                        if (patient != null)
                         {
                             Grid sidebar = AdminPanelWindow.sidebar;
                             sidebar.Visibility = Visibility.Visible;
@@ -255,71 +300,19 @@ namespace Healthtechbd
                                 SelectPrescriptionViewtemp();
                             }
 
-                            //Save New Patient 
-                            patient.first_name = newPatientName;
-                            patient.phone = patientPhoneNumber;
-                            patient.age = PatientAge.Text.Trim();
-                            patient.address_line1 = PatientAddress.Text;
-                            patient.created = DateTime.Now;
-                            patient.doctor_id = MainWindow.Session.doctorId;
-                            patient.role_id = 3; // role_id 3 = Patient
-                            patient.expire_date = "00/00/0000";
-
-                            db.users.Add(patient);
-                            db.SaveChanges();
                             prescription.user_id = patient.id;
 
                             SavePrescription();
                         }
                         else
                         {
-                            MessageBox.Show("The patient already exist", "Already Exit");
-                        }
-                    }
-                    else //Select a patient from combobox
-                    {
-                        try
-                        {
-                            string[] words = PatientComboBox.Text.Split('-');
-                            string patientName = words[0];
-                            string patientPhone = words[1];
-
-                            var patient = db.users.FirstOrDefault(x => x.first_name == patientName && x.phone == patientPhone && x.doctor_id == MainWindow.Session.doctorId);
-
-                            if (patient != null)
-                            {
-                                Grid sidebar = AdminPanelWindow.sidebar;
-                                sidebar.Visibility = Visibility.Visible;
-
-                                AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
-
-                                if (((Button)sender).Name == "SaveAddPrescription")
-                                {
-                                    NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-                                }
-                                else
-                                {
-                                    SelectPrescriptionViewtemp();
-                                }
-
-                                prescription.user_id = patient.id;
-
-                                SavePrescription();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Please select a valid patient", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
-                        }
-                        catch {
                             MessageBox.Show("Please select a valid patient", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
-                }
-                else
-                {
-                    MessageBox.Show("Please select a diagnosis", "Required", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }                                                               
+                    catch {
+                        MessageBox.Show("Please select a valid patient", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }                                                                            
             }
             else
             {

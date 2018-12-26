@@ -280,69 +280,63 @@ namespace Healthtechbd
 
                     if (patient != null)
                     {
-                        if (diagnosisTemplateIds.Count() > 0)// check for diagnosis select
+                        Grid sidebar = AdminPanelWindow.sidebar;
+
+                        sidebar.Visibility = Visibility.Visible;
+
+                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+
+                        if (((Button)sender).Name == "UpdatePrescription")
                         {
-                            Grid sidebar = AdminPanelWindow.sidebar;
-
-                            sidebar.Visibility = Visibility.Visible;
-
-                            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
-
-                            if (((Button)sender).Name == "UpdatePrescription")
-                            {
-                                NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
-                            }
-                            else
-                            {
-                                SelectPrescriptionViewtemp();
-                            }
-
-                            var phone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.first_name == patientName && x.id != patient.id && x.doctor_id == MainWindow.Session.doctorId);
-
-                            if (phone == null)
-                            {
-                                patient.first_name = patientName;
-                                patient.phone = PatientPhone.Text.Trim();
-                                patient.age = PatientAge.Text.Trim();
-                                patient.address_line1 = PatientAddress.Text.Trim();
-
-                                db.SaveChanges();
-
-                                prescription = db.prescriptions.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
-
-                                prescription.user_id = patient.id;
-                                prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
-                                prescription.blood_pressure = BloodPresure.Text;
-                                prescription.temperature = Temperature.Text;
-                                prescription.doctores_notes = DoctorsNotes.Text;
-                                prescription.other_instructions = OtherInstructions.Text;
-
-                                db.SaveChanges();
-
-                                //Add Prescription Diagnosis
-                                AddPrescriptionDiagnosis(MainWindow.Session.editRecordId);
-
-                                //Add Prescription Medicines
-                                AddPrescriptionMedicines(MainWindow.Session.editRecordId);
-
-                                //Add Prescription Tests
-                                AddPrescriptionTests(MainWindow.Session.editRecordId);
-
-                                diagnosisTemplateIds.Clear();
-                                DiagnosisTestChosenControl.selectedIds.Clear();
-
-
-                                MessageBox.Show("Prescription has been saved", "Success");
-                            }
-                            else
-                            {
-                                MessageBox.Show("The Phone already exist.", "Already Exit");
-                            }
+                            NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
                         }
                         else
                         {
-                            MessageBox.Show("Please select a diagnosis", "Invalid", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            SelectPrescriptionViewtemp();
                         }
+
+                        var phone = db.users.FirstOrDefault(x => x.phone == PatientPhone.Text && x.first_name == patientName && x.id != patient.id && x.doctor_id == MainWindow.Session.doctorId);
+
+                        if (phone == null)
+                        {
+                            patient.first_name = patientName;
+                            patient.phone = PatientPhone.Text.Trim();
+                            patient.age = PatientAge.Text.Trim();
+                            patient.address_line1 = PatientAddress.Text.Trim();
+
+                            db.SaveChanges();
+
+                            prescription = db.prescriptions.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
+
+                            prescription.user_id = patient.id;
+                            prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
+                            prescription.blood_pressure = BloodPresure.Text;
+                            prescription.temperature = Temperature.Text;
+                            prescription.doctores_notes = DoctorsNotes.Text;
+                            prescription.other_instructions = OtherInstructions.Text;
+
+                            db.SaveChanges();
+
+                            //Add Prescription Diagnosis
+                            AddPrescriptionDiagnosis(MainWindow.Session.editRecordId);
+
+                            //Add Prescription Medicines
+                            AddPrescriptionMedicines(MainWindow.Session.editRecordId);
+
+                            //Add Prescription Tests
+                            AddPrescriptionTests(MainWindow.Session.editRecordId);
+
+                            diagnosisTemplateIds.Clear();
+                            DiagnosisTestChosenControl.selectedIds.Clear();
+
+
+                            MessageBox.Show("Prescription has been saved", "Success");
+                        }
+                        else
+                        {
+                            MessageBox.Show("The Phone already exist.", "Already Exit");
+                        }
+                        
                     }
                     else
                     {

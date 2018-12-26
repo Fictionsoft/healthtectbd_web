@@ -14,6 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfChosenControl.model;
 using WpfChosenControl;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace Healthtechbd
 {
@@ -188,29 +191,61 @@ namespace Healthtechbd
         public void search()
         {
             string searchBy = searchField.Text.ToString();
-
+            List<prescription> prescriptions = new List<prescription>();
             try
             {
                 if(MainWindow.Session.setPatientId > 0)
                 {
-                    var prescriptions = db.prescriptions.Where(x => (x.user.first_name.Contains(searchBy) ||
-                                    x.user.phone.Contains(searchBy)) && x.user_id == MainWindow.Session.setPatientId && x.doctor_id == MainWindow.Session.doctorId)
-                                    .Take(40).ToList();
-
-                    dataGridPrescriptions.ItemsSource = prescriptions;
+                    prescriptions = db.prescriptions.Where(x => (x.user.first_name.Contains(searchBy) ||
+                                                               x.user.phone.Contains(searchBy)) &&
+                                                               x.user_id == MainWindow.Session.setPatientId &&
+                                                               x.doctor_id == MainWindow.Session.doctorId
+                                                        ).Take(40).ToList();
                 }
                 else
                 {
-                    var prescriptions = db.prescriptions.Where(x => (x.user.first_name.Contains(searchBy) ||
-                                   x.user.phone.Contains(searchBy)) && x.doctor_id == MainWindow.Session.doctorId)
-                                   .Take(40).ToList();
+                    prescriptions = db.prescriptions.Where(x => (x.user.first_name.Contains(searchBy) ||
+                                                               x.user.phone.Contains(searchBy)) &&
+                                                               x.doctor_id == MainWindow.Session.doctorId
+                                                         ).Take(40).ToList();
 
-                    dataGridPrescriptions.ItemsSource = prescriptions;
-                }                                
+                }
+                dataGridPrescriptions.ItemsSource = prescriptions;
             }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(MainWindow.Internet.CheckForInternetConnection() == true)
+            {
+                GetOnlinePrescriptions();
+            }
+            else
+            {
+                MessageBox.Show("Check your Internet connection", "Warning");
+            }
+        }
+
+        public async void GetOnlinePrescriptions()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("admin/users/get-online-prescriptions?doctor_email=" + MainWindow.Session.doctorEmail).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var onlinePrescriptions = response.Content.ReadAsStringAsync();
+                onlinePrescriptions.Wait();
+                //var onlinePatients = JsonConvert.DeserializeObject<List<ViewPatients>>(onlinePrescriptions.Result);               
+            }
+            else
+            {
+                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
             }
         }
     }

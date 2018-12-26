@@ -156,17 +156,15 @@ namespace Healthtechbd
 
         private void ButtonSyncPatient_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckForInternetConnection() == true)
+            if (MainWindow.Internet.CheckForInternetConnection() == true)
             {
                 GetOnlinePatients();
                 GetLocalPatients();
-
-               if((MessageBox.Show("Online to offline: \n Total : " + OfflineTotal + "\n Success : " + OfflineSuccess + "\n Duplicate : " + OfflineDuplicate
-                                + "\n \n Offline to online: \n Total : " + OnlineTotal + "\n Sucess : " + OnlineSuccess + "\n Duplicate : " + OnlineDuplicate,
-                                "Patients sync report", MessageBoxButton.OK, MessageBoxImage.Information)) == MessageBoxResult.OK)
-                {
-                    loadPatients();
-                } 
+                loadPatients();
+                MessageBox.Show("Online to offline: \n Total : " + OfflineTotal + "\n Success : " + OfflineSuccess + "\n Duplicate : " + OfflineDuplicate
+                                 + "\n \n Offline to online: \n Total : " + OnlineTotal + "\n Sucess : " + OnlineSuccess + "\n Duplicate : " + OnlineDuplicate,
+                                 "Patients sync report", MessageBoxButton.OK, MessageBoxImage.Information);
+                
 
                 OfflineTotal = OfflineSuccess = OfflineDuplicate = OnlineTotal = OnlineSuccess = OnlineDuplicate = 0; // Clear Value
             }
@@ -291,22 +289,6 @@ namespace Healthtechbd
             {
                 LocalPatient.is_sync = 1;
                 db.SaveChanges();
-            }
-        }
-
-        public static bool CheckForInternetConnection()
-        {
-            try
-            {
-                using (var client = new WebClient())
-                using (client.OpenRead("http://clients3.google.com/generate_204"))
-                {
-                    return true;
-                }
-            }
-            catch
-            {
-                return false;
             }
         }
     }

@@ -37,7 +37,7 @@
                         <Button ToolTip="Search" x:Name="btnSearch" Style="{StaticResource SearchButton}" Margin="0 0 10 0" Click="btnSearch_Click" Grid.Column="1">
                             <materialDesign:PackIcon Kind="DatabaseSearch"/>
                         </Button>
-                        <Button  x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
+                        <Button x:Name="btnReset" Grid.Column="2" Style="{StaticResource SearchButton}" Click="btnReset_Click">Reset</Button>
                     </Grid>
                 </Grid>
 

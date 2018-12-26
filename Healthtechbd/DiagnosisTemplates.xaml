@@ -15,7 +15,7 @@
             <Grid Height="60" Background="#fff" VerticalAlignment="top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="DIAGNOSIS TEMPLATES" VerticalAlignment="Center" Margin="20" Foreground="#252834" FontSize="18"/>
                 <Button x:Name="ButtonAddDiagnosisTemplate" Grid.Column="1" Margin="0 0 20 0" Content="ADD DIAGNOSIS TEMPLATE" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddDiagnosisTemplate_Click" />
