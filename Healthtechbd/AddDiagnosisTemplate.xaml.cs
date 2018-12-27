@@ -49,57 +49,24 @@ namespace Healthtechbd
                 {
                     diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
 
-                    var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId);
+                    var haveDiagnosisTemplate = db.diagnosis_templates.FirstOrDefault(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctor_id);
 
                     if (haveDiagnosisTemplate == null)
                     {
                         NavigationService.Navigate(new Uri("DiagnosisTemplates.xaml", UriKind.Relative));
 
-                        diagnosis_template.diagnosis_list_id = diagnosis.id;
-                        diagnosis_template.doctor_id = MainWindow.Session.doctorId;
-                        diagnosis_template.instructions = Instruction.Text;
-                        diagnosis_template.status = true;
-                        diagnosis_template.created = DateTime.Now;
-                        db.diagnosis_templates.Add(diagnosis_template);
-
-                        int result_diagnosis_template = db.SaveChanges();
-                        if (result_diagnosis_template > 0)
+                        if (CreateDiagnosisTemplate(diagnosis.id, Instruction.Text, 0) > 0)
                         {
-                            int diagnosis_template_id = diagnosis_template.id;
-
-                            //diagnosis medicines delete
-                            var diagnosis_medicines = db.diagnosis_medicines.Where(x => x.diagnosis_id == diagnosis_template_id);
-                            if (diagnosis_medicines.Count() > 0)
-                            {
-                                db.diagnosis_medicines.RemoveRange(diagnosis_medicines);
-                                int delete_result = db.SaveChanges();
-                            }
+                            int d_template_id = diagnosis_template.id;
 
                             //diagnosis medicines add
-                            var medicinesIds = MedicineChosenControl.selectedIds;
-                            foreach (int medicine_id in medicinesIds)
-                            {
-                                diagnosis_medicine.diagnosis_id = diagnosis_template_id;
-                                diagnosis_medicine.medicine_id = medicine_id;
-                                diagnosis_medicine.status = true;
-                                diagnosis_medicine.created = DateTime.Now;
-                                db.diagnosis_medicines.Add(diagnosis_medicine);
-                                int retult_diagnosis_medicines = db.SaveChanges();
-                            }                            
-
-                            //diagnosis test delete
-                            var diagnosis_tests = db.diagnosis_tests.Where(x => x.diagnosis_id == diagnosis_template_id);
-                            if (diagnosis_tests.Count() > 0)
-                            {
-                                db.diagnosis_tests.RemoveRange(diagnosis_tests);
-                                int delete_result = db.SaveChanges();
-                            }
+                            CreateDiagnosisMedicine(diagnosis_template.id);
 
                             //diagnosis tets add
-                            var testsIds = TestChosenControl.selectedIds;
-                            foreach (int test_id in testsIds)
+                            var tests_ids = TestChosenControl.selectedIds;
+                            foreach (int test_id in tests_ids)
                             {
-                                diagnosis_test.diagnosis_id = diagnosis_template_id;
+                                diagnosis_test.diagnosis_id = d_template_id;
                                 diagnosis_test.test_id = test_id;
                                 diagnosis_test.status = true;
                                 diagnosis_test.created = DateTime.Now;
@@ -108,7 +75,7 @@ namespace Healthtechbd
                             }
 
                             MedicineChosenControl.selectedIds.Clear();
-                            TestChosenControl.selectedIds.Clear();                    
+                            TestChosenControl.selectedIds.Clear();
                         }
 
                         MessageBox.Show("Diagnosis Tempalte has been saved", "Save");
@@ -126,6 +93,38 @@ namespace Healthtechbd
             else
             {
                 MessageBox.Show("Please select a diagnosis", "Required field", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        public int CreateDiagnosisTemplate(int diagnosis_id, string instructions, int is_sync)
+        {
+            diagnosis_template.diagnosis_list_id = diagnosis_id;
+            diagnosis_template.doctor_id = MainWindow.Session.doctor_id;
+            diagnosis_template.instructions = instructions;
+            diagnosis_template.status = true;
+            diagnosis_template.is_sync = is_sync;
+            diagnosis_template.created = DateTime.Now;
+            db.diagnosis_templates.Add(diagnosis_template);
+            int result = db.SaveChanges();
+
+            if (result == 1)
+            {
+                return diagnosis_template.id;
+            }
+            return 0;
+        }
+
+        public void CreateDiagnosisMedicine(int diagnosis_template_id)
+        {
+            var medicines_ids = MedicineChosenControl.selectedIds;
+            foreach (int medicine_id in medicines_ids)
+            {
+                diagnosis_medicine.medicine_id = medicine_id;
+                diagnosis_medicine.diagnosis_id = diagnosis_template_id;
+                diagnosis_medicine.status = true;
+                diagnosis_medicine.created = DateTime.Now;
+                db.diagnosis_medicines.Add(diagnosis_medicine);
+                db.SaveChanges();
             }
         }
 
@@ -176,6 +175,6 @@ namespace Healthtechbd
         private void DiagnosisComboBox_GotFocus(object sender, RoutedEventArgs e)
         {
             DiagnosisComboBox.IsDropDownOpen = true;
-        }        
+        }
     }
 }

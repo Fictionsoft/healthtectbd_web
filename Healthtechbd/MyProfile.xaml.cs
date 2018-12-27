@@ -36,7 +36,7 @@ namespace Healthtechbd
         {
             try
             {
-                doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
+                doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctor_id);
 
                 FirstName.Text = doctor.first_name;
                 LastName.Text = doctor.last_name;
@@ -67,11 +67,11 @@ namespace Healthtechbd
                 //{
                     NavigationService.Navigate(new Uri("MyProfile.xaml", UriKind.Relative));
 
-                    var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text && x.id != MainWindow.Session.doctorId);
+                    var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text && x.id != MainWindow.Session.doctor_id);
 
                     if (havePhone == null)
                     {
-                        doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);                        
+                        doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctor_id);                        
                         doctor.first_name = FirstName.Text;
                         doctor.last_name = LastName.Text;
                         //doctor.email = Email.Text;
@@ -90,15 +90,15 @@ namespace Healthtechbd
                         db.SaveChanges();
 
                         //Change Session Info.................
-                        MainWindow.Session.doctorFirstName = FirstName.Text;
-                        MainWindow.Session.doctorLastName = LastName.Text;
-                        MainWindow.Session.doctorPhone = Phone.Text;
-                        MainWindow.Session.doctorEmail = Email.Text;
+                        MainWindow.Session.doctor_first_name = FirstName.Text;
+                        MainWindow.Session.doctor_last_name = LastName.Text;
+                        MainWindow.Session.doctor_phone = Phone.Text;
+                        MainWindow.Session.doctor_email = Email.Text;
 
                         if (MessageBox.Show("Profile has been updated", "Success") == MessageBoxResult.OK)
                         {
                             TextBlock UserName = AdminPanelWindow.userName;
-                            UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
+                            UserName.Text = MainWindow.Session.doctor_first_name + " " + MainWindow.Session.doctor_last_name;
                         }                        
                     }
                     else

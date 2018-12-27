@@ -33,7 +33,7 @@ namespace Healthtechbd
         {           
             if(patientPhone.Text != "Phone number")
             {
-                var patients = db.users.Where(x => x.phone == patientPhone.Text && x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(40).ToList();// role_id 3 = Patient
+                var patients = db.users.Where(x => x.phone == patientPhone.Text && x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id).OrderByDescending(x => x.created).Take(40).ToList();// role_id 3 = Patient
 
                 if (patients.Count() > 0)
                 {
@@ -42,15 +42,15 @@ namespace Healthtechbd
 
                     //AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(0);
 
-                    //int prescriptionId = prescription.id;
-                    //MainWindow.Session.editRecordId = prescriptionId;
-                    //EditPrescription editPrescription = new EditPrescription(prescriptionId);
+                    //int prescription_id = prescription.id;
+                    //MainWindow.Session.edit_record_id = prescription_id;
+                    //EditPrescription editPrescription = new EditPrescription(prescription_id);
 
-                    //EditPrescription.diagnosisTemplateIds.Clear();
-                    //var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescriptionId).ToList();
+                    //EditPrescription.diagnosis_template_ids.Clear();
+                    //var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescription_id).ToList();
                     //foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
                     //{
-                    //    EditPrescription.diagnosisTemplateIds.Add(prescriptions_diagnosi.diagnosis_id);
+                    //    EditPrescription.diagnosis_template_ids.Add(prescriptions_diagnosi.diagnosis_id);
                     //}
                     Patients patientIndex = new Patients(patients);
 

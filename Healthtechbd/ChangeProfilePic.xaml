@@ -37,7 +37,7 @@
                                 <Button ToolTip="No File Chosen" x:Name="ButtonBrowse" Content="Browse" Foreground="Black" Background="Transparent" Width="150" Height="40" HorizontalAlignment="Left" Click="ButtonBrowse_Click"/>
                                 <Image Height="200" Width="200" Name="ReviewProfilePic" Stretch="Fill"  />
 
-                                <TextBlock x:Name="ProfileImageName" Visibility="Hidden" Text=""/>
+                                <TextBlock x:Name="Profileimage_name" Visibility="Hidden" Text=""/>
                                 <TextBlock x:Name="FilePath" Visibility="Hidden" Text=""/>
                             </StackPanel>
                         </Grid>

@@ -101,7 +101,7 @@
                                             <TextBlock Width="55" FontWeight="SemiBold" Margin="0 0 5 0" Text="Age*:" VerticalAlignment="Center"/>
                                             <TextBox x:Name="PatientAge" Width="320" Style="{StaticResource PrescriptionInputField}"  Text=""/>
                                             
-                                            <TextBox x:Name="PrescriptionId" Visibility="Hidden"  Text=""/>
+                                            <TextBox x:Name="prescription_id" Visibility="Hidden"  Text=""/>
                                         </StackPanel>
                                     </Border>
 

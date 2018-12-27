@@ -112,7 +112,7 @@ namespace Healthtechbd
         private void ButtonDashboard_Loaded(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new Dashboard();
-            UserName.Text = MainWindow.Session.doctorFirstName;
+            UserName.Text = MainWindow.Session.doctor_first_name;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -152,7 +152,7 @@ namespace Healthtechbd
 
         private void ButtonPrescriptions_GotFocus(object sender, RoutedEventArgs e)
         {
-            MainWindow.Session.setPatientId = 0;
+            MainWindow.Session.set_patient_id = 0;
             MainContent.Content = new Prescriptions();
         }
 

@@ -50,8 +50,8 @@ namespace Healthtechbd.prescriptionTemplates
 
         public void LoadViewPrescriptionInfo()
         {
-            doctor = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
-            prescription = db.prescriptions.Where(x => x.id == MainWindow.Session.editRecordId).FirstOrDefault();
+            doctor = db.users.Where(x => x.id == MainWindow.Session.doctor_id).FirstOrDefault();
+            prescription = db.prescriptions.Where(x => x.id == MainWindow.Session.edit_record_id).FirstOrDefault();
 
             DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
             DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
@@ -67,7 +67,7 @@ namespace Healthtechbd.prescriptionTemplates
                 {
                     TextBlock textBlock = new TextBlock();
 
-                    if(MainWindow.Session.editRecordId == prescription.id)
+                    if(MainWindow.Session.edit_record_id == prescription.id)
                     {
                         textBlock.Foreground = new System.Windows.Media.SolidColorBrush((Color)ColorConverter.ConvertFromString("#3cc2bb"));
                         textBlock.TextDecorations = System.Windows.TextDecorations.Underline;
@@ -92,7 +92,7 @@ namespace Healthtechbd.prescriptionTemplates
             DoctorQualification.Text = doctor.educational_qualification;
             DoctorAddress.Text = doctor.address_line1 + " " + doctor.address_line2;            
             DoctorWebsite.Text = doctor.website;
-            DoctorPhone.Text = doctor.phone;
+            doctor_phone.Text = doctor.phone;
 
             //Patient Info
             PatientName.Text = prescription.user.first_name;
@@ -102,7 +102,7 @@ namespace Healthtechbd.prescriptionTemplates
 
             PatientLastVisit.Text = db.prescriptions.Where(x => x.user_id == prescription.user.id).OrderByDescending(x => x.created).Select(x => x.created).FirstOrDefault().ToString("dd MMM yyyy");
 
-            var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
+            var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == MainWindow.Session.edit_record_id).ToList();
 
             //Prescription Medicines 
             foreach (var prescriptions_medicine in prescriptions_medicines)
@@ -134,7 +134,7 @@ namespace Healthtechbd.prescriptionTemplates
                 }                    
             }
 
-            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
+            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == MainWindow.Session.edit_record_id).ToList();
 
             //Prescription Diagnosis 
             foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
@@ -148,7 +148,7 @@ namespace Healthtechbd.prescriptionTemplates
                 PatientDiagnosis.Children.Add(textBlock);
             }
 
-            var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == MainWindow.Session.editRecordId).ToList();
+            var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == MainWindow.Session.edit_record_id).ToList();
 
             //Prescription Examinations
             foreach (var prescriptions_test in prescriptions_tests)
@@ -183,7 +183,7 @@ namespace Healthtechbd.prescriptionTemplates
         {
             TextBlock textBlock = sender as TextBlock;
             
-            MainWindow.Session.editRecordId = int.Parse(textBlock.DataContext.ToString());
+            MainWindow.Session.edit_record_id = int.Parse(textBlock.DataContext.ToString());
 
             int doctorPrescriptionTemId = MainWindow.Session.doctorPrescriptionTemId;
 
@@ -223,15 +223,15 @@ namespace Healthtechbd.prescriptionTemplates
 
             AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(0);
 
-            int prescriptionId = MainWindow.Session.editRecordId;
-            MainWindow.Session.editRecordId = prescriptionId;
-            EditPrescription editPrescription = new EditPrescription(prescriptionId);
+            int prescription_id = MainWindow.Session.edit_record_id;
+            MainWindow.Session.edit_record_id = prescription_id;
+            EditPrescription editPrescription = new EditPrescription(prescription_id);
 
-            EditPrescription.diagnosisTemplateIds.Clear();
-            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescriptionId).ToList();
+            EditPrescription.diagnosis_template_ids.Clear();
+            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescription_id).ToList();
             foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
             {
-                EditPrescription.diagnosisTemplateIds.Add(prescriptions_diagnosi.diagnosis_id);
+                EditPrescription.diagnosis_template_ids.Add(prescriptions_diagnosi.diagnosis_id);
             }
 
             NavigationService.Navigate(editPrescription);

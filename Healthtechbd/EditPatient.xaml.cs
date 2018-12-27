@@ -28,7 +28,7 @@ namespace Healthtechbd
         }
 
         contextd_db db = new contextd_db();
-        user user = new user();
+        user patient = new user();
         prescription prescription = new prescription();
 
         public EditPatient(int id) : this()
@@ -37,12 +37,12 @@ namespace Healthtechbd
 
             try
             {
-                user = db.users.FirstOrDefault(x => x.id == id);
-                PatientName.Text = user.first_name;
-                PatientPhone.Text = user.phone;
-                PatientAge.Text = user.age;
-                PatientEmail.Text = user.email;
-                PatientAddress.Text = user.address_line1;
+                patient = db.users.FirstOrDefault(x => x.id == id);
+                PatientName.Text = patient.first_name;
+                PatientPhone.Text = patient.phone;
+                PatientAge.Text = patient.age;
+                PatientEmail.Text = patient.email;
+                PatientAddress.Text = patient.address_line1;
             }
             catch
             {
@@ -80,17 +80,17 @@ namespace Healthtechbd
                 {
                     int patientId = int.Parse(PatientId.Text);
                   
-                    var havePhone = db.users.FirstOrDefault(x => x.first_name == PatientName.Text && x.phone == PatientPhone.Text && x.id != patientId && x.doctor_id == MainWindow.Session.doctorId);
+                    var havePhone = db.users.FirstOrDefault(x => x.first_name == PatientName.Text && x.phone == PatientPhone.Text && x.id != patientId && x.doctor_id == MainWindow.Session.doctor_id);
 
                     if (havePhone == null)
-                    {                        
-                        user = db.users.FirstOrDefault(x => x.id == patientId);
+                    {
+                        patient = db.users.FirstOrDefault(x => x.id == patientId);
 
-                        user.first_name = patientName;
-                        user.phone = patientPhone;
-                        user.email = PatientEmail.Text.Trim();
-                        user.age = PatientAge.Text.Trim();
-                        user.address_line1 = PatientAddress.Text.Trim();
+                        patient.first_name = patientName;
+                        patient.phone = patientPhone;
+                        patient.email = PatientEmail.Text.Trim();
+                        patient.age = PatientAge.Text.Trim();
+                        patient.address_line1 = PatientAddress.Text.Trim();
 
                         try
                         {

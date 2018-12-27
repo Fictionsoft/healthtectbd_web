@@ -32,20 +32,20 @@ namespace Healthtechbd
         public class Session
         {
             #region Doctor Info
-            public static int doctorId;
-            public static string doctorFirstName;                      
-            public static string doctorLastName;                      
-            public static string doctorPhone;                      
-            public static string doctorEmail;
+            public static int doctor_id;
+            public static string doctor_first_name;                      
+            public static string doctor_last_name;                      
+            public static string doctor_phone;                      
+            public static string doctor_email;
             public static int doctorPrescriptionTemId;
-            public static int editRecordId;
+            public static int edit_record_id;
 
-            public static string imageName;
-            public static string imagePath;
+            public static string image_name;
+            public static string image_path;
 
-            public static int setPatientId;
-            //public static string apiBaseUrl = "http://app.healthtechbd.com/";
-            public static string apiBaseUrl = "http://localhost/pms/";
+            public static int set_patient_id;
+            //public static string api_base_url = "http://app.healthtechbd.com/";
+            public static string api_base_url = "http://localhost/pms/";
             
             #endregion
         }
@@ -133,17 +133,17 @@ namespace Healthtechbd
                             adminpanelwindow.Show();
 
                             //Doctor Info Save to Session....
-                            Session.doctorId = user.id;
-                            Session.doctorFirstName = user.first_name;
-                            Session.doctorLastName = user.last_name;
-                            Session.doctorEmail = user.email;
-                            Session.doctorPhone = user.phone;
+                            Session.doctor_id = user.id;
+                            Session.doctor_first_name = user.first_name;
+                            Session.doctor_last_name = user.last_name;
+                            Session.doctor_email = user.email;
+                            Session.doctor_phone = user.phone;
                             Session.doctorPrescriptionTemId = user.prescription_template_id;
 
                             if (MessageBox.Show("Login successfully", "Success") == MessageBoxResult.OK)
                             {
                                 TextBlock UserName = AdminPanelWindow.userName;
-                                UserName.Text = Session.doctorFirstName + " " + Session.doctorLastName;
+                                UserName.Text = Session.doctor_first_name + " " + Session.doctor_last_name;
 
                                 Image ProfilePic = AdminPanelWindow.profilePic;
 
@@ -184,7 +184,7 @@ namespace Healthtechbd
         public void ApiRegister(int id, string first_name, string last_name, string phone, string email, string password, string expire_date)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             var doctor = db.users.FirstOrDefault(x => x.id == id);

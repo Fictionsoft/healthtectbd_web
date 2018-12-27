@@ -80,7 +80,7 @@
                                 </Grid>
                             </StackPanel>
 
-                            <TextBox x:Name="DiagnosisTemplateId" Visibility="Hidden" Style="{StaticResource InputField}" Text=""/>
+                            <TextBox x:Name="diagnosis_template_id" Visibility="Hidden" Style="{StaticResource InputField}" Text=""/>
 
                         </Grid>
                     </Border>

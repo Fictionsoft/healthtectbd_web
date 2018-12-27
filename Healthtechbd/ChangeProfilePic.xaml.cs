@@ -43,27 +43,27 @@ namespace Healthtechbd
             if (op.ShowDialog() == true)
             {
                 ReviewProfilePic.Source = new BitmapImage(new Uri(op.FileName)); //FilePath               
-                string imageName = System.IO.Path.GetFileName(op.FileName);
+                string image_name = System.IO.Path.GetFileName(op.FileName);
 
                 FilePath.Text = op.FileName; //FileName = FilePath
-                ProfileImageName.Text = imageName;
+                Profileimage_name.Text = image_name;
             }
         }
 
         private void SubmitUpdateProPic_Click(object sender, RoutedEventArgs e)
         {           
-            if(ProfileImageName.Text != "")
+            if(Profileimage_name.Text != "")
             {
                 OpenFileDialog op = new OpenFileDialog();
                 Random rnd = new Random();
-                string fullImageName = rnd.Next() + "_" + ProfileImageName.Text;
+                string fullimage_name = rnd.Next() + "_" + Profileimage_name.Text;
 
                 string destination = System.AppDomain.CurrentDomain.BaseDirectory + "images//";
-                System.IO.File.Copy(FilePath.Text, destination + fullImageName);
+                System.IO.File.Copy(FilePath.Text, destination + fullimage_name);
 
-                user = db.users.Where(x => x.id == MainWindow.Session.doctorId).FirstOrDefault();
+                user = db.users.Where(x => x.id == MainWindow.Session.doctor_id).FirstOrDefault();
 
-                user.profile_picture = fullImageName;
+                user.profile_picture = fullimage_name;
                 var uploadProfilePic = db.SaveChanges();
 
                 if (uploadProfilePic > 0)

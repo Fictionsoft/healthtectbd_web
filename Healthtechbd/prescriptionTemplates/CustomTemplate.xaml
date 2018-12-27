@@ -72,9 +72,9 @@
                                     <TextBlock x:Name="DoctorClinicName" Style="{StaticResource Level}" Foreground="#000" Text="Clinic Name"/>
                                     <TextBlock x:Name="DoctorAddress" Style="{StaticResource Level}" Foreground="#000" Text="384/1 , West Nakhalpara,Tejgaon, Mohakhali"/>
 
-                                    <StackPanel x:Name="DoctorPhoneArea" Orientation="Horizontal">
+                                    <StackPanel x:Name="doctor_phoneArea" Orientation="Horizontal">
                                         <TextBlock Style="{StaticResource Level}" Foreground="#fff" Text="Call : "/>
-                                        <TextBlock x:Name="DoctorPhone" Style="{StaticResource Level}" Foreground="#fff" Text="34565"/>
+                                        <TextBlock x:Name="doctor_phone" Style="{StaticResource Level}" Foreground="#fff" Text="34565"/>
                                     </StackPanel>
                                     <TextBlock x:Name="DoctorWebsite" Style="{StaticResource Level}" Foreground="#fff" Text="www.sitename.com"/>
                                 </StackPanel>

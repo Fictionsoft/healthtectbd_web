@@ -29,7 +29,7 @@ namespace Healthtechbd.prescriptionTemplates
         void LoadTemImageView()
         {
             TemImage.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory +
-                "images/prescription_templates/" + MainWindow.Session.imagePath));
+                "images/prescription_templates/" + MainWindow.Session.image_path));
         }
 
         private void ButtonBack_Click(object sender, RoutedEventArgs e)

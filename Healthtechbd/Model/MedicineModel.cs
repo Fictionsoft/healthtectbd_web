@@ -67,7 +67,7 @@ namespace Healthtechbd.Model
 
             MedicinesLists = medicines;
 
-            int ItemId = MainWindow.Session.editRecordId;
+            int ItemId = MainWindow.Session.edit_record_id;
             if (ItemId > 0)
             {
                 LoadExistingItems(ItemId);

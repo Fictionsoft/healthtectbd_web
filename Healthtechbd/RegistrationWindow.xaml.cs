@@ -103,11 +103,11 @@ namespace Healthtechbd
                                     }
                                 }
 
-                                MainWindow.Session.doctorId = user.id;
-                                MainWindow.Session.doctorFirstName = FirstName.Text;
-                                MainWindow.Session.doctorLastName = LastName.Text;
-                                MainWindow.Session.doctorPhone = Phone.Text;
-                                MainWindow.Session.doctorEmail = EmailAddress.Text;
+                                MainWindow.Session.doctor_id = user.id;
+                                MainWindow.Session.doctor_first_name = FirstName.Text;
+                                MainWindow.Session.doctor_last_name = LastName.Text;
+                                MainWindow.Session.doctor_phone = Phone.Text;
+                                MainWindow.Session.doctor_email = EmailAddress.Text;
                                 MainWindow.Session.doctorPrescriptionTemId = user.prescription_template_id;
 
                                 this.Hide();
@@ -117,7 +117,7 @@ namespace Healthtechbd
                                 if (MessageBox.Show("Registration and Login is successfull", "Success") == MessageBoxResult.OK)
                                 {
                                     TextBlock UserName = AdminPanelWindow.userName;
-                                    UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
+                                    UserName.Text = MainWindow.Session.doctor_first_name + " " + MainWindow.Session.doctor_last_name;
 
                                     Image ProfilePic = AdminPanelWindow.profilePic;
 
@@ -173,7 +173,7 @@ namespace Healthtechbd
         public void ApiRegister(int id)
         {                                                                                                                                                               
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             var doctor = db.users.FirstOrDefault(x => x.id == id);
@@ -227,13 +227,13 @@ namespace Healthtechbd
                     created = x.created,
                     is_sync = x.is_sync
                 })
-                .Where(x => x.doctor_id == MainWindow.Session.doctorId && x.role_id == 3 && x.is_sync == 0)
+                .Where(x => x.doctor_id == MainWindow.Session.doctor_id && x.role_id == 3 && x.is_sync == 0)
                 .OrderByDescending(x => x.created)
                 .Take(2)
                 .ToList();
 
             HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+                client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
 
                 HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients", patients).Result;
                 if (response.IsSuccessStatusCode)

@@ -18,8 +18,8 @@
                 <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="PRESCRIPTIONS" Style="{StaticResource PageHeading}"/>
-            <Button Grid.Column="1" Margin="0 0 20 0" Content="ADD PRESCRIPTION" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddPrescription_Click" />
-            <Button Grid.Column="1" Margin="0 0 180   0" Content="SYNC PRESCRIPTION" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="Button_Click" />
+            <Button x:Name="BUttonAddPrescription" Grid.Column="1" Margin="0 0 20 0" Content="ADD PRESCRIPTION" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonAddPrescription_Click" />
+            <Button x:Name="ButtonSyncPrescription" Grid.Column="1" Margin="0 0 180   0" Content="SYNC PRESCRIPTION" BorderThickness="0" FontWeight="Normal" FontSize="12" Height="35"  Background="#3CC2BB"  VerticalAlignment="Center" HorizontalAlignment="Right" Click="ButtonSyncPrescription_Click"/>
         </Grid>
 
         <!--Page Heading Bottom-->

@@ -67,17 +67,17 @@ namespace Healthtechbd
                     AdminPanelWindow adminPanelWindow = new AdminPanelWindow(this);
                     adminPanelWindow.Show();
 
-                    MainWindow.Session.doctorId = user.id;
-                    MainWindow.Session.doctorFirstName = user.first_name;
-                    MainWindow.Session.doctorLastName = user.last_name;
-                    MainWindow.Session.doctorEmail = user.email;
-                    MainWindow.Session.doctorPhone = user.phone;
+                    MainWindow.Session.doctor_id = user.id;
+                    MainWindow.Session.doctor_first_name = user.first_name;
+                    MainWindow.Session.doctor_last_name = user.last_name;
+                    MainWindow.Session.doctor_email = user.email;
+                    MainWindow.Session.doctor_phone = user.phone;
                     MainWindow.Session.doctorPrescriptionTemId = user.prescription_template_id;
 
                     if (MessageBox.Show("Password has been reset and login successfully", "Success") == MessageBoxResult.OK)
                     {
                         TextBlock UserName = AdminPanelWindow.userName;
-                        UserName.Text = MainWindow.Session.doctorFirstName + " " + MainWindow.Session.doctorLastName;
+                        UserName.Text = MainWindow.Session.doctor_first_name + " " + MainWindow.Session.doctor_last_name;
 
                         Image ProfilePic = AdminPanelWindow.profilePic;
 

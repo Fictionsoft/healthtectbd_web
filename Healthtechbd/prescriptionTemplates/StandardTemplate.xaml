@@ -66,7 +66,7 @@
                                     <TextBlock x:Name="DoctorQualification" Style="{StaticResource Level}" Text="MBBS; FCPS( Medicine)"/>
                                     <TextBlock x:Name="DoctorAddress" Style="{StaticResource Level}" Text="384/1 , West Nakhalpara,Tejgaon, Mohakhali"/>
                                     <TextBlock x:Name="DoctorWebsite" Style="{StaticResource Level}" Text="www.sitename.com"/>
-                                    <TextBlock x:Name="DoctorPhone" Style="{StaticResource Level}" Text="Call: 34565"/>
+                                    <TextBlock x:Name="doctor_phone" Style="{StaticResource Level}" Text="Call: 34565"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

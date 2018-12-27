@@ -307,7 +307,7 @@
 
                                         <DockPanel Grid.Row="1">
                                             <TextBlock FontWeight="Bold" Padding="2" TextWrapping="WrapWithOverflow" Style="{StaticResource defaultViewLevel}" Text="For Booking Call : "/>
-                                            <TextBlock x:Name="DoctorPhone" Padding="2" TextWrapping="WrapWithOverflow" Style="{StaticResource defaultViewLevel}" Text="01750800764"/>
+                                            <TextBlock x:Name="doctor_phone" Padding="2" TextWrapping="WrapWithOverflow" Style="{StaticResource defaultViewLevel}" Text="01750800764"/>
                                         </DockPanel>
 
                                         <TextBlock Padding="2" Grid.Row="2" TextWrapping="WrapWithOverflow" Style="{StaticResource defaultViewLevel}" Text="Must make booking before visiting the doctor."/>

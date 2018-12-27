@@ -67,7 +67,7 @@ namespace Healthtechbd
             Frame mainContent = AdminPanelWindow.mainContent;
             mainContent.Content = new PrescriptionTemplates();
 
-            doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctorId);
+            doctor = db.users.FirstOrDefault(x => x.id == MainWindow.Session.doctor_id);
 
             RadioButton radioButton = sender as RadioButton;
 
@@ -83,7 +83,7 @@ namespace Healthtechbd
 
             //MessageBox.Show(image.DataContext.ToString());
             
-            MainWindow.Session.imagePath = image.DataContext.ToString();
+            MainWindow.Session.image_path = image.DataContext.ToString();
 
             AdminPanelWindow.mainContent.Content = new TemImageView();
 

@@ -69,7 +69,7 @@ namespace Healthtechbd
         {
             try
             {
-                var diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == MainWindow.Session.editRecordId);
+                var diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == MainWindow.Session.edit_record_id);
 
                 var diagnosis = db.diagnosis.Where(x => x.id == diagnosis_template.diagnosis_list_id).OrderByDescending(x => x.created).ToList();
 
@@ -98,7 +98,7 @@ namespace Healthtechbd
                     diagnosis_template = db.diagnosis_templates.FirstOrDefault(x => x.id == diagnosisTemplateId);
                     diagnosis = db.diagnosis.FirstOrDefault(x => x.name == DiagnosisComboBox.Text);
 
-                    var haveDiagnosisTemplate = db.diagnosis_templates.Where(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctorId && diagnosis_template.diagnosis_list_id != diagnosis.id).FirstOrDefault();
+                    var haveDiagnosisTemplate = db.diagnosis_templates.Where(x => x.diagnosis_list_id == diagnosis.id && x.doctor_id == MainWindow.Session.doctor_id && diagnosis_template.diagnosis_list_id != diagnosis.id).FirstOrDefault();
 
                     if (haveDiagnosisTemplate == null)
                     {

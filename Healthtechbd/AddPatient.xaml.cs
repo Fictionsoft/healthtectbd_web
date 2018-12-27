@@ -28,7 +28,7 @@ namespace Healthtechbd
         }
 
         contextd_db db = new contextd_db();
-        user user = new user();
+        user patient = new user();
 
         public bool IsValidEmail(string email)
         {
@@ -53,22 +53,23 @@ namespace Healthtechbd
             {                                
                 if ((PatientEmail.Text != "" && IsValidEmail(PatientEmail.Text) == true) || PatientEmail.Text == "")
                 {
-                    var havePhone = db.users.FirstOrDefault(x => x.first_name == PatientName.Text && x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctorId);
+                    var havePhone = db.users.FirstOrDefault(x => x.first_name == PatientName.Text && x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctor_id);
 
                     if (havePhone == null)
                     {                       
                         NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
-                        user.doctor_id = MainWindow.Session.doctorId;
-                        user.role_id = 3; // role_id 3 = Patient
-                        user.first_name = patientName;
-                        user.phone = patientPhone;
-                        user.email = PatientEmail.Text;
-                        user.age = PatientAge.Text;
-                        user.address_line1 = PatientAddress.Text;
-                        user.created = DateTime.Now;                      
-                        user.expire_date = "00/00/0000";
+                        patient.doctor_id = MainWindow.Session.doctor_id;
+                        patient.role_id = 3; // role_id 3 = Patient
+                        patient.first_name = patientName;
+                        patient.phone = patientPhone;
+                        patient.email = PatientEmail.Text;
+                        patient.age = PatientAge.Text;
+                        patient.address_line1 = PatientAddress.Text;
+                        patient.created = DateTime.Now;                      
+                        patient.expire_date = "00/00/0000";
+                        patient.is_sync = 1;
 
-                        db.users.Add(user);
+                        db.users.Add(patient);
                         try
                         {
                             db.SaveChanges();

@@ -47,7 +47,7 @@ namespace Healthtechbd
         {
             try
             {               
-                var patients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(40).ToList();// role_id 3 = Patient
+                var patients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id).OrderByDescending(x => x.created).Take(40).ToList();// role_id 3 = Patient
                 dataGridPatients.ItemsSource = patients; //Patients = Users                
             }
             catch
@@ -109,7 +109,7 @@ namespace Healthtechbd
 
                 try
                 {
-                    var users = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) &&
+                    var users = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id) &&
                                                 (x.first_name.Contains(searchBy) ||
                                                 x.last_name.Contains(searchBy) ||
                                                 x.phone.Contains(searchBy) ||
@@ -131,7 +131,7 @@ namespace Healthtechbd
         {
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
 
-            MainWindow.Session.setPatientId = (dataGridPatients.SelectedItem as user).id;
+            MainWindow.Session.set_patient_id = (dataGridPatients.SelectedItem as user).id;
         }
 
         private void btnCreatePatientPrescription_Click(object sender, RoutedEventArgs e)
@@ -158,12 +158,12 @@ namespace Healthtechbd
         {
             if (MainWindow.Internet.CheckForInternetConnection() == true)
             {
-                GetOnlinePatients();
+                Getonline_patients();
                 GetLocalPatients();
                 loadPatients();
                 MessageBox.Show("Online to offline: \n Total : " + OfflineTotal + "\n Success : " + OfflineSuccess + "\n Duplicate : " + OfflineDuplicate
                                  + "\n \n Offline to online: \n Total : " + OnlineTotal + "\n Sucess : " + OnlineSuccess + "\n Duplicate : " + OnlineDuplicate,
-                                 "Patients sync report", MessageBoxButton.OK, MessageBoxImage.Information);
+                                 "Patients sync report", MessageBoxButton.OK);
                 
 
                 OfflineTotal = OfflineSuccess = OfflineDuplicate = OnlineTotal = OnlineSuccess = OnlineDuplicate = 0; // Clear Value
@@ -174,23 +174,26 @@ namespace Healthtechbd
             }
         }
 
-        public async void GetOnlinePatients()
+        public async void Getonline_patients()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+            client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.GetAsync("admin/users/get-online-patients?doctor_email="+MainWindow.Session.doctorEmail).Result;
+            HttpResponseMessage response = client.GetAsync("admin/users/get-online-patients?doctor_email="+MainWindow.Session.doctor_email).Result;
             if (response.IsSuccessStatusCode)
             {
                 var patients = response.Content.ReadAsStringAsync();
                 patients.Wait();
-                var onlinePatients = JsonConvert.DeserializeObject<List<ViewPatients>>(patients.Result);
+                var online_patients = JsonConvert.DeserializeObject<List<ViewPatients>>(patients.Result);
 
-                if (SaveOnlinePatientsToLocal(onlinePatients))
+                if(online_patients.Count() > 0)
                 {
-                    HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/users/get-online-patients", onlinePatients).Result;
-                }
+                    if (Saveonline_patientsToLocal(online_patients))
+                    {
+                        HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/users/get-online-patients", online_patients).Result;
+                    }
+                }                
             }
             else
             {
@@ -198,18 +201,18 @@ namespace Healthtechbd
             }
         }
 
-        public bool SaveOnlinePatientsToLocal(List<ViewPatients> onlinePatients)
+        public bool Saveonline_patientsToLocal(List<ViewPatients> online_patients)
         {
             //Count Total Sync Patients From On-line
-            OfflineTotal = (onlinePatients.Count() > 0)?onlinePatients.Count():0;
+            OfflineTotal = (online_patients.Count() > 0)?online_patients.Count():0;
 
-            foreach (var patient in onlinePatients)
+            foreach (var patient in online_patients)
             {
-                var havePatient = db.users.Where(x => x.first_name == patient.first_name && x.phone == patient.phone && x.doctor_id == MainWindow.Session.doctorId).FirstOrDefault();
+                var have_patient = db.users.Where(x => x.first_name == patient.first_name && x.phone == patient.phone && x.doctor_id == MainWindow.Session.doctor_id).FirstOrDefault();
 
-                if(havePatient != null)
+                if(have_patient != null)
                 {
-                    havePatient.is_sync = 1;
+                    have_patient.is_sync = 1;
                     db.SaveChanges();
 
                     //Count Duplicate Sync Patients From On-line
@@ -217,7 +220,7 @@ namespace Healthtechbd
                 }
                 else
                 {                   
-                    user.doctor_id = MainWindow.Session.doctorId;
+                    user.doctor_id = MainWindow.Session.doctor_id;
                     user.role_id = patient.role_id; // role_id 3 = Patient
                     user.first_name = patient.first_name;
                     user.phone = patient.phone;
@@ -226,7 +229,7 @@ namespace Healthtechbd
                     user.address_line1 = patient.address_line1;
                     user.expire_date = patient.expire_date;
                     user.is_sync = 1;
-                    user.created = patient.created;
+                    user.created = DateTime.Now;
 
                     db.users.Add(user);
                     db.SaveChanges();
@@ -248,26 +251,26 @@ namespace Healthtechbd
             //try
             //{
             var LocalPatients = db.users
-                .Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId && x.is_sync == 0)
+                .Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id && x.is_sync == 0)
                 .Take(100)
                 .ToList();// role_id 3 = Patient                              
             
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(MainWindow.Session.apiBaseUrl);
+                client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
 
-                HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients?doctor_email="+MainWindow.Session.doctorEmail, LocalPatients).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients?doctor_email="+MainWindow.Session.doctor_email, LocalPatients).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var ResponseLocalPatientSaveToOnline = response.Content.ReadAsStringAsync();
-                    ResponseLocalPatientSaveToOnline.Wait();
+                    var response_local_patient_save_to_online = response.Content.ReadAsStringAsync();
+                    response_local_patient_save_to_online.Wait();
 
-                    var OnlineResponse = JsonConvert.DeserializeObject<SuccessMessages>(ResponseLocalPatientSaveToOnline.Result);                    
+                    var online_response = JsonConvert.DeserializeObject<SuccessMessages>(response_local_patient_save_to_online.Result);                    
 
-                    if(OnlineResponse != null && OnlineResponse.status == "success")
+                    if(online_response != null && online_response.status == "success")
                     {
-                        OnlineTotal = OnlineResponse.online_total;
-                        OnlineSuccess = OnlineResponse.online_success;
-                        OnlineDuplicate = OnlineResponse.online_duplicate;
+                        OnlineTotal = online_response.online_total;
+                        OnlineSuccess = online_response.online_success;
+                        OnlineDuplicate = online_response.online_duplicate;
 
                         ChangeIsSyncLocalPatients(LocalPatients);
                     }                    

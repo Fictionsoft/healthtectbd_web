@@ -53,7 +53,7 @@ namespace Healthtechbd
         {          
             try
             {
-                var patients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
+                var patients = db.users.Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id).OrderByDescending(x => x.created).Take(10).ToList(); //patient_id 3
 
                 foreach (var patient in patients)
                 {                   
@@ -77,7 +77,7 @@ namespace Healthtechbd
                     string patientName = words[0];
                     string patientPhone = words[1];
 
-                    int patientId = db.users.Where(x => x.first_name == patientName && x.phone == patientPhone && x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId).Select(x => x.id).FirstOrDefault();
+                    int patientId = db.users.Where(x => x.first_name == patientName && x.phone == patientPhone && x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id).Select(x => x.id).FirstOrDefault();
 
                     FillUpPatientInfo(patientId);
                 }
@@ -92,7 +92,7 @@ namespace Healthtechbd
         {
             TextBlock textBlock = sender as TextBlock;
 
-            MainWindow.Session.editRecordId = int.Parse(textBlock.DataContext.ToString()) ;
+            MainWindow.Session.edit_record_id = int.Parse(textBlock.DataContext.ToString()) ;
 
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
@@ -127,7 +127,7 @@ namespace Healthtechbd
 
             var searchBy = obj.Text;
 
-            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctorId) && 
+            var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id) && 
                            (x.first_name.Contains(searchBy))).Take(10).ToList(); //patient_id 3
 
             PatientComboBox.Items.Clear();
@@ -146,7 +146,7 @@ namespace Healthtechbd
         //Load Diagnosis CheckBox.....
         void LoadDiagnosisCheckbox()
         {
-            var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctorId).OrderByDescending(x => x.created).ToList();
+            var diagnosis_templates = db.diagnosis_templates.Where(x => x.doctor_id == MainWindow.Session.doctor_id).OrderByDescending(x => x.created).ToList();
             foreach (var diagnosis_template in diagnosis_templates)
             {
                 CheckBox checkbox = new CheckBox();                                                    
@@ -158,25 +158,25 @@ namespace Healthtechbd
             }
         }
 
-        public static List<long> diagnosisTemplateIds = new List<long>();
+        public static List<long> diagnosis_template_ids = new List<long>();
         private void DiagnosIsClick(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
           
-            var diagnosisTemplateId = (int)checkBox.DataContext;
+            var diagnosis_template_id = (int)checkBox.DataContext;
 
             if(checkBox.IsChecked == true)
             {
-                diagnosisTemplateIds.Add(diagnosisTemplateId);
+                diagnosis_template_ids.Add(diagnosis_template_id);
             }
 
             if(checkBox.IsChecked == false)
             {
-                diagnosisTemplateIds.Remove(diagnosisTemplateId);
+                diagnosis_template_ids.Remove(diagnosis_template_id);
             }
 
             var diagnosis_templates_instructions = db.diagnosis_templates
-                .Where(x => diagnosisTemplateIds.Contains(x.id) && x.instructions != "")
+                .Where(x => diagnosis_template_ids.Contains(x.id) && x.instructions != "")
                 .Select(x => x.instructions).ToList();
 
             var instructions = "";
@@ -190,7 +190,7 @@ namespace Healthtechbd
 
             DoctorsNotes.Text = instructions;
             
-            var diagnosisMedicines = db.diagnosis_medicines.Where(x => diagnosisTemplateIds.Contains(x.diagnosis_id))
+            var diagnosisMedicines = db.diagnosis_medicines.Where(x => diagnosis_template_ids.Contains(x.diagnosis_id))
                 .Select(x => new IdNameModel
                 {
                     Id = x.medicine_id,
@@ -205,7 +205,7 @@ namespace Healthtechbd
                 CreateMedicineSection(diagnosisMedicine.Name, "");
             }
 
-            var diagnosisTests = db.diagnosis_tests.Where(x => diagnosisTemplateIds.Contains(x.diagnosis_id))
+            var diagnosisTests = db.diagnosis_tests.Where(x => diagnosis_template_ids.Contains(x.diagnosis_id))
                 .Select(x => new IdNameModel
                 {
                     Id = x.test_id,
@@ -235,7 +235,7 @@ namespace Healthtechbd
             {                   
                 if (newPatientName != "") //Add a new Patient
                 {
-                    var patientExit = db.users.FirstOrDefault(x => x.first_name == newPatientName && x.phone == patientPhoneNumber && x.doctor_id == MainWindow.Session.doctorId);
+                    var patientExit = db.users.FirstOrDefault(x => x.first_name == newPatientName && x.phone == patientPhoneNumber && x.doctor_id == MainWindow.Session.doctor_id);
 
                     if (patientExit == null)
                     {
@@ -259,9 +259,10 @@ namespace Healthtechbd
                         patient.age = PatientAge.Text.Trim();
                         patient.address_line1 = PatientAddress.Text;
                         patient.created = DateTime.Now;
-                        patient.doctor_id = MainWindow.Session.doctorId;
+                        patient.doctor_id = MainWindow.Session.doctor_id;
                         patient.role_id = 3; // role_id 3 = Patient
                         patient.expire_date = "00/00/0000";
+                        patient.is_sync = 1;
 
                         db.users.Add(patient);
                         db.SaveChanges();
@@ -282,7 +283,7 @@ namespace Healthtechbd
                         string patientName = words[0];
                         string patientPhone = words[1];
 
-                        var patient = db.users.FirstOrDefault(x => x.first_name == patientName && x.phone == patientPhone && x.doctor_id == MainWindow.Session.doctorId);
+                        var patient = db.users.FirstOrDefault(x => x.first_name == patientName && x.phone == patientPhone && x.doctor_id == MainWindow.Session.doctor_id);
 
                         if (patient != null)
                         {
@@ -351,7 +352,7 @@ namespace Healthtechbd
 
         void SavePrescription()
         {
-            prescription.doctor_id = MainWindow.Session.doctorId; //doctorId = doctor_id
+            prescription.doctor_id = MainWindow.Session.doctor_id; //doctor_id = doctor_id
             prescription.blood_pressure = BloodPresure.Text;
             prescription.temperature = Temperature.Text;
             prescription.doctores_notes = DoctorsNotes.Text;
@@ -362,7 +363,7 @@ namespace Healthtechbd
             db.prescriptions.Add(prescription);
             int result_add_prescription = db.SaveChanges();
 
-            MainWindow.Session.editRecordId = prescription.id;//id save to session 
+            MainWindow.Session.edit_record_id = prescription.id;//id save to session 
 
             if (result_add_prescription > 0)
             {
@@ -375,17 +376,17 @@ namespace Healthtechbd
                 //Add Prescription Tests
                 AddPrescriptionTests(prescription.id);
 
-                diagnosisTemplateIds.Clear();
+                diagnosis_template_ids.Clear();
                 DiagnosisTestChosenControl.selectedIds.Clear();            
                 
                 MessageBox.Show("Prescription has been saved", "Success");                               
             }
         }
 
-        void AddPrescriptionDiagnosis(int PrescriptionId)
+        void AddPrescriptionDiagnosis(int prescription_id)
         {
             //prescription diagnosis delete
-            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == PrescriptionId);
+            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescription_id);
             if (prescriptions_diagnosis.Count() > 0)
             {
                 db.prescriptions_diagnosis.RemoveRange(prescriptions_diagnosis);
@@ -393,10 +394,10 @@ namespace Healthtechbd
             }
 
             //prescription diagnosis add            
-            foreach (int diagnosisTemplateId in diagnosisTemplateIds)
+            foreach (int diagnosis_template_id in diagnosis_template_ids)
             {
-                prescriptions_diagnosi.prescription_id = PrescriptionId;
-                prescriptions_diagnosi.diagnosis_id = diagnosisTemplateId;
+                prescriptions_diagnosi.prescription_id = prescription_id;
+                prescriptions_diagnosi.diagnosis_id = diagnosis_template_id;
                 prescriptions_diagnosi.status = true;
                 prescriptions_diagnosi.created = DateTime.Now;
                 db.prescriptions_diagnosis.Add(prescriptions_diagnosi);
@@ -404,10 +405,10 @@ namespace Healthtechbd
             }            
         }
 
-        void AddPrescriptionMedicines(int PrescriptionId)
+        void AddPrescriptionMedicines(int prescription_id)
         {
             //prescription medicines delete
-            var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == PrescriptionId);
+            var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == prescription_id);
             if (prescriptions_medicines.Count() > 0)
             {
                 db.prescriptions_medicines.RemoveRange(prescriptions_medicines);
@@ -429,7 +430,7 @@ namespace Healthtechbd
                         {
                             var dosField = (ComboBox)SingleMedicine.FindName("Dos_" + i);
 
-                            prescriptions_medicine.prescription_id = PrescriptionId;
+                            prescriptions_medicine.prescription_id = prescription_id;
                             prescriptions_medicine.medicine_id = medicine.id;
                             prescriptions_medicine.rule = dosField.Text;
                             prescriptions_medicine.status = true;
@@ -444,10 +445,10 @@ namespace Healthtechbd
             }          
         }
 
-        void AddPrescriptionTests(int PrescriptionId)
+        void AddPrescriptionTests(int prescription_id)
         {
             //prescription tests delete
-            var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == PrescriptionId);
+            var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == prescription_id);
             if (prescriptions_tests.Count() > 0)
             {
                 db.prescriptions_tests.RemoveRange(prescriptions_tests);
@@ -458,7 +459,7 @@ namespace Healthtechbd
             var testsIds = DiagnosisTestChosenControl.selectedIds;
             foreach (int test_id in testsIds)
             {
-                prescriptions_test.prescription_id = PrescriptionId;
+                prescriptions_test.prescription_id = prescription_id;
                 prescriptions_test.test_id = test_id;
                 prescriptions_test.status = true;
                 prescriptions_test.created = DateTime.Now;
