@@ -13,6 +13,7 @@ namespace Healthtechbd.Model.ApiModel
         public ViewName diagnosis_list { get; set; }
         public List<ViewName> medicines { get; set; }
         public List<ViewName> tests { get; set; }
+        public bool will_save { get; set; }
     }       
 
     public class ViewLocalDiagnosisTemplates

@@ -57,22 +57,11 @@ namespace Healthtechbd
 
                         if (CreateDiagnosisTemplate(diagnosis.id, Instruction.Text, 0) > 0)
                         {
-                            int d_template_id = diagnosis_template.id;
-
                             //diagnosis medicines add
                             CreateDiagnosisMedicine(diagnosis_template.id);
 
-                            //diagnosis tets add
-                            var tests_ids = TestChosenControl.selectedIds;
-                            foreach (int test_id in tests_ids)
-                            {
-                                diagnosis_test.diagnosis_id = d_template_id;
-                                diagnosis_test.test_id = test_id;
-                                diagnosis_test.status = true;
-                                diagnosis_test.created = DateTime.Now;
-                                db.diagnosis_tests.Add(diagnosis_test);
-                                int retult_diagnosis_tests = db.SaveChanges();
-                            }
+                            //diagnosis tests add                            
+                            CreateDiagnosisTest(diagnosis_template.id);
 
                             MedicineChosenControl.selectedIds.Clear();
                             TestChosenControl.selectedIds.Clear();
@@ -124,6 +113,20 @@ namespace Healthtechbd
                 diagnosis_medicine.status = true;
                 diagnosis_medicine.created = DateTime.Now;
                 db.diagnosis_medicines.Add(diagnosis_medicine);
+                db.SaveChanges();
+            }
+        }
+
+        public void CreateDiagnosisTest(int diagnosis_template_id)
+        {
+            var tests_ids = TestChosenControl.selectedIds;
+            foreach (int test_id in tests_ids)
+            {
+                diagnosis_test.diagnosis_id = diagnosis_template_id;
+                diagnosis_test.test_id = test_id;
+                diagnosis_test.status = true;
+                diagnosis_test.created = DateTime.Now;
+                db.diagnosis_tests.Add(diagnosis_test);
                 db.SaveChanges();
             }
         }

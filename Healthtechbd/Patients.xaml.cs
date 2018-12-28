@@ -158,7 +158,7 @@ namespace Healthtechbd
         {
             if (MainWindow.Internet.CheckForInternetConnection() == true)
             {
-                Getonline_patients();
+                GetonlinePatients();
                 GetLocalPatients();
                 loadPatients();
                 MessageBox.Show("Online to offline: \n Total : " + OfflineTotal + "\n Success : " + OfflineSuccess + "\n Duplicate : " + OfflineDuplicate
@@ -174,7 +174,7 @@ namespace Healthtechbd
             }
         }
 
-        public async void Getonline_patients()
+        public async void GetonlinePatients()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
@@ -187,9 +187,12 @@ namespace Healthtechbd
                 patients.Wait();
                 var online_patients = JsonConvert.DeserializeObject<List<ViewPatients>>(patients.Result);
 
-                if(online_patients.Count() > 0)
+                //Count Total Sync Patients From on-line
+                OfflineTotal = online_patients.Count();
+
+                if (OfflineTotal > 0)
                 {
-                    if (Saveonline_patientsToLocal(online_patients))
+                    if (SaveonlinePatientsToLocal(online_patients))
                     {
                         HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/users/get-online-patients", online_patients).Result;
                     }
@@ -201,11 +204,8 @@ namespace Healthtechbd
             }
         }
 
-        public bool Saveonline_patientsToLocal(List<ViewPatients> online_patients)
-        {
-            //Count Total Sync Patients From On-line
-            OfflineTotal = (online_patients.Count() > 0)?online_patients.Count():0;
-
+        public bool SaveonlinePatientsToLocal(List<ViewPatients> online_patients)
+        {            
             foreach (var patient in online_patients)
             {
                 var have_patient = db.users.Where(x => x.first_name == patient.first_name && x.phone == patient.phone && x.doctor_id == MainWindow.Session.doctor_id).FirstOrDefault();
@@ -215,7 +215,7 @@ namespace Healthtechbd
                     have_patient.is_sync = 1;
                     db.SaveChanges();
 
-                    //Count Duplicate Sync Patients From On-line
+                    //Count Duplicate Sync Patients From on-line
                     OfflineDuplicate++;
                 }
                 else
@@ -234,7 +234,7 @@ namespace Healthtechbd
                     db.users.Add(user);
                     db.SaveChanges();
 
-                    //Count Success Sync Patients From On-line
+                    //Count Success Sync Patients From on-line
                     OfflineSuccess++;
                 }                                              
             }
@@ -250,35 +250,38 @@ namespace Healthtechbd
         {
             //try
             //{
-            var LocalPatients = db.users
+            var local_patients = db.users
                 .Where(x => x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id && x.is_sync == 0)
                 .Take(100)
                 .ToList();// role_id 3 = Patient                              
             
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
 
-                HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients?doctor_email="+MainWindow.Session.doctor_email, LocalPatients).Result;
+            if(local_patients.Count() > 0)
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients?doctor_email=" + MainWindow.Session.doctor_email, local_patients).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var response_local_patient_save_to_online = response.Content.ReadAsStringAsync();
                     response_local_patient_save_to_online.Wait();
 
-                    var online_response = JsonConvert.DeserializeObject<SuccessMessages>(response_local_patient_save_to_online.Result);                    
+                    var online_response = JsonConvert.DeserializeObject<SuccessMessages>(response_local_patient_save_to_online.Result);
 
-                    if(online_response != null && online_response.status == "success")
+                    if (online_response != null && online_response.status == "success")
                     {
                         OnlineTotal = online_response.online_total;
                         OnlineSuccess = online_response.online_success;
                         OnlineDuplicate = online_response.online_duplicate;
 
-                        ChangeIsSyncLocalPatients(LocalPatients);
-                    }                    
+                        ChangeIsSyncLocalPatients(local_patients);
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
                 }
+            }            
             //}
             //catch
             //{
