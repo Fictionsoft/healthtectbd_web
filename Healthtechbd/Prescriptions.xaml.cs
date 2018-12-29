@@ -228,7 +228,7 @@ namespace Healthtechbd
             }
             else
             {
-                MessageBox.Show("Check your Internet connection", "Warning");
+                MessageBox.Show("Check your internet connection, Please try again", "Warning");
             }
         }
 

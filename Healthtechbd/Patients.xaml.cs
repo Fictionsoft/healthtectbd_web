@@ -146,13 +146,13 @@ namespace Healthtechbd
             NavigationService.Navigate(addPrescription);
         }
 
-        public static int OfflineTotal;
-        public static int OfflineSuccess;
-        public static int OfflineDuplicate;
+        public static int offline_total;
+        public static int offline_success;
+        public static int offline_duplicate;
 
-        public static int OnlineTotal;
-        public static int OnlineSuccess;
-        public static int OnlineDuplicate;
+        public static int online_total;
+        public static int online_success;
+        public static int online_duplicate;
 
         private void ButtonSyncPatient_Click(object sender, RoutedEventArgs e)
         {
@@ -161,16 +161,16 @@ namespace Healthtechbd
                 GetonlinePatients();
                 GetLocalPatients();
                 loadPatients();
-                MessageBox.Show("Online to offline: \n Total : " + OfflineTotal + "\n Success : " + OfflineSuccess + "\n Duplicate : " + OfflineDuplicate
-                                 + "\n \n Offline to online: \n Total : " + OnlineTotal + "\n Sucess : " + OnlineSuccess + "\n Duplicate : " + OnlineDuplicate,
+                MessageBox.Show("Online to offline: \n Total : " + offline_total + "\n Success : " + offline_success + "\n Duplicate : " + offline_duplicate
+                                 + "\n \n Offline to online: \n Total : " + online_total + "\n Success : " + online_success + "\n Duplicate : " + online_duplicate,
                                  "Patients sync report", MessageBoxButton.OK);
                 
 
-                OfflineTotal = OfflineSuccess = OfflineDuplicate = OnlineTotal = OnlineSuccess = OnlineDuplicate = 0; // Clear Value
+                offline_total = offline_success = offline_duplicate = online_total = online_success = online_duplicate = 0; // Clear Value
             }
             else
             {
-                MessageBox.Show("Check your Internet connection", "Warning");
+                MessageBox.Show("Check your internet connection, Please try again", "Warning");
             }
         }
 
@@ -188,9 +188,9 @@ namespace Healthtechbd
                 var online_patients = JsonConvert.DeserializeObject<List<ViewPatients>>(patients.Result);
 
                 //Count Total Sync Patients From on-line
-                OfflineTotal = online_patients.Count();
+                offline_total = online_patients.Count();
 
-                if (OfflineTotal > 0)
+                if (offline_total > 0)
                 {
                     if (SaveonlinePatientsToLocal(online_patients))
                     {
@@ -216,7 +216,7 @@ namespace Healthtechbd
                     db.SaveChanges();
 
                     //Count Duplicate Sync Patients From on-line
-                    OfflineDuplicate++;
+                    offline_duplicate++;
                 }
                 else
                 {                   
@@ -235,11 +235,11 @@ namespace Healthtechbd
                     db.SaveChanges();
 
                     //Count Success Sync Patients From on-line
-                    OfflineSuccess++;
+                    offline_success++;
                 }                                              
             }
 
-            if(OfflineTotal > 0 || OfflineDuplicate > 0)
+            if(offline_total > 0 || offline_duplicate > 0)
             {
                 return true;
             }
@@ -268,11 +268,11 @@ namespace Healthtechbd
 
                     var online_response = JsonConvert.DeserializeObject<SuccessMessages>(response_local_patient_save_to_online.Result);
 
-                    if (online_response != null && online_response.status == "success")
+                    if (online_response.status == "success")
                     {
-                        OnlineTotal = online_response.online_total;
-                        OnlineSuccess = online_response.online_success;
-                        OnlineDuplicate = online_response.online_duplicate;
+                        online_total = online_response.online_total;
+                        online_success = online_response.online_success;
+                        online_duplicate = online_response.online_duplicate;
 
                         ChangeIsSyncLocalPatients(local_patients);
                     }

@@ -35,10 +35,12 @@ namespace Healthtechbd
             //Getonline_diagnosis_templates();
         }
 
-        public static int OfflineTotal;
-        public static int OfflineSuccess;
-        public static int OnlineTotal;
-        public static int OnlineSuccess;
+        public static int offline_total;
+        public static int offline_success;
+        public static int offline_duplicate;
+        public static int online_total;
+        public static int online_success;
+        public static int online_duplicate;
         public static List<long> will_sync_true_diagnosis_template_ids = new List<long>();
 
         contextd_db db = new contextd_db();
@@ -119,12 +121,6 @@ namespace Healthtechbd
             NavigationService.Navigate(editDiagnosisTemplate);
         }
 
-        public static void ClearChosenControlSelectedIds()
-        {
-            MedicineChosenControl.selectedIds.Clear();
-            TestChosenControl.selectedIds.Clear();
-        }
-
         private void btnReset_Click(object sender, RoutedEventArgs e)
         {
             loadDiagnosisTemplates();
@@ -153,21 +149,24 @@ namespace Healthtechbd
 
             if (MainWindow.Internet.CheckForInternetConnection() == true)
             {
-                //Getonline_diagnosis_templates();
-                loadDiagnosisTemplates();
-                MessageBox.Show("Diagnosis templates sync successfully", "Success", MessageBoxButton.OK);            
+                GetonlineDiagnosisTemplates();
                 GetLocalDiagnosisTemplates();
+                loadDiagnosisTemplates();
+                MessageBox.Show("Online to offline: \n Total : " + offline_total + "\n Success : " + offline_success + "\n Duplicate : " + offline_duplicate
+                                 + "\n \n Offline to online: \n Total : " + online_total + "\n Success : " + online_success + "\n Duplicate : " + online_duplicate,
+                                 "Diagnosis Template sync report", MessageBoxButton.OK);
+
             }
             else
             {
-                MessageBox.Show("Check your Internet connection", "Warning");
+                MessageBox.Show("Check your internet connection, Please try again", "Warning");
             }
 
-            OfflineTotal = OfflineSuccess = OnlineTotal = OnlineSuccess = 0;
+            offline_total = offline_success = offline_duplicate = online_total = online_success = online_duplicate = 0; // Clear Value
             will_sync_true_diagnosis_template_ids.Clear(); // Clear Value
         }
 
-        public void Getonline_diagnosis_templates()
+        public void GetonlineDiagnosisTemplates()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
@@ -181,9 +180,9 @@ namespace Healthtechbd
                 var online_diagnosis_templates = JsonConvert.DeserializeObject<List<ViewDiagnosisTemplates>>(diagnosisTemplates.Result);
 
                 //Count Total Sync Diagnosis Templates From on-line
-                OfflineTotal = online_diagnosis_templates.Count();
+                offline_total = online_diagnosis_templates.Count();
 
-                if (OfflineTotal > 0)
+                if (offline_total > 0)
                 {
                     if (SaveOnlineDiagnosisTemplatesToLocal(online_diagnosis_templates))
                     {
@@ -201,33 +200,48 @@ namespace Healthtechbd
         {
             foreach (var online_diagnosis_template in online_diagnosis_templates)
             {
-                var haveDiagnosis = db.diagnosis.FirstOrDefault(x => x.name == online_diagnosis_template.diagnosis_list.name);
+                var have_diagnosis = db.diagnosis.FirstOrDefault(x => x.name == online_diagnosis_template.diagnosis_list.name);
 
-                if (haveDiagnosis != null && haveDiagnosis.diagnosis_template.Count() == 0)
+                if(have_diagnosis != null)
                 {
-                    will_sync_true_diagnosis_template_ids.Add(online_diagnosis_template.id);
+                    bool have_template = false;
 
-                    //Create diagnosis template
-                    int diagnosis_template_id = addDiagnosisTemplate.CreateDiagnosisTemplate(haveDiagnosis.id, online_diagnosis_template.instructions, 1);                   
-
-                    if (diagnosis_template_id > 0)
+                    //Duplicate
+                    if (have_diagnosis.diagnosis_template.Count() > 0 && have_diagnosis.diagnosis_template.FirstOrDefault(x => x.doctor_id == MainWindow.Session.doctor_id) != null)
                     {
-                        online_diagnosis_template.id = diagnosis_template_id;
-                        online_diagnosis_template.will_save = true;
+                        have_template = true;
                     }
 
-                    //Count success sync Diagnosis Templates from on-line
-                    OfflineSuccess++;
+                    if (!have_template)
+                    {
+                        will_sync_true_diagnosis_template_ids.Add(online_diagnosis_template.id);
 
-                }else if(haveDiagnosis != null && haveDiagnosis.diagnosis_template.Count() > 0)
-                {
-                    will_sync_true_diagnosis_template_ids.Add(online_diagnosis_template.id);
-                }
+                        //Create diagnosis template
+                        int diagnosis_template_id = addDiagnosisTemplate.CreateDiagnosisTemplate(have_diagnosis.id, online_diagnosis_template.instructions, 1);
+
+                        if (diagnosis_template_id > 0)
+                        {
+                            online_diagnosis_template.id = diagnosis_template_id;
+                            online_diagnosis_template.will_save = true;
+                        }
+
+                        //Count success sync Diagnosis Templates from on-line
+                        offline_success++;
+                    }
+                    else if (have_template)
+                    {
+                        have_diagnosis.diagnosis_template.FirstOrDefault().is_sync = 1;
+                        db.SaveChanges();
+
+                        will_sync_true_diagnosis_template_ids.Add(online_diagnosis_template.id);
+                        offline_duplicate++;
+                    }
+                }               
             }
 
             foreach (var online_diagnosis_template in online_diagnosis_templates)
             {
-                if(online_diagnosis_template.will_save == true)
+                if (online_diagnosis_template.will_save == true)
                 {
                     if (online_diagnosis_template.medicines.Count() > 0)
                     {
@@ -238,10 +252,10 @@ namespace Healthtechbd
                     {
                         SaveOnlineDiagnosisTestsToLocal(online_diagnosis_template.tests, online_diagnosis_template.id);
                     }
-                }                
+                }
             }
 
-            if(will_sync_true_diagnosis_template_ids.Count() > 0)
+            if (will_sync_true_diagnosis_template_ids.Count() > 0)
             {
                 return true;
             }
@@ -251,13 +265,13 @@ namespace Healthtechbd
         public void SaveOnlineDiagnosisMedicinesToLocal(List<ViewName> online_diagnosis_medicines, int online_diagnosis_template_id)
         {
             foreach (var online_diagnosis_medicine in online_diagnosis_medicines)
-            {                
+            {
                 var have_medicine = db.medicines.FirstOrDefault(x => x.name == online_diagnosis_medicine.name);
 
                 if (have_medicine != null) // have 
                 {
                     MedicineChosenControl.selectedIds.Add(have_medicine.id);
-                }   
+                }
             }
             addDiagnosisTemplate.CreateDiagnosisMedicine(online_diagnosis_template_id);
             MedicineChosenControl.selectedIds.Clear();
@@ -283,36 +297,56 @@ namespace Healthtechbd
             var diagnosis_templates = db.diagnosis_templates
                     .Where(x => x.doctor_id == MainWindow.Session.doctor_id && x.is_sync == 0)
                     .Take(100)
-                    .ToList();            
+                    .ToList();
 
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
 
-            var json_iagnosis_templates = JsonConvert.SerializeObject(diagnosis_templates, Formatting.Indented,
-            new JsonSerializerSettings
+            if (diagnosis_templates.Count() > 0)
             {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                
-            });
+                var json_iagnosis_templates = JsonConvert.SerializeObject(diagnosis_templates, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                });
 
-            HttpResponseMessage response = client.PostAsJsonAsync("admin/diagnosis/get-local-diagnosis-templates?doctor_email="+MainWindow.Session.doctor_email, json_iagnosis_templates).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var diagnosisTemplates = response.Content.ReadAsStringAsync();
-                diagnosisTemplates.Wait();
-                //var online_diagnosis_templates = JsonConvert.DeserializeObject(diagnosisTemplates.Result);
+                HttpResponseMessage response = client.PostAsJsonAsync("admin/diagnosis/get-local-diagnosis-templates?doctor_email=" + MainWindow.Session.doctor_email, json_iagnosis_templates).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var response_local_diagnosis_template_save_to_online = response.Content.ReadAsStringAsync();
+                    response_local_diagnosis_template_save_to_online.Wait();
+                    var online_response = JsonConvert.DeserializeObject<DiagnosisTemplateSucessMessage>(response_local_diagnosis_template_save_to_online.Result);
 
-                //foreach (var diagnosis_template in diagnosis_templates)
-                //{
-                //    diagnosis_template.is_sync = 1;
-                //    int result = db.SaveChanges();
-                //}
+                    if (online_response.status == "success")
+                    {
+                        online_total = online_response.online_total;
+                        online_success = online_response.online_success;
+                        online_duplicate = online_response.online_duplicate;
 
+                        ChangeIsSyncLocalDiagnosisTemplates(online_response.will_sync_ids);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                }
             }
-            else
+        }
+
+        public void ChangeIsSyncLocalDiagnosisTemplates(List<long> will_sync_ids)
+        {
+            foreach (var will_sync_id in will_sync_ids)
             {
-                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                var diagnosis = db.diagnosis_templates.FirstOrDefault(x => x.id == will_sync_id);
+                diagnosis.is_sync = 1;
+                db.SaveChanges();
             }
+        }
+
+        public static void ClearChosenControlSelectedIds()
+        {
+            MedicineChosenControl.selectedIds.Clear();
+            TestChosenControl.selectedIds.Clear();
         }
     }
 }

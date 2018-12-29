@@ -48,11 +48,11 @@ namespace Healthtechbd.prescriptionTemplates
                 ProfileImage.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
             }
 
-            DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorChamberArea.Visibility = (doctor.cember_name == "" && doctor.cember_address == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorChamberArea.Visibility = (doctor.cember_name == "" && doctor.cember_address == "") ? Visibility.Visible : Visibility.Collapsed;
 
             //More Prescriptions
             if (prescription.user.prescription.Count() > 1)
@@ -108,7 +108,7 @@ namespace Healthtechbd.prescriptionTemplates
                 TextBlock medicine = new TextBlock();
                 medicine.Margin = new Thickness(0, 0, 3, 0);
                 medicine.Style = this.FindResource("defaultViewLevel") as Style;
-                medicine.Text = i + ". " + prescriptions_medicine.medicine.name + " : ";
+                medicine.Text = i + ". " + prescriptions_medicine.medicine.name;
 
                 wrapPanel.Children.Add(medicine);
 
@@ -117,7 +117,7 @@ namespace Healthtechbd.prescriptionTemplates
                 {
                     TextBlock dos = new TextBlock();
                     dos.Style = this.FindResource("defaultViewLevel") as Style;
-                    dos.Text = "( " + prescriptions_medicine.rule + " )";
+                    dos.Text = ": ( " + prescriptions_medicine.rule + " )";
 
                     wrapPanel.Children.Add(dos);
                 }                

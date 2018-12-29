@@ -128,7 +128,7 @@ namespace Healthtechbd
             var searchBy = obj.Text;
 
             var patients = db.users.Where(x => (x.role_id == 3 && x.doctor_id == MainWindow.Session.doctor_id) && 
-                           (x.first_name.Contains(searchBy))).Take(10).ToList(); //patient_id 3
+                           (x.first_name.StartsWith(searchBy))).Take(10).ToList(); //patient_id 3
 
             PatientComboBox.Items.Clear();
 
@@ -538,7 +538,7 @@ namespace Healthtechbd
 
             grid.Children.Add(comboBox);            
 
-            //Doc Combobx
+            //Doc Combobox
             ComboBox dosInput = new ComboBox();
 
             Grid.SetColumn(dosInput, 1);
@@ -621,7 +621,7 @@ namespace Healthtechbd
 
             var searchBy = comboBox.Text;
 
-            var medicines = db.medicines.Where(x => x.name.Contains(searchBy)).Take(10).ToList(); //
+            var medicines = db.medicines.Where(x => x.name.StartsWith(searchBy)).Take(10).ToList(); //
 
             comboBox.Items.Clear();
 

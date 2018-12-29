@@ -38,11 +38,11 @@ namespace Healthtechbd.prescriptionTemplates
             doctor = db.users.Where(x => x.id == MainWindow.Session.doctor_id).FirstOrDefault();
             prescription = db.prescriptions.Where(x => x.id == MainWindow.Session.edit_record_id).FirstOrDefault();
 
-            DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Collapsed : Visibility.Visible;
-            DoctorWebsite.Visibility = (doctor.website == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorWebsite.Visibility = (doctor.website == "") ? Visibility.Visible : Visibility.Collapsed;
 
             //More Prescriptions
             if (prescription.user.prescription.Count() > 1)
@@ -98,7 +98,7 @@ namespace Healthtechbd.prescriptionTemplates
                 medicine.Margin = new Thickness(0, 0, 3, 0);
                 medicine.FontWeight = FontWeights.Normal;
                 medicine.Style = this.FindResource("Level") as Style;
-                medicine.Text = i + ". " + prescriptions_medicine.medicine.name + " : ";
+                medicine.Text = i + ". " + prescriptions_medicine.medicine.name;
 
                 stackPanel.Children.Add(medicine);
 
@@ -108,7 +108,7 @@ namespace Healthtechbd.prescriptionTemplates
                     TextBlock dos = new TextBlock();
                     dos.FontWeight = FontWeights.Normal;
                     dos.Style = this.FindResource("Level") as Style;
-                    dos.Text = "( " + prescriptions_medicine.rule + " )";
+                    dos.Text = ": ( " + prescriptions_medicine.rule + " )";
 
                     stackPanel.Children.Add(dos);
                 }
