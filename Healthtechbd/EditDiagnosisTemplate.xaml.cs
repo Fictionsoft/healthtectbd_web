@@ -86,9 +86,6 @@ namespace Healthtechbd
 
         private void SubmitUpdateDiagnosisTemplate_Click(object sender, RoutedEventArgs e)
         {
-            var medicinesIds = MedicineChosenControl.selectedIds;
-            var tetsIds = TestChosenControl.selectedIds;
-
             if (DiagnosisComboBox.SelectedItem != "Type here...")
             {
                 int diagnosisTemplateId = int.Parse(DiagnosisTemplateId.Text);
@@ -154,7 +151,6 @@ namespace Healthtechbd
                 db.diagnosis_medicines.Add(diagnosis_medicine);
                 db.SaveChanges();
             }
-
             MedicineChosenControl.selectedIds.Clear();
         }
 
@@ -168,7 +164,7 @@ namespace Healthtechbd
                 db.SaveChanges();
             }
 
-            //tets add
+            //tests add
             var testsIds = TestChosenControl.selectedIds;
             foreach (int test_id in testsIds)
             {
@@ -179,7 +175,6 @@ namespace Healthtechbd
                 db.diagnosis_tests.Add(diagnosis_test);
                 db.SaveChanges();
             }
-
             TestChosenControl.selectedIds.Clear();
         }
 

@@ -35,7 +35,6 @@ namespace Healthtechbd.Model.ApiModel
     {
         public string status { get; set; }
         public List<long> will_sync_ids { get; set; }
-        public int online_total { get; set; }
         public int online_success { get; set; }
         public int online_duplicate { get; set; }
     }

@@ -266,9 +266,8 @@ namespace Healthtechbd
 
                         db.users.Add(patient);
                         db.SaveChanges();
-                        prescription.user_id = patient.id;
 
-                        SavePrescription();
+                        SavePrescription(patient.id);
                     }
                     else
                     {
@@ -301,9 +300,7 @@ namespace Healthtechbd
                                 SelectPrescriptionViewtemp();
                             }
 
-                            prescription.user_id = patient.id;
-
-                            SavePrescription();
+                            SavePrescription(patient.id);
                         }
                         else
                         {
@@ -350,23 +347,14 @@ namespace Healthtechbd
             NavigationService.Navigate(new Uri("prescriptionTemplates/" + PrescriptionTem, UriKind.Relative));
         }
 
-        void SavePrescription()
+        void SavePrescription(int patient_id)
         {
-            prescription.doctor_id = MainWindow.Session.doctor_id; //doctor_id = doctor_id
-            prescription.blood_pressure = BloodPresure.Text;
-            prescription.temperature = Temperature.Text;
-            prescription.doctores_notes = DoctorsNotes.Text;
-            prescription.other_instructions = OtherInstructions.Text;
-            prescription.status = true;
-            prescription.created = DateTime.Now;
+            int prescription_id = CreatePrescription(patient_id, BloodPresure.Text, Temperature.Text, DoctorsNotes.Text, OtherInstructions.Text, 0);
 
-            db.prescriptions.Add(prescription);
-            int result_add_prescription = db.SaveChanges();
-
-            MainWindow.Session.edit_record_id = prescription.id;//id save to session 
-
-            if (result_add_prescription > 0)
+            if (prescription_id > 0)
             {
+                MainWindow.Session.edit_record_id = prescription_id; //prescription id save to session for get prescription info from view prescription by this id 
+
                 //Add Prescription Diagnosis
                 AddPrescriptionDiagnosis(prescription.id);
 
@@ -383,38 +371,51 @@ namespace Healthtechbd
             }
         }
 
+        //create prescription 
+        public int CreatePrescription(int patient_id, string blood_presure, string temprature, string doctors_notes, string other_instruction, int is_sync)
+        {
+            prescription.user_id = patient_id;
+            prescription.doctor_id = MainWindow.Session.doctor_id; //doctor_id = doctor_id
+            prescription.blood_pressure = blood_presure;
+            prescription.temperature = temprature;
+            prescription.doctores_notes = doctors_notes;
+            prescription.other_instructions = other_instruction;
+            prescription.status = true;
+            prescription.created = DateTime.Now;
+            prescription.is_sync = is_sync;
+
+            db.prescriptions.Add(prescription);
+            int result = db.SaveChanges();
+
+            if (result > 0)
+            {
+                return prescription.id;
+            }
+            return 0;
+        }
+
         void AddPrescriptionDiagnosis(int prescription_id)
         {
-            //prescription diagnosis delete
-            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == prescription_id);
-            if (prescriptions_diagnosis.Count() > 0)
-            {
-                db.prescriptions_diagnosis.RemoveRange(prescriptions_diagnosis);
-                int delete_result = db.SaveChanges();
-            }
-
             //prescription diagnosis add            
             foreach (int diagnosis_template_id in diagnosis_template_ids)
             {
-                prescriptions_diagnosi.prescription_id = prescription_id;
-                prescriptions_diagnosi.diagnosis_id = diagnosis_template_id;
-                prescriptions_diagnosi.status = true;
-                prescriptions_diagnosi.created = DateTime.Now;
-                db.prescriptions_diagnosis.Add(prescriptions_diagnosi);
-                int retult_prescription_diagnosis = db.SaveChanges();
+                CreatePrescriptionDiagnosis(prescription_id, diagnosis_template_id);
             }            
+        }
+
+        //create prescription diagnosis
+        public void CreatePrescriptionDiagnosis(int prescription_id, int diagnosis_template_id)
+        {
+            prescriptions_diagnosi.prescription_id = prescription_id;
+            prescriptions_diagnosi.diagnosis_id = diagnosis_template_id;
+            prescriptions_diagnosi.status = true;
+            prescriptions_diagnosi.created = DateTime.Now;
+            db.prescriptions_diagnosis.Add(prescriptions_diagnosi);
+            db.SaveChanges();
         }
 
         void AddPrescriptionMedicines(int prescription_id)
         {
-            //prescription medicines delete
-            var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == prescription_id);
-            if (prescriptions_medicines.Count() > 0)
-            {
-                db.prescriptions_medicines.RemoveRange(prescriptions_medicines);
-                int delete_result = db.SaveChanges();
-            }
-
             //prescription medicines add
             int i = 0;
             foreach (Border SingleMedicine in MedicineSection.Children)
@@ -430,42 +431,45 @@ namespace Healthtechbd
                         {
                             var dosField = (ComboBox)SingleMedicine.FindName("Dos_" + i);
 
-                            prescriptions_medicine.prescription_id = prescription_id;
-                            prescriptions_medicine.medicine_id = medicine.id;
-                            prescriptions_medicine.rule = dosField.Text;
-                            prescriptions_medicine.status = true;
-                            prescriptions_medicine.created = DateTime.Now;
-                            db.prescriptions_medicines.Add(prescriptions_medicine);
-                            int retult_prescription_medecines = db.SaveChanges();
+                            CreatePrescriptionMedicine(prescription_id, medicine.id, dosField.Text);
                         }                                               
                     }                   
-                }               
-                               
+                }                                              
                 i++;
             }          
         }
 
+        //create prescription medicine 
+        public void CreatePrescriptionMedicine(int prescription_id, int medicine_id, string rule)
+        {
+            prescriptions_medicine.prescription_id = prescription_id;
+            prescriptions_medicine.medicine_id = medicine_id;
+            prescriptions_medicine.rule = rule;
+            prescriptions_medicine.status = true;
+            prescriptions_medicine.created = DateTime.Now;
+            db.prescriptions_medicines.Add(prescriptions_medicine);
+            db.SaveChanges();
+        }
+
         void AddPrescriptionTests(int prescription_id)
         {
-            //prescription tests delete
-            var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == prescription_id);
-            if (prescriptions_tests.Count() > 0)
-            {
-                db.prescriptions_tests.RemoveRange(prescriptions_tests);
-                int delete_result = db.SaveChanges();
-            }
-
             //prescription tests add
             var testsIds = DiagnosisTestChosenControl.selectedIds;
             foreach (int test_id in testsIds)
             {
-                prescriptions_test.prescription_id = prescription_id;
-                prescriptions_test.test_id = test_id;
-                prescriptions_test.status = true;
-                prescriptions_test.created = DateTime.Now;
-                db.prescriptions_tests.Add(prescriptions_test);
-                int retult_prescription_tests = db.SaveChanges();
+                CreatePrescription(prescription_id, test_id);
             }                     
+        }
+
+        //create prescription test
+        public void CreatePrescription(int prescription_id, int test_id)
+        {
+            prescriptions_test.prescription_id = prescription_id;
+            prescriptions_test.test_id = test_id;
+            prescriptions_test.status = true;
+            prescriptions_test.created = DateTime.Now;
+            db.prescriptions_tests.Add(prescriptions_test);
+            db.SaveChanges();
         }
 
         private void CancelAddPrescription_Click(object sender, RoutedEventArgs e)

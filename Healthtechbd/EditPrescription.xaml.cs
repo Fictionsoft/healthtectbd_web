@@ -53,7 +53,7 @@ namespace Healthtechbd
 
             try
             {
-                //To Selected this presceiption User 
+                //To Selected this prescription User 
                 var prescription = db.prescriptions.FirstOrDefault(x => x.id == id);
                 PatientComboBox.SelectedItem = prescription.user.first_name + "-" + prescription.user.phone;                
 
@@ -85,7 +85,7 @@ namespace Healthtechbd
                         AllPrescription.Children.Add(textBlock);
                     }
                 }
-        }
+            }
             catch
             {
                 MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -150,7 +150,7 @@ namespace Healthtechbd
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 
-            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigation bar).                           
             SelectPrescriptionViewtemp();
         }
 
@@ -284,7 +284,7 @@ namespace Healthtechbd
 
                         sidebar.Visibility = Visibility.Visible;
 
-                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigation bar).            
 
                         if (((Button)sender).Name == "UpdatePrescription")
                         {
@@ -328,7 +328,6 @@ namespace Healthtechbd
 
                             diagnosis_template_ids.Clear();
                             DiagnosisTestChosenControl.selectedIds.Clear();
-
 
                             MessageBox.Show("Prescription has been saved", "Success");
                         }
@@ -475,7 +474,7 @@ namespace Healthtechbd
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 
-            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigation bar).            
 
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
         }
@@ -549,7 +548,7 @@ namespace Healthtechbd
 
             grid.Children.Add(comboBox);
 
-            //Doc Combobx
+            //Doc Combobox
             ComboBox dosInput = new ComboBox();
 
             Grid.SetColumn(dosInput, 1);

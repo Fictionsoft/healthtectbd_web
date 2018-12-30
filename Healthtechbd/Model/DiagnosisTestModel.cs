@@ -104,7 +104,7 @@ namespace Healthtechbd.Model
             .ToList();
 
             if (existing_tests.Count() > 0)
-            {
+            {                
                 foreach (var existing_test in existing_tests)
                 {
                     DiagnosisTestChosenControl.selectedIds.Add(existing_test.Id);

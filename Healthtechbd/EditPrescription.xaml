@@ -48,7 +48,7 @@
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30*"/>
-                            <!--Patient Deatils-->
+                            <!--Patient Details-->
                             <ColumnDefinition Width="20*"/>
                             <!--Health Data-->
                             <ColumnDefinition Width="30*"/>
@@ -280,9 +280,9 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                            <Button  x:Name="CancelUpdatePrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelUpdatePrescription_Click"/>
-                            <Button ToolTip="UPDATE" x:Name="UpdatePrescription" Content="SAVE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="UpdatePrescription_Click" />
-                            <Button ToolTip="Update and Print" x:Name="UpdatePrintPrescription" Content="UPDATE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="UpdatePrescription_Click"/>
+                            <Button x:Name="CancelUpdatePrescription" Content="CANCEL" HorizontalAlignment="Left" Margin="13 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Foreground="#2c3144" Background="#edf1f5" Click="CancelUpdatePrescription_Click"/>
+                            <Button x:Name="UpdatePrescription" Content="UPDATE" HorizontalAlignment="Left" Margin="0 0 20 0" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35" Background="#3CC2BB" Click="UpdatePrescription_Click" />
+                            <Button x:Name="UpdatePrintPrescription" Content="UPDATE AND PRINT" HorizontalAlignment="Left" BorderThickness="0" FontWeight="SemiBold" FontSize="12" Height="35"  Background="#3CC2BB" Click="UpdatePrescription_Click"/>
                         </StackPanel>
 
                     </Grid>

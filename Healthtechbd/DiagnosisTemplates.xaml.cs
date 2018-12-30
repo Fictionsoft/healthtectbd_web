@@ -133,7 +133,7 @@ namespace Healthtechbd
 
             try
             {
-                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Contains(searchBy) && x.doctor_id == MainWindow.Session.doctor_id).OrderByDescending(x => x.created).Take(10).ToList();
+                var diagnosis_templates = db.diagnosis_templates.Where(x => x.diagnosis.name.Contains(searchBy) && x.doctor_id == MainWindow.Session.doctor_id).OrderByDescending(x => x.id).Take(10).ToList();
 
                 dataGridDiagnosisTemplates.ItemsSource = diagnosis_templates;
             }
@@ -179,7 +179,7 @@ namespace Healthtechbd
                 diagnosisTemplates.Wait();
                 var online_diagnosis_templates = JsonConvert.DeserializeObject<List<ViewDiagnosisTemplates>>(diagnosisTemplates.Result);
 
-                //Count Total Sync Diagnosis Templates From on-line
+                //count total sync diagnosis templates from online
                 offline_total = online_diagnosis_templates.Count();
 
                 if (offline_total > 0)
@@ -225,7 +225,7 @@ namespace Healthtechbd
                             online_diagnosis_template.will_save = true;
                         }
 
-                        //Count success sync Diagnosis Templates from on-line
+                        //count success sync diagnosis templates from online
                         offline_success++;
                     }
                     else if (have_template)
@@ -304,13 +304,16 @@ namespace Healthtechbd
 
             if (diagnosis_templates.Count() > 0)
             {
-                var json_iagnosis_templates = JsonConvert.SerializeObject(diagnosis_templates, Formatting.Indented,
+                //count total sync Diagnosis Templates from offline
+                online_total = diagnosis_templates.Count();
+
+                var json_diagnosis_templates = JsonConvert.SerializeObject(diagnosis_templates, Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     PreserveReferencesHandling = PreserveReferencesHandling.Objects
                 });
 
-                HttpResponseMessage response = client.PostAsJsonAsync("admin/diagnosis/get-local-diagnosis-templates?doctor_email=" + MainWindow.Session.doctor_email, json_iagnosis_templates).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync("admin/diagnosis/get-local-diagnosis-templates?doctor_email="+MainWindow.Session.doctor_email, json_diagnosis_templates).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var response_local_diagnosis_template_save_to_online = response.Content.ReadAsStringAsync();
@@ -318,8 +321,7 @@ namespace Healthtechbd
                     var online_response = JsonConvert.DeserializeObject<DiagnosisTemplateSucessMessage>(response_local_diagnosis_template_save_to_online.Result);
 
                     if (online_response.status == "success")
-                    {
-                        online_total = online_response.online_total;
+                    {                       
                         online_success = online_response.online_success;
                         online_duplicate = online_response.online_duplicate;
 

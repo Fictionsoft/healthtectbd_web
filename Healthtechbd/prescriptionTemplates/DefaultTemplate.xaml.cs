@@ -154,7 +154,7 @@ namespace Healthtechbd.prescriptionTemplates
                 k++;
             }
 
-            //Doctros Note
+            //Doctors Note
             OthersInstructions.Text = prescription.other_instructions;
             DoctorsNote.Text = prescription.doctores_notes;
 
