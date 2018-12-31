@@ -386,39 +386,101 @@ namespace Healthtechbd
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
 
+            
             if (prescriptions.Count() > 0)
             {
+                var formated_prescriptions = FormatedPrescriptions(prescriptions);
                 //count total sync prescriptions from offline
                 online_total = prescriptions.Count();
 
-                var json_prescriptions = JsonConvert.SerializeObject(prescriptions, Formatting.Indented,
+                var json_prescriptions = JsonConvert.SerializeObject(formated_prescriptions, Formatting.Indented,
                 new JsonSerializerSettings
                 {
                     PreserveReferencesHandling = PreserveReferencesHandling.Objects
                 });
 
-                HttpResponseMessage response = client.PostAsJsonAsync("admin/prescriptions/get-local-prescriptions?doctor_email=" + MainWindow.Session.doctor_email, json_prescriptions).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync("admin/prescriptions/get-local-prescriptions?doctor_email="+MainWindow.Session.doctor_email, json_prescriptions).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var response_local_prescriptions_save_to_online = response.Content.ReadAsStringAsync();
                     response_local_prescriptions_save_to_online.Wait();
-
-
-                    //var online_response = JsonConvert.DeserializeObject<DiagnosisTemplateSucessMessage>(response_local_prescriptions_save_to_online.Result);
-
-                    //if (online_response.status == "success")
-                    //{
-                    //    online_success = online_response.online_success;
-                    //    online_duplicate = online_response.online_duplicate;
-
-                    //    //ChangeIsSyncLocalDiagnosisTemplates(online_response.will_sync_ids);
-                    //}
                 }
                 else
                 {
                     MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
                 }
             }
+        }
+
+        public List<ViewPrescriptions> FormatedPrescriptions(List<prescription> prescriptions)
+        {
+            List<ViewPrescriptions> formated_prescriptions = new List<ViewPrescriptions>();
+
+            foreach (var prescription in prescriptions)
+            {
+                ViewNamePhone user = new ViewNamePhone
+                {
+                    first_name = prescription.user.first_name,
+                    phone = prescription.user.phone
+                };
+
+
+                //Diagnosis list
+                List<ViewName> formated_diagnosis = new List<ViewName>();
+
+                foreach (var prescriptions_diagnosis in prescription.prescriptions_diagnosis)
+                {
+                    ViewName name = new ViewName
+                    {
+                        name = prescriptions_diagnosis.diagnosis_template.diagnosis.name
+                    };
+
+                    formated_diagnosis.Add(name);
+                }
+
+                // Medicines
+                List<ViewNameRule> formated_medicines = new List<ViewNameRule>();
+
+                foreach (var prescriptions_medicine in prescription.prescriptions_medicine)
+                {
+                    ViewNameRule nameRule = new ViewNameRule
+                    {
+                        name = prescriptions_medicine.medicine.name,
+                        rule = prescriptions_medicine.rule
+                    };
+
+                    formated_medicines.Add(nameRule);
+                }
+
+
+                // Tests
+                List<ViewName> tests = new List<ViewName>();
+
+                foreach (var prescriptions_test in prescription.prescriptions_test)
+                {
+                    ViewName name = new ViewName
+                    {
+                        name = prescriptions_test.test.name
+                    };
+
+                    tests.Add(name);
+                }
+
+                ViewPrescriptions formated_prescription = new ViewPrescriptions
+                {
+                    user = user,
+                    temperature = prescription.temperature,
+                    blood_pressure = prescription.blood_pressure,
+                    doctores_notes = prescription.doctores_notes,
+                    other_instructions = prescription.other_instructions,
+                    formated_diagnosis = formated_diagnosis,
+                    formated_medicines = formated_medicines,
+                    tests = tests
+                };
+
+                formated_prescriptions.Add(formated_prescription);
+            }
+            return formated_prescriptions;
         }
     }
 }

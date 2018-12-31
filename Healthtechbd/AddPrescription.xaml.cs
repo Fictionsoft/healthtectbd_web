@@ -97,7 +97,7 @@ namespace Healthtechbd
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 
-            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigation bar).                           
             SelectPrescriptionViewtemp();
         }
 
@@ -242,7 +242,7 @@ namespace Healthtechbd
                         Grid sidebar = AdminPanelWindow.sidebar;
                         sidebar.Visibility = Visibility.Visible;
 
-                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+                        AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigation bar).                           
 
                         if (((Button)sender).Name == "SaveAddPrescription")
                         {
@@ -289,7 +289,7 @@ namespace Healthtechbd
                             Grid sidebar = AdminPanelWindow.sidebar;
                             sidebar.Visibility = Visibility.Visible;
 
-                            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).                           
+                            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigation bar).                           
 
                             if (((Button)sender).Name == "SaveAddPrescription")
                             {
@@ -477,7 +477,7 @@ namespace Healthtechbd
             Grid sidebar = AdminPanelWindow.sidebar;
             sidebar.Visibility = Visibility.Visible;
 
-            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigationbar).            
+            AdminPanelWindow.sidebarColumnDefination.Width = new GridLength(242); // To set width 242 cause when I press AddPresscription it's Width set 0 (to remove sidebar/navigation bar).            
 
             NavigationService.Navigate(new Uri("Prescriptions.xaml", UriKind.Relative));
         }

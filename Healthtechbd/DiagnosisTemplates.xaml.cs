@@ -32,7 +32,6 @@ namespace Healthtechbd
         {
             InitializeComponent();
             loadDiagnosisTemplates();
-            //Getonline_diagnosis_templates();
         }
 
         public static int offline_total;

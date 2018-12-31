@@ -16,11 +16,17 @@ namespace Healthtechbd.Model.ApiModel
         public string doctores_notes { get; set; }
         public string other_instructions { get; set; }
 
-        // Diagnosis Template
-        public List<ViewDiagnosis> diagnosis { get; set; } 
+        // Diagnosis Template to get online data
+        public List<ViewDiagnosis> diagnosis { get; set; }
 
-        //Prescriptions Medicine
+        // Diagnosis Template to send local data
+        public List<ViewName> formated_diagnosis { get; set; }
+
+        // Prescriptions Medicine to get online data
         public List<ViewNameRule> medicines { get; set; }
+
+        // Prescriptions Medicine to send local data
+        public List<ViewNameRule> formated_medicines { get; set; }
 
         //Tests
         public List<ViewName> tests { get; set; }
@@ -37,7 +43,6 @@ namespace Healthtechbd.Model.ApiModel
     // Diagnosis Template
     public class ViewDiagnosis
     {
-        public string instructions { get; set; }
         public ViewName diagnosis_list { get; set; }
     }
 
@@ -45,6 +50,7 @@ namespace Healthtechbd.Model.ApiModel
     public class ViewNameRule
     {
         public string name { get; set; }
+        public string rule { get; set; }
         public ViewRule _joinData { get; set; }
     }
 

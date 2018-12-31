@@ -94,11 +94,9 @@ namespace Healthtechbd.prescriptionTemplates
             PatientBp.Text = prescription.blood_pressure;
             PatientTemparature.Text = prescription.temperature;
 
-            var prescriptions_medicines = db.prescriptions_medicines.Where(x => x.prescription_id == MainWindow.Session.edit_record_id).ToList();
-
             //Prescription Medicines 
             var i = 1;
-            foreach (var prescriptions_medicine in prescriptions_medicines)
+            foreach (var prescriptions_medicine in prescription.prescriptions_medicine)
             {
                 WrapPanel wrapPanel = new WrapPanel();
 
@@ -124,11 +122,9 @@ namespace Healthtechbd.prescriptionTemplates
                 i++;
             }
 
-            var prescriptions_diagnosis = db.prescriptions_diagnosis.Where(x => x.prescription_id == MainWindow.Session.edit_record_id).ToList();
-
             //Prescription Diagnosis 
             var j = 1;
-            foreach (var prescriptions_diagnosi in prescriptions_diagnosis)
+            foreach (var prescriptions_diagnosi in prescription.prescriptions_diagnosis)
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
@@ -139,11 +135,9 @@ namespace Healthtechbd.prescriptionTemplates
                 j++;
             }
 
-            var prescriptions_tests = db.prescriptions_tests.Where(x => x.prescription_id == MainWindow.Session.edit_record_id).ToList();
-
             //Prescription Examinations
             var k = 1;
-            foreach (var prescriptions_test in prescriptions_tests)
+            foreach (var prescriptions_test in prescription.prescriptions_test)
             {
                 TextBlock textBlock = new TextBlock();
                 textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
