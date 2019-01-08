@@ -67,13 +67,13 @@ namespace Healthtechbd
         private void btnRegistration_Click(object sender, RoutedEventArgs e)
         {
 
-            if (FirstName.Text != "Frist Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
+            if (FirstName.Text != "First Name" && LastName.Text != "Last Name" && Phone.Text != "Phone Number" && EmailAddress.Text != "Email Address" && Password.Password != "Password")
             {
                 if (IsValidEmail(EmailAddress.Text) == true)
                 {
                     try
                     {
-                        var haveEmail = db.users.FirstOrDefault(x => x.email == EmailAddress.Text);
+                        var haveEmail = db.users.FirstOrDefault(x => x.email == EmailAddress.Text && x.role_id == 2); // doctor
                         var havePhone = db.users.FirstOrDefault(x => x.phone == Phone.Text);
 
                         if (haveEmail == null)
@@ -90,7 +90,7 @@ namespace Healthtechbd
                                 user.is_localhost = 1;
                                 user.created = DateTime.Now;
 
-                                user.expire_date = DateTime.Now.AddDays(1).ToString("dd/MM/yyyy");
+                                user.expire_date = DateTime.Now.AddMonths(12).ToString("dd/MM/yyyy");
 
                                 db.users.Add(user);
                                 var status = db.SaveChanges();
@@ -99,7 +99,7 @@ namespace Healthtechbd
                                 {
                                     if (CheckForInternetConnection() == true)
                                     {
-                                        ApiRegister(user.id);
+                                        ApiRegistration(user.id);
                                     }
                                 }
 
@@ -114,7 +114,7 @@ namespace Healthtechbd
                                 AdminPanelWindow adminpanelWindow = new AdminPanelWindow(this);
                                 adminpanelWindow.Show();
 
-                                if (MessageBox.Show("Registration and Login is successfull", "Success") == MessageBoxResult.OK)
+                                if (MessageBox.Show("Registration and Login is successful", "Success") == MessageBoxResult.OK)
                                 {
                                     TextBlock UserName = AdminPanelWindow.userName;
                                     UserName.Text = MainWindow.Session.doctor_first_name + " " + MainWindow.Session.doctor_last_name;
@@ -170,7 +170,7 @@ namespace Healthtechbd
             }
         }  
         
-        public void ApiRegister(int id)
+        public void ApiRegistration(int id)
         {                                                                                                                                                               
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
@@ -188,7 +188,7 @@ namespace Healthtechbd
                 new KeyValuePair<string, string>("expire_date", doctor.expire_date)
             });
 
-            HttpResponseMessage response = client.PostAsync("admin/users/api-register", content).Result;
+            HttpResponseMessage response = client.PostAsync("admin/users/api-registration", content).Result;
             if (response.IsSuccessStatusCode)
             {
                 var patients = response.Content.ReadAsStringAsync();
@@ -207,49 +207,6 @@ namespace Healthtechbd
             {
                 MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
             }
-        }
-
-        async void ApiSetPatients()
-        {
-            //try
-            //{
-            //var patients = db.users.Where(x => x.role_id == 3).OrderByDescending(x => x.created).Take(2).ToArray();// role_id 3 = Patient              
-            var patients = db.users.Select(
-                x => new
-                {
-                    role_id = x.role_id,
-                    doctor_id = x.doctor_id,
-                    first_name = x.first_name,
-                    address_line1 = x.address_line1,
-                    phone = x.phone,
-                    email = x.email,
-                    age = x.age,
-                    created = x.created,
-                    is_sync = x.is_sync
-                })
-                .Where(x => x.doctor_id == MainWindow.Session.doctor_id && x.role_id == 3 && x.is_sync == 0)
-                .OrderByDescending(x => x.created)
-                .Take(2)
-                .ToList();
-
-            HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
-
-                HttpResponseMessage response = client.PostAsJsonAsync("admin/users/get-local-patients", patients).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var employees = response.Content.ReadAsStringAsync();
-                    employees.Wait();
-                }
-                else
-                {
-                    MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
-                }
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}
         }
 
         public static bool CheckForInternetConnection()

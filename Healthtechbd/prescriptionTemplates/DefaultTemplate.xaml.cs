@@ -98,54 +98,63 @@ namespace Healthtechbd.prescriptionTemplates
             var i = 1;
             foreach (var prescriptions_medicine in prescription.prescriptions_medicine)
             {
-                WrapPanel wrapPanel = new WrapPanel();
-
-                PrescriptioMedicines.Children.Add(wrapPanel);
-
-                //Medicine Name
-                TextBlock medicine = new TextBlock();
-                medicine.Margin = new Thickness(0, 0, 3, 0);
-                medicine.Style = this.FindResource("defaultViewLevel") as Style;
-                medicine.Text = i + ". " + prescriptions_medicine.medicine.name;
-
-                wrapPanel.Children.Add(medicine);
-
-                //Dos
-                if (prescriptions_medicine.rule != "")
+                if(prescriptions_medicine.medicine != null)
                 {
-                    TextBlock dos = new TextBlock();
-                    dos.Style = this.FindResource("defaultViewLevel") as Style;
-                    dos.Text = ": ( " + prescriptions_medicine.rule + " )";
+                    WrapPanel wrapPanel = new WrapPanel();
 
-                    wrapPanel.Children.Add(dos);
-                }                
-                i++;
+                    PrescriptioMedicines.Children.Add(wrapPanel);
+
+                    //Medicine Name
+                    TextBlock medicine = new TextBlock();
+                    medicine.Margin = new Thickness(0, 0, 3, 0);
+                    medicine.Style = this.FindResource("defaultViewLevel") as Style;
+                    medicine.Text = i + ". " + prescriptions_medicine.medicine.name;
+
+                    wrapPanel.Children.Add(medicine);
+
+                    //Dos
+                    if (prescriptions_medicine.rule != "")
+                    {
+                        TextBlock dos = new TextBlock();
+                        dos.Style = this.FindResource("defaultViewLevel") as Style;
+                        dos.Text = ": ( " + prescriptions_medicine.rule + " )";
+
+                        wrapPanel.Children.Add(dos);
+                    }
+                    i++;
+                }               
             }
 
             //Prescription Diagnosis 
             var j = 1;
             foreach (var prescriptions_diagnosi in prescription.prescriptions_diagnosis)
             {
-                TextBlock textBlock = new TextBlock();
-                textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
-                textBlock.Style = this.FindResource("defaultViewLevel") as Style;
-                textBlock.Text = j + ". " + prescriptions_diagnosi.diagnosis_template.diagnosis.name;
+                if(prescriptions_diagnosi.diagnosis_template != null)
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
+                    textBlock.Style = this.FindResource("defaultViewLevel") as Style;
+                    textBlock.Text = j + ". " + prescriptions_diagnosi.diagnosis_template.diagnosis.name;
 
-                PatientDiagnosis.Children.Add(textBlock);
-                j++;
+                    PatientDiagnosis.Children.Add(textBlock);
+                    j++;
+                }                
             }
 
             //Prescription Examinations
             var k = 1;
             foreach (var prescriptions_test in prescription.prescriptions_test)
             {
-                TextBlock textBlock = new TextBlock();
-                textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
-                textBlock.Style = this.FindResource("defaultViewLevel") as Style;
-                textBlock.Text = k + ". " + prescriptions_test.test.name;
+                if(prescriptions_test.test != null)
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.TextWrapping = TextWrapping.WrapWithOverflow;
+                    textBlock.Style = this.FindResource("defaultViewLevel") as Style;
+                    textBlock.Text = k + ". " + prescriptions_test.test.name;
 
-                PatientExamination.Children.Add(textBlock);
-                k++;
+                    PatientExamination.Children.Add(textBlock);
+                    k++;
+                }                
             }
 
             //Doctors Note

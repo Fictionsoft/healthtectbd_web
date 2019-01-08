@@ -42,7 +42,7 @@ namespace Healthtechbd
 
                         NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));
 
-                        diagnosis.name = DiagnosisName.Text.Trim();
+                        diagnosis.name = DiagnosisName.Text;
                         diagnosis.status = true;
                         diagnosis.created = DateTime.Now;
                         db.diagnosis.Add(diagnosis);

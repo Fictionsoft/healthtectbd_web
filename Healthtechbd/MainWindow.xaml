@@ -20,10 +20,10 @@
                 <Separator/>
 
                 <!--Email-->
-                <TextBox x:Name="EmailAddress" Style="{StaticResource InputField}" Text="doctor@pms.com" GotFocus="EmailAddress_GotFocus" LostFocus="EmailAddress_LostFocus" />
+                <TextBox x:Name="EmailAddress" Style="{StaticResource InputField}" Text="Email Address" GotFocus="EmailAddress_GotFocus" LostFocus="EmailAddress_LostFocus" />
 
                 <!--Password-->
-                <PasswordBox x:Name="Password" Password="12345678" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus"  />
+                <PasswordBox x:Name="Password" Password="Password" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus"  />
                 
                 <!--Login Button-->
                 <Button x:Name="ButtonLogin" Content="LOGIN" Foreground="#fff" Background="#3CC2BB" Margin="0 0 0 10" Padding="9" Height="38" BorderBrush="#eee" BorderThickness="0" Click="ButtonLogin_Click" />

@@ -153,7 +153,7 @@ namespace Healthtechbd
                 loadDiagnosisTemplates();
                 MessageBox.Show("Online to offline: \n Total : " + offline_total + "\n Success : " + offline_success + "\n Duplicate : " + offline_duplicate
                                  + "\n \n Offline to online: \n Total : " + online_total + "\n Success : " + online_success + "\n Duplicate : " + online_duplicate,
-                                 "Diagnosis Template sync report", MessageBoxButton.OK);
+                                 "Diagnosis templates sync report", MessageBoxButton.OK);
 
             }
             else
@@ -167,32 +167,39 @@ namespace Healthtechbd
 
         public void GetonlineDiagnosisTemplates()
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = client.GetAsync("admin/diagnosis/get-online-diagnosis-templates?doctor_email=" + MainWindow.Session.doctor_email).Result;
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var diagnosisTemplates = response.Content.ReadAsStringAsync();
-                diagnosisTemplates.Wait();
-                var online_diagnosis_templates = JsonConvert.DeserializeObject<List<ViewDiagnosisTemplates>>(diagnosisTemplates.Result);
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //count total sync diagnosis templates from online
-                offline_total = online_diagnosis_templates.Count();
-
-                if (offline_total > 0)
+                HttpResponseMessage response = client.GetAsync("admin/diagnosis/get-online-diagnosis-templates?doctor_email=" + MainWindow.Session.doctor_email).Result;
+                if (response.IsSuccessStatusCode)
                 {
-                    if (SaveOnlineDiagnosisTemplatesToLocal(online_diagnosis_templates))
+                    var diagnosisTemplates = response.Content.ReadAsStringAsync();
+                    diagnosisTemplates.Wait();
+                    var online_diagnosis_templates = JsonConvert.DeserializeObject<List<ViewDiagnosisTemplates>>(diagnosisTemplates.Result);
+
+                    //count total sync diagnosis templates from online
+                    offline_total = online_diagnosis_templates.Count();
+
+                    if (offline_total > 0)
                     {
-                        HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/diagnosis/get-online-diagnosis-templates", will_sync_true_diagnosis_template_ids).Result;
+                        if (SaveOnlineDiagnosisTemplatesToLocal(online_diagnosis_templates))
+                        {
+                            HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/diagnosis/get-online-diagnosis-templates", will_sync_true_diagnosis_template_ids).Result;
+                        }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                }
             }
-            else
+            catch
             {
-                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
         }
 
         public bool SaveOnlineDiagnosisTemplatesToLocal(List<ViewDiagnosisTemplates> online_diagnosis_templates)
@@ -293,45 +300,52 @@ namespace Healthtechbd
 
         public async void GetLocalDiagnosisTemplates()
         {
-            var diagnosis_templates = db.diagnosis_templates
+            try
+            {
+                var diagnosis_templates = db.diagnosis_templates
                     .Where(x => x.doctor_id == MainWindow.Session.doctor_id && x.is_sync == 0)
                     .Take(100)
                     .ToList();
 
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
 
-            if (diagnosis_templates.Count() > 0)
-            {
                 //count total sync Diagnosis Templates from offline
                 online_total = diagnosis_templates.Count();
 
-                var json_diagnosis_templates = JsonConvert.SerializeObject(diagnosis_templates, Formatting.Indented,
-                new JsonSerializerSettings
+                if (online_total > 0)
                 {
-                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                });
+                    var json_diagnosis_templates = JsonConvert.SerializeObject(diagnosis_templates, Formatting.Indented,
+                    new JsonSerializerSettings
+                    {
+                        PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                    });
 
-                HttpResponseMessage response = client.PostAsJsonAsync("admin/diagnosis/get-local-diagnosis-templates?doctor_email="+MainWindow.Session.doctor_email, json_diagnosis_templates).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var response_local_diagnosis_template_save_to_online = response.Content.ReadAsStringAsync();
-                    response_local_diagnosis_template_save_to_online.Wait();
-                    var online_response = JsonConvert.DeserializeObject<DiagnosisTemplateSucessMessage>(response_local_diagnosis_template_save_to_online.Result);
+                    HttpResponseMessage response = client.PostAsJsonAsync("admin/diagnosis/get-local-diagnosis-templates?doctor_email=" + MainWindow.Session.doctor_email, json_diagnosis_templates).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var response_local_diagnosis_template_save_to_online = response.Content.ReadAsStringAsync();
+                        response_local_diagnosis_template_save_to_online.Wait();
+                        var online_response = JsonConvert.DeserializeObject<DiagnosisTemplateSucessMessage>(response_local_diagnosis_template_save_to_online.Result);
 
-                    if (online_response.status == "success")
-                    {                       
-                        online_success = online_response.online_success;
-                        online_duplicate = online_response.online_duplicate;
+                        if (online_response.status == "success")
+                        {
+                            online_success = online_response.online_success;
+                            online_duplicate = online_response.online_duplicate;
 
-                        ChangeIsSyncLocalDiagnosisTemplates(online_response.will_sync_ids);
+                            ChangeIsSyncLocalDiagnosisTemplates(online_response.will_sync_ids);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
-                }
             }
+            catch
+            {
+                MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }            
         }
 
         public void ChangeIsSyncLocalDiagnosisTemplates(List<long> will_sync_ids)

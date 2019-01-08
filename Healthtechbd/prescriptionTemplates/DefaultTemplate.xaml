@@ -191,7 +191,6 @@
 
                                     </Grid>
 
-
                                     <Border Grid.Column="1" Style="{StaticResource ResourceKey=singleBorder}" >
                                         <StackPanel>
                                             <Border CornerRadius="10" Background="#0000EF" BorderBrush="#0000EF" BorderThickness="1">

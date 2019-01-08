@@ -41,7 +41,7 @@ namespace Healthtechbd
                     {
                         NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));
 
-                        medicine.name = MedicineName.Text.Trim();
+                        medicine.name = MedicineName.Text;
                         medicine.status = true;
                         medicine.created = DateTime.Now;
                         db.medicines.Add(medicine);

@@ -78,7 +78,7 @@
                                     <Border Grid.Row="0" Padding="5" Grid.ColumnSpan="2">
                                         <StackPanel  Orientation="Horizontal">
                                             <TextBlock Width="43" FontWeight="SemiBold" Margin="0,4,5,5" Text="Name*:" VerticalAlignment="Center"/>
-                                            <ToggleButton Margin="-10 0 0 0" Content="New" Checked = "NewPatientCheck" Unchecked = "NewPatientUncheck" Width="42" />
+                                            <ToggleButton Margin="-10 0 0 0" Content="new" Foreground="Black" Checked = "NewPatientCheck" Unchecked = "NewPatientUncheck" Width="42" />
                                             <ComboBox ItemsSource="{Binding}" IsTextSearchEnabled="False" IsEditable="True" Width="300" x:Name="PatientComboBox" Style="{StaticResource DiagnosisComboBox}" GotFocus="PatientComboBox_GotFocus" DropDownClosed="PatientComboBox_DropDownClosed"/>
 
                                             <TextBox x:Name="NewPatientName" Visibility="Hidden" Margin="-310 0 0 0" Style="{StaticResource PrescriptionInputField}" Width="290" HorizontalAlignment="Right" Text=""/>
@@ -165,8 +165,8 @@
 
                             <ScrollViewer Background="#EEEEEE"  FontSize="14" Foreground="#7d7d7d" Height="140" VerticalScrollBarVisibility="Auto">
 
-                                <Border Padding="3" Background="#EEEEEE">
-                                    <StackPanel x:Name="AllPrescription"/>
+                                <Border Padding="5" Background="#EEEEEE">
+                                    <StackPanel Background="White" x:Name="AllPrescription"/>
                                 </Border>
 
                             </ScrollViewer>
@@ -253,7 +253,7 @@
 
                                     <Grid Background="#fff" Height="220">
                                         <Grid DataContext="{StaticResource diagnosisTestModel}" Height="102" Margin="0 26 0 0">
-                                            <control:DiagnosisTestChosenControl x:Name="testChosen" TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="0,-66,0,-69" VerticalAlignment="Top" Height="237"  />
+                                            <control:DiagnosisTestChosenControl x:Name="testChosen" TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Tests"   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="0,-66,0,-69" VerticalAlignment="Top" Height="237"  />
                                         </Grid>
                                     </Grid>
 

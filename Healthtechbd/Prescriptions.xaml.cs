@@ -236,51 +236,63 @@ namespace Healthtechbd
         }
 
         private void ButtonSyncPrescription_Click(object sender, RoutedEventArgs e)
-        {
-            if(MainWindow.Internet.CheckForInternetConnection() == true)
+        {            
+            if(MessageBox.Show("Are you sure Diagnosis Template and Patient has been already synced", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                //GetOnlinePrescriptions();
-                GetLocalPrescriptions();
-                loadPrescriptions();
-                MessageBox.Show("Prescription sync success", "Success");
+                if (MainWindow.Internet.CheckForInternetConnection() == true)
+                {
+                    GetOnlinePrescriptions();
+                    GetLocalPrescriptions();
+                    loadPrescriptions();
+                    MessageBox.Show("Online to offline: \n Total : " + offline_total + "\n Success : " + offline_success 
+                                 + "\n \n Offline to online: \n Total : " + online_total + "\n Success : " + online_success,
+                                 "Prescriptions sync report", MessageBoxButton.OK);
 
-                offline_total = offline_success = offline_duplicate = online_total = online_success = online_duplicate = 0; // Clear Value
-                will_sync_true_diagnosis_template_ids.Clear(); // Clear Value
-            }
-            else
-            {
-                MessageBox.Show("Check your internet connection, Please try again", "Warning");
-            }
+                    offline_total = offline_success = offline_duplicate = online_total = online_success = online_duplicate = 0; // Clear Value
+                    will_sync_true_diagnosis_template_ids.Clear(); // Clear Value
+                }
+                else
+                {
+                    MessageBox.Show("Check your internet connection, Please try again", "Warning");
+                }
+            }            
         }
 
         public async void GetOnlinePrescriptions()
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //try
+            //{
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = client.GetAsync("admin/prescriptions/get-online-prescriptions?doctor_email="+MainWindow.Session.doctor_email).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var prescriptions = response.Content.ReadAsStringAsync();
-                prescriptions.Wait();
-                var online_prescriptions = JsonConvert.DeserializeObject<List<ViewPrescriptions>>(prescriptions.Result);
-
-                //count total sync prescriptions from online
-                offline_total = online_prescriptions.Count();
-
-                if(offline_total > 0)
+                HttpResponseMessage response = client.GetAsync("admin/prescriptions/get-online-prescriptions?doctor_email=" + MainWindow.Session.doctor_email).Result;
+                if (response.IsSuccessStatusCode)
                 {
-                    if (SaveOnlinePrescriptionsToLocal(online_prescriptions))
+                    var prescriptions = response.Content.ReadAsStringAsync();
+                    prescriptions.Wait();
+                    var online_prescriptions = JsonConvert.DeserializeObject<List<ViewPrescriptions>>(prescriptions.Result);
+
+                    //count total sync prescriptions from online
+                    offline_total = online_prescriptions.Count();
+
+                    if (offline_total > 0)
                     {
-                        HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/prescriptions/get-online-prescriptions", will_sync_true_diagnosis_template_ids).Result;
+                        if (SaveOnlinePrescriptionsToLocal(online_prescriptions))
+                        {
+                            HttpResponseMessage change_is_sync_response = client.PostAsJsonAsync("admin/prescriptions/get-online-prescriptions", will_sync_true_diagnosis_template_ids).Result;
+                        }
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
-            }
+                else
+                {
+                    MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //}            
         }
 
         public bool SaveOnlinePrescriptionsToLocal(List<ViewPrescriptions> online_prescriptions)
@@ -343,7 +355,7 @@ namespace Healthtechbd
             {
                 var have_diagnosis_list = db.diagnosis.FirstOrDefault(x => x.name == online_prescription_diagnosi.diagnosis_list.name);
 
-                if(have_diagnosis_list != null && have_diagnosis_list.diagnosis_template.Count() > 0) //have diagnosis_list and template
+                if(have_diagnosis_list != null && have_diagnosis_list.diagnosis_template.FirstOrDefault(x => x.doctor_id == MainWindow.Session.doctor_id) != null) //have diagnosis_list and template
                 {
                     addPrescription.CreatePrescriptionDiagnosis(prescription_id, have_diagnosis_list.diagnosis_template.Last().id);
                 }
@@ -378,38 +390,48 @@ namespace Healthtechbd
 
         public async void GetLocalPrescriptions()
         {
-            var prescriptions = db.prescriptions
+            //try
+            //{
+                var prescriptions = db.prescriptions
                     .Where(x => x.doctor_id == MainWindow.Session.doctor_id && x.is_sync == 0)
                     .Take(100)
                     .ToList();
 
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri(MainWindow.Session.api_base_url);
 
-            
-            if (prescriptions.Count() > 0)
-            {
-                var formated_prescriptions = FormatedPrescriptions(prescriptions);
                 //count total sync prescriptions from offline
                 online_total = prescriptions.Count();
 
-                var json_prescriptions = JsonConvert.SerializeObject(formated_prescriptions, Formatting.Indented,
-                new JsonSerializerSettings
+                if (online_total > 0)
                 {
-                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                });
+                    var formated_prescriptions = FormatedPrescriptions(prescriptions);
 
-                HttpResponseMessage response = client.PostAsJsonAsync("admin/prescriptions/get-local-prescriptions?doctor_email="+MainWindow.Session.doctor_email, json_prescriptions).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var response_local_prescriptions_save_to_online = response.Content.ReadAsStringAsync();
-                    response_local_prescriptions_save_to_online.Wait();
+                    HttpResponseMessage response = client.PostAsJsonAsync("admin/prescriptions/get-local-prescriptions?doctor_email=" + MainWindow.Session.doctor_email, formated_prescriptions).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var response_local_prescriptions_save_to_online = response.Content.ReadAsStringAsync();
+                        response_local_prescriptions_save_to_online.Wait();
+
+                        var online_response = JsonConvert.DeserializeObject<DiagnosisTemplateSucessMessage>(response_local_prescriptions_save_to_online.Result);
+
+                        if (online_response.status == "success")
+                        {
+                            online_success = online_response.online_success;
+
+                            ChangeIsSyncLocalPrescriptions(online_response.will_sync_ids);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Error Code " + response.StatusCode + " : Message - " + response.ReasonPhrase);
-                }
-            }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("There is a problem, Please try again", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //}            
         }
 
         public List<ViewPrescriptions> FormatedPrescriptions(List<prescription> prescriptions)
@@ -468,6 +490,7 @@ namespace Healthtechbd
 
                 ViewPrescriptions formated_prescription = new ViewPrescriptions
                 {
+                    id = prescription.id,
                     user = user,
                     temperature = prescription.temperature,
                     blood_pressure = prescription.blood_pressure,
@@ -481,6 +504,16 @@ namespace Healthtechbd
                 formated_prescriptions.Add(formated_prescription);
             }
             return formated_prescriptions;
+        }
+
+        public void ChangeIsSyncLocalPrescriptions(List<long> will_sync_ids)
+        {
+            foreach (var will_sync_id in will_sync_ids)
+            {
+                var prescription = db.prescriptions.FirstOrDefault(x => x.id == will_sync_id);
+                prescription.is_sync = 1;
+                db.SaveChanges();
+            }
         }
     }
 }

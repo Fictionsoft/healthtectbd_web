@@ -55,7 +55,7 @@ namespace Healthtechbd
             {
                 //To Selected this prescription User 
                 var prescription = db.prescriptions.FirstOrDefault(x => x.id == id);
-                PatientComboBox.SelectedItem = prescription.user.first_name + "-" + prescription.user.phone;                
+                PatientComboBox.SelectedItem = prescription.user.first_name + "~" + prescription.user.phone;                
 
                 PatientPhone.Text = prescription.user.phone;
                 PatientAddress.Text = prescription.user.address_line1;
@@ -105,7 +105,7 @@ namespace Healthtechbd
 
             foreach (var patient in patients)
             {
-                PatientComboBox.Items.Add(patient.first_name + "-" + patient.phone);
+                PatientComboBox.Items.Add(patient.first_name + "~" + patient.phone);
             }
 
             if (patients.Count == 0)
@@ -126,7 +126,7 @@ namespace Healthtechbd
             {
                 try
                 {
-                    string[] words = PatientComboBox.Text.Split('-');
+                    string[] words = PatientComboBox.Text.Split('~');
                     string patientName = words[0];
                     string patientPhone = words[1];
 
@@ -163,7 +163,7 @@ namespace Healthtechbd
 
                 foreach (var patient in patients)
                 {
-                    PatientComboBox.Items.Add(patient.first_name + "-" + patient.phone);
+                    PatientComboBox.Items.Add(patient.first_name + "~" + patient.phone);
                 }
             }
             catch
@@ -272,7 +272,7 @@ namespace Healthtechbd
             {
                 try
                 {
-                    string[] words = PatientComboBox.Text.Split('-');
+                    string[] words = PatientComboBox.Text.Split('~');
                     string patientName = words[0];
                     string patientPhone = words[1];
 
@@ -300,9 +300,9 @@ namespace Healthtechbd
                         if (phone == null)
                         {
                             patient.first_name = patientName;
-                            patient.phone = PatientPhone.Text.Trim();
-                            patient.age = PatientAge.Text.Trim();
-                            patient.address_line1 = PatientAddress.Text.Trim();
+                            patient.phone = PatientPhone.Text;
+                            patient.age = PatientAge.Text;
+                            patient.address_line1 = PatientAddress.Text;
 
                             db.SaveChanges();
 
@@ -664,7 +664,7 @@ namespace Healthtechbd
 
                 if (patient != null)
                 {
-                    PatientComboBox.SelectedItem = patient.first_name + "-" + patient.phone;
+                    PatientComboBox.SelectedItem = patient.first_name + "~" + patient.phone;
                     PatientPhone.Text = patient.phone;
                     PatientAddress.Text = patient.address_line1;
                     PatientAge.Text = patient.age;

@@ -252,7 +252,7 @@
 
                                     <Grid Background="#fff" Height="220">
                                         <Grid DataContext="{StaticResource diagnosisTestModel}" Height="102" Margin="0 26 0 0">
-                                            <control:DiagnosisTestChosenControl x:Name="testChosen" TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="0,-66,0,-69" VerticalAlignment="Top" Height="237"  />
+                                            <control:DiagnosisTestChosenControl x:Name="testChosen" TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Tests."   ValueMemberPath="Id"  DisplayMemberPath="Name" Margin="0,-66,0,-69" VerticalAlignment="Top" Height="237"  />
                                         </Grid>
                                     </Grid>
                                 </StackPanel>

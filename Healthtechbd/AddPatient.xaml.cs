@@ -45,11 +45,7 @@ namespace Healthtechbd
 
         private void SubmitAddPatient_Click(object sender, RoutedEventArgs e)
         {
-            Regex pattern = new Regex("[-]");
-            var patientName = pattern.Replace(PatientName.Text, " ");
-            var patientPhone = pattern.Replace(PatientPhone.Text, " ");
-
-            if (patientName != "" && patientPhone != "" && PatientAge.Text != "")
+            if (PatientName.Text != "" && PatientPhone.Text != "" && PatientAge.Text != "")
             {                                
                 if ((PatientEmail.Text != "" && IsValidEmail(PatientEmail.Text) == true) || PatientEmail.Text == "")
                 {
@@ -60,14 +56,13 @@ namespace Healthtechbd
                         NavigationService.Navigate(new Uri("Patients.xaml", UriKind.Relative));
                         patient.doctor_id = MainWindow.Session.doctor_id;
                         patient.role_id = 3; // role_id 3 = Patient
-                        patient.first_name = patientName;
-                        patient.phone = patientPhone;
+                        patient.first_name = PatientName.Text;
+                        patient.phone = PatientPhone.Text;
                         patient.email = PatientEmail.Text;
                         patient.age = PatientAge.Text;
                         patient.address_line1 = PatientAddress.Text;
                         patient.created = DateTime.Now;                      
                         patient.expire_date = "00/00/0000";
-                        patient.is_sync = 1;
 
                         db.users.Add(patient);
                         try

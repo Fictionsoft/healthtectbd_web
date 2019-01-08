@@ -41,7 +41,7 @@ namespace Healthtechbd
                     {
                         NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));
 
-                        test.name = TestName.Text.Trim();
+                        test.name = TestName.Text;
                         test.status = true;
                         test.created = DateTime.Now;
                         db.tests.Add(test);

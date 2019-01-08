@@ -65,14 +65,14 @@
                             <StackPanel Grid.Row="1" Grid.Column="0"  Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Medicines"/>
                                 <Grid DataContext="{StaticResource medicineModel}">
-                                    <control:MedicineChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"   DefaultMessage="Please Select Items."  ValueMemberPath="Id" DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
+                                    <control:MedicineChosenControl MedicinesLists="{Binding MedicinesLists}" SelectedMedicines="{Binding SelectedMedicines}"   DefaultMessage="Please Select Medicines"  ValueMemberPath="Id" DisplayMemberPath="Name" Margin="-1,1,1,-75"  />
                                 </Grid>
                             </StackPanel>
 
                             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5 0">
                                 <TextBlock Style="{StaticResource Level}" Text="Tests"/>
                                 <Grid DataContext="{StaticResource testModel}">
-                                    <control:TestChosenControl TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Items."  ValueMemberPath="Id" DisplayMemberPath="Name" />
+                                    <control:TestChosenControl TestsLists="{Binding TestsLists}" SelectedTests="{Binding SelectedTests}"  DefaultMessage="Please Select Tests."  ValueMemberPath="Id" DisplayMemberPath="Name" />
                                 </Grid>
                             </StackPanel>
 

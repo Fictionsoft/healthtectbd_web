@@ -62,7 +62,7 @@ namespace Healthtechbd
                     if (haveDiagnosis == null)
                     {
                         diagnosis = db.diagnosis.FirstOrDefault(x => x.id == diagnosisId);
-                        diagnosis.name = DiagnosisName.Text.Trim();
+                        diagnosis.name = DiagnosisName.Text;
                         db.SaveChanges();
 
                         NavigationService.Navigate(new Uri("Diagnosis.xaml", UriKind.Relative));

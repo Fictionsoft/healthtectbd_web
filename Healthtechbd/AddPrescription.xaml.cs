@@ -57,7 +57,7 @@ namespace Healthtechbd
 
                 foreach (var patient in patients)
                 {                   
-                    PatientComboBox.Items.Add(patient.first_name + "-" + patient.phone);                    
+                    PatientComboBox.Items.Add(patient.first_name + "~" + patient.phone);                    
                 }
             }
             catch
@@ -73,7 +73,7 @@ namespace Healthtechbd
             {
                 try
                 {
-                    string[] words = PatientComboBox.Text.Split('-');
+                    string[] words = PatientComboBox.Text.Split('~');
                     string patientName = words[0];
                     string patientPhone = words[1];
 
@@ -134,7 +134,7 @@ namespace Healthtechbd
 
             foreach (var patient in patients)
             {
-                PatientComboBox.Items.Add(patient.first_name + "-" + patient.phone);
+                PatientComboBox.Items.Add(patient.first_name + "~" + patient.phone);
             }
 
             if (patients.Count == 0)
@@ -227,15 +227,11 @@ namespace Healthtechbd
         string PrescriptionTem;
         private void SaveAddPrescription_Click(object sender, RoutedEventArgs e)
         {
-            Regex pattern = new Regex("[-]");
-            var newPatientName = pattern.Replace(NewPatientName.Text, " ");
-            var patientPhoneNumber = pattern.Replace(PatientPhone.Text, " ");
-
-            if ((PatientComboBox.Text != "" || newPatientName != "") && patientPhoneNumber != "" && PatientAge.Text != "")
+            if ((PatientComboBox.Text != "" || NewPatientName.Text != "") && PatientPhone.Text != "" && PatientAge.Text != "")
             {                   
-                if (newPatientName != "") //Add a new Patient
+                if (NewPatientName.Text != "") //Add a new Patient
                 {
-                    var patientExit = db.users.FirstOrDefault(x => x.first_name == newPatientName && x.phone == patientPhoneNumber && x.doctor_id == MainWindow.Session.doctor_id);
+                    var patientExit = db.users.FirstOrDefault(x => x.first_name == NewPatientName.Text && x.phone == PatientPhone.Text && x.doctor_id == MainWindow.Session.doctor_id);
 
                     if (patientExit == null)
                     {
@@ -254,9 +250,9 @@ namespace Healthtechbd
                         }
 
                         //Save New Patient 
-                        patient.first_name = newPatientName;
-                        patient.phone = patientPhoneNumber;
-                        patient.age = PatientAge.Text.Trim();
+                        patient.first_name = NewPatientName.Text;
+                        patient.phone = PatientPhone.Text;
+                        patient.age = PatientAge.Text;
                         patient.address_line1 = PatientAddress.Text;
                         patient.created = DateTime.Now;
                         patient.doctor_id = MainWindow.Session.doctor_id;
@@ -278,7 +274,7 @@ namespace Healthtechbd
                 {
                     try
                     {
-                        string[] words = PatientComboBox.Text.Split('-');
+                        string[] words = PatientComboBox.Text.Split('~');
                         string patientName = words[0];
                         string patientPhone = words[1];
 
@@ -663,7 +659,7 @@ namespace Healthtechbd
 
                 if (patient != null)
                 {                   
-                    PatientComboBox.SelectedItem = patient.first_name + "-" + patient.phone;
+                    PatientComboBox.SelectedItem = patient.first_name + "~" + patient.phone;
                     PatientPhone.Text = patient.phone;
                     PatientAddress.Text = patient.address_line1;
                     PatientAge.Text = patient.age;

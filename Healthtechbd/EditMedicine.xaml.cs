@@ -42,7 +42,7 @@ namespace Healthtechbd
                     if (haveMedicine == null)
                     {
                         medicine = db.medicines.FirstOrDefault(x => x.id == medicineId);
-                        medicine.name = MedicineName.Text.Trim();
+                        medicine.name = MedicineName.Text;
                         db.SaveChanges();
 
                         NavigationService.Navigate(new Uri("Medicines.xaml", UriKind.Relative));

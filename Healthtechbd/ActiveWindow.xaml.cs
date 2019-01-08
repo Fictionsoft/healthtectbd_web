@@ -50,7 +50,7 @@ namespace Healthtechbd
 
         private void ButtonActiveApplication_Click(object sender, RoutedEventArgs e)
         {
-            if (Token.Text != "Token" && EmailAddress.Text != "Email Address")
+            if (Key.Text != "Token" && EmailAddress.Text != "Email Address")
             {
                 try
                 {
@@ -58,7 +58,7 @@ namespace Healthtechbd
 
                     if (user != null) //User = Doctor
                     {
-                        var key = System.Convert.FromBase64String(Token.Text);
+                        var key = System.Convert.FromBase64String(Key.Text);
                         var emailAndDate = System.Text.Encoding.UTF8.GetString(key);
 
                         string[] words = emailAndDate.Split('|');
@@ -74,7 +74,7 @@ namespace Healthtechbd
                                 user.expire_date = expireDate; // words[1] = Expire Date
                                 db.SaveChanges();
 
-                                Token.Text = EmailAddress.Text = "";// Clear Fields
+                                Key.Text = EmailAddress.Text = "";// Clear Fields
 
                                 if (MessageBox.Show("Application has been activated. You can login now.", "Success") == MessageBoxResult.OK)
                                 {
@@ -109,19 +109,19 @@ namespace Healthtechbd
             }
         }
 
-        private void Token_GotFocus(object sender, RoutedEventArgs e)
+        private void Key_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (Token.Text == "Token")
+            if (Key.Text == "Key")
             {
-                Token.Text = "";
+                Key.Text = "";
             }
         }
 
-        private void Token_LostFocus(object sender, RoutedEventArgs e)
+        private void Key_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (Token.Text == "")
+            if (Key.Text == "")
             {
-                Token.Text = "Token";
+                Key.Text = "Key";
             }
         }
 

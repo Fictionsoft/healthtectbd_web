@@ -56,7 +56,7 @@ namespace Healthtechbd
                     if (haveTest == null)
                     {
                         test = db.tests.FirstOrDefault(x => x.id == testId);
-                        test.name = TestName.Text.Trim();
+                        test.name = TestName.Text;
                         db.SaveChanges();
 
                         NavigationService.Navigate(new Uri("Tests.xaml", UriKind.Relative));

@@ -44,8 +44,8 @@ namespace Healthtechbd
             public static string image_path;
 
             public static int set_patient_id;
-            //public static string api_base_url = "http://app.healthtechbd.com/";
-            public static string api_base_url = "http://localhost/pms/";
+            public static string api_base_url = "http://app.healthtechbd.com/";
+            //public static string api_base_url = "http://localhost/pms/";
             
             #endregion
         }
