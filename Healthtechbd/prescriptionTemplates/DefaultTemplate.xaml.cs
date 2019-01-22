@@ -48,11 +48,11 @@ namespace Healthtechbd.prescriptionTemplates
                 ProfileImage.Source = new BitmapImage(new Uri(System.AppDomain.CurrentDomain.BaseDirectory + "images/defaultProfilePicture.png"));
             }
 
-            DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Visible : Visibility.Collapsed;
-            DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Visible : Visibility.Collapsed;
-            DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Visible : Visibility.Collapsed;
-            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Visible : Visibility.Collapsed;
-            DoctorChamberArea.Visibility = (doctor.cember_name == "" && doctor.cember_address == "") ? Visibility.Visible : Visibility.Collapsed;
+            DoctorQualification.Visibility = (doctor.educational_qualification == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorAddress.Visibility = (doctor.address_line1 == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorClinicName.Visibility = (doctor.clinic_name == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorSpecialist.Visibility = (doctor.specialist == "") ? Visibility.Collapsed : Visibility.Visible;
+            DoctorChamberArea.Visibility = (doctor.cember_name == "" && doctor.cember_address == "") ? Visibility.Collapsed : Visibility.Visible;
 
             //More Prescriptions
             if (prescription.user.prescription.Count() > 1)
@@ -83,7 +83,7 @@ namespace Healthtechbd.prescriptionTemplates
             DoctorQualification.Text = doctor.educational_qualification;           
             DoctorSpecialist.Text = doctor.specialist;           
             DoctorClinicName.Text = doctor.clinic_name;
-            DoctorChamber.Text = doctor.cember_name + ", " + doctor.cember_address; ;
+            DoctorChamber.Text = doctor.cember_name + " " + doctor.cember_address; ;
 
             //Patient Info
             PatientName.Text = prescription.user.first_name;
